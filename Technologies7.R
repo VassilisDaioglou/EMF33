@@ -243,7 +243,6 @@ TechData5$CapitalCo = as.numeric(substr(TechData5$CapitalCo, start=1, stop=5))
 TechData5$Efficiency = as.numeric(substr(TechData5$Efficiency, start=1, stop=5))
 TechData5$OMCostFi = as.numeric(substr(TechData5$OMCostFi, start=1, stop=5))
 TechData5$OMCostVa = as.numeric(substr(TechData5$OMCostVa, start=1, stop=5))
-#TechData5$SecEn = as.numeric(substr(TechData5$SecEn, start=1, stop=5))
 TechData5$Ctax = as.numeric(substr(TechData5$Ctax, start=1, stop=5))
 TechData5$FeedCost2 = as.numeric(substr(TechData5$FeedCost2, start=1, stop=5))
 TechData5$CaptureRate = as.numeric(substr(TechData5$CaptureRate, start=1, stop=5))
@@ -273,56 +272,22 @@ TechData5$LCOE_Cor = as.numeric(substr(TechData5$LCOE_Cor, start=1, stop=5))
 rm(DiscountRate)
 #
 # ---- LABELS ----
-scen_labels <- c("R3-B-hi-full"="hi-full",
-                "R3-B-hi-ready2050"="hi-ready2050",
-                "R3-B-hi-cost100"="hi-cost100",
-                "R3-B-hi-limbio"="hi-limbio",
-                "R3-B-lo-full"="lo-full",
-                "R3-B-lo-ready2050"="lo-ready2050",
-                "R3-B-lo-cost100"="lo-cost100",
-                "R3-B-lo-limbio"="lo-limbio")
-
+scen_labels <- c("R3-B-hi-full"="hi-full","R3-B-hi-ready2050"="hi-ready2050","R3-B-hi-cost100"="hi-cost100","R3-B-hi-limbio"="hi-limbio","R3-B-lo-full"="lo-full","R3-B-lo-ready2050"="lo-ready2050","R3-B-lo-cost100"="lo-cost100","R3-B-lo-limbio"="lo-limbio")
 #Model labels with text wraps                
 model_labels <- c("AIM/CGE"="AIM","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","FARM 3.1"="FARM","MESSAGE-GLOBIOM"="MESSAGE-\nGLOBIOM","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-\nMAgPIE")
 #Model labels without text wraps                
 model_labels2 <- c("AIM/CGE"="AIM","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","FARM 3.1"="FARM","MESSAGE-GLOBIOM"="MESSAGE-GLOBIOM","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE")
-eletech_labeler <- c("Geothermal"="Geothermal",
-                    "Hydro"="Hydro",
-                    "Nuclear"="Nuclear",
-                    "Solar"="Solar (PV&CSP)",
-                    "Wind"="Wind (On/off-shore)",
-                    "BiomasswCCS"="Biomass w/ CCS",
-                    "Biomass"="Biomass",
-                    "CoalwCCS"="Coal w/ CCS",
-                    "Coal"="Coal",
-                    "GaswCCS"="Gas w/ CCS",
-                    "Gas"="Gas")
 
-carrier_labels <- c("Ele"="Bio-Electricity",
-                    "Liq"="Bio-Liquids",
-                    "Hyd"="Bio-Hydrogen",
-                    "Gas"="Bio-Gas",
-                    "Ele woCCS"="Bio-Electricity",
-                    "Liq woCCS"="Bio-Liquids",
-                    "Hyd woCCS"="Bio-Hydrogen",
-                    "Gas woCCS"="Bio-Gas",
-                    "Ele wCCS"="Bio-Electricity w/CCS",
-                    "Liq wCCS"="Bio-Liquids w/CCS",
-                    "Hyd wCCS"="Bio-Hydrogen w/CCS")
+eletech_labeler <- c("Geothermal"="Geothermal", "Hydro"="Hydro","Nuclear"="Nuclear","Solar"="Solar (PV&CSP)","Wind"="Wind (On/off-shore)","BiomasswCCS"="Biomass w/ CCS","Biomass"="Biomass","CoalwCCS"="Coal w/ CCS","Coal"="Coal","GaswCCS"="Gas w/ CCS","Gas"="Gas")
 
+carrier_labels <- c("Ele"="Bio-Electricity","Liq"="Bio-Liquids","Hyd"="Bio-Hydrogen","Gas"="Bio-Gas","Ele woCCS"="Bio-Electricity","Liq woCCS"="Bio-Liquids","Hyd woCCS"="Bio-Hydrogen","Gas woCCS"="Bio-Gas","Ele wCCS"="Bio-Electricity w/CCS","Liq wCCS"="Bio-Liquids w/CCS","Hyd wCCS"="Bio-Hydrogen w/CCS")
 
-scen_labels <- c("hi-"="High",
-                 "lo-"="Low",
-                 "vlo"="Very Low",
-                 "SE-"="Baseline")
+scen_labels <- c("hi-"="High","lo-"="Low","vlo"="Very Low","SE-"="Baseline")
 
 TechData6=TechData5
 TechData6$Mitig <- substr(TechData6$SCENARIO, start=6, stop=8)
 
-TechData6$ScenOrder = factor(TechData6$Mitig, levels=c("SE-",
-                                                          "hi-",
-                                                          "lo-",
-                                                          "vlo"))
+TechData6$ScenOrder = factor(TechData6$Mitig, levels=c("SE-","hi-","lo-","vlo"))
 
 Biotech_labeler <- c("1st gen. ethanol" = "1st Gen. Eth.",
                      "Biodeisel"        = "Biodiesel",
@@ -338,18 +303,14 @@ Biotech_labeler <- c("1st gen. ethanol" = "1st Gen. Eth.",
                      "HydrogenwCCS"         = "Hydrogen \nw/CCS",
                      "Gas"              = "Bio-Gas")
 
-dummy_labeler <- c("2010"       = "Model Assumption",
-                   "2020"       = "Model Assumption",
-                   "2030"       = "Model Assumption",
-                   "Literature" = "Literature")
+dummy_labeler <- c("2010"= "Model Assumption","2020"= "Model Assumption","2030"= "Model Assumption","Literature" = "Literature")
 
 var_labeler <- c("CapitalCo"  = "Capital Costs [$/kW]",
                  "Efficiency" = "Efficiency [-]",
                  "LCOE1"      = "Non-Energy Costs [$/MWh]",
                  "FeedFrac"   = "Feedstock Fraction of LCOE [-]")
 
-var_labeler2 <- c("CapitalCo"  = "Capital Costs Penatly [$/kW]",
-                 "Efficiency" = "Efficiency Penalty [-]")
+var_labeler2 <- c("CapitalCo"  = "Capital Costs Penatly [$/kW]","Efficiency" = "Efficiency Penalty [-]")
 
 #
 # ---- FIGURE DFs GLOBAL ----
@@ -527,7 +488,6 @@ GlobalData$TechOrder2 = factor(GlobalData$Tech2, levels=c("Electricity","1st gen
 
 GlobalData.Bio = subset(GlobalData, Prim=="Biomass"|Prim=="BiomasswCCS")
 GlobalData.Bio1 = subset(GlobalData.Bio, select=-c(SCENARIO,VARIABLE,Efficiency,CapitalCo,SecEn,Ctax))
-#GlobalData.Bio1 <- melt(GlobalData.Bio1, measure.vars=c("LCOE","LCOE_Cap","LCOE_OM","LCOE_Feed","LCOE_ctax","LCOE_CDR","LCOE_Cor","LCOE1","LCOE2","LCOE3"), na.rm=FALSE)
 
 # For figures only: Add variable for cases where LCOE2 & LCOE (ie.e + feedstock and TOTAL) > 500
 GlobalData.Bio1cor = GlobalData.Bio1
@@ -819,7 +779,6 @@ rm(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Calcs.RangeFF)
 # **** FIGURES FOR DRAFT *****
 # ---- FIG 1: Liq+Ele Use ----
 SecEnTot1 = subset(SecEnTot, !(Tech3=="Ele Total"|Tech3=="Liq Total"|Tech3=="Hyd Total")&SCENARIO==ActScen)
-#SecEnTot1$MODEL2 <- plyr::revalue(SecEnTot1$MODEL,model_labels)
 
 GBioLiqEleSec <- ggplot(subset(SecEnTot1, Prim=="Biomass"&!(Year=="2000"|Year=="2050")&!(Tech3=="Hea Total")), mapping=aes(x=Year, y=value, fill=TechOrder3)) + 
   geom_bar(stat="identity") +
@@ -865,7 +824,6 @@ lay<-rbind(1,1,1,1,1,1,1,1,1,
 GBioSec <- grid.arrange(GBioLiqEleSec,GBioSecFrac, layout_matrix=lay)
 
 #
-
 # ---- FIG 2: Bio Cost v. Eff ----
 GlobalData.BioCor=as.data.table(GlobalData.Bio)
 GlobalData.BioCor$x_min <- 0
@@ -890,16 +848,13 @@ GlobalData.BioCor$CapitalCo[GlobalData.BioCor$MODEL=="MESSAGE-GLOBIOM"&GlobalDat
 # FIGURE: Comparison of Efficiencies vs. Capital Costs per model
 Data <- unique(GlobalData.BioCor[,c("TechOrder2")])
 Data$Year <- "Literature"
-#Glob$Year <- Glob$value <-1
 
 BioEffCost <- ggplot(subset(GlobalData.BioCor, Year=="2020"&!(CarrierID=="Gas")&!(TechOrder2=="Other biomass")))+
   geom_point(data=subset(LitData, !(Efficiency=="NA"|CapitalCo=="NA"|CarrierID=="Gas"|TechOrder2=="Other biomass")), aes(x=CapitalCo, y=Efficiency, fill=Capt, colour=Capt), alpha=0.5, shape=21, size=1.5) +
   geom_point(data=, aes(x=CapitalCo, y=Efficiency, shape=MODEL, colour=Capt), alpha=0.4, size=1.5) +
   geom_rect(data=subset(Data, !(TechOrder2=="Gas"|TechOrder2=="Other biomass")), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.1) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
-  ylim(0,1) +
-  xlab(expression("Capital Costs [US$"[2005]*"/kW"[Out]*"]")) +
-  ylab("Conversion Efficiency [-]") +
+  ylim(0,1) + xlab(expression("Capital Costs [US$"[2005]*"/kW"[Out]*"]")) + ylab("Conversion Efficiency [-]") +
   theme_bw() +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
@@ -965,7 +920,6 @@ GlobalData2$TotSecEn <- SecEnTot2.temp[match(GlobalData2$ID,SecEnTot2.temp$ID),5
 GlobalData2$ID <- NULL
 GlobalData2 = GlobalData2 %>% mutate(SecEnFrac = (SecEn/TotSecEn)*100)
 
-
 GBioLiqSecCost2 <- ggplot(subset(GlobalData2, CarrierID=="Liq"&Year=="2050"&SecEn>0.1)) + 
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=TechOrder2, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
@@ -991,8 +945,7 @@ GBioOthSecCost2 <- ggplot(GBioOthSecCost2Dat) +
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=Prim, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("B: DEPLOYMENT OF ELECTRICITY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
-  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
-  ylim(0,100) +
+  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + ylim(0,100) +
   theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="bold")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
@@ -1011,7 +964,6 @@ lay<-rbind(1,1,1,1,1,1,1,1,1,1,1,1,1,
 SecCostFinal2 <- grid.arrange(GBioLiqSecCost2,GBioOthSecCost2, layout_matrix=lay)
 
 #
-
 # ---- FIG S1: G. Bio Cap+OM Cost ALL ----
 GlobalData.Bio2 = subset(GlobalData.Bio2, Year=="2030"|Year=="2050"| Year=="2100")
 GlobalData.Bio2$Year = as.character(GlobalData.Bio2$Year)
@@ -1037,19 +989,16 @@ GBioAllCost <- ggplot(subset(GlobalData.Bio2, (CarrierID=="Liq"|CarrierID=="Ele"
   scale_shape_manual(values=c(0,4),
                      name="",
                      breaks=c("LCOE_Cap","LCOE1"),
-                     labels=c("CapEx", "+ O&M")
-  ) +
+                     labels=c("CapEx", "+ O&M")) +
   scale_colour_manual(values=c("black","red"),
                       name="",
                       breaks=c("LCOE_Cap","LCOE1"),
-                      labels=c("CapEx", "+ O&M")
-  ) +
+                      labels=c("CapEx", "+ O&M")) +
   scale_fill_manual(values=c("grey","dodgerblue","purple"),
                     name="",
                     breaks=c("Ele","Liq","Hyd"),
                     labels=c("Electricity","Liquids","Hydrogen")
-                    ,guide=FALSE
-  ) +
+                    ,guide=FALSE) +
   facet_grid(TechOrder~MODEL, scales="free", labeller=labeller(MODEL= model_labels, TechOrder=Biotech_labeler)) +
   theme(strip.text.x = element_text(size=fontsize1), strip.text.y = element_text(size=fontsize1))
 GBioAllCost
@@ -1071,7 +1020,6 @@ TechDistr <- ggplot(data=subset(Calcs.Costs1, MedID=="Liq woCCS 2030"|MedID=="El
   facet_grid(.~variable, scales="free_x", labeller=labeller(variable=var_labeler))
 TechDistr
 
-# CCSPen <- ggplot(data=subset(Calcs.CCS, CCS_Diff>0&variable=="CapitalCo"&Year=="2030"&!(CarrierID=="Hyd"|CarrierID=="Gas")),aes(CCS_Diff, fill=CarrierID)) +
 CCSPen <- ggplot(data=subset(Calcs.CCS, (variable=="CapitalCo"|variable=="Efficiency")&Year=="2030"&!(CarrierID=="Hyd"|CarrierID=="Gas")&!(CCS_Diff<0&variable=="CapitalCo")&!(CCS_Diff>0&variable=="Efficiency")&!(wCCS==0)),
                  aes(CCS_Diff, fill=CarrierID)) +  geom_histogram(bins = "30",position="dodge") + geom_hline(yintercept=0,size = 0.1, colour='black') +
   ggtitle("B: Histogram of 2030 model values for cost and efficiency penalty of CCS") + theme(plot.title = element_text(lineheight=20, face="bold", size=fontsize3)) +
@@ -1082,8 +1030,6 @@ CCSPen <- ggplot(data=subset(Calcs.CCS, (variable=="CapitalCo"|variable=="Effici
   facet_grid(.~variable, scales="free_x", labeller=labeller(variable=var_labeler2))
 CCSPen
 
-#lay2<-rbind(1,1,1,1,1,2,2,2,2) 
-#SecCostFinal <- grid.arrange(GBioAllSecCost,GBioOthSecCost2, layout_matrix=lay)
 AssumpHist <- grid.arrange(TechDistr,CCSPen)
 #
 # ---- FIG S3: Regional CV ----
@@ -1098,8 +1044,7 @@ RegVar <- ggplot(data=subset(Calcs.Reg1, !(CarrierID=="Gas")&(variable2=="Capita
   scale_fill_manual(values=c("black","grey60","forestgreen"),
                     name ="",
                     breaks=c("CapitalCo","Efficiency","LCOE_Feed"),
-                    labels=c("Capital Costs","Efficiency","Feedstock Cost")
-  ) +
+                    labels=c("Capital Costs","Efficiency","Feedstock Cost")) +
   facet_grid(MODEL~CarrierID, scales="free", labeller=labeller(MODEL=model_labels, CarrierID=carrier_labels))
 RegVar
 #
@@ -1108,8 +1053,7 @@ LCOEvCtax <- ggplot(subset(GlobalData, Capt=="wCCS"&(Year=="2050"|Year=="2100")&
   geom_point(aes(x=LCOE, y=Ctax, colour=MODEL, shape=MODEL), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ylab(expression("Carbon tax, US$"[2005]*"/tCO"[2])) + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
-  ylim(0,3000) +
-  theme_bw() +
+  ylim(0,3000) +  theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="plain")) +  theme(strip.text.y = element_text(size = fontsize1, face="plain")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
@@ -1117,8 +1061,7 @@ LCOEvCtax <- ggplot(subset(GlobalData, Capt=="wCCS"&(Year=="2050"|Year=="2100")&
   scale_color_manual(values=c("burlywood4","red","darkgoldenrod1","blue","azure4","limegreen","coral2","burlywood","darkolivegreen","darkorchid1"),
                      breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
                      labels=c("AIM","BET","DNE21+","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES","REMIND-MAgPIE"),
-                     guide=FALSE
-  ) +
+                     guide=FALSE) +
   scale_shape_manual(values=c(0,1,2,3,4,5,6,8,10,11,13),
                      name="Model",
                      breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
@@ -1133,8 +1076,7 @@ GBioLiqSecCost2100 <- ggplot(subset(GlobalData2, CarrierID=="Liq"&Year=="2100"&S
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("A: DEPLOYMENT OF LIQUID TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
-  ylim(0,100) +
-  theme_bw() +
+  ylim(0,100) + theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="bold")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
@@ -1142,12 +1084,10 @@ GBioLiqSecCost2100 <- ggplot(subset(GlobalData2, CarrierID=="Liq"&Year=="2100"&S
   scale_colour_manual(values=c("chocolate","purple","forestgreen","cornflowerblue","black"),
                       name ="CONVERSION TECHNOLOGY:",
                       breaks=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Other biomass","Liquids"),
-                      labels=c("1st Gen. Eth.","Biodiesel","Adv. Biofuel","Other Biomass","Fossil")
-  ) +
+                      labels=c("1st Gen. Eth.","Biodiesel","Adv. Biofuel","Other Biomass","Fossil")) +
   scale_shape_manual(values=c(16,1),name="CCS:",breaks=c("woCCS","wCCS"),labels=c("No CSS","With CCS")) +
   facet_wrap(~MODEL, scales="free", ncol=5, labeller=labeller(MODEL= model_labels2))
 GBioLiqSecCost2100
-
 
 GBioOthSecCost2100Dat = subset(GlobalData2, CarrierID=="Ele"&Year=="2100"&SecEn>0.1)
 GBioOthSecCost2100 <- ggplot(GBioOthSecCost2100Dat) +  
@@ -1155,8 +1095,7 @@ GBioOthSecCost2100 <- ggplot(GBioOthSecCost2100Dat) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("B: DEPLOYMENT OF ELECTRICITY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
-  ylim(0,100) +
-  theme_bw() +
+  ylim(0,100) + theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="bold")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
@@ -1173,7 +1112,6 @@ lay<-rbind(1,1,1,1,1,1,1,1,1,1,1,1,1,
            2,2,2,2,2,2,2,2,2,2,2,2,2,2) 
 SecCostFinal2100 <- grid.arrange(GBioLiqSecCost2100,GBioOthSecCost2100, layout_matrix=lay)
 rm(lay)
-#
 #
 # ---- OUTPUT: GLOBAL FOR DRAFT----
 # png("output/BioTech/Fig1.png", width=10*ppi, height=5.5*ppi, res=ppi)
@@ -1214,26 +1152,10 @@ rm(lay)
 # print(plot(SecCostFinal2100))
 # dev.off()
 # 
-#
-# ---- OUTPUT: DIOGNOSTIC GLOBAL FOR DRAFT----
-# png("output/BioTech/Diagnostic/SecCostFinal.png", width=10*ppi, height=6.5*ppi, res=ppi)
-# print(plot(SecCostFinal))
-# dev.off()
-# 
-# png("output/BioTech/Diagnostic/DifCostFinal2.png", width=10*ppi, height=6.5*ppi, res=ppi)
-# print(plot(DifCostFinal2))
-# dev.off()
-# 
-# png("output/BioTech/SecCostFinal3.png", width=10*ppi, height=6.5*ppi, res=ppi)
-# print(plot(SecCostFinal3))
-# dev.off()
-# 
-# 
 # **** FIGURES DISSAGREGATED BETWEEN LIQUIDS/OTHER****
 # ---- FIG: G. Bio Cap+OM Cost----
 # Bio Liquids
 GBioLiqCost1 <- ggplot(subset(GlobalData.Bio2, CarrierID=="Liq")) +
-  #geom_point(aes(x=Year, y=value, colour=variable, shape=variable), alpha=0.8) +
   geom_jitter(aes(x=Year, y=value, colour=variable, shape=variable), width=0.2, alpha=0.8) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=c(1.5,2.5), size=0.1, colour="gray10") +
@@ -1256,12 +1178,10 @@ GBioLiqCost1 <- ggplot(subset(GlobalData.Bio2, CarrierID=="Liq")) +
                       labels=c("CapEx", "+ O&M")
   ) +
   facet_grid(TechOrder~MODEL, scales="free", labeller=labeller(MODEL= model_labels))
-#  facet_wrap(TechOrder~MODEL, scales="free", labeller=labeller(MODEL= model_labels))
 GBioLiqCost1
 
 # Non-Liquids
 GBioOthCost1 <- ggplot(subset(GlobalData.Bio2, !(CarrierID=="Liq"))) +
-#  geom_point(aes(x=Year, y=value, colour=variable, shape=variable)) +
   geom_jitter(aes(x=Year, y=value, colour=variable, shape=variable), width=0.2, alpha=0.8) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=c(1.5,2.5), size=0.1, colour="gray10") +
@@ -1277,21 +1197,18 @@ GBioOthCost1 <- ggplot(subset(GlobalData.Bio2, !(CarrierID=="Liq"))) +
                      name="",
                      breaks=c("LCOE_Cap","LCOE1"),
                      labels=c("CapEx", "+ O&M"),
-                     guide=FALSE
-  ) +
+                     guide=FALSE) +
   scale_colour_manual(values=c("black","red"),
                       name="",
                       breaks=c("LCOE_Cap","LCOE1"),
                       labels=c("CapEx", "+ O&M"),
-                      guide=FALSE
-  ) +
+                      guide=FALSE) +
   facet_grid(TechOrder~MODEL, scales="free_y", labeller=labeller(MODEL= model_labels))
 GBioOthCost1
 
 GBioCost1Final <- grid.arrange(GBioLiqCost1, GBioOthCost1, layout_matrix=rbind(c(1,1,1,1),c(1,1,1,1),c(2,2,2,2),c(2,2,2,2)))
 GBioCost1Final
-
-
+#
 # ---- FIG: G. Bio Cap+OM+Feed Cost ----
 # Bio Liquids
 GlobalData.Bio3Liq = subset(GlobalData.Bio3, CarrierID=="Liq")
@@ -1308,17 +1225,13 @@ GBioLiqCost2 <- ggplot(GlobalData.Bio3Liq) +
   scale_shape_manual(values=c(0,4,20),
                      name="",
                      breaks=c("LCOE_Cap","LCOE1","LCOE2"),
-                     labels=c("CapEx", "+ O&M","+ Feedstock")
-  ) +
+                     labels=c("CapEx", "+ O&M","+ Feedstock")) +
   scale_colour_manual(values=c("black","red","green4"),
                       name="",
                       breaks=c("LCOE_Cap","LCOE1","LCOE2"),
-                      labels=c("CapEx", "+ O&M","+ Feedstock")
-  ) +
+                      labels=c("CapEx", "+ O&M","+ Feedstock")) +
   facet_grid(MODEL~TechOrder, scales="free_y", labeller=labeller(MODEL= model_labels))
 GBioLiqCost2
-
-
 
 # Non-Liquids
 GlobalData.Bio3NLiq = subset(GlobalData.Bio3, !(CarrierID=="Liq"))
@@ -1335,17 +1248,15 @@ GBioOthCost2 <- ggplot(GlobalData.Bio3NLiq) +
   scale_shape_manual(values=c(0,4,20),
                      name="",
                      breaks=c("LCOE_Cap","LCOE1","LCOE2"),
-                     labels=c("CapEx", "+ O&M","+ Feedstock")
-  ) +
+                     labels=c("CapEx", "+ O&M","+ Feedstock")) +
   scale_colour_manual(values=c("black","red","green4"),
                       name="",
                       breaks=c("LCOE_Cap","LCOE1","LCOE2"),
-                      labels=c("CapEx", "+ O&M","+ Feedstock")
-  ) +
+                      labels=c("CapEx", "+ O&M","+ Feedstock")) +
   facet_grid(MODEL~TechOrder, scales="free_y", labeller=labeller(MODEL= model_labels))
 GBioOthCost2
 
-
+#
 # ---- FIG: G. Bio Cap+OM+Feed+Ctax+CDR Cost ----
 # Bio Liquids
 GlobalData.Bio4Liq = subset(GlobalData.Bio4, CarrierID=="Liq")
@@ -1362,13 +1273,11 @@ GBioLiqCost4 <- ggplot(GlobalData.Bio4Liq) +
   scale_shape_manual(values=c(3,0,4,20),
                      name="",
                      breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE"),
-                     labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")
-  ) +
+                     labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")) +
   scale_colour_manual(values=c("orange","black","red","green4"),
                       name="",
                       breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE"),
-                      labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")
-  ) +
+                      labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")) +
   facet_grid(MODEL~TechOrder, scales="free_y", labeller=labeller(MODEL= model_labels))
 GBioLiqCost4
 
@@ -1387,208 +1296,14 @@ GBioOthCost4 <- ggplot(GlobalData.Bio4NLiq) +
   scale_shape_manual(values=c(3,0,4,20),
                      name="",
                      breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE"),
-                     labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")
-  ) +
+                     labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")) +
   scale_colour_manual(values=c("orange","black","red","green4"),
                       name="",
                       breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE"),
-                      labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")
-  ) +
+                      labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")) +
   facet_grid(MODEL~TechOrder, scales="free_y", labeller=labeller(MODEL= model_labels))
 GBioOthCost4
-
-# ---- OUTPUT: OTHER GLOBAL ----
-# png("output/BioTech/GBioLiqCost1.png", width=8*ppi, height=5*ppi, res=ppi)
-# print(plot(GBioLiqCost1))
-# dev.off()
-# 
-# png("output/BioTech/GBioLiqCost2.png", width=8*ppi, height=5*ppi, res=ppi)
-# print(plot(GBioLiqCost2))
-# dev.off()
-# 
-# png("output/BioTech/GBioLiqCost4.png", width=8*ppi, height=5*ppi, res=ppi)
-# print(plot(GBioLiqCost4))
-# dev.off()
-# 
-# # Global - Non-liquids - Cost Components
-# png("output/BioTech/GBioOthCost1.png", width=8*ppi, height=7*ppi, res=ppi)
-# print(plot(GBioOthCost1))
-# dev.off()
-# 
-# png("output/BioTech/GBioOthCost2.png", width=8*ppi, height=7*ppi, res=ppi)
-# print(plot(GBioOthCost2))
-# dev.off()
-# 
-# png("output/BioTech/GBioOthCost4.png", width=8*ppi, height=7*ppi, res=ppi)
-# print(plot(GBioOthCost4))
-# dev.off()
-# 
-# # Global - Liquids - Deployment vs Cost
-# png("output/BioTech/GBioLiqSecCost.png", width=4*ppi, height=3.5*ppi, res=ppi)
-# print(plot(GBioLiqSecCost))
-# dev.off()
-# 
-# # Global - Non-Liquids - Deployment vs Cost
-# png("output/BioTech/GBioOthSecCost.png", width=7*ppi, height=3.5*ppi, res=ppi)
-# print(plot(GBioOthSecCost))
-# dev.off()
-# 
-# **** REGIONAL FIGURES ****
-# ---- FIG: R. Bio Cap+OM Cost ----
-# Bio Liquids
-RegData.Bio2Liq = subset(RegData.Bio2, CarrierID=="Liq")
-RBioLiqCost1 <- ggplot(RegData.Bio2Liq) +
-  geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  ggtitle("Capital and O&M Costs of Biofuel Technologies") +
-  xlab("") +
-  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-  theme_bw() +
-  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="right") +
-  scale_shape_manual(values=c(0,4),
-                     name="",
-                     breaks=c("LCOE_Cap","LCOE1"),
-                     labels=c("CapEx", "+ O&M")
-  ) +
-  scale_colour_manual(values=c("black","red"),
-                      name="",
-                      breaks=c("LCOE_Cap","LCOE1"),
-                      labels=c("CapEx", "+ O&M")
-  ) +
-  facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
-RBioLiqCost1
-
-# Non-Liquids
-RegData.Bio2NLiq = subset(RegData.Bio2, !(CarrierID=="Liq"))
-RBioOthCost1 <- ggplot(RegData.Bio2NLiq) +
-  geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  ggtitle("Capital and O&M Costs of Non-Liquid Technologies") +
-  xlab("") +
-  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-  theme_bw() +
-  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="right") +
-  scale_shape_manual(values=c(0,4),
-                     name="",
-                     breaks=c("LCOE_Cap","LCOE1"),
-                     labels=c("CapEx", "+ O&M")
-  ) +
-  scale_colour_manual(values=c("black","red"),
-                      name="",
-                      breaks=c("LCOE_Cap","LCOE1"),
-                      labels=c("CapEx", "+ O&M")
-  ) +
-  facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
-RBioOthCost1
-
-
-# ---- FIG: R. Bio Cap+OM+Feed Cost ----
-# Bio Liquids
-RegData.Bio3Liq = subset(RegData.Bio3, CarrierID=="Liq")
-RBioLiqCost2 <- ggplot(RegData.Bio3Liq) +
-  geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  ggtitle("Capital, O&M and Feedstock Costs of Biofuel Technologies") +
-  xlab("") +
-  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-  theme_bw() +
-  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="right") +
-  scale_shape_manual(values=c(0,4,20),
-                     name="",
-                     breaks=c("LCOE_Cap","LCOE1","LCOE2"),
-                     labels=c("CapEx", "+ O&M","+ Feedstock")
-  ) +
-  scale_colour_manual(values=c("black","red","green4"),
-                      name="",
-                      breaks=c("LCOE_Cap","LCOE1","LCOE2"),
-                      labels=c("CapEx", "+ O&M","+ Feedstock")
-  ) +
-  facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
-RBioLiqCost2
-
-# Non-Liquids
-RegData.Bio3NLiq = subset(RegData.Bio3, !(CarrierID=="Liq"))
-RBioOthCost2 <- ggplot(RegData.Bio3NLiq) +
-  geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  ggtitle("Capital, O&M and Feedstock Costs of Non-Liquid Technologies") +
-  xlab("") +
-  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-  theme_bw() +
-  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="right") +
-  scale_shape_manual(values=c(0,4,20),
-                     name="",
-                     breaks=c("LCOE_Cap","LCOE1","LCOE2"),
-                     labels=c("CapEx", "+ O&M","+ Feedstock")
-  ) +
-  scale_colour_manual(values=c("black","red","green4"),
-                      name="",
-                      breaks=c("LCOE_Cap","LCOE1","LCOE2"),
-                      labels=c("CapEx", "+ O&M","+ Feedstock")
-  ) +
-  facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
-RBioOthCost2
-
 #
-# ---- FIG: R. Bio Cap+OM+Feed+Ctax+CDR Cost ----
-# Bio Liquids
-RegData.Bio4Liq = subset(RegData.Bio4, CarrierID=="Liq")
-RBioLiqCost4 <- ggplot(RegData.Bio4Liq) +
-  geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  ggtitle("Capital, O&M, Feedstock, Ctax and CDR Costs of Biofuel Technologies") +
-  xlab("") +
-  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-  theme_bw() +
-  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="right") +
-  scale_shape_manual(values=c(3,0,4,20),
-                     name="",
-                     breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE"),
-                     labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")
-  ) +
-  scale_colour_manual(values=c("orange","black","red","green4"),
-                      name="",
-                      breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE"),
-                      labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")
-  ) +
-  facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
-RBioLiqCost4
-
-# Non-Liquids
-RegData.Bio4NLiq = subset(RegData.Bio4, !(CarrierID=="Liq"))
-RBioOthCost4 <- ggplot(RegData.Bio4NLiq) +
-  geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  ggtitle("Capital, O&M, Feedstock, Ctax and CDR Costs of Non-Liquid Technologies") +
-  xlab("") +
-  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-  theme_bw() +
-  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="right") +
-  scale_shape_manual(values=c(3,0,4,20),
-                     name="",
-                     breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE"),
-                     labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")
-  ) +
-  scale_colour_manual(values=c("orange","black","red","green4"),
-                      name="",
-                      breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE"),
-                      labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")
-  ) +
-  facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
-RBioOthCost4
-
 # ---- FIG: G. Cost vs. Use Bio Only ----
 GBioLiqSecCost <- ggplot(subset(GlobalData, CarrierID=="Liq"&Year=="2050"&SecEn>0.1)) + 
   geom_point(aes(x=LCOE, y=SecEn, colour=MODEL, shape=TechOrder), size=3) +
@@ -1602,9 +1317,7 @@ GBioLiqSecCost <- ggplot(subset(GlobalData, CarrierID=="Liq"&Year=="2050"&SecEn>
   scale_colour_manual(values=c("black","blue","red","cyan","forestgreen","green3","lightblue3","chocolate","grey","burlywood4"),
                       name="MODEL",
                       breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
-                      labels=c("AIM","BET","DNE21","GCAM","GRAPE","IMACLIM","IMAGE","MESSAGE-GLOBIOM","POLES","REMIND-MAGPIE")
-                      #,guide=TRUE
-  ) +
+                      labels=c("AIM","BET","DNE21","GCAM","GRAPE","IMACLIM","IMAGE","MESSAGE-GLOBIOM","POLES","REMIND-MAGPIE")) +
   scale_shape_manual(values=c(0,15,1,20,16,2,17,5,21,18),
                      name ="Conversion Technology",
                      breaks=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Other biomass","Liquids","1st gen. ethanolwCCS","BiodeiselwCCS","LignocellulosicwCCS","Other biomasswCCS","LiquidswCCS"),
@@ -1669,93 +1382,267 @@ GBioAllSecCost <- ggplot(subset(GlobalData.Bio, Year=="2050"&SecEn>0.1)) +
                               "Electricity",
                               "Electricity wCCS",
                               "Hydrogen wCCS"))+
-  #  scale_shape_manual(values=c(16,4),name="CCS",breaks=c("woCCS","wCCS"),labels=c("No CSS","With CCS"),guide=FALSE)
   facet_wrap(~CarrierID, scales="free", labeller=labeller(CarrierID=carrier_labels))
 GBioAllSecCost
 
 #
-
-# ---- FIG: G. Cost vs. Growth (Bio+Fossil) 2050----
-GBioLiqSecCost3 <- ggplot(subset(GlobalData2, CarrierID=="Liq"&Year=="2050"&SecEn>0.1&SecEnDif>0.01)) + 
-  geom_point(aes(x=LCOE, y=SecEn, colour=TechOrder, shape=Capt), size=2) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
-  ggtitle("A: Deployment of Liquid Technologies for selected models (2050)") + theme(plot.title = element_text(face="bold")) +
-  ylab("Secondary Energy EJ/yr") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+# ---- OUTPUT: OTHER GLOBAL ----
+# png("output/BioTech/GBioLiqCost1.png", width=8*ppi, height=5*ppi, res=ppi)
+# print(plot(GBioLiqCost1))
+# dev.off()
+# 
+# png("output/BioTech/GBioLiqCost2.png", width=8*ppi, height=5*ppi, res=ppi)
+# print(plot(GBioLiqCost2))
+# dev.off()
+# 
+# png("output/BioTech/GBioLiqCost4.png", width=8*ppi, height=5*ppi, res=ppi)
+# print(plot(GBioLiqCost4))
+# dev.off()
+# 
+# # Global - Non-liquids - Cost Components
+# png("output/BioTech/GBioOthCost1.png", width=8*ppi, height=7*ppi, res=ppi)
+# print(plot(GBioOthCost1))
+# dev.off()
+# 
+# png("output/BioTech/GBioOthCost2.png", width=8*ppi, height=7*ppi, res=ppi)
+# print(plot(GBioOthCost2))
+# dev.off()
+# 
+# png("output/BioTech/GBioOthCost4.png", width=8*ppi, height=7*ppi, res=ppi)
+# print(plot(GBioOthCost4))
+# dev.off()
+# 
+# **** REGIONAL FIGURES ****
+# ---- FIG: R. Bio Cap+OM Cost ----
+# Bio Liquids
+RegData.Bio2Liq = subset(RegData.Bio2, CarrierID=="Liq")
+RBioLiqCost1 <- ggplot(RegData.Bio2Liq) +
+  geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ggtitle("Capital and O&M Costs of Biofuel Technologies") +
+  xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
   theme_bw() +
-  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom", legend.text=element_text(size=6), legend.title=element_text(face="bold")) +
-  scale_colour_manual(values=c("chocolate","chocolate","purple","purple","forestgreen","forestgreen","black","black"),
-                      name ="Conversion Technology",
-                      breaks=c("1st gen. ethanol","1st gen. ethanolwCCS","Biodeisel","BiodeiselwCCS","Lignocellulosic","LignocellulosicwCCS","Liquids","LiquidswCCS"),
-                      labels=c("1st Gen. Eth.","1st Gen. Eth. wCCS","Biodiesel","Biodeisel wCCS","Adv. Biofuel","Adv. Biofuel wCCS","Fossil","Fossil wCCS")
-  ) +
-  scale_shape_manual(values=c(16,4),name="CCS",breaks=c("woCCS","wCCS"),labels=c("No CSS","With CCS")) +
-  facet_wrap(~MODEL, scales="free", ncol=10, labeller=labeller(MODEL= model_labels))
-GBioLiqSecCost3
+  theme(legend.position="right") +
+  scale_shape_manual(values=c(0,4),
+                     name="",
+                     breaks=c("LCOE_Cap","LCOE1"),
+                     labels=c("CapEx", "+ O&M")) +
+  scale_colour_manual(values=c("black","red"),
+                      name="",
+                      breaks=c("LCOE_Cap","LCOE1"),
+                      labels=c("CapEx", "+ O&M")) +
+  facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
+RBioLiqCost1
 
-#GBioOthSecCost2Dat = subset(GlobalData, CarrierID=="Ele"&Year=="2050"&SecEn>0.1&SecEnDif>0.01)
-#GBioOthSecCost3 <- ggplot(subset(GBioOthSecCost2Dat, !(MODEL=="AIM/CGE"|MODEL=="MESSAGE-GLOBIOM"))) + 
-#GBioOthSecCost2 <- ggplot(GBioOthSecCost2Dat) + 
-GBioOthSecCost3 <- ggplot(subset(GlobalData2, CarrierID=="Ele"&Year=="2050"&SecEn>0.1&SecEnDif>0.01)) + 
-  geom_point(aes(x=LCOE, y=SecEn, colour=Prim, shape=Capt), size=2) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
-  ggtitle("B: Deployment of Electricity Technologies for selected models (2050)") + theme(plot.title = element_text(face="bold")) +
-  ylab("Secondary Energy EJ/yr") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+# Non-Liquids
+RegData.Bio2NLiq = subset(RegData.Bio2, !(CarrierID=="Liq"))
+RBioOthCost1 <- ggplot(RegData.Bio2NLiq) +
+  geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ggtitle("Capital and O&M Costs of Non-Liquid Technologies") +
+  xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
   theme_bw() +
-  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom", legend.text=element_text(size=6), legend.title=element_text(face="bold")) +
+  theme(legend.position="right") +
+  scale_shape_manual(values=c(0,4),
+                     name="",
+                     breaks=c("LCOE_Cap","LCOE1"),
+                     labels=c("CapEx", "+ O&M")) +
+  scale_colour_manual(values=c("black","red"),
+                      name="",
+                      breaks=c("LCOE_Cap","LCOE1"),
+                      labels=c("CapEx", "+ O&M")) +
+  facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
+RBioOthCost1
+
+#
+# ---- FIG: R. Bio Cap+OM+Feed Cost ----
+# Bio Liquids
+RegData.Bio3Liq = subset(RegData.Bio3, CarrierID=="Liq")
+RBioLiqCost2 <- ggplot(RegData.Bio3Liq) +
+  geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ggtitle("Capital, O&M and Feedstock Costs of Biofuel Technologies") +
+  xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  theme_bw() +
+  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="right") +
+  scale_shape_manual(values=c(0,4,20),
+                     name="",
+                     breaks=c("LCOE_Cap","LCOE1","LCOE2"),
+                     labels=c("CapEx", "+ O&M","+ Feedstock")) +
+  scale_colour_manual(values=c("black","red","green4"),
+                      name="",
+                      breaks=c("LCOE_Cap","LCOE1","LCOE2"),
+                      labels=c("CapEx", "+ O&M","+ Feedstock")) +
+  facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
+RBioLiqCost2
+
+# Non-Liquids
+RegData.Bio3NLiq = subset(RegData.Bio3, !(CarrierID=="Liq"))
+RBioOthCost2 <- ggplot(RegData.Bio3NLiq) +
+  geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ggtitle("Capital, O&M and Feedstock Costs of Non-Liquid Technologies") +
+  xlab("") +
+  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  theme_bw() +
+  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="right") +
+  scale_shape_manual(values=c(0,4,20),
+                     name="",
+                     breaks=c("LCOE_Cap","LCOE1","LCOE2"),
+                     labels=c("CapEx", "+ O&M","+ Feedstock")) +
+  scale_colour_manual(values=c("black","red","green4"),
+                      name="",
+                      breaks=c("LCOE_Cap","LCOE1","LCOE2"),
+                      labels=c("CapEx", "+ O&M","+ Feedstock")) +
+  facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
+RBioOthCost2
+
+#
+# ---- FIG: R. Bio Cap+OM+Feed+Ctax+CDR Cost ----
+# Bio Liquids
+RegData.Bio4Liq = subset(RegData.Bio4, CarrierID=="Liq")
+RBioLiqCost4 <- ggplot(RegData.Bio4Liq) +
+  geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ggtitle("Capital, O&M, Feedstock, Ctax and CDR Costs of Biofuel Technologies") +
+  xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  theme_bw() +
+  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="right") +
+  scale_shape_manual(values=c(3,0,4,20),
+                     name="",
+                     breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE"),
+                     labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")) +
+  scale_colour_manual(values=c("orange","black","red","green4"),
+                      name="",
+                      breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE"),
+                      labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")) +
+  facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
+RBioLiqCost4
+
+# Non-Liquids
+RegData.Bio4NLiq = subset(RegData.Bio4, !(CarrierID=="Liq"))
+RBioOthCost4 <- ggplot(RegData.Bio4NLiq) +
+  geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ggtitle("Capital, O&M, Feedstock, Ctax and CDR Costs of Non-Liquid Technologies") +
+  xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  theme_bw() +
+  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="right") +
+  scale_shape_manual(values=c(3,0,4,20),
+                     name="",
+                     breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE"),
+                     labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")) +
+  scale_colour_manual(values=c("orange","black","red","green4"),
+                      name="",
+                      breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE"),
+                      labels=c("CapEx", "+ O&M","+ Feedstock","+ CDR")) +
+  facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
+RBioOthCost4
+#
+# ---- FIG: REGIONAL Cost vs. Use ----
+RegData.Ele2100 = subset(RegData.Ele, Year=="2100")
+PriceData.Ele2100 = subset(PriceData, Year=="2100")
+PriceData.Ele2100 = subset(PriceData.Ele2100, VARIABLE=="Electricity")
+PriceData.Ele2100 = subset(PriceData.Ele2100, !(MODEL=="COFFEE"))
+
+BioSecEleCost <- ggplot(RegData.Ele2100) +
+  geom_point(aes(x=LCOE, y=SecEn, colour=Prim2, shape=Capt), size=0.8) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ggtitle("Deployment of Electricity Technologies (2100)") +
+  ylab("Secondary Energy EJ/yr") +
+  xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+  theme_bw() +
+  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom") +
   scale_colour_manual(values=c("green3", "black","purple","brown","blue","pink2","orange","lightblue2"),
-                      name ="Primary Energy Carrier", 
+                      name ="Primary Energy Carrier",
                       breaks=c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind"),
                       labels=c("Biomass","Coal","Nat. Gas","Geothermal","Hydro","Nuclear","Solar","Wind")) +
-  scale_shape_manual(values=c(16,4),name="CCS",breaks=c("woCCS","wCCS"),labels=c("No CSS","With CCS")) +
-  facet_wrap(~MODEL, scales="free", ncol=5, labeller=labeller(MODEL= model_labels))
-GBioOthSecCost3
-#
-# ---- FIG: G. Cost vs. Growth Bio+Fossil 2050----
-GBioLiqDifCost2 <- ggplot(subset(GlobalData2, CarrierID=="Liq"&Year=="2050"&SecEnDif>0.01)) + 
-  geom_point(aes(x=LCOE, y=SecEnDif, colour=TechOrder, shape=Capt), size=2) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
-  ggtitle("A: Deployment of Liquid Technologies for selected models (2050)") + theme(plot.title = element_text(face="bold")) +
-  ylab("Secondary Energy Growth EJ/yr") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+  scale_shape_manual(values=c(16,3),
+                     name="Carbon Capture",
+                     breaks=c("wCCS","woCCS"),
+                     labels=c("with CCS","no CCS")) +
+  facet_grid(REGION~MODEL, scales="free", labeller=labeller(MODEL= model_labels))
+BioSecEleCost
+
+# Liquids
+RegData.Liq2100 = subset(RegData.Liq, Year=="2100")
+BioSecLiqCost <- ggplot(RegData.Liq2100) +
+  geom_point(aes(x=LCOE, y=SecEn, colour=TechOrder2, shape=Capt), size=0.8, alpha=0.7) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ggtitle("Deployment of Liquids Technologies (2100)") +
+  ylab("Secondary Energy EJ/yr") +
+  xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
   theme_bw() +
-  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom", legend.text=element_text(size=6), legend.title=element_text(face="bold")) +
-  scale_colour_manual(values=c("chocolate","chocolate","purple","purple","forestgreen","forestgreen","black","black"),
+  theme(legend.position="bottom") +
+  scale_colour_manual(values=c("red","purple","green3","lightblue3","black"),
                       name ="Conversion Technology",
-                      breaks=c("1st gen. ethanol","1st gen. ethanolwCCS","Biodeisel","BiodeiselwCCS","Lignocellulosic","LignocellulosicwCCS","Liquids","LiquidswCCS"),
-                      labels=c("1st Gen. Eth.","1st Gen. Eth. wCCS","Biodiesel","Biodeisel wCCS","Adv. Biofuel","Adv. Biofuel wCCS","Fossil","Fossil wCCS")
-  ) +
-  scale_shape_manual(values=c(16,4),name="CCS",breaks=c("woCCS","wCCS"),labels=c("No CSS","With CCS")) +
-  facet_wrap(~MODEL, scales="free", ncol=10, labeller=labeller(MODEL= model_labels))
-GBioLiqDifCost2
+                      breaks=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Other biomass","Liquids"),
+                      labels=c("1st Gen. Eth.","Biodiesel","Adv. Biofuel","Other Biofuel","Fossil")) +
+  scale_shape_manual(values=c(16,3),name="Carbon Capture",breaks=c("wCCS","woCCS"),labels=c("with CCS","no CCS")) +
+  facet_grid(REGION~MODEL, scales="free", labeller=labeller(MODEL= model_labels))
+BioSecLiqCost
 
-
-GBioOthDifCost2Dat = subset(GlobalData, CarrierID=="Ele"&Year=="2050"&SecEnDif>0.01)
-GBioOthDifCost2 <- ggplot(subset(GBioOthDifCost2Dat, !(MODEL=="AIM/CGE"|MODEL=="MESSAGE-GLOBIOM"))) + 
-  #GBioOthSecCost2 <- ggplot(GBioOthSecCost2Dat) + 
-  geom_point(aes(x=LCOE, y=SecEnDif, colour=Prim, shape=Capt), size=2) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
-  ggtitle("B: Deployment of Electricity Technologies for selected models (2050)") + theme(plot.title = element_text(face="bold")) +
-  ylab("Secondary Energy Growth EJ/yr") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+# ---- FIG: REGIONAL Cost vs. Use2 ----
+RegData.Ele2100a = subset(RegData.Ele2100, SecEn>1)
+BioSecEleCosta <- ggplot(RegData.Ele2100a) +
+  geom_point(aes(x=LCOE, y=SecEn, colour=Prim2, shape=Capt), size=0.8) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ggtitle("Deployment of Electricity Technologies (2100)") +
+  ylab("Secondary Energy EJ/yr") +  xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
   theme_bw() +
-  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom", legend.text=element_text(size=6), legend.title=element_text(face="bold")) +
+  theme(legend.position="bottom") +
   scale_colour_manual(values=c("green3", "black","purple","brown","blue","pink2","orange","lightblue2"),
-                      name ="Primary Energy Carrier", 
+                      name ="Primary Energy Carrier",
                       breaks=c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind"),
                       labels=c("Biomass","Coal","Nat. Gas","Geothermal","Hydro","Nuclear","Solar","Wind")) +
-  scale_shape_manual(values=c(16,4),name="CCS",breaks=c("woCCS","wCCS"),labels=c("No CSS","With CCS")) +
-  facet_wrap(~MODEL, scales="free", ncol=10, labeller=labeller(MODEL= model_labels))
-GBioOthDifCost2
-#
+  scale_shape_manual(values=c(16,3),
+                     name="Carbon Capture",
+                     breaks=c("wCCS","woCCS"),
+                     labels=c("with CCS","no CCS")) +
+  facet_grid(REGION~MODEL, scales="free", labeller=labeller(MODEL= model_labels))
+BioSecEleCosta
 
+# Liquids
+RegData.Liq2100a = subset(RegData.Liq2100, SecEn>1)
+BioSecLiqCosta <- ggplot(RegData.Liq2100a) +
+  geom_point(aes(x=LCOE, y=SecEn, colour=TechOrder2, shape=Capt), size=0.8, alpha=0.7) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ggtitle("Deployment of Liquids Technologies (2100)") +
+  ylab("Secondary Energy EJ/yr") +  xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+  theme_bw() +
+  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom") +
+  scale_colour_manual(values=c("red","purple","green3","lightblue3","black"),
+                      name ="Conversion Technology",
+                      breaks=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Other biomass","Liquids"),
+                      labels=c("1st Gen. Eth.","Biodiesel","Adv. Biofuel","Other Biofuel","Fossil")) +
+  scale_shape_manual(values=c(16,3),name="Carbon Capture",breaks=c("wCCS","woCCS"),labels=c("with CCS","no CCS")) +
+  facet_grid(REGION~MODEL, scales="free", labeller=labeller(MODEL= model_labels))
+BioSecLiqCosta
+
+#
 # ---- OUTPUT: OTHER REGIONAL ----
-
 # png("output/BioTech/Regional/RBioLiqCost1.png", width=8*ppi, height=5*ppi, res=ppi)
 # print(plot(RBioLiqCost1))
 # dev.off()
@@ -1771,7 +1658,7 @@ GBioOthDifCost2
 # png("output/BioTech/Regional/RBioOthCost2.png", width=8*ppi, height=8*ppi, res=ppi)
 # print(plot(RBioOthCost2))
 # dev.off()
-  # 
+# 
 # png("output/BioTech/Regional/RBioLiqCost3.png", width=8*ppi, height=5*ppi, res=ppi)
 # print(plot(RBioLiqCost3))
 # dev.off()
@@ -1803,351 +1690,5 @@ GBioOthDifCost2
 # png("output/BioTech/Regional/BioSecLiqCosta.png", width=7*ppi, height=5*ppi, res=ppi)
 # print(plot(BioSecLiqCosta))
 # dev.off()
-
-# ---- FIG: REGIONAL Cost vs. Use ----
-RegData.Ele2100 = subset(RegData.Ele, Year=="2100")
-PriceData.Ele2100 = subset(PriceData, Year=="2100")
-PriceData.Ele2100 = subset(PriceData.Ele2100, VARIABLE=="Electricity")
-PriceData.Ele2100 = subset(PriceData.Ele2100, !(MODEL=="COFFEE"))
-
-BioSecEleCost <- ggplot(RegData.Ele2100) +
-  geom_point(aes(x=LCOE, y=SecEn, colour=Prim2, shape=Capt), size=0.8) +
-  #geom_point(data=PriceData.Ele2100, aes(x=PricePerMWh, y=10), size=0.8, shape=1) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  geom_vline(xintercept=0,size = 0.1, colour='black') +
-  ggtitle("Deployment of Electricity Technologies (2100)") +
-  ylab("Secondary Energy EJ/yr") +
-  xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
-  theme_bw() +
-  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom") +
-  scale_colour_manual(values=c("green3", "black","purple","brown","blue","pink2","orange","lightblue2"),
-                      name ="Primary Energy Carrier",
-                      breaks=c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind"),
-                      labels=c("Biomass","Coal","Nat. Gas","Geothermal","Hydro","Nuclear","Solar","Wind")
-  ) +
-  scale_shape_manual(values=c(16,3),
-                     name="Carbon Capture",
-                     breaks=c("wCCS","woCCS"),
-                     labels=c("with CCS","no CCS")
-  ) +
-  facet_grid(REGION~MODEL, scales="free", labeller=labeller(MODEL= model_labels))
-BioSecEleCost
-
-# Liquids
-RegData.Liq2100 = subset(RegData.Liq, Year=="2100")
-BioSecLiqCost <- ggplot(RegData.Liq2100) +
-  geom_point(aes(x=LCOE, y=SecEn, colour=TechOrder2, shape=Capt), size=0.8, alpha=0.7) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  ggtitle("Deployment of Liquids Technologies (2100)") +
-  ylab("Secondary Energy EJ/yr") +
-  xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
-  theme_bw() +
-  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom") +
-  scale_colour_manual(values=c("red","purple","green3","lightblue3","black"),
-                      name ="Conversion Technology",
-                      breaks=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Other biomass","Liquids"),
-                      labels=c("1st Gen. Eth.","Biodiesel","Adv. Biofuel","Other Biofuel","Fossil")
-  ) +
-  scale_shape_manual(values=c(16,3),name="Carbon Capture",breaks=c("wCCS","woCCS"),labels=c("with CCS","no CCS")) +
-  facet_grid(REGION~MODEL, scales="free", labeller=labeller(MODEL= model_labels))
-BioSecLiqCost
-
-# ---- FIG: REGIONAL Cost vs. Use2 ----
-RegData.Ele2100a = subset(RegData.Ele2100, SecEn>1)
-BioSecEleCosta <- ggplot(RegData.Ele2100a) +
-  geom_point(aes(x=LCOE, y=SecEn, colour=Prim2, shape=Capt), size=0.8) +
-  #geom_point(data=PriceData.Ele2100, aes(x=PricePerMWh, y=10), size=0.8, shape=1) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  geom_vline(xintercept=0,size = 0.1, colour='black') +
-  ggtitle("Deployment of Electricity Technologies (2100)") +
-  ylab("Secondary Energy EJ/yr") +
-  xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
-  theme_bw() +
-  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom") +
-  scale_colour_manual(values=c("green3", "black","purple","brown","blue","pink2","orange","lightblue2"),
-                      name ="Primary Energy Carrier",
-                      breaks=c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind"),
-                      labels=c("Biomass","Coal","Nat. Gas","Geothermal","Hydro","Nuclear","Solar","Wind")
-  ) +
-  scale_shape_manual(values=c(16,3),
-                     name="Carbon Capture",
-                     breaks=c("wCCS","woCCS"),
-                     labels=c("with CCS","no CCS")
-  ) +
-  facet_grid(REGION~MODEL, scales="free", labeller=labeller(MODEL= model_labels))
-BioSecEleCosta
-
-# Liquids
-RegData.Liq2100a = subset(RegData.Liq2100, SecEn>1)
-BioSecLiqCosta <- ggplot(RegData.Liq2100a) +
-  geom_point(aes(x=LCOE, y=SecEn, colour=TechOrder2, shape=Capt), size=0.8, alpha=0.7) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  ggtitle("Deployment of Liquids Technologies (2100)") +
-  ylab("Secondary Energy EJ/yr") +
-  xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
-  theme_bw() +
-  theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom") +
-  scale_colour_manual(values=c("red","purple","green3","lightblue3","black"),
-                      name ="Conversion Technology",
-                      breaks=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Other biomass","Liquids"),
-                      labels=c("1st Gen. Eth.","Biodiesel","Adv. Biofuel","Other Biofuel","Fossil")
-  ) +
-  scale_shape_manual(values=c(16,3),name="Carbon Capture",breaks=c("wCCS","woCCS"),labels=c("with CCS","no CCS")) +
-  facet_grid(REGION~MODEL, scales="free", labeller=labeller(MODEL= model_labels))
-BioSecLiqCosta
-
-
-
-
-# ---- FIG: R. Bio Cap+OM+Feed+Ctax Cost ----
-# # Bio Liquids
-# RegData.Bio4Liq = subset(RegData.Bio4, CarrierID=="Liq")
-# RBioLiqCost3 <- ggplot(RegData.Bio4Liq) +
-#   geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
-#   geom_hline(yintercept=0,size = 0.1, colour='black') +
-#   ggtitle("Capital, O&M, Feedstock and Ctax Costs of Biofuel Technologies") +
-#   xlab("") +
-#   ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-#   theme_bw() +
-#   theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-#   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-#   theme(legend.position="right") +
-#   scale_shape_manual(values=c(0,4,20,1),
-#                      name="",
-#                      breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE3"),
-#                      labels=c("CapEx", "+ O&M","+ Feedstock","+ Ctax")
-#   ) +
-#   scale_colour_manual(values=c("black","red","green4","blue"),
-#                       name="",
-#                       breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE3"),
-#                       labels=c("CapEx", "+ O&M","+ Feedstock","+ Ctax")
-#   ) +
-#   facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
-# RBioLiqCost3
-# 
-# # Non-Liquids
-# RegData.Bio4NLiq = subset(RegData.Bio4, !(CarrierID=="Liq"))
-# RBioOthCost3 <- ggplot(RegData.Bio4NLiq) +
-#   geom_point(aes(x=TechOrder, y=value, colour=variable, shape=variable, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
-#   geom_hline(yintercept=0,size = 0.1, colour='black') +
-#   ggtitle("Capital, O&M, Feedstock and Ctax Costs of Non-Liquid Technologies") +
-#   xlab("") +
-#   ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-#   theme_bw() +
-#   theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-#   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-#   theme(legend.position="right") +
-#   scale_shape_manual(values=c(0,4,20,1),
-#                      name="",
-#                      breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE3"),
-#                      labels=c("CapEx", "+ O&M","+ Feedstock","+ Ctax")
-#   ) +
-#   scale_colour_manual(values=c("black","red","green4","blue"),
-#                       name="",
-#                       breaks=c("LCOE_Cap","LCOE1","LCOE2","LCOE3"),
-#                       labels=c("CapEx", "+ O&M","+ Feedstock","+ Ctax")
-#   ) +
-#   facet_grid(MODEL~REGION, scales="free_y", labeller=labeller(MODEL= model_labels))
-# RBioOthCost3
-# 
-
-# ---- FIG: GLOBAL Cost vs. Use ----
-# BioSecEleCost <- ggplot(GlobalData.Ele) +
-#   geom_point(aes(x=LCOE3, y=SecEn, colour=Prim, shape=Capt)) +
-#   geom_hline(yintercept=0,size = 0.1, colour='black') +
-#   ggtitle("Deployment of Electricity Technologies") +
-#   ylab("Secondary Energy EJ/yr") +
-#   xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-# #  xlim(-10000,10000) +
-#   scale_x_log10() +
-#   theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-#   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-#   scale_colour_manual(values=c("green3", "black","purple","brown","blue","red3","orange","lightblue2"), 
-#                     name ="Primary Energy Carrier",
-#                     breaks=c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind"),
-#                     labels=c("Biomass","Coal","Nat. Gas","Geothermal","Hydro","Nuclear","Solar","Wind")
-#   ) +
-#   scale_shape_manual(values=c(16,3),
-#                     name="Carbon Capture",
-#                     breaks=c("wCCS","woCCS"),
-#                     labels=c("with CCS","no CCS")
-#   ) +
-#   facet_grid(Year~MODEL, scales="free", labeller=labeller(MODEL= model_labels))
-# BioSecEleCost
-# 
-# # Liquids
-# BioSecLiqCost <- ggplot(GlobalData.Liq) +
-#   geom_point(aes(x=LCOE_Cor, y=SecEn, colour=TechOrder2, shape=Capt)) +
-#   geom_hline(yintercept=0,size = 0.1, colour='black') +
-#   ggtitle("Deployment of Liquids Technologies") +
-#   ylab("Secondary Energy EJ/yr") +
-#   xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-#   theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-#   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-#   scale_colour_manual(values=c("red","purple","green3","lightblue3","black"), 
-#                      name ="Conversion Technology",
-#                      breaks=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Other biomass","Liquids"),
-#                      labels=c("1st Gen. Eth.","Biodiesel","Adv. Biofuel","Other Biofuel","Fossil")
-#   ) +
-#   scale_shape_manual(values=c(16,3),
-#                      name="Carbon Capture",
-#                      breaks=c("wCCS","woCCS"),
-#                      labels=c("with CCS","no CCS")
-#   ) +
-#   facet_grid(Year~MODEL, scales="free", labeller=labeller(MODEL= model_labels))
-# BioSecLiqCost
-
-# ---- FIG: GLOBAL Bio Cost Components ----
-# # FIGURE: Stacked bar charts with cost components
-# GlobalData.Bio1 = subset(GlobalData.Bio, select=-c(SCENARIO,VARIABLE,Efficiency,CapitalCo,SecEn,Ctax))
-# # CORRECT FOR EXTREME POLES OM COSTS
-# GlobalData.Bio1$LCOE_OM[GlobalData.Bio1$MODEL=="POLES EMF33"] <- 0.0
-# #GlobalData.Bio1 <- melt(GlobalData.Bio1, measure.vars=c("LCOE_Feed","LCOE_Cap","LCOE_OM","LCOE_ctax"), variable_name="LCOE", value_name="value", na.rm=FALSE)
-# GlobalData.Bio1 <- melt(GlobalData.Bio1, measure.vars=c("LCOE1","LCOE2","LCOE3"), variable_name="LCOE", value_name="value", na.rm=FALSE)
-# 
-# GlobalData.LiqBio1 = subset(GlobalData.Bio1, CarrierID=="Liq")
-# GlobalData.NLiqBio1 = subset(GlobalData.Bio1, !(CarrierID=="Liq"))
-# 
-# # Bio Liquids
-# BioLiqCostSpec <- ggplot(GlobalData.LiqBio1) +
-#   #geom_bar(aes(x=MODEL,y=value, fill=LCOE), stat="identity") +
-#   geom_point(aes(x=MODEL, y=value, shape=LCOE, colour=LCOE)) +
-#   geom_hline(yintercept=0,size = 0.1, colour='black') +
-#   ggtitle("Cost Components of Biofuel Technologies") +
-#   xlab("") +
-#   ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-#   theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-#   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-#   # scale_fill_manual(values=c("green3", "lightblue", "darkorchid3","black"), 
-#   #                   name ="Cost Component",
-#   #                   breaks=c("LCOE_Feed","LCOE_Cap","LCOE_OM","LCOE_ctax"),
-#   #                   labels=c("Biomass","Capital Costs","O&M","Carbon tax")
-#   #                   ) +
-#   scale_colour_manual(values=c("black","green4","red"),
-#                       name="",
-#                       breaks=c("LCOE1","LCOE2","LCOE3"),
-#                       labels=c("Cap. & OM", "incl. Feed","incl. ctax")
-#   ) +
-#   facet_grid(TechOrder~Year, scales="free_y", labeller=labeller(TechOrder= Biotech_labeler))
-# BioLiqCostSpec
-# 
-# # Non-Bio Liquids
-# BioOthCostSpec <- ggplot(GlobalData.NLiqBio1) +
-#   #geom_bar(aes(x=MODEL,y=value, fill=LCOE), stat="identity") +
-#   geom_point(aes(x=MODEL, y=value, shape=LCOE, colour=LCOE)) +
-#   geom_hline(yintercept=0,size = 0.1, colour='black') +
-#   ggtitle("Cost Components of Non-Liquid Bioenergy Technologies") +
-#   xlab("") +
-#   ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-#   theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-#   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-#   # scale_fill_manual(values=c("green3", "lightblue", "darkorchid3","black"), 
-#   #                   name ="Cost Component",
-#   #                   breaks=c("LCOE_Feed","LCOE_Cap","LCOE_OM","LCOE_ctax"),
-#   #                   labels=c("Biomass","Capital Costs","O&M","Carbon tax")
-#   # ) +
-#   scale_colour_manual(values=c("black","green4","red"),
-#                       name="",
-#                       breaks=c("LCOE1","LCOE2","LCOE3"),
-#                       labels=c("Cap. & OM", "incl. Feed","incl. ctax")
-#   ) +
-#   facet_grid(TechOrder~Year, scales="free_y", labeller=labeller(TechOrder= Biotech_labeler))
-# BioOthCostSpec
-# ---- FIG: REGIONAL Bio Cost Components ----
-# RegData.Bio1 = subset(RegData.Bio, select=-c(SCENARIO,VARIABLE,Efficiency,CapitalCo,SecEn,Ctax))
-# # CORRECT FOR EXTREME POLES OM COSTS
-# RegData.Bio1$LCOE_OM[RegData.Bio1$MODEL=="POLES EMF33"] <- 0.0
-# RegData.Bio1 <- melt(RegData.Bio1, measure.vars=c("LCOE1","LCOE2","LCOE3"), variable.name="LCOE", value.name="value", na.rm=FALSE)
-# RegData.Bio1$TechYr = paste(RegData.Bio1$TechOrder,RegData.Bio1$Year,sep="_")
-# RegData.LiqBio1 = subset(RegData.Bio1, CarrierID=="Liq")
-# 
-# # Bio Liquids
-# RegBioLiqCostSpec <- ggplot(RegData.LiqBio1) +
-#   geom_point(aes(x=TechOrder, y=value, colour=LCOE, shape=LCOE, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
-#   geom_hline(yintercept=0,size = 0.1, colour='black') +
-#   #geom_vline(xintercept=c(1,2,3,4,5,6,7),size=0.1,colour="black") +
-#   ggtitle("Cost Components of Biofuel Technologies") +
-#   xlab("") +
-#   ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-#   scale_y_log10() +
-#   theme_bw() +
-#   theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-#   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-#   theme(legend.position="bottom") +
-#   scale_shape_manual(values=c(0,4,20),
-#                      name="",
-#                      breaks=c("LCOE1","LCOE2","LCOE3"),
-#                      labels=c("Cap. & OM", "incl. Feed","incl. ctax")
-#   ) +
-#   scale_colour_manual(values=c("black","green4","red"),
-#                       name="",
-#                       breaks=c("LCOE1","LCOE2","LCOE3"),
-#                       labels=c("Cap. & OM", "incl. Feed","incl. ctax")
-#   ) +
-#   facet_grid(REGION~MODEL, scales="free_y", labeller=labeller(MODEL= model_labels))
-# RegBioLiqCostSpec
-# 
-# ppi <-300
-# png("output/BioTech/RegBioLiqCostSpec.png", width=8*ppi, height=5*ppi, res=ppi)
-# print(plot(RegBioLiqCostSpec))
-# dev.off()
-# 
-# RegData.NLiqBio1 = subset(RegData.Bio1, !(CarrierID=="Liq"))
-# RegData.NLiqBio1$Year <- factor(RegData.NLiqBio1$Year)
-# RegData.NLiqBio1 = subset(RegData.NLiqBio1, !(Tech=="Gas"))
-# 
-# # Non-Bio Liquids
-# RegBioOthCostSpec <- ggplot(RegData.NLiqBio1) +
-#   geom_point(aes(x=TechOrder, y=value, colour=LCOE, shape=LCOE, group=Year), size=0.8, alpha=0.8, position=position_dodge(0.6)) +
-#   geom_hline(yintercept=0,size = 0.1, colour='black') +
-#   #geom_vline(xintercept=c(1,2,3,4,5,6,7),size=0.1,colour="black") +
-#   ggtitle("Cost Components of Other Bioenergy Technologies") +
-#   xlab("") +
-#   ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
-#   scale_y_log10() +
-#   theme_bw() +
-#   theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-#   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-#   theme(legend.position="bottom") +
-#   scale_shape_manual(values=c(0,4,20),
-#                      name="",
-#                      breaks=c("LCOE1","LCOE2","LCOE3"),
-#                      labels=c("Cap. & OM", "incl. Feed","incl. ctax")
-#   ) +
-#   scale_colour_manual(values=c("black","green4","red"),
-#                       name="",
-#                       breaks=c("LCOE1","LCOE2","LCOE3"),
-#                       labels=c("Cap. & OM", "incl. Feed","incl. ctax")
-#   ) +
-#   facet_grid(REGION~MODEL, scales="free_y", labeller=labeller(MODEL= model_labels))
-# RegBioOthCostSpec
-# 
-# ppi <-300
-# png("output/BioTech/RegBioOthCostSpec.png", width=9*ppi, height=5*ppi, res=ppi)
-# print(plot(RegBioOthCostSpec))
-# dev.off()
-
-
-
-# ---- FIG: G. Cost vs. Use Composites ----
-GBioAllSecCost
-GBioLiqSecCost
-GBioOthSecCost
-
-lay<-rbind(1,1,1,1,1,1,1,1,1,1,1,1,1,
-           2,2,2,2,2,2,2,2,2,2,2,2,2,2) 
-SecCostFinal <- grid.arrange(GBioAllSecCost,GBioOthSecCost2, layout_matrix=lay)
-SecCostFinal3 <- grid.arrange(GBioLiqSecCost3,GBioOthSecCost3)
-DifCostFinal2 <- grid.arrange(GBioLiqDifCost2,GBioOthDifCost2)
-
-#
 
 # ---- END ----
