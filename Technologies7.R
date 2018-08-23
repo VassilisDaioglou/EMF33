@@ -783,7 +783,7 @@ SecEnTot1 = subset(SecEnTot, !(Tech3=="Ele Total"|Tech3=="Liq Total"|Tech3=="Hyd
 GBioLiqEleSec <- ggplot(subset(SecEnTot1, Prim=="Biomass"&!(Year=="2000"|Year=="2050")&!(Tech3=="Hea Total")), mapping=aes(x=Year, y=value, fill=TechOrder3)) + 
   geom_bar(stat="identity") +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
-  ggtitle("A: Deployment of Bioenergy Technologies") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
+  ggtitle("A: DEPLOYMENT OF BIOENERGY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   ylab("Secondary Energy EJ/yr") + xlab("") +
   theme_bw() +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
@@ -800,7 +800,7 @@ GBioLiqEleSec
 GBioSecFrac <- ggplot(subset(SecEnTot2, SCENARIO==ActScen&REGION=="World"&!(CarrierID=="Hea")&!(Year=="2050"))) + 
   geom_point(aes(x=Year, y=BioFrac, colour=TechOrder3, shape=TechOrder3), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
-  ggtitle("B: Fraction of Bioenergy Technologies") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
+  ggtitle("B: FRACTION OF BIOENERGY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   ylab("Bioenergy Fraction [-]") +
   theme_bw() +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
@@ -926,7 +926,7 @@ GBioLiqSecCost2 <- ggplot(subset(GlobalData2, CarrierID=="Liq"&Year=="2050"&SecE
   ggtitle("A: DEPLOYMENT OF LIQUID TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
   ylim(0,100) + theme_bw() +
-  theme(strip.text.x = element_text(size = fontsize1, face="bold")) +
+  theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
@@ -947,7 +947,7 @@ GBioOthSecCost2 <- ggplot(GBioOthSecCost2Dat) +
   ggtitle("B: DEPLOYMENT OF ELECTRICITY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + ylim(0,100) +
   theme_bw() +
-  theme(strip.text.x = element_text(size = fontsize1, face="bold")) +
+  theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
@@ -1077,7 +1077,7 @@ GBioLiqSecCost2100 <- ggplot(subset(GlobalData2, CarrierID=="Liq"&Year=="2100"&S
   ggtitle("A: DEPLOYMENT OF LIQUID TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
   ylim(0,100) + theme_bw() +
-  theme(strip.text.x = element_text(size = fontsize1, face="bold")) +
+  theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
@@ -1096,7 +1096,7 @@ GBioOthSecCost2100 <- ggplot(GBioOthSecCost2100Dat) +
   ggtitle("B: DEPLOYMENT OF ELECTRICITY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
   ylim(0,100) + theme_bw() +
-  theme(strip.text.x = element_text(size = fontsize1, face="bold")) +
+  theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
