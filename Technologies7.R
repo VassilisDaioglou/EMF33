@@ -610,6 +610,7 @@ RegData.Ele = subset(RegData, CarrierID=="Ele")
 RegData.Liq = subset(RegData, CarrierID=="Liq")
 
 # ---- CALCULATIONS FOR PAPER ----
+# ---- *** General *** ----
 Calcs = subset(RegData.Bio, select=c(MODEL,SCENARIO,REGION,Year,
                                          VARIABLE,Prim,Capt,Efficiency,CapitalCo,
                                          LCOE_Cap,LCOE_Feed,LCOE1,LCOE2,LCOE3,LCOE,
@@ -657,6 +658,7 @@ Calcs1$LCOE3 <- Calcs.LCOE3[match(Calcs1$ID,Calcs.LCOE3$ID),8]
 Calcs1$LCOE <- Calcs.LCOE[match(Calcs1$ID,Calcs.LCOE$ID),8]
 Calcs1$ID <- NULL
 
+# ---- *** Cost Components *** ----
 #  Difference between wCCS and woCCS
 Calcs.CCS = Calcs1
 Calcs.CCS <- melt(Calcs.CCS, measure.vars=c("CapitalCo","Efficiency","LCOE_Cap","LCOE_Feed","LCOE1","LCOE2","LCOE3","LCOE"))
@@ -708,6 +710,7 @@ Calcs.CostsMed$FeedFrac <- Calcs.CostsMed4[match(Calcs.CostsMed$MedID, Calcs.Cos
 Calcs.CostsMed$CDRFrac <- Calcs.CostsMed5[match(Calcs.CostsMed$MedID, Calcs.CostsMed5$MedID),5]
 rm(Calcs.CostsMed1,Calcs.CostsMed2,Calcs.CostsMed3,Calcs.CostsMed4,Calcs.CostsMed5)
 
+# ---- *** Regional Variation *** ----
 # Regional variation
 Calcs.Reg = Calcs1
 Calcs.Reg = melt(Calcs.Reg, id.vars=c("MODEL","SCENARIO","REGION","Year","VARIABLE","Capt","TechOrder"), variable_name="variable")
@@ -723,6 +726,7 @@ rm(Calcs.Reg2)
 Calcs.Reg1 = Calcs.Reg1 %>% mutate(CV_perc = (SD/Mean)*100)
 Calcs.Reg1$CarrierID = substr(Calcs.Reg1$VARIABLE,1,3)
 
+# ---- *** Ranges & Percentiles *** ----
 # Determine percentile ranges of results
 Calcs.RangeC <- by(Calcs.Costs$CapitalCo,Calcs.Costs$MedID,quantile,c(0,0.1,0.9,1))
 Calcs.RangeC=as.data.frame.list(Calcs.RangeC)
@@ -772,12 +776,12 @@ Calcs.Range = rbind(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Ca
 # Compare withBaker et al. information to categorise models
 Calcs.Costs2 = Calcs.Costs
 Calcs.Costs2 = subset(Calcs.Costs2, select = c(MODEL,SCENARIO,REGION,Year,Efficiency,LCOE1,MedID))
-Calcs.Costs2 = subset(Calcs.Costs2, Year==2030&REGION=="USA") # Have to use a single region to avoid over-counting
+#Calcs.Costs2 = subset(Calcs.Costs2, Year==2030&REGION=="USA") # Have to use a single region to avoid over-counting
 Calcs.Costs2 = melt(Calcs.Costs2, id.vars=c("MODEL","SCENARIO","REGION","Year","MedID"), na.rm=TRUE)
 
 Calcs.CCS2 = Calcs.CCS
 Calcs.CCS2 = subset(Calcs.CCS2, select = c(MODEL,SCENARIO,REGION,Year,variable,CCS_Diff,CarrierID))
-Calcs.CCS2 = subset(Calcs.CCS2, Year==2030&REGION=="USA"&!(CarrierID=="Gas")) # Have to use a single region to avoid over-counting
+#Calcs.CCS2 = subset(Calcs.CCS2, Year==2030&REGION=="USA"&!(CarrierID=="Gas")) # Have to use a single region to avoid over-counting
 Calcs.CCS2$TechID = paste(Calcs.CCS2$CarrierID,"wCCS",Calcs.CCS2$Year)
 Calcs.CCS2 = na.omit(Calcs.CCS2)
 
@@ -793,8 +797,10 @@ for(i in 1:nrow(BakerDat1)){
   test = subset(Calcs.Costs2, MedID==BakerSample$TechID&variable==BakerSample$variable)
   count = sum(test$value >= BakerSample$value.low &
                 test$value <= BakerSample$value.high)
+  NumObs = nrow(test)
   # Fill in counts in original DF
   BakerDat1[l,6]<-count
+  BakerDat1[l,7]<-NumObs
 }
 
 # CCS parameters
@@ -803,17 +809,20 @@ for(i in 1:nrow(BakerDat2)){
   l=l+1
   # Get counts per row
   BakerSample=BakerDat2[l,]
-  test = subset(Calcs.CCS2, TechID==BakerSample$TechID&variable==BakerSample$variable)
+  test = subset(Calcs.CCS2, TechID==BakerSample$TechID&variable==BakerSample$variable&CCS_Diff>0)
   count = sum(test$CCS_Diff >= BakerSample$value.low &
                 test$CCS_Diff <= BakerSample$value.high)
+  NumObs = nrow(test)
   # Fill in counts in original DF
   BakerDat2[l,6]<-count
+  BakerDat2[l,7]<-NumObs
 }
 
 BakerDat=rbind(BakerDat1,BakerDat2)
 colnames(BakerDat)[6] <- "Count"
+colnames(BakerDat)[7] <- "Observations"
 
-rm(Calcs.Costs2,Calcs.CCS2, BakerDat1, BakerDat2, BakerSample,test,count)
+rm(Calcs.Costs2,Calcs.CCS2, BakerDat1, BakerDat2, BakerSample,test,count, NumObs)
 rm(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Calcs.RangeFF)
 
 # write.xlsx(Calcs.CCS, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Effect of CCS", append=FALSE, row.names=TRUE, showNA = TRUE)
@@ -822,7 +831,7 @@ rm(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Calcs.RangeFF)
 # write.xlsx(Calcs.CostsMed, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Mean Cost Components", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(Calcs.Reg1, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Regional Variation", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(Calcs.Range, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Percentile Ranges", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(BakerDat, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="R&D category Count", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(BakerDat, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="R&D category Count2", append=TRUE, row.names=FALSE, showNA = TRUE)
 
 # **** FIGURES FOR DRAFT *****
 # ---- FIG 1: Liq+Ele Use ----
@@ -975,7 +984,7 @@ GBioLiqSecCost2 <- ggplot(subset(GlobalData2, CarrierID=="Liq"&Year=="2050"&SecE
   ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
   ylim(0,100) + theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
-  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=2)) +
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
   scale_colour_manual(values=c("chocolate","purple","forestgreen","black"),
