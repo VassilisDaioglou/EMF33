@@ -781,7 +781,6 @@ Calcs.CCS2 = subset(Calcs.CCS2, Year==2030&REGION=="USA"&!(CarrierID=="Gas")) # 
 Calcs.CCS2$TechID = paste(Calcs.CCS2$CarrierID,"wCCS",Calcs.CCS2$Year)
 Calcs.CCS2 = na.omit(Calcs.CCS2)
 
-BakerDat=read.csv("data/Technology/BakerElicitation.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 BakerDat1 = subset(BakerDat, variable=="Efficiency"|variable=="LCOE1") # Non-CCS Parameters
 BakerDat2 = subset(BakerDat, variable=="CapitalCo") # CCS Parameters
 
