@@ -27,10 +27,11 @@ ActScen = "R3-B-lo-full"
 setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - Documents/EMF33/Scenario results/R-Scripts")
 #setwd("C:/Users/vassi/Documents/Work/EMF33/R-Scripts")
 
-# Read Data File
+# Read Data Files
 TechData2=read.csv("data/Technology/TechDATA.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 PriceData=read.csv("data/Technology/PriceDATA.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 SecEnTot=read.csv("data/Technology/SecEnTot.csv", sep=",", dec=".", stringsAsFactors = FALSE)
+BakerDat=read.csv("data/Technology/BakerElicitation.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 TechData2$X <-NULL
 PriceData$X <-NULL
 SecEnTot$X <- NULL
@@ -767,6 +768,53 @@ Calcs.RangeCCS= setDT(Calcs.RangeCCS, keep.rownames = TRUE)[]
 Calcs.RangeCCS$VARIABLE <- "CCS CapitalCo" 
 
 Calcs.Range = rbind(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Calcs.RangeFF)
+
+# Compare withBaker et al. information to categorise models
+Calcs.Costs2 = Calcs.Costs
+Calcs.Costs2 = subset(Calcs.Costs2, select = c(MODEL,SCENARIO,REGION,Year,Efficiency,LCOE1,MedID))
+Calcs.Costs2 = subset(Calcs.Costs2, Year==2030&REGION=="USA") # Have to use a single region to avoid over-counting
+Calcs.Costs2 = melt(Calcs.Costs2, id.vars=c("MODEL","SCENARIO","REGION","Year","MedID"), na.rm=TRUE)
+
+Calcs.CCS2 = Calcs.CCS
+Calcs.CCS2 = subset(Calcs.CCS2, select = c(MODEL,SCENARIO,REGION,Year,variable,CCS_Diff,CarrierID))
+Calcs.CCS2 = subset(Calcs.CCS2, Year==2030&REGION=="USA"&!(CarrierID=="Gas")) # Have to use a single region to avoid over-counting
+Calcs.CCS2$TechID = paste(Calcs.CCS2$CarrierID,"wCCS",Calcs.CCS2$Year)
+Calcs.CCS2 = na.omit(Calcs.CCS2)
+
+BakerDat=read.csv("data/Technology/BakerElicitation.csv", sep=",", dec=".", stringsAsFactors = FALSE)
+BakerDat1 = subset(BakerDat, variable=="Efficiency"|variable=="LCOE1") # Non-CCS Parameters
+BakerDat2 = subset(BakerDat, variable=="CapitalCo") # CCS Parameters
+
+# Non-CCS parameters
+l=0
+for(i in 1:nrow(BakerDat1)){
+  l=l+1
+  # Get counts per row
+  BakerSample=BakerDat1[l,]
+  test = subset(Calcs.Costs2, MedID==BakerSample$TechID&variable==BakerSample$variable)
+  count = sum(test$value >= BakerSample$value.low &
+                test$value <= BakerSample$value.high)
+  # Fill in counts in original DF
+  BakerDat1[l,6]<-count
+}
+
+# CCS parameters
+l=0
+for(i in 1:nrow(BakerDat2)){
+  l=l+1
+  # Get counts per row
+  BakerSample=BakerDat2[l,]
+  test = subset(Calcs.CCS2, TechID==BakerSample$TechID&variable==BakerSample$variable)
+  count = sum(test$CCS_Diff >= BakerSample$value.low &
+                test$CCS_Diff <= BakerSample$value.high)
+  # Fill in counts in original DF
+  BakerDat2[l,6]<-count
+}
+
+BakerDat=rbind(BakerDat1,BakerDat2)
+colnames(BakerDat)[6] <- "Count"
+
+rm(Calcs.Costs2,Calcs.CCS2, BakerDat1, BakerDat2, BakerSample,test,count)
 rm(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Calcs.RangeFF)
 
 # write.xlsx(Calcs.CCS, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Effect of CCS", append=FALSE, row.names=TRUE, showNA = TRUE)
@@ -775,6 +823,7 @@ rm(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Calcs.RangeFF)
 # write.xlsx(Calcs.CostsMed, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Mean Cost Components", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(Calcs.Reg1, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Regional Variation", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(Calcs.Range, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Percentile Ranges", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(BakerDat, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="R&D category Count", append=TRUE, row.names=FALSE, showNA = TRUE)
 
 # **** FIGURES FOR DRAFT *****
 # ---- FIG 1: Liq+Ele Use ----
