@@ -902,6 +902,16 @@ GlobalData.BioCor$CapitalCo[GlobalData.BioCor$MODEL=="MESSAGE-GLOBIOM"&GlobalDat
 
 GlobalData.BioCor$Efficiency[GlobalData.BioCor$MODEL=="MESSAGE-GLOBIOM"&GlobalData.BioCor$VARIABLE=="HydrogenBiomasswCCS"&GlobalData.BioCor$Year==2020] <- GlobalData.BioCor$Efficiency[GlobalData.BioCor$MODEL=="MESSAGE-GLOBIOM"&GlobalData.BioCor$VARIABLE=="HydrogenBiomasswCCS"&GlobalData.BioCor$Year==2030]
 GlobalData.BioCor$CapitalCo[GlobalData.BioCor$MODEL=="MESSAGE-GLOBIOM"&GlobalData.BioCor$VARIABLE=="HydrogenBiomasswCCS"&GlobalData.BioCor$Year==2020] <- GlobalData.BioCor$CapitalCo[GlobalData.BioCor$MODEL=="MESSAGE-GLOBIOM"&GlobalData.BioCor$VARIABLE=="HydrogenBiomasswCCS"&GlobalData.BioCor$Year==2030]
+
+# For REMIND-MAGPIE there is no CCS data for 2020, use 2030 data instead
+# In order to avoid inconsistency between 2020 (noCCS) data and 2030 (CCS) data, ignore the 2020 values 
+RM2020Data = subset(GlobalData.BioCor, MODEL=="REMIND-MAGPIE"&Year==2030)
+RM2020Data$Year <- 2020
+
+GlobalData.BioCor = subset(GlobalData.BioCor, !(MODEL=="REMING-MAGPIE"&Year==2020))
+GlobalData.BioCor = rbind(GlobalData.BioCor,RM2020Data)
+rm(RM2020Data)
+
 # FIGURE: Comparison of Efficiencies vs. Capital Costs per model
 Data <- unique(GlobalData.BioCor[,c("TechOrder2")])
 Data$Year <- "Literature"
