@@ -324,7 +324,7 @@ PriceData.Glob = subset(PriceData, REGION=="World")
 PriceData = subset(PriceData, REGION=="ASIA"|REGION=="LAM"|REGION=="OECD90"|REGION=="MAF"|REGION=="REF")
 PriceData = PriceData %>% mutate(PricePerMWh = value * GJ2MWh) 
 
-CostEffData = subset(TechData6, Year=="2020"|Year=="2030"|Year=="2050"|Year=="2070"|Year=="2100")
+CostEffData = subset(TechData6, Year=="2020"|Year=="2030"|Year=="2050"|Year=="2060"|Year=="2070"|Year=="2100")
 CostEffData$Tech = paste(CostEffData$VARIABLE) 
 CostEffData$Tech <- gsub("Biomass","",CostEffData$Tech,fixed=F)  
 CostEffData$Tech <- gsub("Coal","",CostEffData$Tech,fixed=F)  
@@ -1031,6 +1031,139 @@ lay<-rbind(1,1,1,1,1,1,1,1,1,1,1,1,1,
 SecCostFinal2 <- grid.arrange(GBioLiqSecCost2,GBioOthSecCost2, layout_matrix=lay)
 
 #
+# ---- FIG 4b: G. Cost vs. Use Bio+Fossil 2050 ----
+GlobalData2=GlobalData
+
+# Have to determine fraction of Secondary energy each technology accounts for
+SecEnTot2.temp = SecEnTot2
+SecEnTot2.temp$ID = paste(SecEnTot2.temp$MODEL,SecEnTot2.temp$SCENARIO,SecEnTot2.temp$Year,SecEnTot2.temp$CarrierID)
+SecEnTot2.temp = subset(SecEnTot2.temp, REGION=="World")
+GlobalData2$ID = paste(GlobalData2$MODEL,GlobalData2$SCENARIO, GlobalData2$Year,GlobalData2$CarrierID)
+GlobalData2$TotSecEn <- SecEnTot2.temp[match(GlobalData2$ID,SecEnTot2.temp$ID),5]
+GlobalData2$ID <- NULL
+GlobalData2 = GlobalData2 %>% mutate(SecEnFrac = (SecEn/TotSecEn)*100)
+
+# Make new variables which indicate the movement of the LCOE and SecEnFrac over time. Used to draw arrows
+# These have to be relative to the LCOE & SecEnFrac @ time=t
+GlobalData2$ID <- paste(GlobalData2$MODEL, GlobalData2$Year, GlobalData2$VARIABLE)
+
+# FIRST DO FOR LIQUIDS
+  # Calculate change in SecEnFrac
+Diff_Frac=subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Liq")
+Diff_Frac=subset(Diff_Frac, select=c(MODEL,SCENARIO,VARIABLE,Year,CarrierID,SecEnFrac,TechOrder2))
+Diff_Frac = unique(Diff_Frac) #Removes some duplicate observations
+Diff_Frac = na.omit(Diff_Frac)
+Diff_Frac=spread(Diff_Frac,Year,SecEnFrac)
+colnames(Diff_Frac)[6:7]<-c("x2050","x2100")
+Diff_Frac=Diff_Frac %>% mutate(Diff=x2100-x2050)
+Diff_Frac$ID <- paste(Diff_Frac$MODEL, "2050", Diff_Frac$VARIABLE)
+  # Calculate change in LCOE
+Diff_LCOE=subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Liq")
+Diff_LCOE=subset(Diff_LCOE, select=c(MODEL,SCENARIO,VARIABLE,Year,CarrierID,LCOE,TechOrder2))
+Diff_LCOE = unique(Diff_LCOE) #Removes some duplicate observations
+Diff_LCOE = na.omit(Diff_LCOE)
+Diff_LCOE=spread(Diff_LCOE,Year,LCOE)
+colnames(Diff_LCOE)[6:7]<-c("x2050","x2100")
+Diff_LCOE=Diff_LCOE %>% mutate(Diff=x2100-x2050)
+Diff_LCOE$ID <- paste(Diff_LCOE$MODEL, "2050", Diff_LCOE$VARIABLE)
+# Merge into dataframe
+GlobalData2_Liq = subset(GlobalData2, Year==2050&CarrierID=="Liq")
+GlobalData2_Liq$y_diff = Diff_Frac[match(GlobalData2_Liq$ID,Diff_Frac$ID),"Diff"]
+GlobalData2_Liq$x_diff = Diff_LCOE[match(GlobalData2_Liq$ID,Diff_LCOE$ID),"Diff"]
+
+# SAME BUT FOR ELECTRICITY
+# Calculate change in SecEnFrac
+Diff_Frac=subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Ele")
+Diff_Frac=subset(Diff_Frac, select=c(MODEL,SCENARIO,VARIABLE,Year,CarrierID,SecEnFrac,TechOrder2))
+Diff_Frac = unique(Diff_Frac) #Removes some duplicate observations
+Diff_Frac = na.omit(Diff_Frac)
+Diff_Frac=spread(Diff_Frac,Year,SecEnFrac)
+colnames(Diff_Frac)[6:7]<-c("x2050","x2100")
+Diff_Frac=Diff_Frac %>% mutate(Diff=x2100-x2050)
+Diff_Frac$ID <- paste(Diff_Frac$MODEL, "2050", Diff_Frac$VARIABLE)
+# Calculate change in LCOE
+Diff_LCOE=subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Ele")
+Diff_LCOE=subset(Diff_LCOE, select=c(MODEL,SCENARIO,VARIABLE,Year,CarrierID,LCOE,TechOrder2))
+Diff_LCOE = unique(Diff_LCOE) #Removes some duplicate observations
+Diff_LCOE = na.omit(Diff_LCOE)
+Diff_LCOE=spread(Diff_LCOE,Year,LCOE)
+colnames(Diff_LCOE)[6:7]<-c("x2050","x2100")
+Diff_LCOE=Diff_LCOE %>% mutate(Diff=x2100-x2050)
+Diff_LCOE$ID <- paste(Diff_LCOE$MODEL, "2050", Diff_LCOE$VARIABLE)
+# Merge into dataframe
+GlobalData2_Ele = subset(GlobalData2, Year==2050&CarrierID=="Ele")
+GlobalData2_Ele$y_diff = Diff_Frac[match(GlobalData2_Ele$ID,Diff_Frac$ID),"Diff"]
+GlobalData2_Ele$x_diff = Diff_LCOE[match(GlobalData2_Ele$ID,Diff_LCOE$ID),"Diff"]
+
+GlobalData3 = rbind(GlobalData2_Liq, GlobalData2_Ele)
+
+# Have to make sure arrow lengths are constant. Draw arrows based on congruent triangles
+GlobalData3 = subset(GlobalData3, select = c(MODEL,SCENARIO,Year,CarrierID,Prim,Capt,SecEnFrac,LCOE,TechOrder2,y_diff,x_diff))
+GlobalData3 = subset(GlobalData3, Year==2050)
+linlen=50
+GlobalData3 = GlobalData3 %>% mutate(tantheta = y_diff/x_diff)
+GlobalData3 = GlobalData3 %>% mutate(theta = atan(tantheta))
+#GlobalData3 = GlobalData3 %>% mutate(dx2 = ((x_diff < 0)*-1*linlen*cos(theta)) + ((x_diff >=0)*linlen*cos(theta)))
+GlobalData3 = GlobalData3 %>% mutate(dx2 = linlen*cos(theta))
+GlobalData3 = GlobalData3 %>% mutate(dy2 = linlen*sin(theta))
+#GlobalData3 = GlobalData3 %>% mutate(dy2 = ((y_diff < 0)*linlen*sin(theta)) + ((y_diff >=0)*linlen*sin(theta)))
+
+#write.xlsx(GlobalData3, file="output/BioTech/Diagnostic/Fig4Check.xlsx", sheetName="Check", append=FALSE, row.names=TRUE, showNA = TRUE)
+
+GBioLiqSecCost2b <- ggplot(subset(GlobalData3, CarrierID=="Liq"&Year=="2050"&SecEnFrac>0.01)) + 
+  #geom_segment(aes(x=LCOE, xend=LCOE+dx2, y = SecEnFrac, yend=SecEnFrac+dy2), 
+  #             colour="blue", arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
+  geom_segment(aes(x=LCOE, xend=LCOE+x_diff, y = SecEnFrac, yend=SecEnFrac+y_diff), 
+               colour="grey", arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
+  geom_point(aes(x=LCOE, y=SecEnFrac, colour=TechOrder2, shape=Capt), size=2) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ggtitle("A: DEPLOYMENT OF LIQUID TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
+  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+  ylim(0,100) + theme_bw() +
+  theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "grey", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
+  scale_colour_manual(values=c("chocolate","purple","forestgreen","black"),
+                      name ="CONVERSION TECHNOLOGY:",
+                      breaks=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Liquids"),
+                      labels=c("1st Gen. Eth.","Biodiesel","Adv. Biofuel","Fossil")
+  ) +
+  scale_shape_manual(values=c(16,1),name="CCS:",breaks=c("woCCS","wCCS"),labels=c("No CSS","With CCS")) +
+  facet_wrap(~MODEL, scales="free", ncol=5, labeller=labeller(MODEL= model_labels2))
+GBioLiqSecCost2b
+
+
+GBioOthSecCost3Dat = subset(GlobalData3, CarrierID=="Ele"&Year=="2050"&SecEnFrac>0.01)
+GBioOthSecCost3Dat$Year = as.numeric(substr(GBioOthSecCost3Dat$Year, start=1, stop=4))
+GBioOthSecCost2b <- ggplot(GBioOthSecCost3Dat) + 
+  #geom_segment(aes(x=LCOE, xend=LCOE+dx2, y = SecEnFrac, yend=SecEnFrac+dy2), 
+  #             colour="blue", arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
+  geom_segment(aes(x=LCOE, xend=LCOE+x_diff, y = SecEnFrac, yend=SecEnFrac+y_diff), 
+               colour="grey", arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
+  geom_point(aes(x=LCOE, y=SecEnFrac, colour=Prim, shape=Capt), size=2) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ggtitle("B: DEPLOYMENT OF ELECTRICITY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
+  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + ylim(0,100) +
+  theme_bw() +
+  theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
+  scale_colour_manual(values=c("green3", "black","purple","brown","blue","pink2","orange","skyblue3"),
+                      name ="PRMARY ENERGY CARRIER:", 
+                      breaks=c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind"),
+                      labels=c("Biomass","Coal","Nat. Gas","Geothermal","Hydro","Nuclear","Solar","Wind")) +
+  scale_shape_manual(values=c(16,1),name="CCS:",breaks=c("woCCS","wCCS"),labels=c("No CSS","With CCS")) +
+  facet_wrap(~MODEL, scales="free", ncol=5, labeller=labeller(MODEL= model_labels2))
+GBioOthSecCost2b
+
+lay<-rbind(1,1,1,1,1,1,1,1,1,1,1,1,1,
+           2,2,2,2,2,2,2,2,2,2,2,2,2,2) 
+SecCostFinal2b <- grid.arrange(GBioLiqSecCost2b,GBioOthSecCost2b, layout_matrix=lay)
+
+#
+
 # ---- FIG S1: G. Bio Cap+OM Cost ALL ----
 GlobalData.Bio2 = subset(GlobalData.Bio2, Year=="2030"|Year=="2050"| Year=="2100")
 GlobalData.Bio2$Year = as.character(GlobalData.Bio2$Year)
@@ -1195,6 +1328,10 @@ rm(lay)
 # 
 # png("output/BioTech/Fig4.png", width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(SecCostFinal2))
+# dev.off()
+# 
+# png("output/BioTech/Fig4b.png", width=8*ppi, height=9*ppi, res=ppi)
+# print(plot(SecCostFinal2b))
 # dev.off()
 # 
 # ---- OUTPUT: SUPPLEMENTARY INFORMATION ----
