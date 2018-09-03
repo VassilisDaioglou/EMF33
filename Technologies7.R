@@ -15,7 +15,7 @@ library(ggpubr)
 library(gridExtra)
 library(xlsx)
 
-# sit higher RAM capacity for java (used in clsx package)
+# set higher RAM capacity for java (used in clsx package)
 options(java.parameters = "-Xmx8000m")
 
 # ---- INPUTS ----
@@ -1032,6 +1032,7 @@ SecCostFinal2 <- grid.arrange(GBioLiqSecCost2,GBioOthSecCost2, layout_matrix=lay
 
 #
 # ---- FIG 4b: G. Cost vs. Use Bio+Fossil 2050 ----
+# ---- ...fix data ----
 GlobalData2=GlobalData
 
 # Have to determine fraction of Secondary energy each technology accounts for
@@ -1044,12 +1045,11 @@ GlobalData2$ID <- NULL
 GlobalData2 = GlobalData2 %>% mutate(SecEnFrac = (SecEn/TotSecEn)*100)
 
 # Make new variables which indicate the movement of the LCOE and SecEnFrac over time. Used to draw arrows
-# These have to be relative to the LCOE & SecEnFrac @ time=t
 GlobalData2$ID <- paste(GlobalData2$MODEL, GlobalData2$Year, GlobalData2$VARIABLE)
-
+GlobalData2 = unique(GlobalData2) #Removes some duplicate observations
 # FIRST DO FOR LIQUIDS
-  # Calculate change in SecEnFrac
-Diff_Frac=subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Liq")
+  # Calculate change in SecEnFrac (y-axis)
+Diff_Frac=subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Liq"&SecEnFrac>0.01)
 Diff_Frac=subset(Diff_Frac, select=c(MODEL,SCENARIO,VARIABLE,Year,CarrierID,SecEnFrac,TechOrder2))
 Diff_Frac = unique(Diff_Frac) #Removes some duplicate observations
 Diff_Frac = na.omit(Diff_Frac)
@@ -1057,8 +1057,11 @@ Diff_Frac=spread(Diff_Frac,Year,SecEnFrac)
 colnames(Diff_Frac)[6:7]<-c("x2050","x2100")
 Diff_Frac=Diff_Frac %>% mutate(Diff=x2100-x2050)
 Diff_Frac$ID <- paste(Diff_Frac$MODEL, "2050", Diff_Frac$VARIABLE)
-  # Calculate change in LCOE
-Diff_LCOE=subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Liq")
+  # Calculate maximumlength of axis (to help determine arrow length)
+Diff_Frac = melt(Diff_Frac, id.vars=c("MODEL","SCENARIO","VARIABLE","CarrierID","TechOrder2","Diff","ID"))
+Diff_Frac$ylen <- 100 # Lenth of y-axis is always 100 since scale is a percentage
+  # Calculate change in LCOE (x-axis)
+Diff_LCOE=subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Liq"&SecEnFrac>0.01)
 Diff_LCOE=subset(Diff_LCOE, select=c(MODEL,SCENARIO,VARIABLE,Year,CarrierID,LCOE,TechOrder2))
 Diff_LCOE = unique(Diff_LCOE) #Removes some duplicate observations
 Diff_LCOE = na.omit(Diff_LCOE)
@@ -1066,14 +1069,22 @@ Diff_LCOE=spread(Diff_LCOE,Year,LCOE)
 colnames(Diff_LCOE)[6:7]<-c("x2050","x2100")
 Diff_LCOE=Diff_LCOE %>% mutate(Diff=x2100-x2050)
 Diff_LCOE$ID <- paste(Diff_LCOE$MODEL, "2050", Diff_LCOE$VARIABLE)
-# Merge into dataframe
+  # Calculate maximumlength of axis (to help determine arrow length)
+x_max = aggregate(Diff_LCOE$x2050, by=list(MODEL=Diff_LCOE$MODEL), FUN=max, na.rm=TRUE)
+x_min = aggregate(Diff_LCOE$x2050, by=list(MODEL=Diff_LCOE$MODEL), FUN=min, na.rm=TRUE)
+Diff_LCOE$x_max = x_max[match(Diff_LCOE$MODEL,x_max$MODEL),"x"]
+Diff_LCOE$x_min = x_min[match(Diff_LCOE$MODEL,x_min$MODEL),"x"]
+Diff_LCOE = Diff_LCOE %>% mutate(xlen=((x_min>=0)*x_max)+((x_min<0)*(x_max-x_min)))
+  # Merge x&y calculations into dataframe
 GlobalData2_Liq = subset(GlobalData2, Year==2050&CarrierID=="Liq")
-GlobalData2_Liq$y_diff = Diff_Frac[match(GlobalData2_Liq$ID,Diff_Frac$ID),"Diff"]
 GlobalData2_Liq$x_diff = Diff_LCOE[match(GlobalData2_Liq$ID,Diff_LCOE$ID),"Diff"]
+GlobalData2_Liq$y_diff = Diff_Frac[match(GlobalData2_Liq$ID,Diff_Frac$ID),"Diff"]
+GlobalData2_Liq$x_len = Diff_LCOE[match(GlobalData2_Liq$ID,Diff_LCOE$ID),"xlen"]
+GlobalData2_Liq$y_len = Diff_Frac[match(GlobalData2_Liq$ID,Diff_Frac$ID),"ylen"]
 
 # SAME BUT FOR ELECTRICITY
-# Calculate change in SecEnFrac
-Diff_Frac=subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Ele")
+  # Calculate change in SecEnFrac
+Diff_Frac=subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Ele"&SecEnFrac>0.01)
 Diff_Frac=subset(Diff_Frac, select=c(MODEL,SCENARIO,VARIABLE,Year,CarrierID,SecEnFrac,TechOrder2))
 Diff_Frac = unique(Diff_Frac) #Removes some duplicate observations
 Diff_Frac = na.omit(Diff_Frac)
@@ -1081,8 +1092,11 @@ Diff_Frac=spread(Diff_Frac,Year,SecEnFrac)
 colnames(Diff_Frac)[6:7]<-c("x2050","x2100")
 Diff_Frac=Diff_Frac %>% mutate(Diff=x2100-x2050)
 Diff_Frac$ID <- paste(Diff_Frac$MODEL, "2050", Diff_Frac$VARIABLE)
-# Calculate change in LCOE
-Diff_LCOE=subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Ele")
+  # Calculate maximumlength of axis (to help determine arrow length)
+Diff_Frac = melt(Diff_Frac, id.vars=c("MODEL","SCENARIO","VARIABLE","CarrierID","TechOrder2","Diff","ID"))
+Diff_Frac$ylen <- 100 # Lenth of y-axis is always 100 since scale is a percentage
+  # Calculate change in LCOE
+Diff_LCOE=subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Ele"&SecEnFrac>0.01)
 Diff_LCOE=subset(Diff_LCOE, select=c(MODEL,SCENARIO,VARIABLE,Year,CarrierID,LCOE,TechOrder2))
 Diff_LCOE = unique(Diff_LCOE) #Removes some duplicate observations
 Diff_LCOE = na.omit(Diff_LCOE)
@@ -1090,31 +1104,53 @@ Diff_LCOE=spread(Diff_LCOE,Year,LCOE)
 colnames(Diff_LCOE)[6:7]<-c("x2050","x2100")
 Diff_LCOE=Diff_LCOE %>% mutate(Diff=x2100-x2050)
 Diff_LCOE$ID <- paste(Diff_LCOE$MODEL, "2050", Diff_LCOE$VARIABLE)
-# Merge into dataframe
+  # Calculate maximumlength of axis (to help determine arrow length)
+x_max = aggregate(Diff_LCOE$x2050, by=list(MODEL=Diff_LCOE$MODEL), FUN=max, na.rm=TRUE)
+x_min = aggregate(Diff_LCOE$x2050, by=list(MODEL=Diff_LCOE$MODEL), FUN=min, na.rm=TRUE)
+Diff_LCOE$x_max = x_max[match(Diff_LCOE$MODEL,x_max$MODEL),"x"]
+Diff_LCOE$x_min = x_min[match(Diff_LCOE$MODEL,x_min$MODEL),"x"]
+Diff_LCOE = Diff_LCOE %>% mutate(xlen=((x_min>=0)*x_max)+((x_min<0)*(x_max-x_min)))
+  # Merge into dataframe
 GlobalData2_Ele = subset(GlobalData2, Year==2050&CarrierID=="Ele")
 GlobalData2_Ele$y_diff = Diff_Frac[match(GlobalData2_Ele$ID,Diff_Frac$ID),"Diff"]
 GlobalData2_Ele$x_diff = Diff_LCOE[match(GlobalData2_Ele$ID,Diff_LCOE$ID),"Diff"]
+GlobalData2_Ele$x_len = Diff_LCOE[match(GlobalData2_Ele$ID,Diff_LCOE$ID),"xlen"]
+GlobalData2_Ele$y_len = Diff_Frac[match(GlobalData2_Ele$ID,Diff_Frac$ID),"ylen"]
 
+# Final Dataframe for figure
 GlobalData3 = rbind(GlobalData2_Liq, GlobalData2_Ele)
-
 # Have to make sure arrow lengths are constant. Draw arrows based on congruent triangles
-GlobalData3 = subset(GlobalData3, select = c(MODEL,SCENARIO,Year,CarrierID,Prim,Capt,SecEnFrac,LCOE,TechOrder2,y_diff,x_diff))
+GlobalData3 = subset(GlobalData3, select = c(MODEL,SCENARIO,Year,CarrierID,Prim,Capt,SecEnFrac,LCOE,TechOrder2,y_diff,x_diff,x_len,y_len))
 GlobalData3 = subset(GlobalData3, Year==2050)
-linlen=50
 GlobalData3 = GlobalData3 %>% mutate(tantheta = y_diff/x_diff)
 GlobalData3 = GlobalData3 %>% mutate(theta = atan(tantheta))
-#GlobalData3 = GlobalData3 %>% mutate(dx2 = ((x_diff < 0)*-1*linlen*cos(theta)) + ((x_diff >=0)*linlen*cos(theta)))
-GlobalData3 = GlobalData3 %>% mutate(dx2 = linlen*cos(theta))
-GlobalData3 = GlobalData3 %>% mutate(dy2 = linlen*sin(theta))
-#GlobalData3 = GlobalData3 %>% mutate(dy2 = ((y_diff < 0)*linlen*sin(theta)) + ((y_diff >=0)*linlen*sin(theta)))
+# Due to different x&y scales, have to make an "arrow length multiplier" dependent on its angle
+GlobalData3 = GlobalData3 %>% mutate(len_c = x_len/y_len) # The length multiplier at theta=0, i.e. a horizontal line
+GlobalData3 = GlobalData3 %>% mutate(len_mult = (len_c-1)*exp(-4*abs(theta))+1) #multiplier based on exponential decay: The smaller the angle, the greater the multiplier
+GlobalData3$linlen <- 20 #base  arrow length, @ theta = 90degrees
 
-#write.xlsx(GlobalData3, file="output/BioTech/Diagnostic/Fig4Check.xlsx", sheetName="Check", append=FALSE, row.names=TRUE, showNA = TRUE)
+GlobalData3 = GlobalData3 %>% mutate(dx = ((x_diff < 0)
+                                           * -1 * linlen * len_mult * cos(abs(theta)) 
+                                           ) +
+                                       ((x_diff >=0)
+                                        * linlen * len_mult * cos(abs(theta))
+                                        )
+                                     )
+GlobalData3 = GlobalData3 %>% mutate(dy = ((y_diff < 0)
+                                           * -1 * linlen * len_mult * sin(abs(theta))
+                                           ) +
+                                       ((y_diff >=0)
+                                        * linlen * len_mult * sin(abs(theta))
+                                        )
+                                     )
 
-GBioLiqSecCost2b <- ggplot(subset(GlobalData3, CarrierID=="Liq"&Year=="2050"&SecEnFrac>0.01)) + 
-  #geom_segment(aes(x=LCOE, xend=LCOE+dx2, y = SecEnFrac, yend=SecEnFrac+dy2), 
-  #             colour="blue", arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
-  geom_segment(aes(x=LCOE, xend=LCOE+x_diff, y = SecEnFrac, yend=SecEnFrac+y_diff), 
-               colour="grey", arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
+GlobalData3 = GlobalData3 %>% mutate(xend = LCOE+dx)
+GlobalData3 = GlobalData3 %>% mutate(yend = SecEnFrac+dy)
+#
+# ---- ...fig----
+GBioLiqSecCost2b <- ggplot(subset(GlobalData3, CarrierID=="Liq"&Year=="2050"&SecEnFrac>0.05)) + 
+  geom_segment(aes(x=LCOE, xend=xend, y = SecEnFrac, yend=yend, colour=TechOrder2),
+              arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=TechOrder2, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("A: DEPLOYMENT OF LIQUID TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
@@ -1133,14 +1169,11 @@ GBioLiqSecCost2b <- ggplot(subset(GlobalData3, CarrierID=="Liq"&Year=="2050"&Sec
   facet_wrap(~MODEL, scales="free", ncol=5, labeller=labeller(MODEL= model_labels2))
 GBioLiqSecCost2b
 
-
-GBioOthSecCost3Dat = subset(GlobalData3, CarrierID=="Ele"&Year=="2050"&SecEnFrac>0.01)
+GBioOthSecCost3Dat = subset(GlobalData3, CarrierID=="Ele"&Year=="2050"&SecEnFrac>0.05)
 GBioOthSecCost3Dat$Year = as.numeric(substr(GBioOthSecCost3Dat$Year, start=1, stop=4))
 GBioOthSecCost2b <- ggplot(GBioOthSecCost3Dat) + 
-  #geom_segment(aes(x=LCOE, xend=LCOE+dx2, y = SecEnFrac, yend=SecEnFrac+dy2), 
-  #             colour="blue", arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
-  geom_segment(aes(x=LCOE, xend=LCOE+x_diff, y = SecEnFrac, yend=SecEnFrac+y_diff), 
-               colour="grey", arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
+  geom_segment(aes(x=LCOE, xend=xend, y = SecEnFrac, yend=yend, colour=Prim),
+              arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=Prim, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("B: DEPLOYMENT OF ELECTRICITY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
@@ -1163,7 +1196,6 @@ lay<-rbind(1,1,1,1,1,1,1,1,1,1,1,1,1,
 SecCostFinal2b <- grid.arrange(GBioLiqSecCost2b,GBioOthSecCost2b, layout_matrix=lay)
 
 #
-
 # ---- FIG S1: G. Bio Cap+OM Cost ALL ----
 GlobalData.Bio2 = subset(GlobalData.Bio2, Year=="2030"|Year=="2050"| Year=="2100")
 GlobalData.Bio2$Year = as.character(GlobalData.Bio2$Year)
@@ -1271,7 +1303,7 @@ LCOEvCtax
 
 #
 # ---- FIG S5: G. Cost vs. Use Bio+Fossil 2100----
-GBioLiqSecCost2100 <- ggplot(subset(GlobalData2, CarrierID=="Liq"&Year=="2100"&SecEn>0.1)) + 
+GBioLiqSecCost2100 <- ggplot(subset(GlobalData2, CarrierID=="Liq"&Year=="2100"&SecEnFrac>0.01)) + 
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=TechOrder2, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("A: DEPLOYMENT OF LIQUID TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
@@ -1289,7 +1321,7 @@ GBioLiqSecCost2100 <- ggplot(subset(GlobalData2, CarrierID=="Liq"&Year=="2100"&S
   facet_wrap(~MODEL, scales="free", ncol=5, labeller=labeller(MODEL= model_labels2))
 GBioLiqSecCost2100
 
-GBioOthSecCost2100Dat = subset(GlobalData2, CarrierID=="Ele"&Year=="2100"&SecEn>0.1)
+GBioOthSecCost2100Dat = subset(GlobalData2, CarrierID=="Ele"&Year=="2100"&SecEnFrac>0.01)
 GBioOthSecCost2100 <- ggplot(GBioOthSecCost2100Dat) +  
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=Prim, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
