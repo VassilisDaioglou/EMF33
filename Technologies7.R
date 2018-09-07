@@ -192,11 +192,6 @@ TechData4$VARIABLE2[TechData4$MODEL=="IMAGE"&TechData4$VARIABLE=="LiquidsBiomass
 TechData4$VARIABLE2[TechData4$MODEL=="IMAGE"&TechData4$VARIABLE=="LiquidsBiomassOtherwCCS2"] <- "LiquidsBiomassCellulosicNondieselwCCS6"
 TechData4$VARIABLE2[TechData4$MODEL=="IMAGE"&TechData4$VARIABLE=="LiquidsBiomassOtherwoCCS2"] <- "LiquidsBiomassCellulosicNondieselwoCCS6"
 
-# For REMIND, Liquids|Biomass|Biodiesel is an FT process (see email Nico 1 April 2018), and so will classify as
-TechData4$VARIABLE2[TechData4$MODEL=="REMIND-MAGPIE"&TechData4$VARIABLE=="LiquidsBiomassBiodieselwCCS"] <- "LiquidsBiomassCellulosicNondieselwCCS"
-TechData4$VARIABLE2[TechData4$MODEL=="REMIND-MAGPIE"&TechData4$VARIABLE=="LiquidsBiomassBiodieselwoCCS"] <- "LiquidsBiomassCellulosicNondieselwoCCS"
-TechData4$VARIABLE2[TechData4$MODEL=="REMIND-MAGPIE"&TechData4$VARIABLE=="LiquidsBiomassBiodieselwoCCS2"] <- "LiquidsBiomassCellulosicNondieselwoCCS2"
-
 TechData4$VARIABLE <- NULL
 names(TechData4)[names(TechData4)=="VARIABLE2"] <- "VARIABLE"
 
@@ -275,9 +270,9 @@ rm(DiscountRate)
 # ---- LABELS ----
 scen_labels <- c("R3-B-hi-full"="hi-full","R3-B-hi-ready2050"="hi-ready2050","R3-B-hi-cost100"="hi-cost100","R3-B-hi-limbio"="hi-limbio","R3-B-lo-full"="lo-full","R3-B-lo-ready2050"="lo-ready2050","R3-B-lo-cost100"="lo-cost100","R3-B-lo-limbio"="lo-limbio")
 #Model labels with text wraps                
-model_labels <- c("AIM/CGE"="AIM","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","FARM 3.1"="FARM","MESSAGE-GLOBIOM"="MESSAGE-\nGLOBIOM","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-\nMAgPIE")
+model_labels <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","FARM 3.1"="FARM","MESSAGE-GLOBIOM"="MESSAGE-\nGLOBIOM","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-\nMAgPIE")
 #Model labels without text wraps                
-model_labels2 <- c("AIM/CGE"="AIM","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","FARM 3.1"="FARM","MESSAGE-GLOBIOM"="MESSAGE-GLOBIOM","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE")
+model_labels2 <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","FARM 3.1"="FARM","MESSAGE-GLOBIOM"="MESSAGE-GLOBIOM","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE")
 
 eletech_labeler <- c("Geothermal"="Geothermal", "Hydro"="Hydro","Nuclear"="Nuclear","Solar"="Solar (PV&CSP)","Wind"="Wind (On/off-shore)","BiomasswCCS"="Biomass w/ CCS","Biomass"="Biomass","CoalwCCS"="Coal w/ CCS","Coal"="Coal","GaswCCS"="Gas w/ CCS","Gas"="Gas")
 
@@ -835,7 +830,7 @@ rm(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Calcs.RangeFF)
 
 # **** FIGURES FOR DRAFT *****
 # ---- FIG 1: Liq+Ele Use ----
-SecEnTot1 = subset(SecEnTot, !(Tech3=="Ele Total"|Tech3=="Liq Total"|Tech3=="Hyd Total")&SCENARIO==ActScen)
+SecEnTot1 = subset(SecEnTot, !(Tech3=="Ele Total"|Tech3=="Liq Total"|Tech3=="Hyd Total")&!(MODEL=="FARM 3.1"|MODEL=="COFFEE")&SCENARIO==ActScen)
 
 GBioLiqEleSec <- ggplot(subset(SecEnTot1, Prim=="Biomass"&!(Year=="2000"|Year=="2050")&!(Tech3=="Hea Total")), mapping=aes(x=Year, y=value, fill=TechOrder3)) + 
   geom_bar(stat="identity") +
@@ -857,7 +852,7 @@ GBioLiqEleSec
 GBioSecFrac <- ggplot(subset(SecEnTot2, SCENARIO==ActScen&REGION=="World"&!(CarrierID=="Hea")&!(Year=="2050"))) + 
   geom_point(aes(x=Year, y=BioFrac, colour=TechOrder3, shape=TechOrder3), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
-  ggtitle("B: FRACTION OF BIOENERGY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
+  ggtitle("B: FRACTION OF BIOENERGY TECHNOLOGIES IN RESPECTIVE ENERGY CARRIER") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   ylab("Bioenergy Fraction [-]") +
   theme_bw() +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
@@ -908,15 +903,15 @@ GlobalData.BioCor$CapitalCo[GlobalData.BioCor$MODEL=="MESSAGE-GLOBIOM"&GlobalDat
 RM2020Data = subset(GlobalData.BioCor, MODEL=="REMIND-MAGPIE"&Year==2030)
 RM2020Data$Year <- 2020
 
-GlobalData.BioCor = subset(GlobalData.BioCor, !(MODEL=="REMING-MAGPIE"&Year==2020))
-GlobalData.BioCor = rbind(GlobalData.BioCor,RM2020Data)
+GlobalData.BioCor1 = subset(GlobalData.BioCor, !(MODEL=="REMIND-MAGPIE"&Year==2020))
+GlobalData.BioCor1 = rbind(GlobalData.BioCor1,RM2020Data)
 rm(RM2020Data)
 
 # FIGURE: Comparison of Efficiencies vs. Capital Costs per model
-Data <- unique(GlobalData.BioCor[,c("TechOrder2")])
+Data <- unique(GlobalData.BioCor1[,c("TechOrder2")])
 Data$Year <- "Literature"
 
-BioEffCost <- ggplot(subset(GlobalData.BioCor, Year=="2020"&!(CarrierID=="Gas")&!(TechOrder2=="Other biomass")))+
+BioEffCost <- ggplot(subset(GlobalData.BioCor1, Year=="2020"&!(CarrierID=="Gas")&!(TechOrder2=="Other biomass")))+
   geom_point(data=subset(LitData, !(Efficiency=="NA"|CapitalCo=="NA"|CarrierID=="Gas"|TechOrder2=="Other biomass")), aes(x=CapitalCo, y=Efficiency, fill=Capt, colour=Capt), alpha=0.5, shape=21, size=1.5) +
   geom_point(data=, aes(x=CapitalCo, y=Efficiency, shape=MODEL, colour=Capt), alpha=0.4, size=1.5) +
   geom_rect(data=subset(Data, !(TechOrder2=="Gas"|TechOrder2=="Other biomass")), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.1) +
@@ -931,7 +926,7 @@ BioEffCost <- ggplot(subset(GlobalData.BioCor, Year=="2020"&!(CarrierID=="Gas")&
   scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
                      name="",
                      breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
-                     labels=c("AIM","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGE-GLOBIOM","BET","DNE21+")
+                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGE-GLOBIOM","BET","DNE21+")
   ) +
   geom_blank(aes(x=x_max)) + geom_blank(aes(x=x_min)) +
   guides(col = guide_legend(nrow = 2)) +
@@ -1349,7 +1344,7 @@ LCOEvCtax <- ggplot(subset(GlobalData, Capt=="wCCS"&(Year=="2050"|Year=="2100")&
   scale_shape_manual(values=c(0,1,2,3,4,5,6,8,10,11,13),
                      name="Model",
                      breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("AIM","BET","DNE21+","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES","REMIND-MAgPIE")) +
+                     labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES","REMIND-MAgPIE")) +
   facet_grid(Year~CarrierID, scales="free", labeller=labeller(MODEL= model_labels, CarrierID = carrier_labels))
 LCOEvCtax
 
@@ -1439,7 +1434,7 @@ rm(lay)
 # png("output/BioTech/FigS4.png", width=6*ppi, height=5*ppi, res=ppi)
 # print(plot(LCOEvCtax))
 # dev.off()
-#
+# 
 # png("output/BioTech/FigS5.png", width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(SecCostFinal2100))
 # dev.off()
