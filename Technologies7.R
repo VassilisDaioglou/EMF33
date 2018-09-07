@@ -1012,7 +1012,8 @@ GBioOthSecCost2 <- ggplot(GBioOthSecCost2Dat) +
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=Prim, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("B: DEPLOYMENT OF ELECTRICITY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
-  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + ylim(0,100) +
+  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  scale_y_continuous(breaks=c(0,10,20,30,40,50), limits=c(0,50))+
   theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
@@ -1147,9 +1148,9 @@ GlobalData3 = GlobalData3 %>% mutate(dy = ((y_diff < 0)
 GlobalData3 = GlobalData3 %>% mutate(xend = LCOE+dx)
 GlobalData3 = GlobalData3 %>% mutate(yend = SecEnFrac+dy)
 #
-# ---- ...fig----
+# ---- ...fig1----
 GBioLiqSecCost2b <- ggplot(subset(GlobalData3, CarrierID=="Liq"&Year=="2050"&SecEnFrac>0.05)) + 
-  geom_segment(aes(x=LCOE, xend=xend, y = SecEnFrac, yend=yend, colour=TechOrder2),
+  geom_segment(aes(x=LCOE, xend=xend, y = SecEnFrac, yend=yend, colour=TechOrder2), alpha=0.3,
               arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=TechOrder2, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
@@ -1172,12 +1173,13 @@ GBioLiqSecCost2b
 GBioOthSecCost3Dat = subset(GlobalData3, CarrierID=="Ele"&Year=="2050"&SecEnFrac>0.05)
 GBioOthSecCost3Dat$Year = as.numeric(substr(GBioOthSecCost3Dat$Year, start=1, stop=4))
 GBioOthSecCost2b <- ggplot(GBioOthSecCost3Dat) + 
-  geom_segment(aes(x=LCOE, xend=xend, y = SecEnFrac, yend=yend, colour=Prim),
+  geom_segment(aes(x=LCOE, xend=xend, y = SecEnFrac, yend=yend, colour=Prim), alpha=0.3,
               arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=Prim, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("B: DEPLOYMENT OF ELECTRICITY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
-  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + ylim(0,100) +
+  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  scale_y_continuous(breaks=c(0,10,20,30,40,50,60), limits=c(0,65))+
   theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
@@ -1188,12 +1190,62 @@ GBioOthSecCost2b <- ggplot(GBioOthSecCost3Dat) +
                       breaks=c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind"),
                       labels=c("Biomass","Coal","Nat. Gas","Geothermal","Hydro","Nuclear","Solar","Wind")) +
   scale_shape_manual(values=c(16,1),name="CCS:",breaks=c("woCCS","wCCS"),labels=c("No CSS","With CCS")) +
-  facet_wrap(~MODEL, scales="free", ncol=5, labeller=labeller(MODEL= model_labels2))
+  facet_wrap(~MODEL, scales="free_x", ncol=5, labeller=labeller(MODEL= model_labels2))
 GBioOthSecCost2b
 
 lay<-rbind(1,1,1,1,1,1,1,1,1,1,1,1,1,
            2,2,2,2,2,2,2,2,2,2,2,2,2,2) 
 SecCostFinal2b <- grid.arrange(GBioLiqSecCost2b,GBioOthSecCost2b, layout_matrix=lay)
+
+#
+# ---- ...fig2----
+GBioLiqSecCost2c <- ggplot(subset(GlobalData3, CarrierID=="Liq"&Year=="2050"&SecEnFrac>0.05)) + 
+  geom_segment(aes(x=LCOE, xend=LCOE+x_diff, y = SecEnFrac, yend=SecEnFrac+y_diff, colour=TechOrder2), alpha=0.3,
+               arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
+  geom_point(aes(x=LCOE, y=SecEnFrac, colour=TechOrder2, shape=Capt), size=2) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ggtitle("A: DEPLOYMENT OF LIQUID TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
+  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+  ylim(0,100) + theme_bw() +
+  theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "grey", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
+  scale_colour_manual(values=c("chocolate","purple","forestgreen","black"),
+                      name ="CONVERSION TECHNOLOGY:",
+                      breaks=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Liquids"),
+                      labels=c("1st Gen. Eth.","Biodiesel","Adv. Biofuel","Fossil")
+  ) +
+  scale_shape_manual(values=c(16,1),name="CCS:",breaks=c("woCCS","wCCS"),labels=c("No CSS","With CCS")) +
+  facet_wrap(~MODEL, scales="free", ncol=5, labeller=labeller(MODEL= model_labels2))
+GBioLiqSecCost2c
+
+GBioOthSecCost3Dat = subset(GlobalData3, CarrierID=="Ele"&Year=="2050"&SecEnFrac>0.05)
+GBioOthSecCost3Dat$Year = as.numeric(substr(GBioOthSecCost3Dat$Year, start=1, stop=4))
+GBioOthSecCost2c <- ggplot(GBioOthSecCost3Dat) + 
+  geom_segment(aes(x=LCOE, xend=LCOE+x_diff, y = SecEnFrac, yend=SecEnFrac+y_diff, colour=Prim), alpha=0.3,
+               arrow=arrow(angle=30, length=unit(0.20,"cm"), ends="last", type="open")) +
+  geom_point(aes(x=LCOE, y=SecEnFrac, colour=Prim, shape=Capt), size=2) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ggtitle("B: DEPLOYMENT OF ELECTRICITY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
+  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  scale_y_continuous(breaks=c(10,20,30,40,50))+
+  theme_bw() +
+  theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
+  scale_colour_manual(values=c("green3", "black","purple","brown","blue","pink2","orange","skyblue3"),
+                      name ="PRMARY ENERGY CARRIER:", 
+                      breaks=c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind"),
+                      labels=c("Biomass","Coal","Nat. Gas","Geothermal","Hydro","Nuclear","Solar","Wind")) +
+  scale_shape_manual(values=c(16,1),name="CCS:",breaks=c("woCCS","wCCS"),labels=c("No CSS","With CCS")) +
+  facet_wrap(~MODEL, scales="free_x", ncol=5, labeller=labeller(MODEL= model_labels2))
+GBioOthSecCost2c
+
+lay<-rbind(1,1,1,1,1,1,1,1,1,1,1,1,1,
+           2,2,2,2,2,2,2,2,2,2,2,2,2,2) 
+SecCostFinal2c <- grid.arrange(GBioLiqSecCost2c,GBioOthSecCost2c, layout_matrix=lay)
 
 #
 # ---- FIG S1: G. Bio Cap+OM Cost ALL ----
@@ -1364,6 +1416,10 @@ rm(lay)
 # 
 # png("output/BioTech/Fig4b.png", width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(SecCostFinal2b))
+# dev.off()
+# 
+# png("output/BioTech/Fig4c.png", width=8*ppi, height=9*ppi, res=ppi)
+# print(plot(SecCostFinal2c))
 # dev.off()
 # 
 # ---- OUTPUT: SUPPLEMENTARY INFORMATION ----
