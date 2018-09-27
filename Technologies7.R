@@ -1299,7 +1299,51 @@ lay<-rbind(1,1,1,1,1,1,1,1,1,1,1,1,1,
 SecCostFinal2d <- grid.arrange(GBioLiqSecCost2d,GBioOthSecCost2d, layout_matrix=lay)
 
 #
-# ---- FIG S1: G. Bio Cap+OM Cost ALL ----
+# ---- FIG S1: Histograms of techno-economic parameters ----
+Calcs.Costs1=melt(Calcs.Costs, id.vars=c("MODEL","SCENARIO","REGION","Year","VARIABLE","Capt","TechOrder","MedID"), variable_name="variable")
+Calcs.Costs1=subset(Calcs.Costs1, Year=="2030")
+Calcs.Costs1=subset(Calcs.Costs1, variable=="CapitalCo"|variable=="Efficiency"|variable=="LCOE1"|variable=="FeedFrac")
+Calcs.Costs1$value = as.numeric(substr(Calcs.Costs1$value,start=1,stop=5))
+
+TechDistr <- ggplot(data=subset(Calcs.Costs1, MedID=="Liq woCCS 2030"|MedID=="Ele woCCS 2030"),aes(value, fill=MedID)) +
+  geom_histogram(bins = "15",position="dodge") +   geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ggtitle("A: Histogram of 2030 model values for key techno-economic parameters") + theme(plot.title = element_text(lineheight=20, face="bold", size=fontsize3)) +
+  xlab("") + ylab("Count") +  theme_bw() +
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  scale_fill_manual(values=c("forestgreen","chocolate"),name ="Parameter",breaks=c("Liq woCCS","Ele woCCS"),labels=c("Liquids","Electricity"),guide=FALSE) +
+  facet_grid(.~variable, scales="free_x", labeller=labeller(variable=var_labeler))
+TechDistr
+
+CCSPen <- ggplot(data=subset(Calcs.CCS, (variable=="CapitalCo"|variable=="Efficiency")&Year=="2030"&!(CarrierID=="Hyd"|CarrierID=="Gas")&!(CCS_Diff<0&variable=="CapitalCo")&!(CCS_Diff>0&variable=="Efficiency")&!(wCCS==0)),
+                 aes(CCS_Diff, fill=CarrierID)) +  geom_histogram(bins = "30",position="dodge") + geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ggtitle("B: Histogram of 2030 model values for cost and efficiency penalty of CCS") + theme(plot.title = element_text(lineheight=20, face="bold", size=fontsize3)) +
+  xlab("") +  ylab("Count") +  theme_bw() +
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  scale_fill_manual(values=c("forestgreen","chocolate"),name ="Energy Carrier",breaks=c("Liq","Ele"),labels=c("Liquids","Electricity")) +
+  facet_grid(.~variable, scales="free_x", labeller=labeller(variable=var_labeler2))
+CCSPen
+
+AssumpHist <- grid.arrange(TechDistr,CCSPen)
+#
+# ---- FIG S2: Regional CV ----
+RegVar <- ggplot(data=subset(Calcs.Reg1, !(CarrierID=="Gas")&(variable2=="CapitalCo"|variable2=="Efficiency"|variable2=="LCOE_Feed")&Year=="2050"),aes(CV_perc, fill=variable2)) +
+  geom_histogram(bins = "20",position="dodge") +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  xlab(expression("Coefficient of Variation [%]")) +  ylab("Count") +
+  theme_bw() +
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=2, vjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom") +
+  scale_fill_manual(values=c("black","grey60","forestgreen"),
+                    name ="",
+                    breaks=c("CapitalCo","Efficiency","LCOE_Feed"),
+                    labels=c("Capital Costs","Efficiency","Feedstock Cost")) +
+  facet_grid(MODEL~CarrierID, scales="free", labeller=labeller(MODEL=model_labels, CarrierID=carrier_labels))
+RegVar
+#
+# ---- FIG S3: G. Bio Cap+OM Cost ALL ----
 GlobalData.Bio2 = subset(GlobalData.Bio2, Year=="2030"|Year=="2050"| Year=="2100")
 GlobalData.Bio2$Year = as.character(GlobalData.Bio2$Year)
 # For some models OM and Capital Costs are not dissagregated. For these only present Cap costs
@@ -1338,50 +1382,6 @@ GBioAllCost <- ggplot(subset(GlobalData.Bio2, (CarrierID=="Liq"|CarrierID=="Ele"
   theme(strip.text.x = element_text(size=fontsize1), strip.text.y = element_text(size=fontsize1))
 GBioAllCost
 
-#
-# ---- FIG S2: Histograms of techno-economic parameters ----
-Calcs.Costs1=melt(Calcs.Costs, id.vars=c("MODEL","SCENARIO","REGION","Year","VARIABLE","Capt","TechOrder","MedID"), variable_name="variable")
-Calcs.Costs1=subset(Calcs.Costs1, Year=="2030")
-Calcs.Costs1=subset(Calcs.Costs1, variable=="CapitalCo"|variable=="Efficiency"|variable=="LCOE1"|variable=="FeedFrac")
-Calcs.Costs1$value = as.numeric(substr(Calcs.Costs1$value,start=1,stop=5))
-
-TechDistr <- ggplot(data=subset(Calcs.Costs1, MedID=="Liq woCCS 2030"|MedID=="Ele woCCS 2030"),aes(value, fill=MedID)) +
-  geom_histogram(bins = "15",position="dodge") +   geom_hline(yintercept=0,size = 0.1, colour='black') +
-  ggtitle("A: Histogram of 2030 model values for key techno-economic parameters") + theme(plot.title = element_text(lineheight=20, face="bold", size=fontsize3)) +
-  xlab("") + ylab("Count") +  theme_bw() +
-  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  scale_fill_manual(values=c("forestgreen","chocolate"),name ="Parameter",breaks=c("Liq woCCS","Ele woCCS"),labels=c("Liquids","Electricity"),guide=FALSE) +
-  facet_grid(.~variable, scales="free_x", labeller=labeller(variable=var_labeler))
-TechDistr
-
-CCSPen <- ggplot(data=subset(Calcs.CCS, (variable=="CapitalCo"|variable=="Efficiency")&Year=="2030"&!(CarrierID=="Hyd"|CarrierID=="Gas")&!(CCS_Diff<0&variable=="CapitalCo")&!(CCS_Diff>0&variable=="Efficiency")&!(wCCS==0)),
-                 aes(CCS_Diff, fill=CarrierID)) +  geom_histogram(bins = "30",position="dodge") + geom_hline(yintercept=0,size = 0.1, colour='black') +
-  ggtitle("B: Histogram of 2030 model values for cost and efficiency penalty of CCS") + theme(plot.title = element_text(lineheight=20, face="bold", size=fontsize3)) +
-  xlab("") +  ylab("Count") +  theme_bw() +
-  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  scale_fill_manual(values=c("forestgreen","chocolate"),name ="Energy Carrier",breaks=c("Liq","Ele"),labels=c("Liquids","Electricity")) +
-  facet_grid(.~variable, scales="free_x", labeller=labeller(variable=var_labeler2))
-CCSPen
-
-AssumpHist <- grid.arrange(TechDistr,CCSPen)
-#
-# ---- FIG S3: Regional CV ----
-RegVar <- ggplot(data=subset(Calcs.Reg1, !(CarrierID=="Gas")&(variable2=="CapitalCo"|variable2=="Efficiency"|variable2=="LCOE_Feed")&Year=="2050"),aes(CV_perc, fill=variable2)) +
-  geom_histogram(bins = "20",position="dodge") +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  xlab(expression("Coefficient of Variation [%]")) +  ylab("Count") +
-  theme_bw() +
-  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=2, vjust=1), axis.text.y = element_text(size=fontsize2)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom") +
-  scale_fill_manual(values=c("black","grey60","forestgreen"),
-                    name ="",
-                    breaks=c("CapitalCo","Efficiency","LCOE_Feed"),
-                    labels=c("Capital Costs","Efficiency","Feedstock Cost")) +
-  facet_grid(MODEL~CarrierID, scales="free", labeller=labeller(MODEL=model_labels, CarrierID=carrier_labels))
-RegVar
 #
 # ---- FIG S4: LCOE vs Ctax ----
 LCOEvCtax <- ggplot(subset(GlobalData, Capt=="wCCS"&(Year=="2050"|Year=="2100")&Prim=="Biomass"&SecEn>0.1)) + 
@@ -1476,21 +1476,20 @@ rm(lay)
 # png("output/BioTech/Fig4d.png", width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(SecCostFinal2d))
 # dev.off()
-# # 
-# # ---- OUTPUT: SUPPLEMENTARY INFORMATION ----
-# png("output/BioTech/FigS1.png", width=7*ppi, height=7*ppi, res=ppi)
-# print(plot(GBioAllCost))
-# dev.off()
 # #
-# png("output/BioTech/FigS2.png", width=7*ppi, height=5*ppi, res=ppi)
+# # ---- OUTPUT: SUPPLEMENTARY INFORMATION ----
+# png("output/BioTech/FigS1.png", width=7*ppi, height=5*ppi, res=ppi)
 # print(plot(AssumpHist))
 # dev.off()
 # 
-# png("output/BioTech/FigS3.png", width=6*ppi, height=8*ppi, res=ppi)
+# png("output/BioTech/FigS2.png", width=6*ppi, height=8*ppi, res=ppi)
 # print(plot(RegVar))
 # dev.off()
 # 
-# # Global - Non-Liquids - Deployment vs Cost
+# png("output/BioTech/FigS3.png", width=7*ppi, height=7*ppi, res=ppi)
+# print(plot(GBioAllCost))
+# dev.off()
+# #
 # png("output/BioTech/FigS4.png", width=6*ppi, height=5*ppi, res=ppi)
 # print(plot(LCOEvCtax))
 # dev.off()
