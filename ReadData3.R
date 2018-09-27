@@ -109,9 +109,47 @@ TradDATA = rbind(TradDATA1.RYVS,TradData1.COF,NewIMACLIM1)
 # write.csv(BioPrice, file = "data/Trade/TradPrice.csv")
 
 # ---- TECH DF ----
-# ---- Secondate Energy Demand ----
-# First get total Secondary Energy Deamand DF
 DATA$VARID <- substr(DATA$VARIABLE, start=1, stop=10)
+
+# For DNE21+ there is a technology producing liquid fuels reported under "Secondary Energy|Liquids|Other".
+# This is a bio-synthetic fuel (see email fuminori Sano 26/09/2018)
+# Technoeconomic parameters are not however reported for this technology and so it is not included in the results.
+# Thus, we add the secondary energy production from this technology to "Secondary Energy|Liquids|Other|w/o CCS"
+# First for specific technology (*|Biomass|Other|w/o CCS)
+DNEcor=subset(DATA, MODEL=="DNE21+ V.14"&
+                (VARIABLE=="Secondary Energy|Liquids|Biomass|Other|w/o CCS"|VARIABLE=="Secondary Energy|Liquids|Other"))
+
+DNEcor = spread(DNEcor,VARIABLE,value)
+colnames(DNEcor)[7:8] <- c("A","B")
+DNEcor = DNEcor %>% mutate(Total = A + B)
+DNEcor$A <- NULL
+DNEcor$B <- NULL
+colnames(DNEcor)[length(DNEcor)] <-"value"
+DNEcor$VARIABLE <- "Secondary Energy|Liquids|Biomass|Other|w/o CCS"
+
+# Second for overall biofuels (*|Biomass|w/o CCS)
+DNEcor2=subset(DATA, MODEL=="DNE21+ V.14"&
+                (VARIABLE=="Secondary Energy|Liquids|Biomass|w/o CCS"|VARIABLE=="Secondary Energy|Liquids|Other"))
+
+DNEcor2 = spread(DNEcor2,VARIABLE,value)
+colnames(DNEcor2)[7:8] <- c("A","B")
+DNEcor2 = DNEcor2 %>% mutate(Total = A + B)
+DNEcor2$A <- NULL
+DNEcor2$B <- NULL
+colnames(DNEcor2)[length(DNEcor2)] <-"value"
+DNEcor2$VARIABLE <- "Secondary Energy|Liquids|Biomass|w/o CCS"
+
+# Add to main DATA dataframe
+DATA = subset(DATA, !(MODEL=="DNE21+ V.14"&
+                (VARIABLE=="Secondary Energy|Liquids|Biomass|Other|w/o CCS"|
+                   VARIABLE=="Secondary Energy|Liquids|Other"|
+                   VARIABLE=="Secondary Energy|Liquids|Biomass|w/o CCS")))
+
+DATA = rbind(DATA,DNEcor,DNEcor2)
+rm(DNEcor,DNEcor2)
+
+# ---- Secondary Energy Demand ----
+# First get total Secondary Energy Deamand DF
 SecEnTot = subset(DATA, VARID=="Secondary ")
 SecEnTot = subset(SecEnTot,
                   VARIABLE=="Secondary Energy|Electricity"|
@@ -153,10 +191,8 @@ SecEnTot$CarrierID <-gsub( "Biomass","",SecEnTot$CarrierID,fixed=F)
 # ---- Techno-economic Parameters ----
 # Spread Data to creat columns of "Captial Cost","Efficiency","OM fixed" and "OM Variabled"
 DATA$VARID <- substr(DATA$VARIABLE, start=1, stop=10)
-#TechData = subset(DATA, VARID=="Capital Co"|VARID=="Efficiency"|VARID=="OM Cost|Fi"|VARID=="OM Cost|Va"|VARID=="Capacity|E"|VARID=="Secondary "|VARID=="Price|Carb")
 TechData = subset(DATA, VARID=="Capital Co"|VARID=="Efficiency"|VARID=="OM Cost|Fi"|VARID=="OM Cost|Va"|VARID=="Secondary "|VARID=="Price|Carb")
 TechData1=data.table(TechData)
-#TechData1=TechData1[VARID %in% c("Capital Co", "Efficiency", "OM Cost|Fi","OM Cost|Va","Capacity|E","Secondary ","Price|Carb")] 
 TechData1=TechData1[VARID %in% c("Capital Co", "Efficiency", "OM Cost|Fi","OM Cost|Va","Secondary ","Price|Carb")] 
 
 TechData1$VARIABLE <-gsub("Capital Cost|","",TechData1$VARIABLE,fixed=F)
@@ -212,8 +248,8 @@ GCAMDAT1$value=as.numeric(substr(GCAMDAT1$value, start=1, stop=6))
 
 TechData1a=rbind(TechData1,GCAMDAT1)
 rm(GCAMDAT.Scen,GCAMDAT,GCAMDAT1)
-# Fix Data Set
 
+# Fix Data Set
 TechData1a=spread(TechData1a, VARID, value, drop=TRUE)
 
 TechData2=TechData1a
@@ -372,12 +408,6 @@ TechData4$FeedCost[TechData4$Prim=="Geothermal"|
 TechData4$FeedCost[TechData4$Prim=="Nuclear"] <- 9.33
 
 TechData4=data.table(TechData4)
-
-# For POLES: Correct OM Cost for liquids have to be ultiplied by 0.038 (corrected in February 2018)
-# TechData4$OMCostVa2 = TechData4$OMCostVa
-# TechData4$OMCostVa2[TechData4$MODEL=="POLES EMF33"&TechData4$CarrierID=="Liq"&(TechData4$Prim=="Biomass"|TechData4$Prim=="BiomasswCCS")] <- 0.038 * TechData4$OMCostVa[TechData4$MODEL=="POLES EMF33"&TechData4$CarrierID=="Liq"&(TechData4$Prim=="Biomass"|TechData4$Prim=="BiomasswCCS")]
-# TechData4$OMCostVa <- NULL
-# colnames(TechData4)[17] <- "OMCostVa"
 
 # Correct Column Order
 TechData4 <- TechData4[,c("MODEL","SCENARIO","REGION","Year","VARIABLE","Prim","CarrierID","Capt","SecEn","Efficiency","CapitalCo","OMCostFi","OMCostVa","Ctax","FeedCost","CarrierID2")]
