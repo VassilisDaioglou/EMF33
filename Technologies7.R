@@ -19,7 +19,7 @@ library(xlsx)
 options(java.parameters = "-Xmx8000m")
 
 # ---- INPUTS ----
-ppi <- 200
+ppi <- 600
 # ACTIVE SCENARIO FOR THIS SCRIPT
 ActScen = "R3-B-lo-full"
 
@@ -1449,6 +1449,7 @@ SecCostFinal2100 <- grid.arrange(GBioLiqSecCost2100,GBioOthSecCost2100, layout_m
 rm(lay)
 #
 # # ---- OUTPUT: GLOBAL FOR DRAFT----
+
 # png("output/BioTech/Fig1.png", width=10*ppi, height=5.5*ppi, res=ppi)
 # print(plot(GBioSec))
 # dev.off()
