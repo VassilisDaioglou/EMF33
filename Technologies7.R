@@ -923,8 +923,8 @@ BioEffCost <- ggplot(subset(GlobalData.BioCor1, Year=="2020"&!(CarrierID=="Gas")
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="bottom", legend.text=element_text(size=fontsize1)) +
-  scale_colour_manual(values=c("green4","black"),name="",breaks=c("woCCS","wCCS"),labels=c("w/o CCS", "w/ CCS")) +
-  scale_fill_manual(values=c("green4","black"),name="",breaks=c("woCCS","wCCS"),labels=c("w/o CCS", "w/ CCS")) +
+  scale_colour_manual(values=c("green4","black"),name="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
+  scale_fill_manual(values=c("green4","black"),name ="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
   scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
                      name="",
                      breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
@@ -1449,7 +1449,6 @@ SecCostFinal2100 <- grid.arrange(GBioLiqSecCost2100,GBioOthSecCost2100, layout_m
 rm(lay)
 #
 # # ---- OUTPUT: GLOBAL FOR DRAFT----
-
 # png("output/BioTech/Fig1.png", width=10*ppi, height=5.5*ppi, res=ppi)
 # print(plot(GBioSec))
 # dev.off()
@@ -2038,4 +2037,210 @@ BioSecLiqCosta
 # print(plot(BioSecLiqCosta))
 # dev.off()
 
-# ---- END ----
+#
+# ---- FOR PRESENTATION ----
+# For figures
+fontsize4 = 5 # For Panels, legends and axes (labels)
+fontsize5 = 5 # For axes (scale)
+fontsize6 = 6 #For chart titles
+fontsize7 = 6
+arrowsize = 0.15
+#
+# ---- FIG: Bioenergy Strategies ----
+BioStrat <- ggplot(subset(SecEnTot1, Prim=="Biomass"&!(Year=="2000"|Year=="2050")&!(Tech3=="Hea Total")), mapping=aes(x=Year, y=value, fill=TechOrder3)) + 
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ylab("Secondary Energy EJ/yr") + xlab("") +
+  theme_bw() +
+  theme(text= element_text(size=fontsize7, face="plain"), axis.text.x = element_text(angle=66, size=fontsize5, hjust=1), axis.text.y = element_text(size=fontsize5)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize4), legend.title=element_text(face="bold")) +
+  scale_fill_manual(values=c("grey47","grey67","forestgreen","green2","navy","dodgerblue","darkmagenta"),
+                    name ="Bio-Technology:",
+                    breaks=c('Ele woCCS','Ele wCCS','Liq woCCS','Liq wCCS','Hyd woCCS','Hyd wCCS','Gas Total'),
+                    labels=c('Ele woCCS','Ele wCCS','Liq woCCS','Liq wCCS','Hyd woCCS','Hyd wCCS','Gas Total')
+  ) +
+  facet_wrap(~MODEL, nrow=2, labeller=labeller(MODEL=model_labels, TechOrder3=carrier_labels))
+BioStrat
+
+#
+# ---- FIG: Fig 2 components----
+EleCost1 <- ggplot(subset(GlobalData.Bio4, CarrierID=="Ele"&!(Tech2=="Other biomass"|Tech2=="1st gen. ethanol")&variable=="LCOE1")) +
+  geom_point(aes(x=Year, y=value, colour=variable, shape=variable),size=1.25, alpha=0.8) +
+  geom_rect(data=subset(Bkgrd, CarrierID=="Ele"), aes(fill = CarrierID), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.03) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + 
+  geom_vline(xintercept=c(1.5,2.5), size=0.1, colour="gray10") +
+  xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  theme_bw() +  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank()) + 
+  theme(text= element_text(size=fontsize4, face="plain"), axis.text.x = element_text(angle=66, size=fontsize5, hjust=1), axis.text.y = element_text(size=fontsize5)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize4)) +
+  scale_shape_manual(values=c(19),name="",breaks=c("LCOE1"),labels=c("Capital + O&M")) +
+  scale_colour_manual(values=c("black"),name="",breaks=c("LCOE1"),labels=c("Capital + O&M")) +
+  scale_fill_manual(values=c("grey"),name="",breaks=c("Ele"),labels=c("Electricity"),guide=FALSE) +
+  guides(shape=guide_legend(nrow=2,byrow=TRUE)) +
+  facet_grid(TechOrder~MODEL, scales="free", labeller=labeller(MODEL= model_labels, TechOrder=Biotech_labeler)) +
+  theme(strip.text.x = element_text(size=fontsize4), strip.text.y = element_text(size=fontsize4))
+EleCost1
+
+EleCost2 <- ggplot(subset(GlobalData.Bio4, CarrierID=="Ele"&!(Tech2=="Other biomass"|Tech2=="1st gen. ethanol")&(variable=="LCOE1"|variable=="LCOE3"|variable=="LCOE3cor"))) +
+  geom_point(aes(x=Year, y=value, colour=variable, shape=variable),size=1.25, alpha=0.8) +
+  geom_rect(data=subset(Bkgrd, CarrierID=="Ele"), aes(fill = CarrierID), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.03) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + 
+  geom_vline(xintercept=c(1.5,2.5), size=0.1, colour="gray10") +
+  xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  theme_bw() +  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank()) + 
+  theme(text= element_text(size=fontsize4, face="plain"), axis.text.x = element_text(angle=66, size=fontsize5, hjust=1), axis.text.y = element_text(size=fontsize5)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize4)) +
+  scale_shape_manual(values=c(19,19,5),name="",breaks=c("LCOE1","LCOE3","LCOE3cor"),labels=c("Capital + O&M","+ Feedstock","+ Feedstock (out of scale)")) +
+  scale_colour_manual(values=c("black", "green4","green4"),name="",breaks=c("LCOE1","LCOE3","LCOE3cor"),labels=c("Capital + O&M","+ Feedstock","+ Feedstock (out of scale)")) +
+  scale_fill_manual(values=c("grey"),name="",breaks=c("Ele"),labels=c("Electricity"),guide=FALSE) +
+  guides(shape=guide_legend(nrow=2,byrow=TRUE)) +
+  facet_grid(TechOrder~MODEL, scales="free", labeller=labeller(MODEL= model_labels, TechOrder=Biotech_labeler)) +
+  theme(strip.text.x = element_text(size=fontsize4), strip.text.y = element_text(size=fontsize4))
+EleCost2
+
+EleCost3 <- ggplot(subset(GlobalData.Bio4, CarrierID=="Ele"&!(Tech2=="Other biomass"|Tech2=="1st gen. ethanol"))) +
+  geom_jitter(aes(x=Year, y=value, colour=variable, shape=variable),size=1.25, width=0.2, alpha=0.8) +
+  geom_rect(data=subset(Bkgrd, CarrierID=="Ele"), aes(fill = CarrierID), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.03) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + 
+  geom_vline(xintercept=c(1.5,2.5), size=0.1, colour="gray10") +
+  xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  theme_bw() +  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank()) + 
+  theme(text= element_text(size=fontsize4, face="plain"), axis.text.x = element_text(angle=66, size=fontsize5, hjust=1), axis.text.y = element_text(size=fontsize5)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize4)) +
+  scale_shape_manual(values=c(19,19,19,5,5),name="",breaks=c("LCOE1","LCOE3","LCOE3cor","LCOE","LCOEcor"),labels=c("Capital + O&M","+ Feedstock","+ Feedstock (out of scale)","+ Feedstock & CDR","+ Feedstock & CDR (out of scale)")) +
+  scale_colour_manual(values=c("firebrick","black","green4","firebrick","green4"),name="",breaks=c("LCOE1","LCOE3","LCOE3cor","LCOE","LCOEcor"),labels=c("Capital + O&M","+ Feedstock","+ Feedstock (out of scale)","+ Feedstock & CDR","+ Feedstock & CDR (out of scale)")) +
+  scale_fill_manual(values=c("grey","dodgerblue","purple"),name="",breaks=c("Ele","Liq","Hyd"),labels=c("Electricity","Liquids","Hydrogen"),guide=FALSE) +  guides(shape=guide_legend(nrow=2,byrow=TRUE)) +
+  facet_grid(TechOrder~MODEL, scales="free", labeller=labeller(MODEL= model_labels, TechOrder=Biotech_labeler)) +
+  theme(strip.text.x = element_text(size=fontsize4), strip.text.y = element_text(size=fontsize4))
+EleCost3
+
+#
+# ---- FIG: Deploy-LCOE Liq ----
+# Use version of figure including technology trajectory thorugh to 2100
+# for LiqDepCost1, sel <alpha> for geom_path as 0 in order to make sure panel axes are identical to allow for easy presentation
+LiqDepCost1 <- ggplot(subset(GlobalData4, CarrierID=="Liq"&Year=="2050"&SecEnFrac>0.1)) + 
+  geom_point(aes(x=LCOE, y=SecEnFrac, colour=TechOrder2, shape=Capt), size=2) +
+  geom_path(data=subset(GlobalData4, CarrierID=="Liq"&!(Year==2030)&SecEnFrac>0.1), 
+            aes(x=LCOE, y = SecEnFrac, group = VARIABLE, colour = TechOrder2), alpha=0.0,
+            arrow=arrow(angle=30, length=unit(arrowsize,"cm"), ends="last", type="open")) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+  ylim(0,100) + theme_bw() +
+  theme(strip.text.x = element_text(size = fontsize4, face="plain")) +
+  theme(text= element_text(size=fontsize7, face="plain"), axis.text.x = element_text(angle=66, size=fontsize5, hjust=1), axis.text.y = element_text(size=fontsize5)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize4), legend.title=element_text(face="bold.italic")) +
+  scale_colour_manual(values=c("chocolate","purple","forestgreen","black"),
+                      name ="CONVERSION \nTECHNOLOGY:",
+                      breaks=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Liquids"),
+                      labels=c("1st Gen. Eth.","Biodiesel","Adv. Biofuel","Fossil")) +
+  scale_shape_manual(values=c(16,1),name="CCS:",breaks=c("woCCS","wCCS"),labels=c("No \nCSS","With \nCCS")) +
+  facet_wrap(~MODEL, scales="free_x", ncol=5, labeller=labeller(MODEL= model_labels2))
+LiqDepCost1
+
+LiqDepCost2 <- ggplot(subset(GlobalData4, CarrierID=="Liq"&Year=="2050"&SecEnFrac>0.1)) + 
+  geom_point(aes(x=LCOE, y=SecEnFrac, colour=TechOrder2, shape=Capt), size=2) +
+  geom_path(data=subset(GlobalData4, CarrierID=="Liq"&!(Year==2030)&SecEnFrac>0.1), 
+            aes(x=LCOE, y = SecEnFrac, group = VARIABLE, colour = TechOrder2), alpha=0.3,
+            arrow=arrow(angle=30, length=unit(arrowsize,"cm"), ends="last", type="open")) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+  ylim(0,100) + theme_bw() +
+  theme(strip.text.x = element_text(size = fontsize4, face="plain")) +
+  theme(text= element_text(size=fontsize7, face="plain"), axis.text.x = element_text(angle=66, size=fontsize5, hjust=1), axis.text.y = element_text(size=fontsize5)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize4), legend.title=element_text(face="bold.italic")) +
+  scale_colour_manual(values=c("chocolate","purple","forestgreen","black"),
+                      name ="CONVERSION \nTECHNOLOGY:",
+                      breaks=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Liquids"),
+                      labels=c("1st Gen. Eth.","Biodiesel","Adv. Biofuel","Fossil")) +
+  scale_shape_manual(values=c(16,1),name="CCS",breaks=c("woCCS","wCCS"),labels=c("No \nCSS","With \nCCS")) +
+  facet_wrap(~MODEL, scales="free_x", ncol=5, labeller=labeller(MODEL= model_labels2))
+LiqDepCost2
+
+#
+# ---- FIG: Deploy-LCOE Ele ----
+# Use version of figure including technology trajectory thorugh to 2100
+# for EleDepCost1, sel <alpha> for geom_path as 0 in order to make sure panel axes are identical to allow for easy presentation
+EleDepCost1 <- ggplot(GBioOthSecCost3Dat) + 
+  geom_point(aes(x=LCOE, y=SecEnFrac, colour=Prim, shape=Capt), size=2) +
+  geom_path(data=subset(GlobalData4, CarrierID=="Ele"&!(Year==2030)&SecEnFrac>0.1), 
+            aes(x=LCOE, y = SecEnFrac, group = VARIABLE, colour = Prim), alpha=0.0,
+            arrow=arrow(angle=30, length=unit(arrowsize,"cm"), ends="last", type="open")) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  scale_y_continuous(breaks=c(10,20,30,40,50))+
+  theme_bw() +
+  theme(strip.text.x = element_text(size = fontsize4, face="plain")) +
+  theme(text= element_text(size=fontsize7, face="plain"), axis.text.x = element_text(angle=66, size=fontsize5, hjust=1), axis.text.y = element_text(size=fontsize5)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize4), legend.title=element_text(face="bold.italic")) +
+  scale_colour_manual(values=c("green3", "black","purple","brown","blue","pink2","orange","skyblue3"),
+                      name ="PRIMARY \nENERGY CARRIER:", 
+                      breaks=c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind"),
+                      labels=c("Biomass","Coal","Nat. Gas","Geothermal","Hydro","Nuclear","Solar","Wind")) +
+  scale_shape_manual(values=c(16,1),name="CCS:",breaks=c("woCCS","wCCS"),labels=c("No \nCSS","With \nCCS")) +
+  facet_wrap(~MODEL, scales="free_x", ncol=5, labeller=labeller(MODEL= model_labels2))
+EleDepCost1
+
+EleDepCost2 <- ggplot(GBioOthSecCost3Dat) + 
+  geom_point(aes(x=LCOE, y=SecEnFrac, colour=Prim, shape=Capt), size=2) +
+  geom_path(data=subset(GlobalData4, CarrierID=="Ele"&!(Year==2030)&SecEnFrac>0.1), 
+            aes(x=LCOE, y = SecEnFrac, group = VARIABLE, colour = Prim), alpha=0.3,
+            arrow=arrow(angle=30, length=unit(arrowsize,"cm"), ends="last", type="open")) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  scale_y_continuous(breaks=c(10,20,30,40,50))+
+  theme_bw() +
+  theme(strip.text.x = element_text(size = fontsize4, face="plain")) +
+  theme(text= element_text(size=fontsize7, face="plain"), axis.text.x = element_text(angle=66, size=fontsize5, hjust=1), axis.text.y = element_text(size=fontsize5)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize4), legend.title=element_text(face="bold.italic")) +
+  scale_colour_manual(values=c("green3", "black","purple","brown","blue","pink2","orange","skyblue3"),
+                      name ="PRIMARY \nENERGY CARRIER:", 
+                      breaks=c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind"),
+                      labels=c("Biomass","Coal","Nat. Gas","Geothermal","Hydro","Nuclear","Solar","Wind")) +
+  scale_shape_manual(values=c(16,1),name="CCS:",breaks=c("woCCS","wCCS"),labels=c("No \nCSS","With \nCCS")) +
+  facet_wrap(~MODEL, scales="free_x", ncol=5, labeller=labeller(MODEL= model_labels2))
+EleDepCost2
+
+#
+# ---- OUTPUT: PRESENTATION ----
+# png("output/BioTech/Presentation/BioStrategy.png", width=6*ppi, height=4*ppi, res=ppi)
+# print(plot(BioStrat))
+# dev.off()
+# 
+# png("output/BioTech/Presentation/EleCost1.png", width=6*ppi, height=3*ppi, res=ppi)
+# print(plot(EleCost1))
+# dev.off()
+# 
+# png("output/BioTech/Presentation/EleCost2.png", width=6*ppi, height=3*ppi, res=ppi)
+# print(plot(EleCost2))
+# dev.off()
+# 
+# png("output/BioTech/Presentation/EleCost3.png", width=6*ppi, height=3*ppi, res=ppi)
+# print(plot(EleCost3))
+# dev.off()
+#
+# png("output/BioTech/Presentation/LiqDepCost1.png", width=6*ppi, height=3.5*ppi, res=ppi)
+# print(plot(LiqDepCost1))
+# dev.off()
+# #
+# png("output/BioTech/Presentation/LiqDepCost2.png", width=6*ppi, height=3.5*ppi, res=ppi)
+# print(plot(LiqDepCost2))
+# dev.off()
+# 
+# png("output/BioTech/Presentation/EleDepCost1.png", width=6*ppi, height=3.7*ppi, res=ppi)
+# print(plot(EleDepCost1))
+# dev.off()
+# #
+# png("output/BioTech/Presentation/EleDepCost2.png", width=6*ppi, height=3.7*ppi, res=ppi)
+# print(plot(EleDepCost2))
+# dev.off()
+
+
+# ---- END ---- 
