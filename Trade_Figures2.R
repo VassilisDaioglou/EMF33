@@ -21,8 +21,8 @@ library(gridExtra)
 library(scales)
 
 # set directory path for csv file
-setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - Documents/EMF33/Scenario results/R-Scripts")
-#setwd("C:/Users/vassi/Documents/Work/EMF33/R-Scripts")
+# setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - Documents/EMF33/Scenario results/R-Scripts")
+setwd("C:\Users\Asus\Documents\work backup\EMF33\R-Scripts")
 
 # ---- READ DATA FILE ----
 ppi <- 600
