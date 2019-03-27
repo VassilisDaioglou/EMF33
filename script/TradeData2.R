@@ -42,7 +42,6 @@
   var.vals <- unique(TradDATA$VARIABLE)
   year.vals <- unique(TradDATA$Year)
   
-  # Make correction for GRAPE15 (add primary equivalent to primary energy trade)
   TradDATA$VARID <- substr(TradDATA$VARIABLE, start=1, stop=50)
   TradDATA=data.table(TradDATA)
   TradDATA$VARID <-gsub( "[[:punct:]]","",TradDATA$VARID,fixed=F)
