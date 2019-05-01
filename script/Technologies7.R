@@ -24,8 +24,8 @@ ppi <- 600
 ActScen = "R3-B-lo-full"
 
 # set directory path for csv file
-setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - Documents/EMF33/Scenario results/R-Scripts")
-#setwd("C:/Users/vassi/Documents/Work/EMF33/R-Scripts")
+#setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - Documents/EMF33/Scenario results/R-Scripts")
+setwd("C:/Users/Asus/Documents/GitHub/EMF33")
 
 # Read Data Files
 TechData2=read.csv("data/Technology/TechDATA.csv", sep=",", dec=".", stringsAsFactors = FALSE)
@@ -2103,6 +2103,26 @@ BioEffCostPre <- ggplot(subset(GlobalData.BioCor1, Year=="2020"&!(CarrierID=="Ga
   facet_grid( Year~TechOrder2, scales="free_x", labeller=labeller(Year = dummy_labeler,TechOrder2=Biotech_labeler)) +
   theme(strip.text.x = element_text(size = fontsize1), strip.text.y = element_text(size = fontsize1))
 BioEffCostPre
+
+BioEffCostPre2 <- ggplot(subset(GlobalData.BioCor1, Year=="2020"&!(CarrierID=="Gas")&!(TechOrder2=="Other biomass")))+
+  geom_point(data=subset(LitData, !(Efficiency=="NA"|CapitalCo=="NA"|CarrierID=="Gas"|TechOrder2=="Other biomass")), aes(x=CapitalCo, y=Efficiency, fill=Capt, shape=Capt, colour=Capt), alpha=0.5, size=2.5) +
+  geom_point(data=, aes(x=CapitalCo, y=Efficiency, shape=Capt, colour=Capt), alpha=0.7, size=2.5) +
+  geom_rect(data=subset(Data, !(TechOrder2=="Gas"|TechOrder2=="Other biomass")), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.1) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ylim(0,1) + xlab(expression("Capital Costs [US$"[2005]*"/kW"[Out]*"]")) + ylab("Conversion Efficiency [-]") +
+  theme_bw() +
+  theme(text= element_text(size=11, face="plain"), axis.text.x = element_text(angle=66, size=10, hjust=1), axis.text.y = element_text(size=11)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=9)) +
+  scale_colour_manual(values=c("green4","black"),name="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
+  scale_fill_manual(values=c("green4","black"),name ="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
+  scale_shape_manual(values=c(10,16),name ="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
+  geom_blank(aes(x=x_max)) + geom_blank(aes(x=x_min)) +
+  guides(col = guide_legend(nrow = 2)) +
+  facet_grid( Year~TechOrder2, scales="free_x", labeller=labeller(Year = dummy_labeler,TechOrder2=Biotech_labeler)) +
+  theme(strip.text.x = element_text(size = 11), strip.text.y = element_text(size = 11))
+BioEffCostPre2
+
 #
 # ---- FIG: Fig 2 components----
 EleCost1 <- ggplot(subset(GlobalData.Bio4, CarrierID=="Ele"&!(Tech2=="Other biomass"|Tech2=="1st gen. ethanol")&variable=="LCOE1")) +
@@ -2274,6 +2294,10 @@ EleDepCost2
 # 
 # png("output/BioTech/Presentation/BioEffCost.png", width=9*ppi, height=4*ppi, res=ppi)
 # print(plot(BioEffCostPre))
+# dev.off()
+#
+# png("output/BioTech/Presentation/BioEffCost2.png", width=9*ppi, height=5*ppi, res=ppi)
+# print(plot(BioEffCostPre2))
 # dev.off()
 #
 # png("output/BioTech/Presentation/EleCost1.png", width=6*ppi, height=3*ppi, res=ppi)
