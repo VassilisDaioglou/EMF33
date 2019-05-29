@@ -1,5 +1,6 @@
 # R script to make figures for EMF33 Bioenergy Trade crosscut
 # clear memory
+
 # ---- START ----
 rm(list=ls()) 
 
@@ -22,7 +23,7 @@ library(scales)
 
 # set directory path for csv file
 # setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - Documents/EMF33/Scenario results/R-Scripts")
-setwd("C:\Users\Asus\Documents\work backup\EMF33\R-Scripts")
+setwd("C:/Users/Asus/Documents/GitHub/EMF33")
 
 # ---- READ DATA FILE ----
 ppi <- 600
@@ -32,17 +33,33 @@ BioPrice=read.csv("data/Trade/TradeRegPrice.csv", sep=",", dec=".", stringsAsFac
 NewReg$X <-NULL
 NewReg$Year = as.numeric(substr(NewReg$Year, start=1, stop=4))
 BioPrice$X <- NULL
+# Get global values
+NewReg.World = NewReg
+NewReg.World$value = ifelse(NewReg.World$value<0,0,NewReg.World$value)
+NewReg.World = spread(NewReg.World,REGION,value)
+NewReg.World=NewReg.World %>% mutate(World=Brazil+RLAM+USA+EU+ROECD90+MAF+EAsia+RAsia+REF)
+NewReg.World=melt(NewReg.World, id.vars=c("MODEL","SCENARIO","Year","variable"), na.rm=TRUE)
+colnames(NewReg.World)[5] <-"REGION"
+NewReg.World = subset(NewReg.World, REGION=="World")
+
+NewReg=rbind(NewReg,NewReg.World)
+rm(NewReg.World)
 # Spread Data to creat columns for each of the variables
 Trade = NewReg
 Trade1=spread(Trade, variable, value, drop=TRUE)
 
 # ---- PROCESS DATA ----
 # Identify biomass and fossil exporters
-Trade1$BioExporter = ifelse(Trade1$TradePrimBiomassVol>0,1,0)
-Trade1$FFExporter = ifelse((Trade1$TradePrimCoalVol+Trade1$TradePrimOilVol+Trade1$TradePrimGasVol)>0,1,0)
+Trade1$BioExporter = ifelse(Trade1$REGION=="World",0,
+                            ifelse(Trade1$TradePrimBiomassVol>0,1,0)
+                            )
+Trade1$FFExporter = ifelse(Trade1$REGION=="World",0,
+                           ifelse((Trade1$TradePrimCoalVol+Trade1$TradePrimOilVol+Trade1$TradePrimGasVol)>0,1,0)
+                            )
 Trade1 = Trade1 %>% mutate(TradeFF=(TradePrimCoalVol+TradePrimOilVol+TradePrimGasVol))
 # Biomass Imports / Biomass demand
 Trade1= Trade1 %>% mutate(BioImpDep=((1-BioExporter)*((TradePrimBiomassVol*-1)/PrimBiomass)))
+Trade1$BioImpDep = ifelse(Trade1$REGION=="World",-1*Trade1$BioImpDep,Trade1$BioImpDep)
 # Biomass Demand / TPES
 Trade1 = Trade1 %>% mutate(BioDep=(PrimBiomass/Prim))
 # Fossil Imports / Fossil demand
@@ -53,22 +70,12 @@ Trade2 = Trade1
 # Get median of FFImpDep for 2010
 FossilDepMedx <- aggregate(Trade2$FFImpDep, by=list(REGION=Trade2$REGION, Year=Trade2$Year), FUN=median, na.rm=TRUE)
 FossilDepMedx =subset(FossilDepMedx, Year=="2010")
-FossilDepMedx=subset(FossilDepMedx, REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
-# FossilDepMedx1 = FossilDepMedx
-# FossilDepMedx1$Year <- 2050
-# FossilDepMedx2 = FossilDepMedx
-# FossilDepMedx2$Year <- 2100
-# FossilDepMedx=rbind(FossilDepMedx1,FossilDepMedx2)
-
+FossilDepMedx$x = ifelse(FossilDepMedx$REGION=="World",-1*FossilDepMedx$x,FossilDepMedx$x) #Have to correct for world since it cant be negate, as dictated above
+FossilDepMedx=subset(FossilDepMedx, REGION=="World"|REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
 # Get median of FFDep for 2010
 FossilDepMedy <- aggregate(Trade2$FFDep, by=list(REGION=Trade2$REGION, Year=Trade2$Year), FUN=median, na.rm=TRUE)
 FossilDepMedy =subset(FossilDepMedy, Year=="2010")
-FossilDepMedy=subset(FossilDepMedy, REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
-# FossilDepMedy1 = FossilDepMedy
-# FossilDepMedy1$Year <- 2050
-# FossilDepMedy2 = FossilDepMedy
-# FossilDepMedy2$Year <- 2100
-# FossilDepMedy=rbind(FossilDepMedy1,FossilDepMedy2)
+FossilDepMedy=subset(FossilDepMedy, REGION=="World"|REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
 # Exporters: Fraction of produced biomass destined for export
 Trade2= Trade2 %>% mutate(BioExpFrac=(BioExporter*(TradePrimBiomassVol/(PrimBiomass+TradePrimBiomassVol))))
 # Importers: Fraction of consumed biomass imported
@@ -139,20 +146,6 @@ Carriers$RegOrder = factor(Carriers$REGION, levels=c('Brazil','RLAM','USA','EU',
 Carriers$value[Carriers$MODEL=="POLES EMF33" & Carriers$variable=="TradePrimBiomassVol"] <- 0
 Carriers$value[Carriers$MODEL=="IMAGE" & Carriers$variable=="TradePrimBiomassVol"] <- 0
 
-# Carriers1 <- ggplot(data=Carriers, mapping=aes(x=Year, y=value, fill=variable)) +
-#   geom_bar(stat="identity") +
-#   geom_hline(yintercept=0,size = 0.1, colour='black') +
-#   theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-#   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-#   ylab("EJ/yr") +
-#   xlab("") +
-#   scale_color_manual(values=c("forestgreen","purple","red"),
-#                      name="",
-#                      breaks=c("TradePrimBiomassVol","TradeSecLiquidsBiomassVol","TradeSecSolidsBiomassVol"),
-#                      labels=c("Primary","Liquids","Solids")
-#   )+
-#   facet_grid(RegOrder ~ MODEL , labeller=labeller(REGION = region_label, MODEL=model_labels))
-# Carriers1
 # List of relevant models
 BioTradCheck = subset(EneTrade, variable=="TradePrimBiomassVol")
 BioTradCheck = subset(BioTradCheck, !(BioTradCheck$Global==0))
@@ -162,7 +155,6 @@ colnames(BioTradCheck) <- c("MODEL")
 Fossil<-data.frame("Fossil")
 names(Fossil)<-c("MODEL")
 BioTradCheck=rbind(BioTradCheck,Fossil)
-
 
 # ---- DFs FOR FIGS ----
 # Check which models actually trade biomass
@@ -273,7 +265,6 @@ BioTradVal=subset(BioTradVal,!is.na(BioTradVal$TradePrimBiomassVal))
 BioPrice$ScenOrder = factor(BioPrice$SCENARIO, levels=c('R3-BASE-0-full','R3-B-hi-full','R3-B-lo-full','R3-B-vlo-full'))
 BioPrice$RegOrder = factor(BioPrice$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF")) 
 
-
 BioTradFrac = subset(Trade3, REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
 BioTradFrac = subset(BioTradFrac, Year=="2050"|Year=="2100")
 BioTradFrac=subset(BioTradFrac,!is.na(BioTradFrac$BioExpFrac)&!is.na(BioTradFrac$BioImpFrac))
@@ -291,10 +282,11 @@ BioTradFrac <- melt(BioTradFrac, measure.vars=c('BioExpFrac', 'BioImpFrac'))
 BioTradFrac = subset(BioTradFrac, !(value==0))
 BioTradFrac$value[BioTradFrac$value > 1] <- 1 
 BioTradFrac$value[BioTradFrac$value < -1] <- -1 
-BioTradFrac1 = subset(BioTradFrac, SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-hi-nobeccs"|SCENARIO=="R3-B-hi-nofuel"|SCENARIO=="R3-B-hi-none")
+BioTradFrac1 = subset(BioTradFrac, SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full")
 BioTradFrac1$RegOrder = factor(BioTradFrac1$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF")) 
+BioTradFrac1$ScenOrder = factor(BioTradFrac1$SCENARIO, levels=c('R3-BASE-0-full','R3-B-lo-full','R3-B-vlo-full')) 
 
-Security = subset(Trade3, REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
+Security = subset(Trade3, REGION=="World"|REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
 Security = subset(Security,Year=="2050"|Year=="2100")
 Security = subset(Security, select=-c(TradePrimBiomassVol,TradePrimBiomassVal,BioExporter,FFExporter,TradeFF,FFImpDep,FFDep,BioExpFrac,BioImpFrac))
 Security =subset(Security,!is.na(Security$BioImpDep))
@@ -311,19 +303,12 @@ FossilDepMed3=FossilDepMed
 FossilDepMed1$SCENARIO <- "R3-B-hi-full"
 FossilDepMed2$SCENARIO <- "R3-B-lo-full"
 FossilDepMed3$SCENARIO <- "R3-B-vlo-full"
-# FossilDepMed1=FossilDepMed
-# FossilDepMed2=FossilDepMed
-# FossilDepMed3=FossilDepMed
-# FossilDepMed2$SCENARIO <- "R3-B-hi-full"
-# FossilDepMed3$SCENARIO <- "R3-B-lo-full"
-# FossilDepMed <- rbind(FossilDepMed1,FossilDepMed2,FossilDepMed3)
-#FossilDepMed <-FossilDepMed[,c(5,6,1,2,3,4)]
 Security <- rbind(Security,FossilDepMed,FossilDepMed1,FossilDepMed2,FossilDepMed3)
 
 Security1 = subset(Security, SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full")
 Security1$ScenOrder = factor(Security1$SCENARIO, levels=c('R3-BASE-0-full','R3-B-hi-full','R3-B-lo-full','R3-B-vlo-full'))
 Security1$ModelOrder = factor(Security1$MODEL, levels=c("Fossil","AIM/CGE","BET","COFFEE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"))
-Security1$RegOrder = factor(Security1$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF")) 
+Security1$RegOrder = factor(Security1$REGION, levels=c('World','Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF")) 
 Security1$Year <- factor(Security1$Year)
 
 # Shannon-Weiner Index for Diversity of Supply
@@ -344,7 +329,7 @@ SWDiversity <- spread(SWDiversity,REGION,value)
 SWDiversity[is.na(SWDiversity)]<-0
 SWDiversity= SWDiversity %>% mutate(NetExport=(Brazil+EAsia+EU+MAF+RAsia+REF+RLAM+ROECD90+USA)) # Total Global Exports
 SWDiversity$variable <-NULL
-SWDiversity <- melt(SWDiversity, measure.vars=c(unique(BioTradVol$REGION)))  
+SWDiversity <- melt(SWDiversity, measure.vars=c('Brazil','EAsia','EU','MAF','RAsia','REF','RLAM','ROECD90','USA'))  
 names(SWDiversity)[names(SWDiversity)=="value"] <- "TradPrimBiomassVol"
 names(SWDiversity)[names(SWDiversity)=="variable"] <- "REGION"
 SWDiversity= SWDiversity %>% mutate(ShareExport=(TradPrimBiomassVol/NetExport)) # Share of exporters' global market
@@ -611,24 +596,7 @@ for(i in unique(SecurityStat.1$REGION)){
 }
 colnames(SecurityTest.Tuk)[6] <- 'p_adj'
 
-#SecurityTest$names <- TestScenLabels[match(SecurityTest$names,TestScenLabels$NameIn),2]
-#SecurityTest = subset(SecurityTest, !(names=="Baseline vs. lo"))
 boxplot(SecurityTest.Tuk$p_adj~SecurityTest.Tuk$names)
-
-# DEMO TESTS
-#Significance of Trade across scenarios
-# boxplot(DiversityStat$NetExport~DiversityStat$ScenOrder)
-# TradeSig <- aov(NetExport~ScenOrder, data=DiversityStat)
-# summary(TradeSig)
-# TukeyHSD(TradeSig)
-
-# DRIVERS OF TRADE: Check if regional trade fraction changes across scenarios 
-# RDriverSig = subset(DriverStat, REGION=="EU")
-# RDriverSig$ScenOrder = factor(RDriverSig$SCENARIO, levels=c(unique(RDriverSig$SCENARIO)))
-# boxplot(RDriverSig$value~RDriverSig$ScenOrder)
-# fit <- aov(value~SCENARIO, data=RDriverSig)
-# summary(fit)
-# TukeyHSD(fit)
 
 # ---- LABELS ----
 scen_labels <- c("Fossil"="Fossil (2010)",
@@ -653,8 +621,8 @@ var_labels <- c("Trade|Primary Energy|Biomass|Volume"="Biomass","Trade|Primary E
 model_labels <- c("AIM/CGE"="AIM","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE","FARM 3.1"="FARM")
 region_label <- c("EU"="EU","USA"="USA","ROECD90"="Rest OECD","EAsia"="East Asia","RAsia"="Rest Asia","Brazil"="Brazil","RLAM"="Rest Lat.Am.","REF"="Former USSR","MAF"="M.East & Africa","NetTrade"="Global (gross)","Global"="Global (gross)")
 #  
-# ---- FIG: VOLUME PRODUCTION ----
-FigProd <- ggplot(data=subset(BioProd, variable=="BioProd"), mapping=aes(x=Year, y=value, fill=RegOrder)) +
+# ---- FIG.1/S1: VOLUME PRODUCTION/TRADE ----
+FigProd <- ggplot(data=subset(BioProd, variable=="BioProd"&(!REGION=="World")), mapping=aes(x=Year, y=value, fill=RegOrder)) +
   geom_bar(stat="identity") +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   ggtitle("A: Regional Primary Bioenergy Production") + theme(plot.title = element_text(lineheight=20, face="bold")) +
@@ -673,7 +641,7 @@ FigProd <- ggplot(data=subset(BioProd, variable=="BioProd"), mapping=aes(x=Year,
   facet_grid(ScenOrder ~ MODEL, labeller=labeller(MODEL=model_labels, ScenOrder=scen_labels))
 FigProd
 
-FigTrad <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"), mapping=aes(x=Year, y=value, fill=RegOrder)) +
+FigTrad <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(!REGION=="World")), mapping=aes(x=Year, y=value, fill=RegOrder)) +
   geom_bar(stat="identity") +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   ggtitle("B: Regional Primary Bioenergy Net Trade") + theme(plot.title = element_text(lineheight=20, face="bold")) +
@@ -694,125 +662,27 @@ FigTrad
 
 lay<-rbind(1,1,1,2,2,2,2) 
 FigTradeFull <- grid.arrange(FigProd,FigTrad, layout_matrix=lay)
-#
-# ---- FIG: VOLUME TRADE ----
-BioTradVol=subset(BioTradVol, MODEL %in% BioTradCheck$MODEL)
-Trade_BioVol <-ggplot(data=BioTradVol, aes(x=Year, y=TradePrimBiomassVol, colour=REGION, fill=REGION)) + 
-  #geom_bar(stat="identity", position="dodge")+
-  geom_line(size=0.2)+
+
+FigTrad2 <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full")&!REGION=="World")
+                   , mapping=aes(x=Year, y=value, fill=RegOrder)) +
+  geom_bar(stat="identity") +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
-  xlim(2010,2100) +
-  # Text
   theme_bw() +
-  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
-  theme(legend.title=element_blank(), legend.position="bottom") +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, vjust=0.5), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  ylab(expression(paste(EJ[Primary],"/yr",""))) +
+  theme(legend.title=element_blank(), legend.position="bottom") +
+  ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
   xlab("") +
-  # Legend                      Brazil      EAsia      EU        MAF      RASIA     REF       RLAM      ROECD90   USA
-  scale_colour_manual(values=c("#006400", "#FFB90F", "#0000FF","#8B4513","#838B8B","firebrick1","#00BFFF","#8A2BE2","#000000"), 
-                      name ="Regions",
-                      breaks=c("EU","USA","ROECD90","Brazil","RLAM","MAF","EAsia","RAsia","REF"),
-                      labels=c("EU","USA","Rest OECD","Brazil","Rest Lat.Am.","M. East & Africa","East Asia","Rest Asia","Former USSR")
+  scale_x_continuous(breaks=seq(2020, 2100, 20)) +
+  scale_fill_manual(values=c("forestgreen","greenyellow","navy","dodgerblue","cadetblue1","brown","blueviolet","pink","red"),
+                    name ="",
+                    breaks=c("Brazil","RLAM","USA","EU","ROECD90","MAF","EAsia","RAsia","REF"),
+                    labels=c("Brazil","Rest Lat.Am.","USA","EU","Rest OECD","M. East & Africa","East Asia","Rest Asia","Former USSR")
   ) +
-  facet_grid(MODEL ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,MODEL = model_labels), scales="free_y")
-Trade_BioVol
+  facet_grid(ScenOrder ~ MODEL, labeller=labeller(MODEL=model_labels, ScenOrder=scen_labels))
+FigTrad2
 #
-# ---- FIG: VALUE TRADE ----
-BioPrice=subset(BioPrice, MODEL %in% BioTradCheck$MODEL)
-BioPrice$ScenOrder = factor(BioPrice$SCENARIO, levels=c("R3-BASE-0-full","R3-B-hi-full","R3-B-lo-full","R3-B-vlo-full"))
-
-BioPrice1 = subset(BioPrice, VARIABLE=="BiomassDelivered"&SCENARIO=="R3-B-hi-full")
-Trade_BioVal <-ggplot(data=BioPrice1, aes(x=Year, y=value, colour=REGION, fill=REGION)) + 
-  geom_line(size=0.2)+
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  xlim(2010,2100) +
-  scale_y_continuous(breaks=seq(-600, 600, 200)) +
-  # Text
-  theme_bw() +
-  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
-  theme(legend.title=element_blank(), legend.position="bottom") +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(text= element_text(size=7, face="plain")) +
-  #ylab( expression(paste("Billion US$/yr",""))) +
-  ylab( expression(paste("Billion US","$"[2005],"/yr",""))) +
-  xlab("") +
-  # Legend                      Brazil      EAsia      EU        MAF      RASIA     REF       RLAM      ROECD90   USA
-  scale_colour_manual(values=c("#006400", "#FFB90F", "#0000FF","#8B4513","#838B8B","firebrick1","#00BFFF","#8A2BE2","#000000"), 
-                      name ="Regions",
-                      breaks=c("EU","USA","ROECD90","Brazil","RLAM","MAF","EAsia","RAsia","REF"),
-                      labels=c("EU","USA","Rest OECD","Brazil","Rest Lat.Am.","M. East & Africa","East Asia","Rest Asia","Former USSR")
-  ) +
-  facet_grid(MODEL ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,MODEL = model_labels), scale="free_y")
-Trade_BioVal
-
-
-Trade_BioVal <-ggplot() +
-  geom_point(data=subset(BioPrice.Norm, VARIABLE=="BiomassMarket"&(Year=="2050"|Year=="2100")&SCENARIO=="R3-B-hi-full")
-                      , aes(x=RegOrder ,y=NormPric, colour=ScenOrder, shape=MODEL)) +#,position = position_jitter(w = 0.5, h = 0)) + 
-  #geom_line(size=0.2)+
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  geom_vline(xintercept=c(1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5), size=0.1, colour="gray") +
-  #xlim(2010,2100) +
-  #scale_y_continuous(breaks=seq(-600, 600, 200)) +
-  theme_bw() +
-  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
-  theme(legend.title=element_blank(), legend.position="bottom") +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank()) + 
-  theme(text= element_text(size=7, face="plain")) +
-  ylab( expression(paste("Billion US","$"[2005],"/yr",""))) +
-  xlab("") +
-  # scale_colour_manual(values=c("#006400", "#FFB90F", "#0000FF","#8B4513","#838B8B","firebrick1","#00BFFF","#8A2BE2","#000000"), 
-  #                     name ="Regions",
-  #                     breaks=c("EU","USA","ROECD90","Brazil","RLAM","MAF","EAsia","RAsia","REF"),
-  #                     labels=c("EU","USA","Rest OECD","Brazil","Rest Lat.Am.","M. East & Africa","East Asia","Rest Asia","Former USSR")
-  # ) +
-  scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
-                     name="",
-                     breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
-  ) +
-  #facet_grid(Year ~ MODEL, labeller=labeller(RegOrder = region_label), scale="free_y")
-  facet_wrap(Year ~ MODEL, nrow = 2, labeller=labeller(MODEL= model_labels,RegOrder = region_label), scale="free_y")
-Trade_BioVal
-
-# ---- FIG: PRICE VS. TRADE
-PricTrade1=subset(PricTrade, SCENARIO=="R3-B-hi-full"&!(REGION=="ASIA"|REGION=="LAM"|REGION=="OECD90")&(Year=="2050"|Year=="2100"))
-PricTrade1$ID <- NULL
-PricTrade1=na.omit(PricTrade1)
-
-FigPricTrad <-ggplot() + 
-  geom_point(data=PricTrade1,aes(x=TradePrimBiomassVol, y=BioPrice, colour=REGION, shape=MODEL)) + 
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  #xlim(2010,2100) +
-  #scale_y_continuous(breaks=seq(-600, 600, 200)) +
-  theme_bw() +
-  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
-  theme(legend.title=element_blank(), legend.position="bottom") +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(text= element_text(size=7, face="plain")) +
-  #ylab( expression(paste("Billion US$/yr",""))) +
-  # ylab( expression(paste("Billion US","$"[2005],"/yr",""))) +
-  # xlab("") +
-  # Legend                      Brazil      EAsia      EU        MAF      RASIA     REF       RLAM      ROECD90   USA
-  scale_colour_manual(values=c("#006400", "#FFB90F", "#0000FF","#8B4513","#838B8B","firebrick1","#00BFFF","#8A2BE2","#000000"), 
-                      name ="Regions",
-                      breaks=c("EU","USA","ROECD90","Brazil","RLAM","MAF","EAsia","RAsia","REF"),
-                      labels=c("EU","USA","Rest OECD","Brazil","Rest Lat.Am.","M. East & Africa","East Asia","Rest Asia","Former USSR")
-  ) +
-  scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
-                     name="",
-                     breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
-  ) + 
-  facet_grid(MODEL~Year, scales="free_y")
-FigPricTrad
-
-#facet_grid(RegOrder ~SCENARIO , labeller=labeller(RegOrder = region_label, SCENARIO = scen_labels))
-
-#
-# ---- FIG: EXPORT FRAC ----
+# ---- FIG.S3: EXPORT FRAC ----
 BioTradFrac1=subset(BioTradFrac1, MODEL %in% BioTradCheck$MODEL)
 ExportFrac <- ggplot() +
   geom_jitter(data=BioTradFrac1, mapping=aes(x=Year, y=value, shape=MODEL, colour=variable), size = 1, width=9, alpha = 0.8) +
@@ -840,13 +710,14 @@ ExportFrac <- ggplot() +
                       breaks=c("BioExpFrac","BioImpFrac"),
                       labels=c("Dependence on Exports","Dependence on Imports")
   )+
-  facet_grid(RegOrder ~SCENARIO , labeller=labeller(RegOrder = region_label, SCENARIO = scen_labels))
+  facet_grid(RegOrder ~ScenOrder , labeller=labeller(RegOrder = region_label, ScenOrder = scen_labels))
 ExportFrac
 #
-# ---- FIG: SECURITY ----
+# ---- FIG.3: SECURITY ----
 Security1=subset(Security1, MODEL %in% BioTradCheck$MODEL)
 SecurityFig <- ggplot() +  
-  geom_point(data=Security1, mapping=aes(x=value.x, y=value.y, color=Year, shape=ModelOrder), alpha=0.75) +
+  geom_point(data=subset(Security1, !(SCENARIO=="R3-B-hi-full"|REGION=="World"))
+             , mapping=aes(x=value.x, y=value.y, color=Year, shape=ModelOrder), alpha=0.75) +
   # Limits
   coord_cartesian(ylim=c(0, 1), xlim=c(0, 1)) + 
   scale_y_continuous(breaks=seq(0,1,0.25)) +
@@ -863,13 +734,41 @@ SecurityFig <- ggplot() +
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
                      labels=c("Fossil (median)","AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
   ) +
-  scale_color_manual(values=c("black","forestgreen","red"),
+  scale_color_manual(values=c("black","blue2","brown2"),
                      name="Year",
                      breaks=c("2010","2050","2100"),
                      labels=c("2010 (Fossil only)","2050","2100")
   ) +
   facet_grid(RegOrder ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,RegOrder = region_label))
 SecurityFig
+
+SecurityFig2 <- ggplot() +  
+  geom_point(data=subset(Security1, !(SCENARIO=="R3-B-hi-full")&REGION=="World")
+             , mapping=aes(x=value.x, y=value.y, color=Year, shape=ModelOrder), alpha=0.75) +
+  # Limits
+  coord_cartesian(ylim=c(0, 1), xlim=c(0, 1)) + 
+  scale_y_continuous(breaks=seq(0,1,0.25)) +
+  scale_x_continuous(breaks=seq(0,1,0.25))+
+  # Text
+  theme_bw() +
+  theme(text= element_text(size=6, face="bold"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(text= element_text(size=7, face="plain")) +
+  ylab("Bioenergy fraction of TPES [-]") +
+  xlab("Bioenergy Trade Fraction [-]") +
+  scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
+                     name="",
+                     breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("Fossil (median)","AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+  ) +
+  scale_color_manual(values=c("black","blue2","brown2"),
+                     name="Year",
+                     breaks=c("2010","2050","2100"),
+                     labels=c("2010 (Fossil only)","2050","2100")
+  ) +
+  facet_grid(. ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,RegOrder = region_label))
+SecurityFig2
+
 #
 # ---- FIG: S-W DIVERSITY ----
 SupplyDiversity <-ggplot() + 
@@ -1238,22 +1137,35 @@ ExportFracRCP
 
 
 # ---- OUTPUTS FOR PAPER----
-# tiff(file = "output/BioTrade/Fig1.tiff", width = 6*ppi, height = 8*ppi, units = "px", res = ppi)
-# plot(FigTradeFull)
+# tiff(file = "output/BioTrade/Fig1.tiff", width = 6*ppi, height = 5*ppi, units = "px", res = ppi)
+# plot(FigTrad2)
 # dev.off()
 # 
 # tiff("output/BioTrade/Fig2.tiff", width=4.9*ppi, height=5*ppi, res=ppi)
 # plot(MapTradFracAll)
 # dev.off()
 # 
-# tiff("output/BioTrade/Fig3.tiff", width=6*ppi, height=8*ppi, res=ppi)
-# plot(SecurityFig)
+# tiff("output/BioTrade/Fig3.tiff", width=6*ppi, height=5*ppi, res=ppi)
+# plot(SecurityFig2)
 # dev.off()
 # 
 # tiff("output/BioTrade/Fig4.tiff", width=6.5*ppi, height=3*ppi, res=ppi)
 # plot(SupplyDiversity)
 # dev.off()
-
+#
+#
+# tiff(file = "output/BioTrade/FigS1.tiff", width = 6*ppi, height = 8*ppi, units = "px", res = ppi)
+# plot(FigTradeFull)
+# dev.off()
+# 
+# png("output/BioTrade/FigS3.png", width=5.5*ppi, height=8*ppi, res=ppi)
+# print(plot(ExportFrac))
+# dev.off()
+#
+# tiff("output/BioTrade/FigS5.tiff", width=6*ppi, height=5*ppi, res=ppi)
+# plot(SecurityFig)
+# dev.off()
+#
 # ---- OTHER OUTPUTS FOR PAPER----
 # png("output/BioTrade/BioProdTrade.png", width=6*ppi, height=8*ppi, res=ppi)
 # print(plot(FigTradeFull))
@@ -1269,10 +1181,6 @@ ExportFracRCP
 # 
 # png("output/BioTrade/MapTradFrac.jpg", width=4.9*ppi, height=5*ppi, res=ppi)
 # print(plot(MapTradFracAll))
-# dev.off()
-# 
-# png("output/BioTrade/BioExportFrac.png", width=5.5*ppi, height=8*ppi, res=ppi)
-# print(plot(ExportFrac))
 # dev.off()
 # 
 # png("output/BioTrade/Security.png", width=6*ppi, height=8*ppi, res=ppi)
@@ -1329,6 +1237,124 @@ ExportFracRCP
 #                                   BioDep,BioImpDep))
 # write.xlsx(BRTrade, file="output/Brazil/BRTrade.xlsx", sheetName="BrazilTrade", row.names=TRUE, showNA = TRUE)
 
+# ---- EXTRA FIGURES GENERAL ----
+# ---- *** FIG: VOL TRADE (LINE) ----
+BioTradVol=subset(BioTradVol, MODEL %in% BioTradCheck$MODEL)
+Trade_BioVol <-ggplot(data=BioTradVol, aes(x=Year, y=TradePrimBiomassVol, colour=REGION, fill=REGION)) + 
+  #geom_bar(stat="identity", position="dodge")+
+  geom_line(size=0.2)+
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  xlim(2010,2100) +
+  # Text
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(legend.title=element_blank(), legend.position="bottom") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  ylab(expression(paste(EJ[Primary],"/yr",""))) +
+  xlab("") +
+  # Legend                      Brazil      EAsia      EU        MAF      RASIA     REF       RLAM      ROECD90   USA
+  scale_colour_manual(values=c("#006400", "#FFB90F", "#0000FF","#8B4513","#838B8B","firebrick1","#00BFFF","#8A2BE2","#000000"), 
+                      name ="Regions",
+                      breaks=c("EU","USA","ROECD90","Brazil","RLAM","MAF","EAsia","RAsia","REF"),
+                      labels=c("EU","USA","Rest OECD","Brazil","Rest Lat.Am.","M. East & Africa","East Asia","Rest Asia","Former USSR")
+  ) +
+  facet_grid(MODEL ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,MODEL = model_labels), scales="free_y")
+Trade_BioVol
+# ---- ***FIG: VALUE TRADE ----
+BioPrice=subset(BioPrice, MODEL %in% BioTradCheck$MODEL)
+BioPrice$ScenOrder = factor(BioPrice$SCENARIO, levels=c("R3-BASE-0-full","R3-B-hi-full","R3-B-lo-full","R3-B-vlo-full"))
+
+BioPrice1 = subset(BioPrice, VARIABLE=="BiomassDelivered"&SCENARIO=="R3-B-hi-full")
+Trade_BioVal <-ggplot(data=BioPrice1, aes(x=Year, y=value, colour=REGION, fill=REGION)) + 
+  geom_line(size=0.2)+
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  xlim(2010,2100) +
+  scale_y_continuous(breaks=seq(-600, 600, 200)) +
+  # Text
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(legend.title=element_blank(), legend.position="bottom") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(text= element_text(size=7, face="plain")) +
+  #ylab( expression(paste("Billion US$/yr",""))) +
+  ylab( expression(paste("Billion US","$"[2005],"/yr",""))) +
+  xlab("") +
+  # Legend                      Brazil      EAsia      EU        MAF      RASIA     REF       RLAM      ROECD90   USA
+  scale_colour_manual(values=c("#006400", "#FFB90F", "#0000FF","#8B4513","#838B8B","firebrick1","#00BFFF","#8A2BE2","#000000"), 
+                      name ="Regions",
+                      breaks=c("EU","USA","ROECD90","Brazil","RLAM","MAF","EAsia","RAsia","REF"),
+                      labels=c("EU","USA","Rest OECD","Brazil","Rest Lat.Am.","M. East & Africa","East Asia","Rest Asia","Former USSR")
+  ) +
+  facet_grid(MODEL ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,MODEL = model_labels), scale="free_y")
+Trade_BioVal
+
+
+Trade_BioVal <-ggplot() +
+  geom_point(data=subset(BioPrice.Norm, VARIABLE=="BiomassMarket"&(Year=="2050"|Year=="2100")&SCENARIO=="R3-B-hi-full")
+             , aes(x=RegOrder ,y=NormPric, colour=ScenOrder, shape=MODEL)) +#,position = position_jitter(w = 0.5, h = 0)) + 
+  #geom_line(size=0.2)+
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=c(1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5), size=0.1, colour="gray") +
+  #xlim(2010,2100) +
+  #scale_y_continuous(breaks=seq(-600, 600, 200)) +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(legend.title=element_blank(), legend.position="bottom") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank()) + 
+  theme(text= element_text(size=7, face="plain")) +
+  ylab( expression(paste("Billion US","$"[2005],"/yr",""))) +
+  xlab("") +
+  # scale_colour_manual(values=c("#006400", "#FFB90F", "#0000FF","#8B4513","#838B8B","firebrick1","#00BFFF","#8A2BE2","#000000"), 
+  #                     name ="Regions",
+  #                     breaks=c("EU","USA","ROECD90","Brazil","RLAM","MAF","EAsia","RAsia","REF"),
+  #                     labels=c("EU","USA","Rest OECD","Brazil","Rest Lat.Am.","M. East & Africa","East Asia","Rest Asia","Former USSR")
+  # ) +
+  scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
+                     name="",
+                     breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+  ) +
+  #facet_grid(Year ~ MODEL, labeller=labeller(RegOrder = region_label), scale="free_y")
+  facet_wrap(Year ~ MODEL, nrow = 2, labeller=labeller(MODEL= model_labels,RegOrder = region_label), scale="free_y")
+Trade_BioVal
+
+# ---- ***FIG: PRICE VS. TRADE ----
+PricTrade1=subset(PricTrade, SCENARIO=="R3-B-hi-full"&!(REGION=="ASIA"|REGION=="LAM"|REGION=="OECD90")&(Year=="2050"|Year=="2100"))
+PricTrade1$ID <- NULL
+PricTrade1=na.omit(PricTrade1)
+
+FigPricTrad <-ggplot() + 
+  geom_point(data=PricTrade1,aes(x=TradePrimBiomassVol, y=BioPrice, colour=REGION, shape=MODEL)) + 
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  #xlim(2010,2100) +
+  #scale_y_continuous(breaks=seq(-600, 600, 200)) +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(legend.title=element_blank(), legend.position="bottom") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(text= element_text(size=7, face="plain")) +
+  #ylab( expression(paste("Billion US$/yr",""))) +
+  # ylab( expression(paste("Billion US","$"[2005],"/yr",""))) +
+  # xlab("") +
+  # Legend                      Brazil      EAsia      EU        MAF      RASIA     REF       RLAM      ROECD90   USA
+  scale_colour_manual(values=c("#006400", "#FFB90F", "#0000FF","#8B4513","#838B8B","firebrick1","#00BFFF","#8A2BE2","#000000"), 
+                      name ="Regions",
+                      breaks=c("EU","USA","ROECD90","Brazil","RLAM","MAF","EAsia","RAsia","REF"),
+                      labels=c("EU","USA","Rest OECD","Brazil","Rest Lat.Am.","M. East & Africa","East Asia","Rest Asia","Former USSR")
+  ) +
+  scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
+                     name="",
+                     breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+  ) + 
+  facet_grid(MODEL~Year, scales="free_y")
+FigPricTrad
+
+#facet_grid(RegOrder ~SCENARIO , labeller=labeller(RegOrder = region_label, SCENARIO = scen_labels))
+#
+
+#
 # ---- END ----
 # # Delete excess variables
 # rm(FossilDepMed,FossilDepMedx,FossilDepMedy,DiversityStat,TestScenLabels,SecurityCompare1,Fossil)
