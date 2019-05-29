@@ -682,36 +682,110 @@ FigTrad2 <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(SCENARIO
   facet_grid(ScenOrder ~ MODEL, labeller=labeller(MODEL=model_labels, ScenOrder=scen_labels))
 FigTrad2
 #
-# ---- FIG.S3: EXPORT FRAC ----
-BioTradFrac1=subset(BioTradFrac1, MODEL %in% BioTradCheck$MODEL)
-ExportFrac <- ggplot() +
-  geom_jitter(data=BioTradFrac1, mapping=aes(x=Year, y=value, shape=MODEL, colour=variable), size = 1, width=9, alpha = 0.8) +
-  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1)) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  geom_vline(xintercept=2075, size=0.1, colour="gray2") +
-  coord_cartesian(ylim=c(-1, 1)) +
-  scale_y_continuous(breaks=seq(-1,1,0.5)) +
-  coord_cartesian(xlim=c(2040,2110)) +
-  scale_x_continuous(breaks = seq(2050,2100,50)) +
-  # Text
+# ---- FIG.2: MAP ----
+# 1. Map of exporters/ importers. Exporters=green, Importers=red, gradient = # of agreeing models
+# 2. Mapg of trade volume importance. Median trade volume of agreeing models, as a % of total trade 
+# Map of Importers / Exporters / No Agreement
+l=0
+for(i in unique(ModelAgree$SCENARIO))
+{ for(j in c(2060,2100))
+{
+  l=l+1
+  ModelAgree.1=subset(ModelAgree, SCENARIO==i&Year==j)
+  map.EMF=read.csv("data/Trade/MapEMF.csv", sep=",", dec=".", stringsAsFactors = FALSE)
+  map.EMF1=map.EMF
+  map.EMF1$BioExporter <- ModelAgree.1[match(map.EMF1$EMFRegion,ModelAgree.1$REGION),4]
+  map.EMF1$ModelFraction <- ModelAgree.1[match(map.EMF1$EMFRegion,ModelAgree.1$REGION),9]
+  # Map of How important Imports/Exports are
+  ModelAgree.ModelExpMed1=subset(ModelAgree.ModelExpMed, SCENARIO==i&Year==j)
+  map.EMF.Exp=subset(map.EMF1, BioExporter==1|BioExporter==0)
+  map.EMF.Exp$MedTradFrac <- ModelAgree.ModelExpMed1[match(map.EMF.Exp$EMFRegion,ModelAgree.ModelExpMed1$REGION),5]
+  ModelAgree.ModelImpMed1=subset(ModelAgree.ModelImpMed, SCENARIO==i&Year==j)
+  map.EMF.Imp=subset(map.EMF1, BioExporter==-1)
+  map.EMF.Imp$MedTradFrac <- ModelAgree.ModelImpMed1[match(map.EMF.Imp$EMFRegion,ModelAgree.ModelImpMed1$REGION),5]
+  
+  map.EMF2=rbind(map.EMF.Exp,map.EMF.Imp)
+  map.EMF2$MedTradFrac[map.EMF2$ModelFraction=="No Agreement"] <- 0
+  # Categorize Importance
+  map.EMF2$MedTradFracRound = round(map.EMF2$MedTradFrac, digits=-1)
+  
+  MapTradFrac <- ggplot() +
+    geom_polygon(data =map.EMF2, aes(x=long, y = lat, group=group,fill=MedTradFracRound), color="grey40", size = 0.1, alpha=0.9) + 
+    #geom_map(data=map.EMF, map=map.EMF, aes(map_id=EMFRegion, x=long, y=lat, fill=ModelFraction))
+    coord_fixed(1) +
+    theme(title = element_text(size=7)) +
+    ggtitle(paste(scen_labels[i],"in",j,sep=" ")) +
+    theme_bw() +
+    theme(text= element_text(size=7, face="plain")) +
+    theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),panel.border = element_blank()) +
+    theme(axis.text = element_blank(), axis.ticks =element_blank(), axis.title = element_blank()) +
+    theme(legend.position="bottom", legend.text = element_text(angle=0, size=7), legend.direction="horizontal") +
+    scale_fill_gradient2(low="firebrick", high="forestgreen", mid="gainsboro", 
+                         midpoint=0, space="Lab",
+                         limits=c(-50,50),
+                         guide_legend(title="Portion of Global Trade (%)"),
+                         guide=FALSE)
+  MapTradFrac
+  
+  assign(paste("MapTradFrac",i,j,sep="_"),MapTradFrac)
+}
+}
+
+legend <- ggplot() +
+  geom_polygon(data =map.EMF2, aes(x=long, y = lat, group=group,fill=MedTradFracRound), color="white", size = 0.1, alpha=0) + 
+  coord_fixed(0) +
+  theme(text= element_text(size=7, face="plain")) +
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),panel.border = element_blank()) +
+  theme(axis.text = element_blank(), axis.ticks =element_blank(), axis.title = element_blank()) +
+  theme(legend.position="bottom", legend.text = element_text(angle=0, size=7), legend.direction="horizontal") +
+  scale_fill_gradient2(low="firebrick", high="forestgreen", mid="gainsboro", 
+                       midpoint=0, space="Lab",
+                       limits=c(-50,50),
+                       guide_legend(title="Portion of Global Trade (%)"))
+legend
+
+`MapTradFrac_R3-BASE-0-full_2060`
+`MapTradFrac_R3-B-hi-full_2060`
+`MapTradFrac_R3-B-lo-full_2060`
+`MapTradFrac_R3-B-vlo-full_2060`
+
+`MapTradFrac_R3-BASE-0-full_2100`
+`MapTradFrac_R3-B-hi-full_2100`
+`MapTradFrac_R3-B-lo-full_2100`
+`MapTradFrac_R3-B-vlo-full_2100`
+
+lay<-rbind(c(1,2),c(3,4),c(5,5)) 
+MapTradFracAll <- grid.arrange(`MapTradFrac_R3-B-hi-full_2060`,`MapTradFrac_R3-B-hi-full_2100`,
+                               `MapTradFrac_R3-B-lo-full_2060`,`MapTradFrac_R3-B-lo-full_2100`,
+                               legend,
+                               layout_matrix=lay)
+
+
+MapImpExp <- ggplot() +
+  geom_polygon(data =map.EMF2, aes(x=long, y = lat, group=group,fill=ModelFraction), color="grey40", size = 0.1, alpha=0.9) + 
+  #geom_map(data=map.EMF, map=map.EMF, aes(map_id=EMFRegion, x=long, y=lat, fill=ModelFraction))
+  coord_fixed(1) +
   theme_bw() +
-  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank()) + 
-  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  ylab("Bioenergy Trade Fraction [-]") +
-  xlab("") + 
-  scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
-                     name="",
-                     breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
-  ) +
-  scale_color_manual(values=c("forestgreen","firebrick"),
-                      name="",
-                      breaks=c("BioExpFrac","BioImpFrac"),
-                      labels=c("Dependence on Exports","Dependence on Imports")
-  )+
-  facet_grid(RegOrder ~ScenOrder , labeller=labeller(RegOrder = region_label, ScenOrder = scen_labels))
-ExportFrac
+  theme(text= element_text(size=6, face="plain")) +
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),panel.border = element_blank()) +
+  theme(axis.text = element_blank(), axis.ticks =element_blank(), axis.title = element_blank()) +
+  theme(legend.position="bottom") +
+  theme(legend.text = element_text(angle=0, size=6), legend.direction="vertical") +
+  # scale_fill_gradientn(colours = c("red","white","white","white","forestgreen"),
+  #                     breaks = c(-100,-66, 0,66, 100),
+  #                     labels = c("100% (Import)","","No agreement","","100% (Export)"),
+  #                     guide_legend(title="Agreement Across Models")) +
+  scale_fill_manual(values=c("forestgreen", "firebrick", "gainsboro"),
+                    name ="Agreement Across Models",
+                    breaks=c(">66% Export",">66% Import","No Agreement"),
+                    labels=c("Agreement as Exporter","Agreement and Importer","No Agreement")
+  )
+MapImpExp
+
+# png("output/BioTrade/MapImpExp.png", width=8*ppi, height=6*ppi, res=ppi)
+# print(plot(MapImpExp))
+# dev.off()
+
 #
 # ---- FIG.3: SECURITY ----
 Security1=subset(Security1, MODEL %in% BioTradCheck$MODEL)
@@ -754,6 +828,7 @@ SecurityFig2 <- ggplot() +
   theme(text= element_text(size=6, face="bold"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(text= element_text(size=7, face="plain")) +
+  theme(legend.title=element_blank(), legend.position="bottom") +
   ylab("Bioenergy fraction of TPES [-]") +
   xlab("Bioenergy Trade Fraction [-]") +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
@@ -770,10 +845,10 @@ SecurityFig2 <- ggplot() +
 SecurityFig2
 
 #
-# ---- FIG: S-W DIVERSITY ----
+# ---- FIG.4: S-W DIVERSITY ----
 SupplyDiversity <-ggplot() + 
   #geom_point(data=SWDiversity1, mapping=aes(x=SWIndex, y=NetExport, colour=Year, shape=MODEL ),position = position_jitter(w = 0.05, h = 0), alpha=0.75) +
-  geom_point(data=SWDiversity1, mapping=aes(x=SWIndex, y=NetExport, colour=Year, shape=MODEL ), alpha=0.75) +
+  geom_point(data=subset(SWDiversity1, !SCENARIO=="R3-B-hi-full"), mapping=aes(x=SWIndex, y=NetExport, colour=Year, shape=MODEL ), alpha=0.75) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   xlim(0,2) +
   # Text
@@ -789,7 +864,7 @@ SupplyDiversity <-ggplot() +
                      breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
                      labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
   ) +
-  scale_color_manual(values=c("forestgreen","red"),
+  scale_color_manual(values=c("blue2","brown2"),
                      name="Year",
                      breaks=c("2050","2100"),
                      labels=c("2050","2100")
@@ -797,38 +872,105 @@ SupplyDiversity <-ggplot() +
   facet_grid( ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,MODEL = model_labels))
 SupplyDiversity
 #
-# ---- FIG: SECURITY ACROSS BUDGETS ----
-SecurityCompare=subset(SecurityCompare, MODEL %in% BioTradCheck$MODEL)
-SecurityCompare=subset(SecurityCompare, SCENARIO=="Fossil"|SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full")
-SecurityCompare$ScenNames = scen_labels[SecurityCompare$SCENARIO]
-SecurityCompare$ScenOrder2  = factor(SecurityCompare$ScenNames, levels=c("Baseline","Budget1600","Budget1000","Budget400","Fossil (2010)"))
-#SecurityCompareBox <- ggplot(SecurityCompare, aes(x=ScenOrder, y=Indicator, fill=ScenOrder)) +
-#  geom_boxplot(lwd=0.3, outlier.shape = 1) +
-SecurityCompare.Corr =SecurityCompare[!duplicated(SecurityCompare),]
-SecurityCompareFig <-ggplot() +
-  geom_point(data=SecurityCompare.Corr, mapping=aes(x=ScenNames, y=Indicator, colour=ModelOrder, shape=ModelOrder),position = position_jitter(w = 0.25, h = 0), alpha = 0.75) +
-  geom_vline(xintercept=c(1.5,2.5,3.5,4.5), size=0.1, colour="gray") +
+# ---- FIG.S2: FOSSIL+BIO TRADE ----
+# Bio and Fossil energy trade
+EneTradeAll = subset(Trade2, select=c(MODEL,SCENARIO,Year,REGION,TradePrimBiomassVol,TradePrimCoalVol,TradePrimGasVol,TradePrimOilVol))
+EneTradeAll = subset(EneTradeAll, SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full"|SCENARIO=="R3-BASE-0-full")
+EneTradeAll = subset(EneTradeAll, !(REGION=="OECD90"|REGION=="LAM"|REGION=="ASIA"))
+EneTradeAll = melt(EneTradeAll, measure.vars = c("TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol"))
+EneTradeAll = subset(EneTradeAll, MODEL=="AIM/CGE"|MODEL=="COFFEE"|MODEL=="GCAM_EMF33"|MODEL=="GRAPE-15"|MODEL=="IMACLIM-NLU"|MODEL=="IMAGE"|MODEL=="POLES EMF33"|MODEL=="REMIND-MAGPIE") 
+# Correct IMACLIM mistake
+EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimCoalVol"] <- EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimCoalVol"] *-1
+EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimGasVol"] <- EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimGasVol"] *-1
+EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimOilVol"] <- EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimOilVol"] *-1
+#Get Gross Global Numbers
+EneTradeAll1=EneTradeAll
+EneTradeAll1$value[EneTradeAll1$value<0] <-0
+EneTradeAll1 = spread(EneTradeAll1,REGION,value )
+EneTradeAll1 = EneTradeAll1 %>% mutate(Global=Brazil+EAsia+EU+MAF+RAsia+REF+RLAM+ROECD90+USA)
+EneTradeAll1[,5:13] <-NULL
+EneTradeAll1 = melt(EneTradeAll1, id.vars = c("MODEL","SCENARIO","Year","variable"),  measure_vars="Global", variable_name="REGION")
+
+EneTradeAll = rbind(EneTradeAll,EneTradeAll1)
+EneTradeAll$RegOrder = factor(EneTradeAll$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","Global")) 
+
+
+EneTradeAll.Hi = subset(EneTradeAll, SCENARIO=="R3-B-hi-full"&!REGION=="World")
+EneTradeAll.Lo = subset(EneTradeAll, SCENARIO=="R3-B-lo-full"&!REGION=="World")
+
+Glob <- unique(EneTradeAll[,c("MODEL","RegOrder")])
+Glob$Year <- Glob$value <-1
+
+FFandBioHi <- ggplot(data=EneTradeAll.Hi, mapping=aes(x=Year, y=value, fill=variable)) +
+  geom_rect(data=subset(Glob, RegOrder=="Global"),aes(fill = RegOrder), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.2) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
+  xlab("") +
+  xlim(2010,2100) +
+  scale_fill_manual(values=c("red","forestgreen","Black","grey36","grey"),
+                    name="",
+                    breaks=c("TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol"),
+                    labels=c("Bioenergy","Coal","Naturel Gas","Oil")
+  ) +
+  facet_grid(MODEL ~ RegOrder, labeller=labeller(MODEL=model_labels, RegOrder=region_label), scales="free_y")
+FFandBioHi
+
+
+FFandBioLo <- ggplot(data=EneTradeAll.Lo, mapping=aes(x=Year, y=value, fill=variable)) +
+  geom_rect(data=subset(Glob, RegOrder=="Global"),aes(fill = RegOrder), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.2) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
+  xlab("") +
+  xlim(2010,2100) +
+  scale_fill_manual(values=c("red","forestgreen","Black","grey36","grey"),
+                    name="",
+                    breaks=c("TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol"),
+                    labels=c("Bioenergy","Coal","Naturel Gas","Oil")
+  ) +
+  facet_grid(MODEL ~ RegOrder, labeller=labeller(MODEL=model_labels, RegOrder=region_label), scales="free_y")
+FFandBioLo
+
+#
+# ---- FIG.S3: EXPORT FRAC ----
+BioTradFrac1=subset(BioTradFrac1, MODEL %in% BioTradCheck$MODEL)
+ExportFrac <- ggplot() +
+  geom_jitter(data=BioTradFrac1, mapping=aes(x=Year, y=value, shape=MODEL, colour=variable), size = 1, width=9, alpha = 0.8) +
+  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1)) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=2075, size=0.1, colour="gray2") +
+  coord_cartesian(ylim=c(-1, 1)) +
+  scale_y_continuous(breaks=seq(-1,1,0.5)) +
+  coord_cartesian(xlim=c(2040,2110)) +
+  scale_x_continuous(breaks = seq(2050,2100,50)) +
+  # Text
   theme_bw() +
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank()) + 
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  ylab("Compound Security Indicator") +
-  xlab("") +
-  scale_shape_manual(values=c(19,12,1,2,3,4,6,8,10),
+  ylab("Bioenergy Trade Fraction [-]") +
+  xlab("") + 
+  scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
                      name="",
-                     breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("Fossil (2010)","AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+                     breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
   ) +
-  scale_color_manual(values=c("black","burlywood4","red","blue","azure4","limegreen","coral2","darkolivegreen","darkorchid1"),
-                     name="Year",
-                     breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("Fossil (2010)","AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE"),
-                     guide=FALSE
-  ) +
-  facet_grid( RegOrder~Year, labeller=labeller(RegOrder = region_label, ScenOrder= scen_labels))
-SecurityCompareFig
+  scale_color_manual(values=c("forestgreen","firebrick"),
+                     name="",
+                     breaks=c("BioExpFrac","BioImpFrac"),
+                     labels=c("Dependence on Exports","Dependence on Imports")
+  )+
+  facet_grid(RegOrder ~ScenOrder , labeller=labeller(RegOrder = region_label, ScenOrder = scen_labels))
+ExportFrac
 #
-# ---- FIG: TRADE vs. BUDGET ----
+# ---- FIG.S4: TRADE vs. BUDGET ----
 Drivers.1=subset(Drivers, MODEL %in% BioTradCheck$MODEL)
 Drivers.1$ModelOrder = factor(Drivers.1$MODEL, levels=c("Fossil","AIM/CGE","BET","COFFEE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"))
 Drivers.1$ScenName <- scen_labels[Drivers.1$SCENARIO]
@@ -858,6 +1000,22 @@ Glob1 <- unique(Drivers.1[,c("ScenOrder2","RegOrder")])
 Glob1= subset(Glob1, RegOrder=="NetTrade")
 #Glob1$CumNetTrade <-Glob1$ScenOrder <- 1
 #Glob1$ModelOrder <- NULL
+
+TradeComparePointGlobal <- ggplot() +
+  geom_point(data=subset(Drivers.1, RegOrder=="NetTrade"), mapping=aes(x=ScenOrder2, y=CumNetTrade)) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=c(1.5,2.5,3.5,4.5,5.5), size=0.1, colour="gray") +
+  scale_y_continuous(breaks=seq(0,500,100)) +
+  theme_bw() + 
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank()) + 
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  ylab(expression(paste("Cumulative BioenergyTrade", EJ[Primary],"/yr (2010-2100)",""))) +
+  xlab("") +
+  theme(legend.position="bottom") +
+  facet_wrap(~ModelOrder, nrow=2, labeller=labeller(RegOrder = region_label))
+TradeComparePointGlobal
+
 
 TradeComparePoint <- ggplot() +
   #geom_blank(data=axis, mapping=aes(x=ScenOrder2, y=CumNetTrade)) +
@@ -922,177 +1080,125 @@ TradeCompareBox <- ggplot(Drivers, aes(x=ScenOrder, y=CumNetTrade, fill=ScenOrde
   facet_wrap(~RegOrder,nrow=2, labeller=labeller(RegOrder = region_label))
 TradeCompareBox
 
-# ---- FIG: FOSSIL+BIO TRADE ----
-# Bio and Fossil energy trade
-EneTradeAll = subset(Trade2, select=c(MODEL,SCENARIO,Year,REGION,TradePrimBiomassVol,TradePrimCoalVol,TradePrimGasVol,TradePrimOilVol))
-EneTradeAll = subset(EneTradeAll, SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full"|SCENARIO=="R3-BASE-0-full")
-EneTradeAll = subset(EneTradeAll, !(REGION=="OECD90"|REGION=="LAM"|REGION=="ASIA"))
-EneTradeAll = melt(EneTradeAll, measure.vars = c("TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol"))
-EneTradeAll = subset(EneTradeAll, MODEL=="AIM/CGE"|MODEL=="COFFEE"|MODEL=="GCAM_EMF33"|MODEL=="GRAPE-15"|MODEL=="IMACLIM-NLU"|MODEL=="IMAGE"|MODEL=="POLES EMF33"|MODEL=="REMIND-MAGPIE") 
-# Correct IMACLIM mistake
-EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimCoalVol"] <- EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimCoalVol"] *-1
-EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimGasVol"] <- EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimGasVol"] *-1
-EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimOilVol"] <- EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimOilVol"] *-1
-#Get Gross Global Numbers
-EneTradeAll1=EneTradeAll
-EneTradeAll1$value[EneTradeAll1$value<0] <-0
-EneTradeAll1 = spread(EneTradeAll1,REGION,value )
-EneTradeAll1 = EneTradeAll1 %>% mutate(Global=Brazil+EAsia+EU+MAF+RAsia+REF+RLAM+ROECD90+USA)
-EneTradeAll1[,5:13] <-NULL
-EneTradeAll1 = melt(EneTradeAll1, id.vars = c("MODEL","SCENARIO","Year","variable"),  measure_vars="Global", variable_name="REGION")
-
-EneTradeAll = rbind(EneTradeAll,EneTradeAll1)
-EneTradeAll$RegOrder = factor(EneTradeAll$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","Global")) 
-
-
-EneTradeAll.Hi = subset(EneTradeAll, SCENARIO=="R3-B-hi-full")
-EneTradeAll.Lo = subset(EneTradeAll, SCENARIO=="R3-B-lo-full")
-
-Glob <- unique(EneTradeAll[,c("MODEL","RegOrder")])
-Glob$Year <- Glob$value <-1
-
-FFandBioHi <- ggplot(data=EneTradeAll.Hi, mapping=aes(x=Year, y=value, fill=variable)) +
-  geom_rect(data=subset(Glob, RegOrder=="Global"),aes(fill = RegOrder), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.2) +
-  geom_bar(stat="identity") +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
+# ---- FIG.S6: SECURITY ACROSS BUDGETS ----
+SecurityCompare=subset(SecurityCompare, MODEL %in% BioTradCheck$MODEL)
+SecurityCompare=subset(SecurityCompare, SCENARIO=="Fossil"|SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full")
+SecurityCompare$ScenNames = scen_labels[SecurityCompare$SCENARIO]
+SecurityCompare$ScenOrder2  = factor(SecurityCompare$ScenNames, levels=c("Baseline","Budget1600","Budget1000","Budget400","Fossil (2010)"))
+#SecurityCompareBox <- ggplot(SecurityCompare, aes(x=ScenOrder, y=Indicator, fill=ScenOrder)) +
+#  geom_boxplot(lwd=0.3, outlier.shape = 1) +
+SecurityCompare.Corr =SecurityCompare[!duplicated(SecurityCompare),]
+SecurityCompareFig <-ggplot() +
+  geom_point(data=SecurityCompare.Corr, mapping=aes(x=ScenOrder2, y=Indicator, colour=ModelOrder, shape=ModelOrder),position = position_jitter(w = 0.25, h = 0), alpha = 0.75) +
+  geom_vline(xintercept=c(1.5,2.5,3.5,4.5), size=0.1, colour="gray") +
   theme_bw() +
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank()) + 
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
+  ylab("Compound Security Indicator") +
   xlab("") +
-  xlim(2010,2100) +
-  scale_fill_manual(values=c("red","forestgreen","Black","grey36","grey"),
-                    name="",
-                    breaks=c("TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol"),
-                    labels=c("Bioenergy","Coal","Naturel Gas","Oil")
-  ) +
-  facet_grid(MODEL ~ RegOrder, labeller=labeller(MODEL=model_labels, RegOrder=region_label), scales="free_y")
-FFandBioHi
-
-
-FFandBioLo <- ggplot(data=EneTradeAll.Lo, mapping=aes(x=Year, y=value, fill=variable)) +
-  geom_rect(data=subset(Glob, RegOrder=="Global"),aes(fill = RegOrder), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.2) +
-  geom_bar(stat="identity") +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  theme_bw() +
-  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
-  xlab("") +
-  xlim(2010,2100) +
-  scale_fill_manual(values=c("red","forestgreen","Black","grey36","grey"),
+  scale_shape_manual(values=c(19,12,1,2,3,4,6,8,10),
                      name="",
-                     breaks=c("TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol"),
-                     labels=c("Bioenergy","Coal","Naturel Gas","Oil")
+                     breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("Fossil (2010)","AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
   ) +
-  facet_grid(MODEL ~ RegOrder, labeller=labeller(MODEL=model_labels, RegOrder=region_label), scales="free_y")
-FFandBioLo
-
+  scale_color_manual(values=c("black","burlywood4","red","blue","azure4","limegreen","coral2","darkolivegreen","darkorchid1"),
+                     name="Year",
+                     breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("Fossil (2010)","AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE"),
+                     guide=FALSE
+  ) +
+  facet_grid(RegOrder~Year, labeller=labeller(RegOrder = region_label, ScenOrder= scen_labels))
+SecurityCompareFig
 #
-# ---- FIG: MAP ----
-# 1. Map of exporters/ importers. Exporters=green, Importers=red, gradient = # of agreeing models
-# 2. Mapg of trade volume importance. Median trade volume of agreeing models, as a % of total trade 
-# Map of Importers / Exporters / No Agreement
-l=0
-for(i in unique(ModelAgree$SCENARIO))
-  { for(j in c(2060,2100))
-  {
-l=l+1
-ModelAgree.1=subset(ModelAgree, SCENARIO==i&Year==j)
-map.EMF=read.csv("data/Trade/MapEMF.csv", sep=",", dec=".", stringsAsFactors = FALSE)
-map.EMF1=map.EMF
-map.EMF1$BioExporter <- ModelAgree.1[match(map.EMF1$EMFRegion,ModelAgree.1$REGION),4]
-map.EMF1$ModelFraction <- ModelAgree.1[match(map.EMF1$EMFRegion,ModelAgree.1$REGION),9]
-# Map of How important Imports/Exports are
-ModelAgree.ModelExpMed1=subset(ModelAgree.ModelExpMed, SCENARIO==i&Year==j)
-map.EMF.Exp=subset(map.EMF1, BioExporter==1|BioExporter==0)
-map.EMF.Exp$MedTradFrac <- ModelAgree.ModelExpMed1[match(map.EMF.Exp$EMFRegion,ModelAgree.ModelExpMed1$REGION),5]
-ModelAgree.ModelImpMed1=subset(ModelAgree.ModelImpMed, SCENARIO==i&Year==j)
-map.EMF.Imp=subset(map.EMF1, BioExporter==-1)
-map.EMF.Imp$MedTradFrac <- ModelAgree.ModelImpMed1[match(map.EMF.Imp$EMFRegion,ModelAgree.ModelImpMed1$REGION),5]
+# ---- OUTPUTS FOR PAPER----
+# png(file = "output/BioTrade/Fig1.png", width = 6*ppi, height = 4*ppi, units = "px", res = ppi)
+# plot(FigTrad2)
+# dev.off()
+# 
+# png(file = "output/BioTrade/Fig2.png", width=4.9*ppi, height=5*ppi, res=ppi)
+# plot(MapTradFracAll)
+# dev.off()
+# 
+# png(file = "output/BioTrade/Fig3.png", width=6*ppi, height=3*ppi, res=ppi)
+# plot(SecurityFig2)
+# dev.off()
+# 
+# png(file = "output/BioTrade/Fig4.png", width=6*ppi, height=3*ppi, res=ppi)
+# plot(SupplyDiversity)
+# dev.off()
+# 
+# 
+# png(file = "output/BioTrade/FigS1.png", width = 6*ppi, height = 8*ppi, units = "px", res = ppi)
+# plot(FigTradeFull)
+# dev.off()
+# 
+# png(file = "output/BioTrade/FigS2.png", width=8*ppi, height=8*ppi, res=ppi)
+# print(plot(FFandBioLo))
+# dev.off()
+# 
+# png(file = "output/BioTrade/FigS3.png", width=5*ppi, height=8*ppi, res=ppi)
+# print(plot(ExportFrac))
+# dev.off()
+# 
+# png(file = "output/BioTrade/FigS4.png", width=7*ppi, height=5*ppi, res=ppi)
+# print(plot(TradeComparePointGlobal))
+# dev.off()
+# 
+# png(file = "output/BioTrade/FigS5.png", width=5*ppi, height=8*ppi, res=ppi)
+# plot(SecurityFig)
+# dev.off()
+# 
+# png(file = "output/BioTrade/FigS6.png", width=5*ppi, height=8*ppi, res=ppi)
+# print(plot(SecurityCompareFig))
+# dev.off()
 
-map.EMF2=rbind(map.EMF.Exp,map.EMF.Imp)
-map.EMF2$MedTradFrac[map.EMF2$ModelFraction=="No Agreement"] <- 0
-# Categorize Importance
-map.EMF2$MedTradFracRound = round(map.EMF2$MedTradFrac, digits=-1)
-
-MapTradFrac <- ggplot() +
-  geom_polygon(data =map.EMF2, aes(x=long, y = lat, group=group,fill=MedTradFracRound), color="grey40", size = 0.1, alpha=0.9) + 
-  #geom_map(data=map.EMF, map=map.EMF, aes(map_id=EMFRegion, x=long, y=lat, fill=ModelFraction))
-  coord_fixed(1) +
-  theme(title = element_text(size=7)) +
-  ggtitle(paste(scen_labels[i],"in",j,sep=" ")) +
-  theme_bw() +
-  theme(text= element_text(size=7, face="plain")) +
-  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),panel.border = element_blank()) +
-  theme(axis.text = element_blank(), axis.ticks =element_blank(), axis.title = element_blank()) +
-  theme(legend.position="bottom", legend.text = element_text(angle=0, size=7), legend.direction="horizontal") +
-  scale_fill_gradient2(low="firebrick", high="forestgreen", mid="gainsboro", 
-                       midpoint=0, space="Lab",
-                       limits=c(-50,50),
-                      guide_legend(title="Portion of Global Trade (%)"),
-                      guide=FALSE)
-MapTradFrac
-
-assign(paste("MapTradFrac",i,j,sep="_"),MapTradFrac)
-}
-}
-
-legend <- ggplot() +
-  geom_polygon(data =map.EMF2, aes(x=long, y = lat, group=group,fill=MedTradFracRound), color="white", size = 0.1, alpha=0) + 
-  coord_fixed(0) +
-  theme(text= element_text(size=7, face="plain")) +
-  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),panel.border = element_blank()) +
-  theme(axis.text = element_blank(), axis.ticks =element_blank(), axis.title = element_blank()) +
-  theme(legend.position="bottom", legend.text = element_text(angle=0, size=7), legend.direction="horizontal") +
-  scale_fill_gradient2(low="firebrick", high="forestgreen", mid="gainsboro", 
-                       midpoint=0, space="Lab",
-                       limits=c(-50,50),
-                       guide_legend(title="Portion of Global Trade (%)"))
-legend
-
-`MapTradFrac_R3-BASE-0-full_2060`
-`MapTradFrac_R3-B-hi-full_2060`
-`MapTradFrac_R3-B-lo-full_2060`
-`MapTradFrac_R3-B-vlo-full_2060`
-
-`MapTradFrac_R3-BASE-0-full_2100`
-`MapTradFrac_R3-B-hi-full_2100`
-`MapTradFrac_R3-B-lo-full_2100`
-`MapTradFrac_R3-B-vlo-full_2100`
-
-lay<-rbind(c(1,2),c(3,4),c(5,5)) 
-MapTradFracAll <- grid.arrange(`MapTradFrac_R3-B-hi-full_2060`,`MapTradFrac_R3-B-hi-full_2100`,
-                               `MapTradFrac_R3-B-lo-full_2060`,`MapTradFrac_R3-B-lo-full_2100`,
-                               legend,
-                               layout_matrix=lay)
-
-
-MapImpExp <- ggplot() +
-  geom_polygon(data =map.EMF2, aes(x=long, y = lat, group=group,fill=ModelFraction), color="grey40", size = 0.1, alpha=0.9) + 
-  #geom_map(data=map.EMF, map=map.EMF, aes(map_id=EMFRegion, x=long, y=lat, fill=ModelFraction))
-  coord_fixed(1) +
-  theme_bw() +
-  theme(text= element_text(size=6, face="plain")) +
-  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),panel.border = element_blank()) +
-  theme(axis.text = element_blank(), axis.ticks =element_blank(), axis.title = element_blank()) +
-  theme(legend.position="bottom") +
-  theme(legend.text = element_text(angle=0, size=6), legend.direction="vertical") +
-  # scale_fill_gradientn(colours = c("red","white","white","white","forestgreen"),
-  #                     breaks = c(-100,-66, 0,66, 100),
-  #                     labels = c("100% (Import)","","No agreement","","100% (Export)"),
-  #                     guide_legend(title="Agreement Across Models")) +
-  scale_fill_manual(values=c("forestgreen", "firebrick", "gainsboro"),
-                    name ="Agreement Across Models",
-                    breaks=c(">66% Export",">66% Import","No Agreement"),
-                    labels=c("Agreement as Exporter","Agreement and Importer","No Agreement")
-  )
-MapImpExp
-
-png("output/BioTrade/MapImpExp.png", width=8*ppi, height=6*ppi, res=ppi)
-print(plot(MapImpExp))
-dev.off()
- 
+# write.xlsx(DiversityTest.TtestDF, file="output/BioTrade/Statistics.xlsx", sheetName="Diversity of Supply", row.names=TRUE, showNA = TRUE)
+# write.xlsx(DriversTech.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Technology)", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(DriversBudg.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(SecurityTest.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Security Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(EneTradeMed, file="output/BioTrade/Statistics.xlsx", sheetName="Medians", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(EneTradeGr, file="output/BioTrade/Statistics.xlsx", sheetName="Growth Rates", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(BiomassTrade, file="output/BioTrade/Statistics.xlsx", sheetName="Biomass Trade Summary", append=TRUE, row.names=FALSE, showNA = TRUE)
+#
+#
+# ---- OUTPUTS FOR PAPER----
+# png("output/BioTrade/BioProdTrade.png", width=6*ppi, height=8*ppi, res=ppi)
+# print(plot(FigTradeFull))
+# dev.off()
+# 
+# png("output/BioTrade/BioTradeVolume.png", width=6*ppi, height=8*ppi, res=ppi)
+# print(plot(Trade_BioVol))
+# dev.off()
+# 
+# png("output/BioTrade/BioTradeValue2.png", width=8*ppi, height=5*ppi, res=ppi)
+# print(plot(Trade_BioVal))
+# dev.off()
+# 
+# png("output/BioTrade/MapTradFrac.jpg", width=4.9*ppi, height=5*ppi, res=ppi)
+# print(plot(MapTradFracAll))
+# dev.off()
+# 
+# png("output/BioTrade/Security.png", width=6*ppi, height=8*ppi, res=ppi)
+# print(plot(SecurityFig))
+# dev.off()
+# 
+# png("output/BioTrade/SupplyDiversity.png", width=6.5*ppi, height=3*ppi, res=ppi)
+# print(plot(SupplyDiversity))
+# dev.off()
+# 
+# png("output/BioTrade/BioExportFracRCP.png", width=5*ppi, height=8*ppi, res=ppi)
+# print(plot(ExportFracRCP))
+# dev.off()
+# 
+# png("output/BioTrade/Carriers.png", width=8*ppi, height=8*ppi, res=ppi)
+# print(plot(Carriers1))
+# dev.off()
+# 
+# png("output/BioTrade/FFandBioHi.png", width=8*ppi, height=8*ppi, res=ppi)
+# print(plot(FFandBioHi))
+# dev.off()
+# 
 #
 # ---- EXPORT FRAC FOR DEMAND X-CUT ----
 BioTradFracRCP = subset(Trade3, REGION=="OECD90"|REGION=="REF"|REGION=="ASIA"|REGION=="MAF"|REGION=="LAM")
@@ -1136,96 +1242,8 @@ ExportFracRCP <- ggplot() +
 ExportFracRCP
 
 
-# ---- OUTPUTS FOR PAPER----
-# tiff(file = "output/BioTrade/Fig1.tiff", width = 6*ppi, height = 5*ppi, units = "px", res = ppi)
-# plot(FigTrad2)
-# dev.off()
-# 
-# tiff("output/BioTrade/Fig2.tiff", width=4.9*ppi, height=5*ppi, res=ppi)
-# plot(MapTradFracAll)
-# dev.off()
-# 
-# tiff("output/BioTrade/Fig3.tiff", width=6*ppi, height=5*ppi, res=ppi)
-# plot(SecurityFig2)
-# dev.off()
-# 
-# tiff("output/BioTrade/Fig4.tiff", width=6.5*ppi, height=3*ppi, res=ppi)
-# plot(SupplyDiversity)
-# dev.off()
-#
-#
-# tiff(file = "output/BioTrade/FigS1.tiff", width = 6*ppi, height = 8*ppi, units = "px", res = ppi)
-# plot(FigTradeFull)
-# dev.off()
-# 
-# png("output/BioTrade/FigS3.png", width=5.5*ppi, height=8*ppi, res=ppi)
-# print(plot(ExportFrac))
-# dev.off()
-#
-# tiff("output/BioTrade/FigS5.tiff", width=6*ppi, height=5*ppi, res=ppi)
-# plot(SecurityFig)
-# dev.off()
-#
-# ---- OTHER OUTPUTS FOR PAPER----
-# png("output/BioTrade/BioProdTrade.png", width=6*ppi, height=8*ppi, res=ppi)
-# print(plot(FigTradeFull))
-# dev.off()
-# 
-# png("output/BioTrade/BioTradeVolume.png", width=6*ppi, height=8*ppi, res=ppi)
-# print(plot(Trade_BioVol))
-# dev.off()
-# 
-# png("output/BioTrade/BioTradeValue2.png", width=8*ppi, height=5*ppi, res=ppi)
-# print(plot(Trade_BioVal))
-# dev.off()
-# 
-# png("output/BioTrade/MapTradFrac.jpg", width=4.9*ppi, height=5*ppi, res=ppi)
-# print(plot(MapTradFracAll))
-# dev.off()
-# 
-# png("output/BioTrade/Security.png", width=6*ppi, height=8*ppi, res=ppi)
-# print(plot(SecurityFig))
-# dev.off()
-# 
-# png("output/BioTrade/SupplyDiversity.png", width=6.5*ppi, height=3*ppi, res=ppi)
-# print(plot(SupplyDiversity))
-# dev.off()
-# 
-# png("output/BioTrade/SecurityCompare.png", width=5*ppi, height=8*ppi, res=ppi)
-# print(plot(SecurityCompareFig))
-# dev.off()
-# 
-# png("output/BioTrade/TradeCompare.png", width=7*ppi, height=5*ppi, res=ppi)
-# print(plot(TradeComparePoint))
-# dev.off()
-# 
-# png("output/BioTrade/BioExportFracRCP.png", width=5*ppi, height=8*ppi, res=ppi)
-# print(plot(ExportFracRCP))
-# dev.off()
-# 
-# png("output/BioTrade/Carriers.png", width=8*ppi, height=8*ppi, res=ppi)
-# print(plot(Carriers1))
-# dev.off()
-# 
-# png("output/BioTrade/FFandBioHi.png", width=8*ppi, height=8*ppi, res=ppi)
-# print(plot(FFandBioHi))
-# dev.off()
-# 
-# png("output/BioTrade/FFandBioLo.png", width=8*ppi, height=8*ppi, res=ppi)
-# print(plot(FFandBioLo))
-# dev.off()
-# 
-# 
-# write.xlsx(DiversityTest.TtestDF, file="output/BioTrade/Statistics.xlsx", sheetName="Diversity of Supply", row.names=TRUE, showNA = TRUE)
-# write.xlsx(DriversTech.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Technology)", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(DriversBudg.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(SecurityTest.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Security Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(EneTradeMed, file="output/BioTrade/Statistics.xlsx", sheetName="Medians", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(EneTradeGr, file="output/BioTrade/Statistics.xlsx", sheetName="Growth Rates", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(BiomassTrade, file="output/BioTrade/Statistics.xlsx", sheetName="Biomass Trade Summary", append=TRUE, row.names=FALSE, showNA = TRUE)
 
-#
-# # ---- EXTRA RESULT FOR BRAZIL PAPER ----
+# ---- EXTRA RESULT FOR BRAZIL PAPER ----
 # BRTrade = subset(Trade2, REGION=="Brazil")
 # BRTrade = subset(BRTrade, SCENARIO=="R3-B-hi-full"|
 #                    SCENARIO=="R3-B-hi-nobeccs"|

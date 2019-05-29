@@ -9,3 +9,4 @@ data/Technology/QuestionnaireDATA.xlsx
 data/Technology/TechData_Sample.xlsx
 *.png
 .Rhistory
+output/BioTrade/Statistics.xlsx
