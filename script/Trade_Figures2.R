@@ -4,8 +4,6 @@
 # ---- START ----
 rm(list=ls()) 
 
-#install.packages(c("maps", "mapdata"))
-
 # Load Libraries
 library(reshape);
 library(ggplot2);
@@ -478,7 +476,6 @@ Drivers2 <- melt(Drivers2, measure.vars=c('TradePrimBiomassVol'))
 Drivers2 <- spread(Drivers2,REGION,value)
 Drivers2[is.na(Drivers2)]<-0
 Drivers2$NetTrade<-0
-#Drivers2= Drivers2 %>% mutate(NetTrade=(Brazil+EAsia+EU+MAF+RAsia+REF+RLAM+ROECD90+USA)) # Total Global Exports
 Drivers2$variable <-NULL
 Drivers =rbind(Drivers1,Drivers2)
 # Second: Get cumulative trade 
@@ -565,7 +562,6 @@ SecurityStat.1 = subset(SecurityStat, !(MODEL=="Fossil"))
 SecurityStat.1 = subset(SecurityStat.1, Year=="2100")
 SecurityStat.1[,5:6] <- NULL
 SecurityStat.1 <- SecurityStat.1[!(SecurityStat.1$Indicator=="-Inf"),]
-#SecurityStat$ScenOrder <- NULL
 SecurityStat.1$Indicator[SecurityStat.1$Indicator>2] <-2
 l=0
 SecurityTest.Tuk = data.frame()
@@ -711,10 +707,9 @@ for(i in unique(ModelAgree$SCENARIO))
   
   MapTradFrac <- ggplot() +
     geom_polygon(data =map.EMF2, aes(x=long, y = lat, group=group,fill=MedTradFracRound), color="grey40", size = 0.1, alpha=0.9) + 
-    #geom_map(data=map.EMF, map=map.EMF, aes(map_id=EMFRegion, x=long, y=lat, fill=ModelFraction))
     coord_fixed(1) +
     theme(title = element_text(size=7)) +
-    ggtitle(paste(scen_labels[i],"in",j,sep=" ")) +
+    ggtitle(j) +
     theme_bw() +
     theme(text= element_text(size=7, face="plain")) +
     theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),panel.border = element_blank()) +
@@ -754,12 +749,13 @@ legend
 `MapTradFrac_R3-B-lo-full_2100`
 `MapTradFrac_R3-B-vlo-full_2100`
 
-lay<-rbind(c(1,2),c(3,4),c(5,5)) 
-MapTradFracAll <- grid.arrange(`MapTradFrac_R3-B-hi-full_2060`,`MapTradFrac_R3-B-hi-full_2100`,
-                               `MapTradFrac_R3-B-lo-full_2060`,`MapTradFrac_R3-B-lo-full_2100`,
-                               legend,
-                               layout_matrix=lay)
+lay<-rbind(1,2)
 
+MapTradFracAll <- cowplot::ggdraw(grid.arrange(`MapTradFrac_R3-B-lo-full_2060`,
+                                   `MapTradFrac_R3-B-lo-full_2100`,
+                                   layout_matrix=lay)) + 
+                theme(plot.background = element_rect(fill="white", color = NA))
+MapTradFracAll
 
 MapImpExp <- ggplot() +
   geom_polygon(data =map.EMF2, aes(x=long, y = lat, group=group,fill=ModelFraction), color="grey40", size = 0.1, alpha=0.9) + 
@@ -1116,8 +1112,12 @@ SecurityCompareFig
 # plot(FigTrad2)
 # dev.off()
 # 
-# png(file = "output/BioTrade/Fig2.png", width=4.9*ppi, height=5*ppi, res=ppi)
+# png(file = "output/BioTrade/Fig2a.png", width=2.8*ppi, height=2.8*ppi, res=ppi)
 # plot(MapTradFracAll)
+# dev.off()
+# 
+# png(file = "output/BioTrade/Fig2b.png", width=3*ppi, height=4*ppi, res=ppi)
+# plot(legend)
 # dev.off()
 # 
 # png(file = "output/BioTrade/Fig3.png", width=6*ppi, height=3*ppi, res=ppi)
@@ -1162,7 +1162,7 @@ SecurityCompareFig
 # write.xlsx(BiomassTrade, file="output/BioTrade/Statistics.xlsx", sheetName="Biomass Trade Summary", append=TRUE, row.names=FALSE, showNA = TRUE)
 #
 #
-# ---- OUTPUTS FOR PAPER----
+# ---- OTHER OUTPUTS ----
 # png("output/BioTrade/BioProdTrade.png", width=6*ppi, height=8*ppi, res=ppi)
 # print(plot(FigTradeFull))
 # dev.off()
