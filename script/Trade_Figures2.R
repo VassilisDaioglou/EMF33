@@ -427,7 +427,7 @@ SecurityCompare$value.x <- NULL
 SecurityCompare$value.y <- NULL
 SecurityCompare$ScenOrder = factor(SecurityCompare$ScenID, levels=c('Fossil','Baseline','B-hi','B-lo','B-vlo'))
 SecurityCompare=subset(SecurityCompare, Indicator<2.01)
-SecurityCompare$RegOrder = factor(SecurityCompare$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF")) 
+SecurityCompare$RegOrder = factor(SecurityCompare$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","World")) 
 SecurityCompare$ModelOrder = factor(SecurityCompare$MODEL, levels=c("Fossil","AIM/CGE","BET","COFFEE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"))
 
 Drivers=subset(Trade2, REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
@@ -614,8 +614,8 @@ scen_labels <- c("Fossil"="Fossil (2010)",
                  "B-lo"="Budget1000",
                  "B-vlo"="Budget400")
 var_labels <- c("Trade|Primary Energy|Biomass|Volume"="Biomass","Trade|Primary Energy|Coal|Volume"="Coal","Trade|Primary Energy|Gas|Volume"="Gas","Trade|Primary Energy|Oil|Volume"="Oil")
-model_labels <- c("AIM/CGE"="AIM","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE","FARM 3.1"="FARM")
-region_label <- c("EU"="EU","USA"="USA","ROECD90"="Rest OECD","EAsia"="East Asia","RAsia"="Rest Asia","Brazil"="Brazil","RLAM"="Rest Lat.Am.","REF"="Former USSR","MAF"="M.East & Africa","NetTrade"="Global (gross)","Global"="Global (gross)")
+model_labels <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE","FARM 3.1"="FARM")
+region_label <- c("EU"="EU","USA"="USA","ROECD90"="Rest OECD","EAsia"="East Asia","RAsia"="Rest Asia","Brazil"="Brazil","RLAM"="Rest Lat.Am.","REF"="Former USSR","MAF"="M.East & Africa","NetTrade"="Global (gross)","Global"="Global (gross)","World"="Global")
 #  
 # ---- FIG.1/S1: VOLUME PRODUCTION/TRADE ----
 FigProd <- ggplot(data=subset(BioProd, variable=="BioProd"&(!REGION=="World")), mapping=aes(x=Year, y=value, fill=RegOrder)) +
@@ -802,7 +802,7 @@ SecurityFig <- ggplot() +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
                      name="",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("Fossil (median)","AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+                     labels=c("Fossil (median)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("black","blue2","brown2"),
                      name="Year",
@@ -830,7 +830,7 @@ SecurityFig2 <- ggplot() +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
                      name="",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("Fossil (median)","AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+                     labels=c("Fossil (median)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("black","blue2","brown2"),
                      name="Year",
@@ -858,7 +858,7 @@ SupplyDiversity <-ggplot() +
   scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
                      name="",
                      breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+                     labels=c("AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("blue2","brown2"),
                      name="Year",
@@ -875,30 +875,16 @@ EneTradeAll = subset(EneTradeAll, SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-fu
 EneTradeAll = subset(EneTradeAll, !(REGION=="OECD90"|REGION=="LAM"|REGION=="ASIA"))
 EneTradeAll = melt(EneTradeAll, measure.vars = c("TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol"))
 EneTradeAll = subset(EneTradeAll, MODEL=="AIM/CGE"|MODEL=="COFFEE"|MODEL=="GCAM_EMF33"|MODEL=="GRAPE-15"|MODEL=="IMACLIM-NLU"|MODEL=="IMAGE"|MODEL=="POLES EMF33"|MODEL=="REMIND-MAGPIE") 
-# Correct IMACLIM mistake
-EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimCoalVol"] <- EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimCoalVol"] *-1
-EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimGasVol"] <- EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimGasVol"] *-1
-EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimOilVol"] <- EneTradeAll$value[EneTradeAll$MODEL=="IMACLIM-NLU"&EneTradeAll$variable=="TradePrimOilVol"] *-1
-#Get Gross Global Numbers
-EneTradeAll1=EneTradeAll
-EneTradeAll1$value[EneTradeAll1$value<0] <-0
-EneTradeAll1 = spread(EneTradeAll1,REGION,value )
-EneTradeAll1 = EneTradeAll1 %>% mutate(Global=Brazil+EAsia+EU+MAF+RAsia+REF+RLAM+ROECD90+USA)
-EneTradeAll1[,5:13] <-NULL
-EneTradeAll1 = melt(EneTradeAll1, id.vars = c("MODEL","SCENARIO","Year","variable"),  measure_vars="Global", variable_name="REGION")
+EneTradeAll$RegOrder = factor(EneTradeAll$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","World")) 
 
-EneTradeAll = rbind(EneTradeAll,EneTradeAll1)
-EneTradeAll$RegOrder = factor(EneTradeAll$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","Global")) 
-
-
-EneTradeAll.Hi = subset(EneTradeAll, SCENARIO=="R3-B-hi-full"&!REGION=="World")
-EneTradeAll.Lo = subset(EneTradeAll, SCENARIO=="R3-B-lo-full"&!REGION=="World")
+EneTradeAll.Hi = subset(EneTradeAll, SCENARIO=="R3-B-hi-full")
+EneTradeAll.Lo = subset(EneTradeAll, SCENARIO=="R3-B-lo-full")
 
 Glob <- unique(EneTradeAll[,c("MODEL","RegOrder")])
 Glob$Year <- Glob$value <-1
 
 FFandBioHi <- ggplot(data=EneTradeAll.Hi, mapping=aes(x=Year, y=value, fill=variable)) +
-  geom_rect(data=subset(Glob, RegOrder=="Global"),aes(fill = RegOrder), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.2) +
+  geom_rect(data=subset(Glob, RegOrder=="World"),aes(fill = RegOrder), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.2) +
   geom_bar(stat="identity") +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   theme_bw() +
@@ -907,7 +893,7 @@ FFandBioHi <- ggplot(data=EneTradeAll.Hi, mapping=aes(x=Year, y=value, fill=vari
   ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
   xlab("") +
   xlim(2010,2100) +
-  scale_fill_manual(values=c("red","forestgreen","Black","grey36","grey"),
+  scale_fill_manual(values=c("forestgreen","Black","grey36","grey","red"),
                     name="",
                     breaks=c("TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol"),
                     labels=c("Bioenergy","Coal","Naturel Gas","Oil")
@@ -915,9 +901,8 @@ FFandBioHi <- ggplot(data=EneTradeAll.Hi, mapping=aes(x=Year, y=value, fill=vari
   facet_grid(MODEL ~ RegOrder, labeller=labeller(MODEL=model_labels, RegOrder=region_label), scales="free_y")
 FFandBioHi
 
-
 FFandBioLo <- ggplot(data=EneTradeAll.Lo, mapping=aes(x=Year, y=value, fill=variable)) +
-  geom_rect(data=subset(Glob, RegOrder=="Global"),aes(fill = RegOrder), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.2) +
+  geom_rect(data=subset(Glob, RegOrder=="World"),aes(fill = RegOrder), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.2) +
   geom_bar(stat="identity") +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   theme_bw() +
@@ -926,7 +911,7 @@ FFandBioLo <- ggplot(data=EneTradeAll.Lo, mapping=aes(x=Year, y=value, fill=vari
   ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
   xlab("") +
   xlim(2010,2100) +
-  scale_fill_manual(values=c("red","forestgreen","Black","grey36","grey"),
+  scale_fill_manual(values=c("forestgreen","Black","grey36","grey","red"),
                     name="",
                     breaks=c("TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol"),
                     labels=c("Bioenergy","Coal","Naturel Gas","Oil")
@@ -956,7 +941,7 @@ ExportFrac <- ggplot() +
   scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
                      name="",
                      breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+                     labels=c("AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("forestgreen","firebrick"),
                      name="",
@@ -1009,7 +994,7 @@ TradeComparePointGlobal <- ggplot() +
   ylab(expression(paste("Cumulative BioenergyTrade", EJ[Primary],"/yr (2010-2100)",""))) +
   xlab("") +
   theme(legend.position="bottom") +
-  facet_wrap(~ModelOrder, nrow=2, labeller=labeller(RegOrder = region_label))
+  facet_wrap(~ModelOrder, nrow=2, labeller=labeller(RegOrder = region_label, ModelOrder = model_labels))
 TradeComparePointGlobal
 
 
@@ -1096,12 +1081,12 @@ SecurityCompareFig <-ggplot() +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,10),
                      name="",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("Fossil (2010)","AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+                     labels=c("Fossil (2010)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("black","burlywood4","red","blue","azure4","limegreen","coral2","darkolivegreen","darkorchid1"),
                      name="Year",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("Fossil (2010)","AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE"),
+                     labels=c("Fossil (2010)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE"),
                      guide=FALSE
   ) +
   facet_grid(RegOrder~Year, labeller=labeller(RegOrder = region_label, ScenOrder= scen_labels))
@@ -1111,7 +1096,7 @@ SecurityCompareFig
 # png(file = "output/BioTrade/Fig1.png", width = 6*ppi, height = 4*ppi, units = "px", res = ppi)
 # plot(FigTrad2)
 # dev.off()
-# 
+#
 # png(file = "output/BioTrade/Fig2a.png", width=2.8*ppi, height=2.8*ppi, res=ppi)
 # plot(MapTradFracAll)
 # dev.off()
@@ -1152,7 +1137,7 @@ SecurityCompareFig
 # png(file = "output/BioTrade/FigS6.png", width=5*ppi, height=8*ppi, res=ppi)
 # print(plot(SecurityCompareFig))
 # dev.off()
-
+#
 # write.xlsx(DiversityTest.TtestDF, file="output/BioTrade/Statistics.xlsx", sheetName="Diversity of Supply", row.names=TRUE, showNA = TRUE)
 # write.xlsx(DriversTech.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Technology)", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(DriversBudg.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
