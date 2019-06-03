@@ -493,7 +493,17 @@ names(Drivers)[names(Drivers)=="2070"] <- "yr2070"
 names(Drivers)[names(Drivers)=="2080"] <- "yr2080"
 names(Drivers)[names(Drivers)=="2090"] <- "yr2090"
 names(Drivers)[names(Drivers)=="2100"] <- "yr2100"
-Drivers= Drivers %>% mutate(CumNetTrade=(yr2010+yr2020+yr2030+yr2040+yr2050+yr2060+yr2070+yr2080+yr2090+yr2100)) # Total Global Exports
+Drivers= Drivers %>% mutate(CumNetTrade=(((yr2010*10) + ((yr2020-yr2010)*5)) +    #Calculate under curve assuming trapezoidal shape
+                                           ((yr2020*10) + ((yr2030-yr2020)*5)) +
+                                           ((yr2030*10) + ((yr2040-yr2030)*5)) +
+                                           ((yr2040*10) + ((yr2050-yr2040)*5)) +
+                                           ((yr2050*10) + ((yr2060-yr2050)*5)) +
+                                           ((yr2060*10) + ((yr2070-yr2060)*5)) +
+                                           ((yr2070*10) + ((yr2080-yr2070)*5)) +
+                                           ((yr2080*10) + ((yr2090-yr2080)*5)) +
+                                           ((yr2090*10) + ((yr2100-yr2090)*5))
+                                         )
+                            )
 Drivers = subset(Drivers, select=-c(yr2010,yr2020,yr2030,yr2040,yr2050,yr2060,yr2070,yr2080,yr2090,yr2100))
 Drivers$RegOrder = factor(Drivers$variable, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","NetTrade")) 
 boxplot(Drivers$CumNetTrade~Drivers$ScenOrder)
@@ -979,24 +989,20 @@ axis$RegOrder=factor(axis$variable, levels=c("Brazil","RLAM","USA","EU","ROECD90
 
 Glob1 <- unique(Drivers.1[,c("ScenOrder2","RegOrder")])
 Glob1= subset(Glob1, RegOrder=="NetTrade")
-#Glob1$CumNetTrade <-Glob1$ScenOrder <- 1
-#Glob1$ModelOrder <- NULL
 
 TradeComparePointGlobal <- ggplot() +
   geom_point(data=subset(Drivers.1, RegOrder=="NetTrade"), mapping=aes(x=ScenOrder2, y=CumNetTrade)) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=c(1.5,2.5,3.5,4.5,5.5), size=0.1, colour="gray") +
-  scale_y_continuous(breaks=seq(0,500,100)) +
   theme_bw() + 
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank()) + 
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  ylab(expression(paste("Cumulative BioenergyTrade", EJ[Primary],"/yr (2010-2100)",""))) +
+  ylab(expression(paste("Cumulative Bioenergy Trade ", EJ[Primary]," (2010-2100)",""))) +
   xlab("") +
   theme(legend.position="bottom") +
   facet_wrap(~ModelOrder, nrow=2, labeller=labeller(RegOrder = region_label, ModelOrder = model_labels))
 TradeComparePointGlobal
-
 
 TradeComparePoint <- ggplot() +
   #geom_blank(data=axis, mapping=aes(x=ScenOrder2, y=CumNetTrade)) +
