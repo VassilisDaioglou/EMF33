@@ -624,7 +624,7 @@ scen_labels <- c("Fossil"="Fossil (2010)",
                  "B-lo"="Budget1000",
                  "B-vlo"="Budget400")
 var_labels <- c("Trade|Primary Energy|Biomass|Volume"="Biomass","Trade|Primary Energy|Coal|Volume"="Coal","Trade|Primary Energy|Gas|Volume"="Gas","Trade|Primary Energy|Oil|Volume"="Oil")
-model_labels <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE","FARM 3.1"="FARM")
+model_labels <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM-NLU","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE","FARM 3.1"="FARM")
 region_label <- c("EU"="EU","USA"="USA","ROECD90"="Rest OECD","EAsia"="East Asia","RAsia"="Rest Asia","Brazil"="Brazil","RLAM"="Rest Lat.Am.","REF"="Former USSR","MAF"="M.East & Africa","NetTrade"="Global (gross)","Global"="Global (gross)","World"="Global")
 #  
 # ---- FIG.1/S1: VOLUME PRODUCTION/TRADE ----
@@ -812,7 +812,7 @@ SecurityFig <- ggplot() +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
                      name="",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("Fossil (median)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+                     labels=c("Fossil (median)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("black","blue2","brown2"),
                      name="Year",
@@ -840,7 +840,7 @@ SecurityFig2 <- ggplot() +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
                      name="",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("Fossil (median)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+                     labels=c("Fossil (median)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("black","blue2","brown2"),
                      name="Year",
@@ -868,7 +868,7 @@ SupplyDiversity <-ggplot() +
   scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
                      name="",
                      breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+                     labels=c("AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("blue2","brown2"),
                      name="Year",
@@ -951,7 +951,7 @@ ExportFrac <- ggplot() +
   scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
                      name="",
                      breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+                     labels=c("AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("forestgreen","firebrick"),
                      name="",
@@ -1023,12 +1023,12 @@ TradeComparePoint <- ggplot() +
   scale_shape_manual(values=c(12,1,2,3,4,6,8,10,0,0),
                      name="",
                      breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE","Min","Max"),
-                     labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","","")
+                     labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE","","")
   ) +
   scale_color_manual(values=c("burlywood4","red","blue","azure4","limegreen","coral2","darkolivegreen","darkorchid1","white","white"),
                      name="Year",
                      breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE","Min","Max"),
-                     labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","",""),
+                     labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE","",""),
                      guide=FALSE
   ) +
   scale_fill_manual(values="red",name="",breaks="NetTrade",labels="Global",guide=FALSE) +
@@ -1087,22 +1087,22 @@ SecurityCompareFig <-ggplot() +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,10),
                      name="",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("Fossil (2010)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
+                     labels=c("Fossil (2010)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("black","burlywood4","red","blue","azure4","limegreen","coral2","darkolivegreen","darkorchid1"),
                      name="Year",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("Fossil (2010)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE"),
+                     labels=c("Fossil (2010)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE"),
                      guide=FALSE
   ) +
   facet_grid(RegOrder~Year, labeller=labeller(RegOrder = region_label, ScenOrder= scen_labels))
 SecurityCompareFig
 #
-# ---- OUTPUTS FOR PAPER----
+# # ---- OUTPUTS FOR PAPER----
 # png(file = "output/BioTrade/Fig1.png", width = 6*ppi, height = 4*ppi, units = "px", res = ppi)
 # plot(FigTrad2)
 # dev.off()
-#
+# 
 # png(file = "output/BioTrade/Fig2a.png", width=2.8*ppi, height=2.8*ppi, res=ppi)
 # plot(MapTradFracAll)
 # dev.off()
