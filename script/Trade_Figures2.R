@@ -880,15 +880,16 @@ SupplyDiversity
 #
 # ---- FIG.S2: FOSSIL+BIO TRADE ----
 # Bio and Fossil energy trade
-EneTradeAll = subset(Trade2, select=c(MODEL,SCENARIO,Year,REGION,TradePrimBiomassVol,TradePrimCoalVol,TradePrimGasVol,TradePrimOilVol))
+EneTradeAll = subset(Trade2, select=c(MODEL,SCENARIO,Year,REGION,TradePrimBiomassVol,TradePrimCoalVol,TradePrimGasVol,TradePrimOilVol,TradeSecLiquidsBiomassVol))
 EneTradeAll = subset(EneTradeAll, SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full"|SCENARIO=="R3-BASE-0-full")
 EneTradeAll = subset(EneTradeAll, !(REGION=="OECD90"|REGION=="LAM"|REGION=="ASIA"))
-EneTradeAll = melt(EneTradeAll, measure.vars = c("TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol"))
+EneTradeAll = melt(EneTradeAll, measure.vars = c("TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol","TradeSecLiquidsBiomassVol"))
 EneTradeAll = subset(EneTradeAll, MODEL=="AIM/CGE"|MODEL=="COFFEE"|MODEL=="GCAM_EMF33"|MODEL=="GRAPE-15"|MODEL=="IMACLIM-NLU"|MODEL=="IMAGE"|MODEL=="POLES EMF33"|MODEL=="REMIND-MAGPIE") 
 EneTradeAll$RegOrder = factor(EneTradeAll$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","World")) 
 
-EneTradeAll.Hi = subset(EneTradeAll, SCENARIO=="R3-B-hi-full")
-EneTradeAll.Lo = subset(EneTradeAll, SCENARIO=="R3-B-lo-full")
+EneTradeAll.Hi = subset(EneTradeAll, SCENARIO=="R3-B-hi-full"&!(variable=="TradeSecLiquidsBiomassVol"))
+EneTradeAll.Lo = subset(EneTradeAll, SCENARIO=="R3-B-lo-full"&!(variable=="TradeSecLiquidsBiomassVol"))
+LiqTrade.Lo = subset(EneTradeAll, SCENARIO=="R3-B-lo-full"&(variable=="TradeSecLiquidsBiomassVol"|variable=="TradePrimOilVol"))
 
 Glob <- unique(EneTradeAll[,c("MODEL","RegOrder")])
 Glob$Year <- Glob$value <-1
@@ -928,6 +929,25 @@ FFandBioLo <- ggplot(data=EneTradeAll.Lo, mapping=aes(x=Year, y=value, fill=vari
   ) +
   facet_grid(MODEL ~ RegOrder, labeller=labeller(MODEL=model_labels, RegOrder=region_label), scales="free_y")
 FFandBioLo
+
+LiqTradeLo <- ggplot(data=LiqTrade.Lo, mapping=aes(x=Year, y=value, fill=variable)) +
+  geom_rect(data=subset(Glob, RegOrder=="World"),aes(fill = RegOrder), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.2) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
+  xlab("") +
+  xlim(2010,2100) +
+  scale_fill_manual(values=c("grey","forestgreen","red"),
+                    name="",
+                    breaks=c("TradeSecLiquidsBiomassVol","TradePrimOilVol"),
+                    labels=c("Bioliquids","Oil")
+  ) +
+  facet_grid(MODEL ~ RegOrder, labeller=labeller(MODEL=model_labels, RegOrder=region_label), scales="free_y")
+LiqTradeLo
+
 
 #
 # ---- FIG.S3: EXPORT FRAC ----
