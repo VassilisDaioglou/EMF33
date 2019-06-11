@@ -812,7 +812,7 @@ SecurityFig <- ggplot() +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
                      name="",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("Fossil (median)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE")
+                     labels=c("Fossil (2010)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("black","blue2","brown2"),
                      name="Year",
@@ -840,7 +840,7 @@ SecurityFig2 <- ggplot() +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
                      name="",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("Fossil (median)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE")
+                     labels=c("Fossil (2010)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("black","blue2","brown2"),
                      name="Year",
