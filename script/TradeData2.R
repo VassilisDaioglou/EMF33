@@ -13,7 +13,8 @@
   library(dplyr)
   
   # set directory path for csv file
-  setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - Documents/EMF33/Scenario results/R-Scripts")
+  # setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - Documents/EMF33/Scenario results/R-Scripts")
+  setwd("C:/Users/Asus/Documents/GitHub/EMF33")
   
   # Read Data File
   TradDATA=read.csv("data/Trade/TradDATA.csv", sep=",", dec=".", stringsAsFactors = FALSE)
@@ -52,17 +53,22 @@
   TradDATA$VARID <-gsub( "Modern","",TradDATA$VARID,fixed=F)
   TradDATA$VARID <-gsub( "SecondaryEnergy","Sec",TradDATA$VARID,fixed=F)
   TradDATA$VARID <-gsub( "PrimaryEqu","PrimEqu",TradDATA$VARID,fixed=F)
+  TradDATA$VARID <-gsub( "AgriculturalProduction","AgriProd",TradDATA$VARID,fixed=F)
   TradDATA$VARIABLE <-NULL
   TradDATA$UNIT <-NULL
   TradDATA=spread(TradDATA, VARID, value, drop=TRUE)
   TradDATA[is.na(TradDATA)]<-0
   TradDATA=TradDATA %>% mutate(TradePrimBiomassVol2=TradePrimBiomassVol+TradeSecLiquidsBiomassPrimEqu)
+  TradDATA=TradDATA %>% mutate(AgriProdFood=AgriProd-AgriProdEnergyCrops)
+  TradDATA$AgriProdFood[TradDATA$AgriProdFood<0] <-0
   TradDATA$TradePrimBiomassVol <-NULL
   TradDATA$TradeSecLiquidsBiomassPrimEqu <-NULL
+  TradDATA$AgriProd <- NULL
+  TradDATA$AgriProdEnergyCrops <- NULL
   TradDATA<-melt(TradDATA, measure.vars=c("Prim","PrimBiomass","PrimFossil",
                                     "TradePrimBiomassVal","TradePrimCoalVal","TradePrimGasVal","TradePrimOilVal",
                                     "TradePrimBiomassVol2","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol",
-                                    "TradeSecLiquidsBiomassVol","TradeSecSolidsBiomassVol"))
+                                    "TradeSecLiquidsBiomassVol","TradeSecSolidsBiomassVol","AgriProdFood"))
   TradDATA$variable <-gsub( "TradePrimBiomassVol2","TradePrimBiomassVol",TradDATA$variable,fixed=F)
   TradDATA=spread(TradDATA,REGION,value,drop=TRUE)
   TradDATA[is.na(TradDATA)]<-0
@@ -101,7 +107,7 @@
   write.csv(NewReg, file = "data/Trade/TradeRegData.csv")
   
   # SAME BUT FOR PRICES
-  # Have to eigh prices based on biomass importance of different regions
+  # Have to weigh prices of different regions based on biomass importance of different regions
   # Biomass importance = Production + Imports
   #BioSize = subset(AllR, variable=="TradePrimBiomassVol"|variable=="PrimBiomass")
   BioSize = subset(AllR, variable=="PrimBiomass")

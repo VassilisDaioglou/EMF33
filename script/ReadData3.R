@@ -16,7 +16,8 @@ library(tidyr)
 library(xlsx)
 
 # set directory path for csv file
-setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - documents/EMF33/Scenario results/R-Scripts/")
+# setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - documents/EMF33/Scenario results/R-Scripts/")
+setwd("C:/Users/Asus/Documents/GitHub/EMF33")
 
 # ---- READ DATA ----
 DATA=read.csv("data/emf33demr3r_compare_20180219-164947.csv", sep=",", dec=".", stringsAsFactors = FALSE)
@@ -61,6 +62,8 @@ TradDATA1.RYV = subset(TradDATA1.RY, VARIABLE=="Trade|Primary Energy|Biomass|Vol
                                       VARIABLE=="Trade|Primary Energy|Coal|Volume"|
                                       VARIABLE=="Trade|Primary Energy|Gas|Volume"|
                                       VARIABLE=="Trade|Primary Energy|Oil|Volume"|
+                                      VARIABLE=="Agricultural Production"|
+                                      VARIABLE=="Agricultural Production|Energy Crops"|
                                       VARIABLE=="Primary Energy"|
                                       VARIABLE=="Primary Energy|Biomass|Modern"|
                                       VARIABLE=="Primary Energy|Fossil"|
