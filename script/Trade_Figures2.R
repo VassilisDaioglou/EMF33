@@ -1118,6 +1118,7 @@ SecurityCompareFig
 # ---- FIG.S7: BIO TRADE VS. AGRI PROD ----
 BiovsAgri = subset(BioProd, variable=="AgriProdFood"|variable=="AgriProdEnergyCrops")
 BiovsAgri = subset(BiovsAgri, !(MODEL=="AIM/CGE"|MODEL=="COFFEE"|MODEL=="IMACLIM-NLU"|MODEL=="POLES EMF33")) #Remove models which do not shows agri  production
+BiovsAgri = subset(BiovsAgri, !(MODEL=="REMIND-MAGPIE"&REGION=="Brazil")) #Remove since these are set as 0s (REMIND does not have BRA) and incorrectly seems like it does not produce
 
 FigBiovsAgri <-ggplot(data=subset(BiovsAgri, SCENARIO=="R3-B-lo-full"), aes(x=Year, y=value, colour=variable, fill=variable, linetype=variable)) + 
   geom_line(size=0.5)+
