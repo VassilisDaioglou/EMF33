@@ -784,7 +784,7 @@ SecurityFig <- ggplot() +
   theme(text= element_text(size=6, face="bold"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(text= element_text(size=7, face="plain")) +
-  theme(legend.text=element_text(size=FSizeLeg)) +
+  theme(legend.text=element_text(size=FSizeLeg), legend.title=element_text(size=FSizeLeg,face="bold")) +
   ylab("Bioenergy fraction of TPES [-]") +
   xlab("Bioenergy Import Fraction [-]") +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
@@ -793,7 +793,7 @@ SecurityFig <- ggplot() +
                      labels=c("Fossil (2010)","AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("black","blue2","brown2"),
-                     name="Year",
+                     name="",
                      breaks=c("2010","2050","2100"),
                      labels=c("2010 (Fossil only)","2050","2100")
   ) +
@@ -1126,18 +1126,18 @@ FigBiovsAgri <-ggplot(data=subset(BiovsAgri, SCENARIO=="R3-B-lo-full"), aes(x=Ye
   # Text
   theme_bw() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
-  theme(legend.title=element_text(size=6), legend.position="bottom", legend.text=element_text(size=FSizeLeg)) +
+  theme(legend.title=element_text(size=FSizeLeg, face="bold"), legend.position="bottom", legend.text=element_text(size=FSizeLeg)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   ylab(expression(paste(Mt[DM],"/yr",""))) +
   xlab("") +
   # Legend                      
   scale_colour_manual(values=c("brown", "forestgreen"), 
-                      name ="Agricultural Commodity",
+                      name ="Agricultural Commodity:",
                       breaks=c("AgriProdFood","AgriProdEnergyCrops"),
                       labels=c("Food","Energy Crops")
   ) +
   scale_linetype_manual(values=c("twodash","solid"),
-                        name ="Agricultural Commodity",
+                        name ="Agricultural Commodity:",
                         breaks=c("AgriProdFood","AgriProdEnergyCrops"),
                         labels=c("Food","Energy Crops")
   ) +
