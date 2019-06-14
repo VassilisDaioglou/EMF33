@@ -64,11 +64,10 @@
   TradDATA$TradePrimBiomassVol <-NULL
   TradDATA$TradeSecLiquidsBiomassPrimEqu <-NULL
   TradDATA$AgriProd <- NULL
-  TradDATA$AgriProdEnergyCrops <- NULL
   TradDATA<-melt(TradDATA, measure.vars=c("Prim","PrimBiomass","PrimFossil",
                                     "TradePrimBiomassVal","TradePrimCoalVal","TradePrimGasVal","TradePrimOilVal",
                                     "TradePrimBiomassVol2","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol",
-                                    "TradeSecLiquidsBiomassVol","TradeSecSolidsBiomassVol","AgriProdFood"))
+                                    "TradeSecLiquidsBiomassVol","TradeSecSolidsBiomassVol","AgriProdFood","AgriProdEnergyCrops"))
   TradDATA$variable <-gsub( "TradePrimBiomassVol2","TradePrimBiomassVol",TradDATA$variable,fixed=F)
   TradDATA=spread(TradDATA,REGION,value,drop=TRUE)
   TradDATA[is.na(TradDATA)]<-0

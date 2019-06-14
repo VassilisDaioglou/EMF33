@@ -82,11 +82,7 @@ Trade2= Trade2 %>% mutate(BioImpFrac=((1-BioExporter)*(TradePrimBiomassVol/PrimB
 # ---- RESULTS FOR PAPER ----
 # Global Net Trade of different energy carriers
 EneTrade=subset(Trade2, REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
-EneTrade[,7:8]<- list(NULL)
-EneTrade$TradePrimCoalVal <- NULL
-EneTrade$TradePrimGasVal <- NULL
-EneTrade$TradePrimOilVal <- NULL
-EneTrade[,13:21]<- list(NULL)
+EneTrade <- subset(EneTrade, select=c('MODEL','SCENARIO','Year','REGION','Prim','PrimBiomass','TradePrimBiomassVol', 'TradePrimCoalVol','TradePrimOilVol','TradePrimGasVol','TradeSecLiquidsBiomassVol','TradeSecSolidsBiomassVol'))  
 EneTrade <- melt(EneTrade, measure.vars=c('Prim','PrimBiomass','TradePrimBiomassVol', 'TradePrimCoalVol','TradePrimOilVol','TradePrimGasVol','TradeSecLiquidsBiomassVol','TradeSecSolidsBiomassVol'))  
 EneTrade$value[EneTrade$value<0] <-0
 EneTrade <- spread(EneTrade,REGION,value)
@@ -107,7 +103,7 @@ EneTradeMed.Reg <- aggregate(EneTrade2$value, by=list(Year=EneTrade2$Year,variab
 
 # Ranges
 Ranges.max <- aggregate(BiomassTrade[,5:14], by=list(SCENARIO=BiomassTrade$SCENARIO,Year=BiomassTrade$Year,variable=BiomassTrade$variable), FUN=max, na.rm=TRUE)
-Ranges <- melt(BiomassTrade, id.vars=c("MODEL","SCENARIO","Year","variable"), variable_name="REGION")
+Ranges <- melt(BiomassTrade, id.vars=c("MODEL","SCENARIO","Year","variable"), variable.name="REGION")
 Ranges = subset(Ranges, value>1)
 Ranges <- spread(Ranges,REGION,value)
 Ranges.max <- aggregate(Ranges[,5:14], by=list(SCENARIO=Ranges$SCENARIO,Year=Ranges$Year,variable=Ranges$variable), FUN=max, na.rm=TRUE)
@@ -162,7 +158,7 @@ BioProd$BioProd[BioProd$BioProd<0] <-0
 BioProd = subset(BioProd, SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full"|SCENARIO=="R3-BASE-0-full")
 BioProd = subset(BioProd, !(REGION=="OECD90"|REGION=="LAM"|REGION=="ASIA"))
 BioProd = melt(BioProd, id.vars=c("MODEL","SCENARIO","Year","REGION"))
-BioProd$RegOrder = factor(BioProd$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","Global")) 
+BioProd$RegOrder = factor(BioProd$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","World")) 
 BioProd$ScenOrder = factor(BioProd$SCENARIO, levels=c('R3-BASE-0-full','R3-B-hi-full','R3-B-lo-full','R3-B-vlo-full'))
 BioProd=subset(BioProd, Year=="2020"|Year=="2040"|Year=="2060"|Year=="2080"|Year=="2100")
 BioProd=subset(BioProd, MODEL %in% BioTradCheck$MODEL)
@@ -235,18 +231,9 @@ ModelAgree.ModelMed = rbind(ModelAgree.ModelImpMed,ModelAgree.ModelExpMed)
 
 #
 Trade3=subset(Trade2, MODEL %in%BioTradCheck$MODEL)
-Trade3$TradePrimCoalVol <-NULL
-Trade3$TradePrimCoalVal <-NULL
-Trade3$TradePrimOilVol <-NULL
-Trade3$TradePrimOilVal <-NULL
-Trade3$TradePrimGasVol <-NULL
-Trade3$TradePrimGasVal <-NULL
-Trade3$Prim <-NULL
-Trade3$PrimBiomass <-NULL
-Trade3$PrimFossil <-NULL
-Trade3$TradeSecLiquidsBiomassVol <- NULL
-Trade3$TradeSecSolidsBiomassVol <- NULL
-
+Trade3=subset(Trade3, select=-c(TradePrimCoalVol,TradePrimCoalVal,TradePrimOilVol,TradePrimOilVal,TradePrimGasVol,TradePrimGasVal,
+                                Prim,PrimBiomass,PrimFossil,TradeSecLiquidsBiomassVol,TradeSecSolidsBiomassVol,
+                                AgriProdFood,AgriProdEnergyCrops))
 BioTradVol = subset(Trade3, REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
 BioTradVol = subset(BioTradVol, SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full")
 BioTradVol$ScenOrder = factor(BioTradVol$SCENARIO, levels=c('R3-BASE-0-full','R3-B-hi-full','R3-B-lo-full','R3-B-vlo-full'))
@@ -267,15 +254,8 @@ BioTradFrac = subset(Trade3, REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGIO
 BioTradFrac = subset(BioTradFrac, Year=="2050"|Year=="2100")
 BioTradFrac=subset(BioTradFrac,!is.na(BioTradFrac$BioExpFrac)&!is.na(BioTradFrac$BioImpFrac))
 BioTradFrac=subset(BioTradFrac,!is.na(BioTradFrac$BioExpFrac)&!is.na(BioTradFrac$BioImpFrac))
-BioTradFrac$TradePrimBiomassVol <-NULL
-BioTradFrac$TradePrimBiomassVal <-NULL
-BioTradFrac$BioExporter <-NULL
-BioTradFrac$FFExporter <-NULL
-BioTradFrac$TradeFF <-NULL
-BioTradFrac$BioImpDep <-NULL
-BioTradFrac$BioDep <-NULL
-BioTradFrac$FFImpDep <-NULL
-BioTradFrac$FFDep <-NULL
+BioTradFrac=subset(BioTradFrac, select=-c(TradePrimBiomassVol,TradePrimBiomassVal,BioExporter,FFExporter,
+                                TradeFF,BioImpDep,BioDep,FFImpDep,FFDep))
 BioTradFrac <- melt(BioTradFrac, measure.vars=c('BioExpFrac', 'BioImpFrac'))  
 BioTradFrac = subset(BioTradFrac, !(value==0))
 BioTradFrac$value[BioTradFrac$value > 1] <- 1 
@@ -311,15 +291,8 @@ Security1$Year <- factor(Security1$Year)
 
 # Shannon-Weiner Index for Diversity of Supply
 SWDiversity = subset(Trade3, REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
-SWDiversity$TradePrimBiomassVal <-NULL
-SWDiversity$FFExporter <-NULL
-SWDiversity$TradeFF <-NULL
-SWDiversity$BioImpDep <-NULL
-SWDiversity$BioDep <-NULL
-SWDiversity$FFImpDep <-NULL
-SWDiversity$FFDep <-NULL
-SWDiversity$BioExpFrac <-NULL
-SWDiversity$BioImpFrac <-NULL
+SWDiversity = subset(SWDiversity, select=-c(TradePrimBiomassVal,FFExporter,TradeFF,BioImpDep,BioDep,FFImpDep,FFDep,
+                                            BioExpFrac,BioImpFrac))
 SWDiversity =subset(SWDiversity,BioExporter==1)
 SWDiversity$BioExporter <-NULL
 SWDiversity <- melt(SWDiversity, measure.vars=c('TradePrimBiomassVol'))  
@@ -460,7 +433,8 @@ DiversityTest.BonfDF=as.data.frame(DiversityTest.Bonf$p.value)
 Drivers = subset(Drivers, select=-c(TradePrimCoalVal,TradePrimCoalVol,TradePrimOilVal,TradePrimOilVol,TradePrimGasVal,TradePrimGasVol,
                                     TradeSecLiquidsBiomassVol,TradeSecSolidsBiomassVol,TradePrimBiomassVal,
                                     FFExporter,TradeFF,BioImpDep,BioDep,FFImpDep,FFDep,BioExpFrac,BioImpFrac,
-                                    Prim,PrimBiomass,PrimFossil))
+                                    Prim,PrimBiomass,PrimFossil,
+                                    AgriProdFood,AgriProdEnergyCrops))
 # First: Get annual global trade
 Drivers1 =subset(Drivers,BioExporter==1)
 Drivers1$BioExporter <-NULL
@@ -788,10 +762,6 @@ MapImpExp <- ggplot() +
   )
 MapImpExp
 
-# png("output/BioTrade/MapImpExp.png", width=8*ppi, height=6*ppi, res=ppi)
-# print(plot(MapImpExp))
-# dev.off()
-
 #
 # ---- FIG.3: SECURITY ----
 Security1=subset(Security1, MODEL %in% BioTradCheck$MODEL)
@@ -947,7 +917,6 @@ LiqTradeLo <- ggplot(data=LiqTrade.Lo, mapping=aes(x=Year, y=value, fill=variabl
   ) +
   facet_grid(MODEL ~ RegOrder, labeller=labeller(MODEL=model_labels, RegOrder=region_label), scales="free_y")
 LiqTradeLo
-
 
 #
 # ---- FIG.S3: EXPORT FRAC ----
@@ -1118,6 +1087,36 @@ SecurityCompareFig <-ggplot() +
   facet_grid(RegOrder~Year, labeller=labeller(RegOrder = region_label, ScenOrder= scen_labels))
 SecurityCompareFig
 #
+# ---- FIG.S7: BIO TRADE VS. AGRI PROD ----
+BiovsAgri = subset(BioProd, variable=="AgriProdFood"|variable=="AgriProdEnergyCrops")
+BiovsAgri = subset(BiovsAgri, !(MODEL=="AIM/CGE"|MODEL=="COFFEE"|MODEL=="IMACLIM-NLU"|MODEL=="POLES EMF33")) #Remove models which do not shows agri  production
+
+FigBiovsAgri <-ggplot(data=subset(BiovsAgri, SCENARIO=="R3-B-lo-full"), aes(x=Year, y=value, colour=variable, fill=variable, linetype=variable)) + 
+  geom_line(size=0.5)+
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  xlim(2010,2100) +
+  # Text
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(legend.title=element_text(size=6), legend.position="bottom") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  ylab(expression(paste(Mt[DM],"/yr",""))) +
+  xlab("") +
+  # Legend                      
+  scale_colour_manual(values=c("brown", "forestgreen"), 
+                      name ="Agricultural Commodity",
+                      breaks=c("AgriProdFood","AgriProdEnergyCrops"),
+                      labels=c("Food","Energy Crops")
+  ) +
+  scale_linetype_manual(values=c("twodash","solid"),
+                        name ="Agricultural Commodity",
+                        breaks=c("AgriProdFood","AgriProdEnergyCrops"),
+                        labels=c("Food","Energy Crops")
+  ) +
+  facet_grid(RegOrder ~ MODEL, labeller=labeller(MODEL = model_labels, RegOrder = region_label), scales="free_y")
+FigBiovsAgri
+
+#
 # # ---- OUTPUTS FOR PAPER----
 # png(file = "output/BioTrade/Fig1.png", width = 6*ppi, height = 4*ppi, units = "px", res = ppi)
 # plot(FigTrad2)
@@ -1164,6 +1163,10 @@ SecurityCompareFig
 # print(plot(SecurityCompareFig))
 # dev.off()
 #
+# png(file = "output/BioTrade/FigS7.png", width = 5*ppi, height = 8*ppi, units = "px", res = ppi)
+# plot(FigBiovsAgri)
+# dev.off()
+
 # write.xlsx(DiversityTest.TtestDF, file="output/BioTrade/Statistics.xlsx", sheetName="Diversity of Supply", row.names=TRUE, showNA = TRUE)
 # write.xlsx(DriversTech.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Technology)", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(DriversBudg.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
