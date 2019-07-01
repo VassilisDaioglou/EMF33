@@ -706,7 +706,7 @@ for(i in unique(ModelAgree$SCENARIO))
     theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),panel.border = element_blank()) +
     theme(axis.text = element_blank(), axis.ticks =element_blank(), axis.title = element_blank()) +
     theme(legend.position="bottom", legend.text = element_text(angle=0, size=7), legend.direction="horizontal") +
-    scale_fill_gradient2(low="firebrick", high="forestgreen", mid="gainsboro", 
+    scale_fill_gradient2(low="magenta", high="forestgreen", mid="gainsboro", 
                          midpoint=0, space="Lab",
                          limits=c(-50,50),
                          guide_legend(title="Portion of Global Trade (%)"),
@@ -724,7 +724,7 @@ legend <- ggplot() +
   theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),panel.border = element_blank()) +
   theme(axis.text = element_blank(), axis.ticks =element_blank(), axis.title = element_blank()) +
   theme(legend.position="bottom", legend.text = element_text(angle=0, size=7), legend.direction="horizontal") +
-  scale_fill_gradient2(low="firebrick", high="forestgreen", mid="gainsboro", 
+  scale_fill_gradient2(low="magenta", high="forestgreen", mid="gainsboro", 
                        midpoint=0, space="Lab",
                        limits=c(-50,50),
                        guide_legend(title="Portion of Global Trade (%)"))
@@ -961,7 +961,7 @@ ExportFrac <- ggplot() +
                      breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
                      labels=c("AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE")
   ) +
-  scale_color_manual(values=c("forestgreen","firebrick"),
+  scale_color_manual(values=c("forestgreen","magenta"),
                      name="",
                      breaks=c("BioExpFrac","BioImpFrac"),
                      labels=c("Dependence on Exports","Dependence on Imports")
@@ -1132,7 +1132,7 @@ FigBiovsAgri <-ggplot(data=subset(BiovsAgri, SCENARIO=="R3-B-lo-full"), aes(x=Ye
   ylab(expression(paste(Mt[DM],"/yr",""))) +
   xlab("") +
   # Legend                      
-  scale_colour_manual(values=c("brown", "forestgreen"), 
+  scale_colour_manual(values=c("limegreen", "magenta"), 
                       name ="Agricultural Commodity:",
                       breaks=c("AgriProdFood","AgriProdEnergyCrops"),
                       labels=c("Food","Energy Crops")
