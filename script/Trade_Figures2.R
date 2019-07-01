@@ -1193,7 +1193,7 @@ FigBiovsAgri
 # print(plot(SecurityCompareFig))
 # dev.off()
 # 
-# png(file = "output/BioTrade/FigS7.png", width = 5*ppi, height = 8*ppi, units = "px", res = ppi)
+# png(file = "output/BioTrade/FigS7.png", width = 5*ppi, height = 9*ppi, units = "px", res = ppi)
 # plot(FigBiovsAgri)
 # dev.off()
 #
