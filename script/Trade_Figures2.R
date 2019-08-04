@@ -599,6 +599,9 @@ scen_labels <- c("Fossil"="Fossil (2010)",
                  "B-hi"="Budget1600",
                  "B-lo"="Budget1000",
                  "B-vlo"="Budget400")
+scen_labels2 <- c("R3-B-hi-full"=">2°C Scenario",
+                  "R3-B-lo-full"="Approx. 2°C Scenario", 
+                  "R3-B-vlo-full"="Approx. 1.5°C Scenario")
 var_labels <- c("Trade|Primary Energy|Biomass|Volume"="Biomass","Trade|Primary Energy|Coal|Volume"="Coal","Trade|Primary Energy|Gas|Volume"="Gas","Trade|Primary Energy|Oil|Volume"="Oil")
 model_labels <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM-NLU","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE","FARM 3.1"="FARM")
 model_labels2 <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM-NLU","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND\n-MAgPIE","FARM 3.1"="FARM")
@@ -1419,64 +1422,42 @@ FigPricTrad
 #
 # ---- END ----
 # # Delete excess variables
-# rm(FossilDepMed,FossilDepMedx,FossilDepMedy,DiversityStat,TestScenLabels,SecurityCompare1,Fossil)
-# rm(Drivers1,Drivers2)
-# rm(DriversTech1,DriversTech1.fit,DriversTech1.Tuk,DriversTech1.result)
-# rm(DriversTech2,DriversTech2.Ttest,DriversTech2.TtestDF)
-# rm(DriversBudg1,DriversBudg1.fit,DriversBudg1.Tuk,DriversBudg1.result)
-# rm(DriversBudg2,DriversBudg2.Ttest,DriversBudg2.TtestDF)
-# rm(SecurityTest1,SecurityTest1.fit,SecurityTest1.fit2,SecurityTest1.result)
-# rm(SecurityTest2,SecurityTest2.Ttest,SecurityTest2.TtestDF)
-# rm(EneTrade,EneTradeMed.Scen)
-# rm(DiversityTest1.fit,DiversityTest1.fit2,DiversityTest1.result)
-# rm(names,names2,i,l)
+rm(FossilDepMed,FossilDepMedx,FossilDepMedy,DiversityStat,TestScenLabels,SecurityCompare1,Fossil)
+rm(Drivers1,Drivers2)
+rm(DriversTech1,DriversTech1.fit,DriversTech1.Tuk,DriversTech1.result)
+rm(DriversTech2,DriversTech2.Ttest,DriversTech2.TtestDF)
+rm(DriversBudg1,DriversBudg1.fit,DriversBudg1.Tuk,DriversBudg1.result)
+rm(DriversBudg2,DriversBudg2.Ttest,DriversBudg2.TtestDF)
+rm(SecurityTest1,SecurityTest1.fit,SecurityTest1.fit2,SecurityTest1.result)
+rm(SecurityTest2,SecurityTest2.Ttest,SecurityTest2.TtestDF)
+rm(EneTrade,EneTradeMed.Scen)
+rm(DiversityTest1.fit,DiversityTest1.fit2,DiversityTest1.result)
+rm(names,names2,i,l)
 
-# ---- DISABLED ----
-# TRADE FIGURE - EXPORT FRACTION (DISABLED)
-# ExportFrac <- ggplot() +
-#   geom_point(data=TradeDep, mapping=aes(x=SCENARIO, y=value, shape=MODEL, color=VARIABLE), size = 1) +
-#   coord_cartesian(ylim=c(-1, 1)) + 
-#   scale_y_continuous(breaks=seq(-1,1,0.5)) +
-#   # Text
-#   theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-#   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-#   ylab("Biomass Trade Fraction [-]") +
-#   xlab("") + 
-#   scale_shape_manual(values=c(1,2,3,4,6,8),
-#                      name="",
-#                      breaks=c("GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
-#                      labels=c("GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","ReMIND-MAgPIE")
-#   ) + 
-#  scale_color_manual(values=c("forestgreen","firebrick"),
-#                     name="",
-#                     breaks=c("Biomass Export Fraction","Biomass Import Fraction"),
-#                     labels=c("Dependence on Exports","Dependence on Imports")
-#                     )+
-#   scale_x_discrete(labels=scen_labels) +
-#   facet_grid(REGION ~Year , labeller=labeller(REGION = region_label))
-# ExportFrac
+# ---- FIGURES FOR PRESENTATIONS/LECTURES ----
+FigTrad2C <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&SCENARIO=="R3-B-lo-full"&!REGION=="World")
+                   , mapping=aes(x=Year, y=value, fill=RegOrder)) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, vjust=0.5), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.title=element_blank(), legend.position="bottom", legend.text=element_text(size=FSizeLeg)) +
+  ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
+  xlab("") +
+  scale_x_continuous(breaks=seq(2020, 2100, 20)) +
+  scale_fill_manual(values=c("forestgreen","greenyellow","navy","dodgerblue","cadetblue1","brown","blueviolet","pink","red"),
+                    name ="",
+                    breaks=c("Brazil","RLAM","USA","EU","ROECD90","MAF","EAsia","RAsia","REF"),
+                    labels=c("Brazil","Rest Lat.Am.","USA","EU","Rest OECD","M. East & Africa","East Asia","Rest Asia","Former USSR")
+  ) +
+  facet_grid(ScenOrder ~ MODEL, labeller=labeller(MODEL=model_labels2, ScenOrder=scen_labels2)) +
+  theme(strip.text.x = element_text(size = 6.5), strip.text.y = element_text(size = FSizeStrip))
+FigTrad2C
 
-# TRADE FIGURE - LOCAL CONSUMPTION AND TRADE (DISABLED)
-# BioTradeDriver=BioImpExp
-# BioTradeDriver$ModelID <- paste(BioTradeDriver$SCENARIO,BioTradeDriver$Year) 
-# BioTradeDriver$ModelID=substr(BioTradeDriver$ModelID, start=6, stop=40)
+#
+# png(file = "output/BioTrade/Presentations/FigTrad2C.png", width = 6.5*ppi, height = 2.6*ppi, units = "px", res = ppi)
+# plot(FigTrad2C)
+# dev.off()
 # 
-# TradeDriver <- ggplot(data=BioTradeDriver, mapping=aes(x=ModelID, y=value, fill=VARIABLE)) +
-#   #geom_point(data=BioImpExp, mapping=aes(x=SCENARIO, y=value, shape=MODEL, color=VARIABLE), size = 1) +
-#   geom_bar(stat="identity") +
-#   geom_hline(yintercept=0,size = 0.1, colour='black') +
-#   #coord_cartesian(ylim=c(-1, 1)) + 
-#   #scale_y_continuous(breaks=seq(-1,1,0.5)) +
-#   # Text
-#   theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
-#   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-#   ylab(expression(paste(EJ[Primary],"/yr",""))) +
-#   xlab("") + 
-#   scale_color_manual(values=c("firebrick","forestgreen"),
-#                      name="",
-#                      breaks=c("Primary Energy|Biomass|Modern","Trade|Primay Energy|Biomass|Volume"),
-#                      labels=c("Bioenergy Production","BioEnergy Traded")
-#   )+
-#   #scale_x_discrete(labels=scen_labels)
-#   facet_grid(REGION ~ MODEL , labeller=labeller(REGION = region_label, MODEL=model_labels))
-# TradeDriver
+
