@@ -935,6 +935,83 @@ BioEffCost <- ggplot(subset(GlobalData.BioCor1, Year=="2020"&!(CarrierID=="Gas")
   facet_grid( Year~TechOrder2, scales="free_x", labeller=labeller(Year = dummy_labeler,TechOrder2=Biotech_labeler)) 
 BioEffCost
 #
+# ---- ***FIG 2: Regional ----
+# Get relevant dataset
+TechDataR = Calcs1
+TechDataR$TechOrder2 <-gsub("wCCS","",TechDataR$TechOrder)
+# Make correction for 2020 since some models display dummy data for that timestep
+TechDataR$Efficiency[TechDataR$MODEL=="MESSAGE-GLOBIOM"&TechDataR$VARIABLE=="ElectricityBiomasswCCS"&TechDataR$Year==2020] <- TechDataR$Efficiency[TechDataR$MODEL=="MESSAGE-GLOBIOM"&TechDataR$VARIABLE=="ElectricityBiomasswCCS"&TechDataR$Year==2030]
+TechDataR$CapitalCo[TechDataR$MODEL=="MESSAGE-GLOBIOM"&TechDataR$VARIABLE=="ElectricityBiomasswCCS"&TechDataR$Year==2020] <- TechDataR$CapitalCo[TechDataR$MODEL=="MESSAGE-GLOBIOM"&TechDataR$VARIABLE=="ElectricityBiomasswCCS"&TechDataR$Year==2030]
+TechDataR$Efficiency[TechDataR$MODEL=="MESSAGE-GLOBIOM"&TechDataR$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&TechDataR$Year==2020] <- TechDataR$Efficiency[TechDataR$MODEL=="MESSAGE-GLOBIOM"&TechDataR$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&TechDataR$Year==2030]
+TechDataR$CapitalCo[TechDataR$MODEL=="MESSAGE-GLOBIOM"&TechDataR$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&TechDataR$Year==2020] <- TechDataR$CapitalCo[TechDataR$MODEL=="MESSAGE-GLOBIOM"&TechDataR$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&TechDataR$Year==2030]
+TechDataR$Efficiency[TechDataR$MODEL=="MESSAGE-GLOBIOM"&TechDataR$VARIABLE=="HydrogenBiomasswCCS"&TechDataR$Year==2020] <- TechDataR$Efficiency[TechDataR$MODEL=="MESSAGE-GLOBIOM"&TechDataR$VARIABLE=="HydrogenBiomasswCCS"&TechDataR$Year==2030]
+TechDataR$CapitalCo[TechDataR$MODEL=="MESSAGE-GLOBIOM"&TechDataR$VARIABLE=="HydrogenBiomasswCCS"&TechDataR$Year==2020] <- TechDataR$CapitalCo[TechDataR$MODEL=="MESSAGE-GLOBIOM"&TechDataR$VARIABLE=="HydrogenBiomasswCCS"&TechDataR$Year==2030]
+TechDataR2 = melt(TechDataR, id.vars=c("MODEL","SCENARIO","REGION","Year","VARIABLE","Capt","TechOrder","TechOrder2"))
+# Literature data
+LitData2 = subset(LitData, select=-c(Ref,TechType,CapitalCoPerIn))
+LitData2 = melt(LitData2, id.vars=c("VARIABLE","CarrierID","Prim","Tech","Capt","Tech2","TechOrder2","Year"))
+LitData2$VarID = paste(LitData2$VARIABLE,LitData2$variable)
+LitData2.max <- aggregate(LitData2$value, by=list(VarID=LitData2$VarID), max, na.rm=TRUE)
+LitData2.min <- aggregate(LitData2$value, by=list(VarID=LitData2$VarID), min, na.rm=TRUE)
+# Hydrogen has identical min-max efficiency (0.35). Set them appart
+LitData2.max$x[LitData2.max$VarID=="HydrogenBiomasswoCCS Efficiency"] <- 0.37
+LitData2.min$x[LitData2.min$VarID=="HydrogenBiomasswoCCS Efficiency"] <- 0.33
+
+LitData2$Max <- LitData2.max[match(LitData2$VarID, LitData2.max$VarID),2]
+LitData2$Min <- LitData2.min[match(LitData2$VarID, LitData2.min$VarID),2]
+# Have to repeat literature data across models in order to add them to the panels
+LitData2$MODEL <- NA
+LitData2.temp = LitData2
+for(i in unique(TechDataR2$MODEL)){
+  LitData2.model = LitData2.temp
+  LitData2.model$MODEL <- i
+  LitData2 = rbind(LitData2,LitData2.model)
+}
+LitData2=subset(LitData2, !MODEL=="NA")
+rm(LitData2.max,LitData2.min,LitData2.model,LitData2.temp)
+# Remove specific datapoints in orde rto avoid over-shading of the area (have 1 set of points per technology, the min-max)
+LitData2$value <- NULL
+LitData2 =LitData2[!duplicated(LitData2),]
+
+BioCostR2 <- ggplot(subset(TechDataR2, Year=="2020"&(variable=="CapitalCo")&!TechOrder=="Gas"))+
+  geom_point(data=, aes(x=REGION, y=value, colour=Capt, fill=Capt, shape=Capt), alpha=0.4, size=1.5) +
+  geom_rect(data=subset(LitData2, !(TechOrder2=="Gas"|TechOrder2=="Other biomass")), aes(xmin=-Inf, xmax=Inf, ymin=Min, ymax=Max, fill=Capt), alpha = 0.2) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ggtitle("A: Capital Costs") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
+  # ylim(0,1) + 
+  ylab(expression("Capital Costs [US$"[2005]*"/kW"[Out]*"]")) + xlab("") + #ylab("Conversion Efficiency [-]") +
+  theme_bw() +
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="none", legend.text=element_text(size=fontsize1)) +
+  scale_colour_manual(values=c("green4","black"),name="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
+  scale_fill_manual(values=c("green4","black"),name ="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
+  scale_shape_manual(values=c(2,1),name="",breaks=c("woCCS","wCCS"),labels=c("No CCS","With CCS")) +
+  facet_grid(TechOrder2~MODEL, labeller=labeller(TechOrder2=Biotech_labeler, MODEL=model_labels), scales="free_y") 
+BioCostR2
+
+BioEffR2 <- ggplot(subset(TechDataR2, Year=="2020"&(variable=="Efficiency")&!TechOrder=="Gas"))+
+  geom_point(data=, aes(x=REGION, y=value, colour=Capt, fill=Capt, shape=Capt), alpha=0.4, size=1.5) +
+  geom_rect(data=subset(LitData2, !(TechOrder2=="Gas"|TechOrder2=="Other biomass")), aes(xmin=-Inf, xmax=Inf, ymin=Min, ymax=Max, fill=Capt), alpha = 0.2) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  ggtitle("B: Conversion Efficiency") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
+  ylim(0,1) + 
+  xlab("") + ylab("Conversion Efficiency [-]") +
+  theme_bw() +
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize1)) +
+  scale_colour_manual(values=c("green4","black"),name="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
+  scale_fill_manual(values=c("green4","black"),name ="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
+  scale_shape_manual(values=c(2,1),name="",breaks=c("woCCS","wCCS"),labels=c("No CCS","With CCS")) +
+  facet_grid(TechOrder2~MODEL, labeller=labeller(TechOrder2=Biotech_labeler, MODEL=model_labels), scales="free_y") 
+BioEffR2
+
+lay<-rbind(1,1,1,1,1,1,1,1,1,1,1,1,1,
+           2,2,2,2,2,2,2,2,2,2,2,2,2,2) 
+BioEffCostR2 <- grid.arrange(BioCostR2,BioEffR2, layout_matrix=lay)
+
+#
 # ---- FIG 3: G. Bio All cost ALL ----
 GlobalData.Bio4 = subset(GlobalData.Bio1cor, variable=="LCOE1"|variable=="LCOE3"|variable=="LCOE"|variable=="LCOE3cor"|variable=="LCOEcor")
 GlobalData.Bio4 = subset(GlobalData.Bio4, Year=="2030"|Year=="2050"| Year=="2100")
@@ -1457,6 +1534,10 @@ rm(lay)
 # print(plot(BioEffCost))
 # dev.off()
 # 
+# png("output/BioTech/Fig2R2.png", width=7*ppi, height=10*ppi, res=ppi)
+# print(plot(BioEffCostR2))
+# dev.off()
+#
 # png("output/BioTech/Fig3.png", width=7*ppi, height=7*ppi, res=ppi)
 # print(plot(GBioAllCost4))
 # dev.off()
