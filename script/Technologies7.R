@@ -273,9 +273,9 @@ rm(DiscountRate)
 # ---- LABELS ----
 scen_labels <- c("R3-B-hi-full"="hi-full","R3-B-hi-ready2050"="hi-ready2050","R3-B-hi-cost100"="hi-cost100","R3-B-hi-limbio"="hi-limbio","R3-B-lo-full"="lo-full","R3-B-lo-ready2050"="lo-ready2050","R3-B-lo-cost100"="lo-cost100","R3-B-lo-limbio"="lo-limbio")
 #Model labels with text wraps                
-model_labels <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","FARM 3.1"="FARM","MESSAGE-GLOBIOM"="MESSAGE-\nGLOBIOM","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-\nMAgPIE")
+model_labels <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","FARM 3.1"="FARM","MESSAGE-GLOBIOM"="MESSAGEix-\nGLOBIOM","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-\nMAgPIE")
 #Model labels without text wraps                
-model_labels2 <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","FARM 3.1"="FARM","MESSAGE-GLOBIOM"="MESSAGE-GLOBIOM","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE")
+model_labels2 <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","FARM 3.1"="FARM","MESSAGE-GLOBIOM"="MESSAGEix-GLOBIOM","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE")
 
 eletech_labeler <- c("Geothermal"="Geothermal", "Hydro"="Hydro","Nuclear"="Nuclear","Solar"="Solar (PV&CSP)","Wind"="Wind (On/off-shore)","BiomasswCCS"="Biomass w/ CCS","Biomass"="Biomass","CoalwCCS"="Coal w/ CCS","Coal"="Coal","GaswCCS"="Gas w/ CCS","Gas"="Gas")
 
@@ -928,7 +928,7 @@ BioEffCost <- ggplot(subset(GlobalData.BioCor1, Year=="2020"&!(CarrierID=="Gas")
   scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
                      name="",
                      breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
-                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGE-GLOBIOM","BET","DNE21+")
+                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGEix-GLOBIOM","BET","DNE21+")
   ) +
   geom_blank(aes(x=x_max)) + geom_blank(aes(x=x_min)) +
   guides(col = guide_legend(nrow = 2)) +
@@ -995,7 +995,7 @@ GBioCapOMCost <- ggplot(subset(GlobalData.Bio5,
   scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
                      name="",
                      breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
-                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGE-GLOBIOM","BET","DNE21+")
+                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGEix-GLOBIOM","BET","DNE21+")
   ) +
   scale_color_manual(values="black") +
   scale_fill_manual(values=c("grey","dodgerblue","purple"),
@@ -1025,7 +1025,7 @@ GBioFeedCost <- ggplot(subset(GlobalData.Bio5,
   scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
                      name="",
                      breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
-                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGE-GLOBIOM","BET","DNE21+")
+                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGEix-GLOBIOM","BET","DNE21+")
   ) +
   scale_color_manual(values=c("green4","green4")) +
   scale_fill_manual(values=c("grey","dodgerblue","purple"),
@@ -1057,7 +1057,7 @@ GBioCDRCost <- ggplot(subset(GlobalData.Bio5,
   scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
                      name="",
                      breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
-                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGE-GLOBIOM","BET","DNE21+")
+                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGEix-GLOBIOM","BET","DNE21+")
   ) +
   scale_color_manual(values=c("firebrick","firebrick"),
                      guide=FALSE) +
@@ -1580,7 +1580,7 @@ LCOEvCtax <- ggplot(subset(GlobalData, Capt=="wCCS"&(Year=="2050"|Year=="2100")&
   scale_shape_manual(values=c(0,1,2,3,4,5,6,8,10,11,13),
                      name="Model",
                      breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES","REMIND-MAgPIE")) +
+                     labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGEix-GLOBIOM","POLES","REMIND-MAgPIE")) +
   facet_grid(Year~CarrierID, scales="free", labeller=labeller(MODEL= model_labels, CarrierID = carrier_labels))
 LCOEvCtax
 
@@ -1644,7 +1644,7 @@ rm(lay)
 # png("output/BioTech/Fig3_Revised.png", width=7*ppi, height=7*ppi, res=ppi)
 # print(plot(GBioAllCostPanel))
 # dev.off()
-#
+# 
 # png("output/BioTech/Fig4.png", width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(SecCostFinal2))
 # dev.off()
@@ -1665,7 +1665,7 @@ rm(lay)
 # png("output/BioTech/FigS1.png", width=7*ppi, height=10*ppi, res=ppi)
 # print(plot(BioEffCostR2))
 # dev.off()
-#
+# 
 # png("output/BioTech/FigS2.png", width=7*ppi, height=5*ppi, res=ppi)
 # print(plot(AssumpHist))
 # dev.off()
