@@ -1049,6 +1049,111 @@ GBioAllCost4 <- ggplot(subset(GlobalData.Bio4, (CarrierID=="Liq"|CarrierID=="Ele
 GBioAllCost4
 
 #
+# ---- ***FIG 3: G. Bio All cost ALL ----
+GlobalData.Bio5 = subset(GlobalData.Bio1cor, variable=="LCOE1"|variable=="LCOE3"|variable=="LCOE"|variable=="LCOE3cor"|variable=="LCOEcor")
+GlobalData.Bio5 = subset(GlobalData.Bio4, Year=="2030"|Year=="2050")
+GlobalData.Bio5$Year = as.character(GlobalData.Bio5$Year)
+GlobalData.Bio5$value[GlobalData.Bio5$variable=="LCOE"&GlobalData.Bio5$Capt=="woCCS"] <-NA
+
+GBioCapOMCost <- ggplot(subset(GlobalData.Bio5, 
+                               (CarrierID=="Liq"|CarrierID=="Ele"|CarrierID=="Hyd")
+                               &!(Tech2=="Other biomass"|Tech2=="1st gen. ethanol")
+                               &(variable=="LCOE1"))) +
+  geom_jitter(aes(x=Year, y=value, colour=variable, shape=MODEL),size=1.2, width=0.25, alpha=0.5) +
+  geom_rect(data=Bkgrd, aes(fill = CarrierID), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.03) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + 
+  geom_vline(xintercept=1.5, size=0.1, colour="gray10") +
+  ggtitle("Capital and O&M Costs") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
+  xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  theme_bw() +  
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="none", legend.text=element_text(size=fontsize1)) +
+  scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
+                     name="",
+                     breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
+                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGE-GLOBIOM","BET","DNE21+")
+  ) +
+  scale_color_manual(values="black") +
+  scale_fill_manual(values=c("grey","dodgerblue","purple"),
+                    name="",
+                    breaks=c("Ele","Liq","Hyd"),
+                    labels=c("Electricity","Liquids","Hydrogen")
+                    ,guide=FALSE
+  ) +  guides(shape=guide_legend(nrow=2,byrow=TRUE)) +
+  facet_grid(.~TechOrder, scales="free", labeller=labeller(MODEL= model_labels, TechOrder=Biotech_labeler)) +
+  theme(strip.text.x = element_text(size=fontsize1), strip.text.y = element_text(size=fontsize1))
+GBioCapOMCost
+
+GBioFeedCost <- ggplot(subset(GlobalData.Bio5, 
+                               (CarrierID=="Liq"|CarrierID=="Ele"|CarrierID=="Hyd")
+                               &!(Tech2=="Other biomass"|Tech2=="1st gen. ethanol")
+                               &(variable=="LCOE3"|variable=="LCOE3cor"))) +
+  geom_jitter(aes(x=Year, y=value, colour=variable, shape=MODEL),size=1.2, width=0.25, alpha=0.5) +
+  geom_rect(data=Bkgrd, aes(fill = CarrierID), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.03) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + 
+  geom_vline(xintercept=1.5, size=0.1, colour="gray10") +
+  ggtitle("+ Feedstock Costs") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
+  xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  theme_bw() +  
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="none", legend.text=element_text(size=fontsize1)) +
+  scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
+                     name="",
+                     breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
+                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGE-GLOBIOM","BET","DNE21+")
+  ) +
+  scale_color_manual(values=c("green4","green4")) +
+  scale_fill_manual(values=c("grey","dodgerblue","purple"),
+                    name="",
+                    breaks=c("Ele","Liq","Hyd"),
+                    labels=c("Electricity","Liquids","Hydrogen")
+                    ,guide=FALSE
+  ) +  guides(shape=guide_legend(nrow=2,byrow=TRUE)) +
+  facet_grid(.~TechOrder, scales="free", labeller=labeller(MODEL= model_labels, TechOrder=Biotech_labeler)) +
+  theme(strip.text.x = element_text(size=fontsize1), strip.text.y = element_text(size=fontsize1))
+GBioFeedCost
+
+GBioCDRCost <- ggplot(subset(GlobalData.Bio5, 
+                              (CarrierID=="Liq"|CarrierID=="Ele"|CarrierID=="Hyd")
+                              &!(Tech2=="Other biomass"|Tech2=="1st gen. ethanol")
+                              &(variable=="LCOE"|variable=="LCOEcor")
+                              &(Capt=="wCCS"))) +
+  geom_jitter(aes(x=Year, y=value, colour=variable, shape=MODEL),size=1.2, width=0.25, alpha=0.5) +
+  geom_rect(data=subset(Bkgrd, TechOrder=="ElectricitywCCS"|TechOrder=="LignocellulosicwCCS"|TechOrder=="HydrogenwCCS"|TechOrder=="BiodeiselwCCS")
+            , aes(fill = CarrierID), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.03) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + 
+  geom_vline(xintercept=1.5, size=0.1, colour="gray10") +
+  ggtitle("+ CDR") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
+  xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  theme_bw() + 
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="right", legend.text=element_text(size=fontsize1)) +
+  scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
+                     name="",
+                     breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
+                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGE-GLOBIOM","BET","DNE21+")
+  ) +
+  scale_color_manual(values=c("firebrick","firebrick"),
+                     guide=FALSE) +
+  scale_fill_manual(values=c("grey","dodgerblue","purple"),
+                    name="",
+                    breaks=c("Ele","Liq","Hyd"),
+                    labels=c("Electricity","Liquids","Hydrogen"),
+                    guide=FALSE) +  
+  guides(shape=guide_legend(ncol=2,byrow=TRUE)) +
+  facet_grid(.~TechOrder, scales="free", labeller=labeller(MODEL= model_labels, TechOrder=Biotech_labeler)) +
+  theme(strip.text.x = element_text(size=fontsize1), strip.text.y = element_text(size=fontsize1))
+GBioCDRCost
+
+#
+lay<-rbind(1,2,3) 
+GBioAllCostPanel <- grid.arrange(GBioCapOMCost,GBioFeedCost,GBioCDRCost,
+                                 layout_matrix=lay)
+
+#
 # ---- FIG 4: G. Cost vs. Use Bio+Fossil 2050 ----
 GlobalData2=GlobalData
 
@@ -1534,14 +1639,14 @@ rm(lay)
 # print(plot(BioEffCost))
 # dev.off()
 # 
-# png("output/BioTech/Fig2R2.png", width=7*ppi, height=10*ppi, res=ppi)
-# print(plot(BioEffCostR2))
-# dev.off()
-#
 # png("output/BioTech/Fig3.png", width=7*ppi, height=7*ppi, res=ppi)
 # print(plot(GBioAllCost4))
 # dev.off()
 # 
+# png("output/BioTech/Fig3_Revised.png", width=7*ppi, height=7*ppi, res=ppi)
+# print(plot(GBioAllCostPanel))
+# dev.off()
+#
 # png("output/BioTech/Fig4.png", width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(SecCostFinal2))
 # dev.off()
@@ -1559,23 +1664,27 @@ rm(lay)
 # dev.off()
 # #
 # # ---- OUTPUT: SUPPLEMENTARY INFORMATION ----
-# png("output/BioTech/FigS1.png", width=7*ppi, height=5*ppi, res=ppi)
+# png("output/BioTech/FigS1.png", width=7*ppi, height=10*ppi, res=ppi)
+# print(plot(BioEffCostR2))
+# dev.off()
+#
+# png("output/BioTech/FigS2.png", width=7*ppi, height=5*ppi, res=ppi)
 # print(plot(AssumpHist))
 # dev.off()
 # 
-# png("output/BioTech/FigS2.png", width=6*ppi, height=8*ppi, res=ppi)
+# png("output/BioTech/FigS3.png", width=6*ppi, height=8*ppi, res=ppi)
 # print(plot(RegVar))
 # dev.off()
 # 
-# png("output/BioTech/FigS3.png", width=7*ppi, height=7*ppi, res=ppi)
+# png("output/BioTech/FigS4.png", width=7*ppi, height=7*ppi, res=ppi)
 # print(plot(GBioAllCost))
 # dev.off()
 # #
-# png("output/BioTech/FigS4.png", width=6*ppi, height=5*ppi, res=ppi)
+# png("output/BioTech/FigS5.png", width=6*ppi, height=5*ppi, res=ppi)
 # print(plot(LCOEvCtax))
 # dev.off()
 # 
-# png("output/BioTech/FigS5.png", width=8*ppi, height=9*ppi, res=ppi)
+# png("output/BioTech/FigS6.png", width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(SecCostFinal2100))
 # dev.off()
 # 
