@@ -1687,6 +1687,32 @@ rm(lay)
 # dev.off()
 # 
 # **** FIGURES DISSAGREGATED BETWEEN LIQUIDS/OTHER****
+# ---- OUTPUT: DATA FOR EXTERNAL USE ----
+RegSecEn.Liq = subset(RegData.Liq, select=c(MODEL,SCENARIO,REGION,Year,Prim,Capt,SecEn,Tech2))
+RegSecEn.BioLiqIMAGE = subset(RegSecEn.Liq, MODEL=="IMAGE"&(Prim=="Biomass"|Prim=="BiomasswCCS"))
+RegSecEn.BioLiqIMAGE = subset(RegSecEn.BioLiqIMAGE, select=-c(Prim))
+RegSecEn.BioLiqIMAGE = subset(RegSecEn.BioLiqIMAGE, !Year<=2010)                           
+
+# Definitions of primary biomass categories
+SecBioLiqDefs <- data.frame(Variables = c("Tech2 = Biodeisel",
+                                        "Tech2 = Lignocellulosic",
+                                        "Tech2 = 1st Gen. Ethanol",
+                                        "Capt = woCCS",
+                                        "Capt = wCCS",
+                                        "SCENARIO = R2-B-lo-full",
+                                        "SecEn"),
+                          Definition = c("Biodiesel produced from oil-crops)",
+                                         "Advanced biofuels made from lignocellulosic crops (ethanol, methanol, FT deisel)",
+                                         "1st generation ethanol from sugarcane or maize",
+                                         "Technologies applied WITHOUT carbon capture and storage",
+                                         "Technologies applied WITH carbon capture and storage",
+                                         "Scenario with a global 1000GtCO2 emission budget, consistent with a 2degree climate target. Model default settings on biomass supply and technology availability ",
+                                         "Secondary Energy (biofuel) in EJ/yr"))
+
+# write.xlsx(RegSecEn.BioLiqIMAGE, file="output/BioTech/Other/IMAGE_Secondary_Bioliquids_EMF33.xlsx", sheetName="Secondary Biofuels Deployment", row.names=FALSE, showNA = TRUE)
+# write.xlsx(SecBioLiqDefs, file="output/BioTech/Other/IMAGE_Secondary_Bioliquids_EMF33.xlsx", sheetName="Definitions", append=TRUE, row.names=FALSE, showNA = TRUE)
+
+#
 # ---- FIG: G. Bio Cap+OM Cost----
 # Bio Liquids
 GBioLiqCost1 <- ggplot(subset(GlobalData.Bio2, CarrierID=="Liq")) +
