@@ -829,6 +829,31 @@ rm(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Calcs.RangeFF)
 # write.xlsx(Calcs.Range, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Percentile Ranges", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(BakerDat, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="R&D category Count2", append=TRUE, row.names=FALSE, showNA = TRUE)
 
+# Range of CCS penalties
+RangeCCSPen.CapCo = Calcs.CCS
+RangeCCSPen.CapCo = subset(RangeCCSPen.CapCo, CCS_Diff>0 & SCENARIO==ActScen & Year=="2030" & variable=="CapitalCo")
+RangeCCSPen.CapCo <- by(RangeCCSPen.CapCo$Perc_Chang,
+                        RangeCCSPen.CapCo$CarrierID,
+                        quantile,c(0,0.1,0.5,0.9,1))
+RangeCCSPen.CapCo=as.data.frame.list(RangeCCSPen.CapCo)
+RangeCCSPen.CapCo <- as.data.frame(t(RangeCCSPen.CapCo))
+RangeCCSPen.CapCo$variable <-"CapitalCo"
+
+RangeCCSPen.Eff = Calcs.CCS
+RangeCCSPen.Eff = subset(RangeCCSPen.Eff, SCENARIO==ActScen & Year=="2030" & variable=="Efficiency" & wCCS>0)
+RangeCCSPen.Eff <- by(RangeCCSPen.Eff$CCS_Diff,
+                        RangeCCSPen.Eff$CarrierID,
+                        quantile,c(0,0.1,0.5,0.9,1),
+                      na.rm=TRUE)
+RangeCCSPen.Eff=as.data.frame.list(RangeCCSPen.Eff)
+RangeCCSPen.Eff <- as.data.frame(t(RangeCCSPen.Eff))
+RangeCCSPen.Eff$variable <-"Efficiency (%pts)"
+
+RangeCCSPen = rbind(RangeCCSPen.CapCo,RangeCCSPen.Eff)
+rm(RangeCCSPen.CapCo,RangeCCSPen.Eff)
+write.xlsx(RangeCCSPen, file="output/BioTech/Diagnostic/CCSPenalties.xlsx", sheetName="CCS Penalty Percentiles", append=FALSE, row.names=TRUE, showNA = TRUE)
+
+#
 # **** FIGURES FOR DRAFT *****
 # ---- FIG 1: Liq+Ele Use ----
 SecEnTot1 = subset(SecEnTot, !(Tech3=="Ele Total"|Tech3=="Liq Total"|Tech3=="Hyd Total")&!(MODEL=="FARM 3.1"|MODEL=="COFFEE")&SCENARIO==ActScen)
