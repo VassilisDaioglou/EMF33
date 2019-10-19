@@ -1443,15 +1443,24 @@ TechDataR2 = melt(TechDataR, id.vars=c("MODEL","SCENARIO","REGION","Year","VARIA
 # Literature data
 LitData2 = subset(LitData, select=-c(Ref,TechType,CapitalCoPerIn))
 LitData2 = melt(LitData2, id.vars=c("VARIABLE","CarrierID","Prim","Tech","Capt","Tech2","TechOrder2","Year"))
-LitData2$VarID = paste(LitData2$VARIABLE,LitData2$variable)
+LitData2$VarID = paste(LitData2$Tech,LitData2$Capt,LitData2$variable)
 LitData2.max <- aggregate(LitData2$value, by=list(VarID=LitData2$VarID), max, na.rm=TRUE)
 LitData2.min <- aggregate(LitData2$value, by=list(VarID=LitData2$VarID), min, na.rm=TRUE)
 # Hydrogen has identical min-max efficiency (0.35). Set them appart
-LitData2.max$x[LitData2.max$VarID=="HydrogenBiomasswoCCS Efficiency"] <- 0.37
-LitData2.min$x[LitData2.min$VarID=="HydrogenBiomasswoCCS Efficiency"] <- 0.33
+LitData2.max$x[LitData2.max$VarID=="Hydrogen woCCS Efficiency"] <- 0.37
+LitData2.min$x[LitData2.min$VarID=="Hydrogen woCCS Efficiency"] <- 0.33
+# Ligno Liquids wCCS have identical min-max efficiency (0.465) and CapitalCo (362.82) . Set them appart
+LitData2.max$x[LitData2.max$VarID=="Lignocellulosic wCCS Efficiency"] <- 0.475
+LitData2.min$x[LitData2.min$VarID=="Lignocellulosic wCCS Efficiency"] <- 0.435
+LitData2.max$x[LitData2.max$VarID=="Lignocellulosic wCCS CapitalCo"] <- 402
+LitData2.min$x[LitData2.min$VarID=="Lignocellulosic wCCS CapitalCo"] <- 322
 
 LitData2$Max <- LitData2.max[match(LitData2$VarID, LitData2.max$VarID),2]
 LitData2$Min <- LitData2.min[match(LitData2$VarID, LitData2.min$VarID),2]
+# Remove duplicates
+LitData2$VARIABLE <- NULL
+LitData2 =LitData2[!duplicated(LitData2),]
+
 # Have to repeat literature data across models in order to add them to the panels
 LitData2$MODEL <- NA
 LitData2.temp = LitData2
@@ -1468,7 +1477,7 @@ LitData2 =LitData2[!duplicated(LitData2),]
 
 BioCostR2 <- ggplot(subset(TechDataR2, Year=="2020"&(variable=="CapitalCo")&!TechOrder=="Gas"))+
   geom_point(data=, aes(x=REGION, y=value, colour=Capt, fill=Capt, shape=Capt), alpha=0.4, size=1.5) +
-  geom_rect(data=subset(LitData2, !(TechOrder2=="Gas"|TechOrder2=="Other biomass")), aes(xmin=-Inf, xmax=Inf, ymin=Min, ymax=Max, fill=Capt), alpha = 0.2) +
+  geom_rect(data=subset(LitData2, !(TechOrder2=="Gas")), aes(xmin=-Inf, xmax=Inf, ymin=Min, ymax=Max, fill=Capt), alpha = 0.2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   ggtitle("A: Capital Costs") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   ylab(expression("Capital Costs [US$"[2005]*"/kW"[Out]*"]")) + xlab("") + #ylab("Conversion Efficiency [-]") +
@@ -1484,7 +1493,7 @@ BioCostR2
 
 BioEffR2 <- ggplot(subset(TechDataR2, Year=="2020"&(variable=="Efficiency")&!TechOrder=="Gas"))+
   geom_point(data=, aes(x=REGION, y=value, colour=Capt, fill=Capt, shape=Capt), alpha=0.4, size=1.5) +
-  geom_rect(data=subset(LitData2, !(TechOrder2=="Gas"|TechOrder2=="Other biomass")), aes(xmin=-Inf, xmax=Inf, ymin=Min, ymax=Max, fill=Capt), alpha = 0.2) +
+  geom_rect(data=subset(LitData2, !(TechOrder2=="Gas")), aes(xmin=-Inf, xmax=Inf, ymin=Min, ymax=Max, fill=Capt), alpha = 0.2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   ggtitle("B: Conversion Efficiency") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   ylim(0,1) + 
