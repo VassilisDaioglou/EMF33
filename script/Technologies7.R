@@ -939,7 +939,7 @@ Data <- unique(GlobalData.BioCor1[,c("TechOrder2")])
 Data$Year <- "Literature"
 
 BioEffCost <- ggplot(subset(GlobalData.BioCor1, Year=="2020"&!(CarrierID=="Gas")&!(TechOrder2=="Other biomass")))+
-  geom_point(data=subset(LitData, !(Efficiency=="NA"|CapitalCo=="NA"|CarrierID=="Gas"|TechOrder2=="Other biomass")), aes(x=CapitalCo, y=Efficiency, fill=Capt, colour=Capt), alpha=0.5, shape=21, size=1.5) +
+  geom_point(data=subset(LitData, !(Efficiency=="NA"|CapitalCo=="NA"|CarrierID=="Gas")), aes(x=CapitalCo, y=Efficiency, fill=Capt, colour=Capt), alpha=0.5, shape=21, size=1.5) +
   geom_point(data=, aes(x=CapitalCo, y=Efficiency, shape=MODEL, colour=Capt), alpha=0.4, size=1.5) +
   geom_rect(data=subset(Data, !(TechOrder2=="Gas"|TechOrder2=="Other biomass")), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.1) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
