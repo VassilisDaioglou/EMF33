@@ -724,7 +724,12 @@ Calcs.Reg1$CarrierID = substr(Calcs.Reg1$VARIABLE,1,3)
 
 # ---- *** Ranges & Percentiles *** ----
 # Determine percentile ranges of results
-Calcs.RangeC <- by(Calcs.Costs$CapitalCo,Calcs.Costs$MedID,quantile,c(0,0.1,0.9,1))
+  #First, dissagregzte 1st gen and 2nd gen liquids
+  Calcs.Ranges = Calcs.Costs
+  Calcs.Ranges$SecID[Calcs.Ranges$TechOrder=="Lignocellulosic"|Calcs.Ranges$TechOrder=="LignocellulosicwCCS"] <- "Liq2"
+  Calcs.Ranges$MedID = paste(Calcs.Ranges$SecID,Calcs.Ranges$Capt,Calcs.Ranges$Year)
+
+Calcs.RangeC <- by(Calcs.Ranges$CapitalCo,Calcs.Ranges$MedID,quantile,c(0,0.1,0.9,1))
 Calcs.RangeC=as.data.frame.list(Calcs.RangeC)
 Calcs.RangeC= setDT(Calcs.RangeC, keep.rownames = TRUE)[]
 Calcs.RangeC = setNames(data.frame(t(Calcs.RangeC[,-1])), Calcs.RangeC[,1])
@@ -732,7 +737,7 @@ colnames(Calcs.RangeC)[1:4] <- c("0%","10%","90%","100%")
 Calcs.RangeC= setDT(Calcs.RangeC, keep.rownames = TRUE)[]
 Calcs.RangeC$VARIABLE <- "CapitalCo" 
 
-Calcs.RangeE <- by(Calcs.Costs$Efficiency,Calcs.Costs$MedID,quantile,c(0,0.1,0.9,1))
+Calcs.RangeE <- by(Calcs.Ranges$Efficiency,Calcs.Ranges$MedID,quantile,c(0,0.1,0.9,1))
 Calcs.RangeE=as.data.frame.list(Calcs.RangeE)
 Calcs.RangeE= setDT(Calcs.RangeE, keep.rownames = TRUE)[]
 Calcs.RangeE = setNames(data.frame(t(Calcs.RangeE[,-1])), Calcs.RangeE[,1])
@@ -740,7 +745,7 @@ colnames(Calcs.RangeE)[1:4] <- c("0%","10%","90%","100%")
 Calcs.RangeE= setDT(Calcs.RangeE, keep.rownames = TRUE)[]
 Calcs.RangeE$VARIABLE <- "Efficiency" 
 
-Calcs.RangeN <- by(Calcs.Costs$LCOE1,Calcs.Costs$MedID,quantile,c(0,0.1,0.9,1))
+Calcs.RangeN <- by(Calcs.Ranges$LCOE1,Calcs.Ranges$MedID,quantile,c(0,0.1,0.9,1))
 Calcs.RangeN=as.data.frame.list(Calcs.RangeN)
 Calcs.RangeN= setDT(Calcs.RangeN, keep.rownames = TRUE)[]
 Calcs.RangeN = setNames(data.frame(t(Calcs.RangeN[,-1])), Calcs.RangeN[,1])
@@ -748,7 +753,7 @@ colnames(Calcs.RangeN)[1:4] <- c("0%","10%","90%","100%")
 Calcs.RangeN= setDT(Calcs.RangeN, keep.rownames = TRUE)[]
 Calcs.RangeN$VARIABLE <- "Non-Energy Costs" 
 
-Calcs.RangeFF <- by(Calcs.Costs$FeedFrac,Calcs.Costs$MedID,quantile,c(0,0.1,0.9,1))
+Calcs.RangeFF <- by(Calcs.Ranges$FeedFrac,Calcs.Ranges$MedID,quantile,c(0,0.1,0.9,1))
 Calcs.RangeFF=as.data.frame.list(Calcs.RangeFF)
 Calcs.RangeFF= setDT(Calcs.RangeFF, keep.rownames = TRUE)[]
 Calcs.RangeFF = setNames(data.frame(t(Calcs.RangeFF[,-1])), Calcs.RangeFF[,1])
@@ -758,6 +763,12 @@ Calcs.RangeFF$VARIABLE <- "Feedstock Fraction"
 
 Calcs.RangeCCS = Calcs.CCS
 Calcs.RangeCCS = subset(Calcs.RangeCCS, CCS_Diff>0&variable=="CapitalCo")
+Calcs.RangeCCS$CarrierID[Calcs.RangeCCS$VARIBALE=="LiquidsBiomassCellulosicNondiesel"|
+                       Calcs.RangeCCS$VARIBALE=="LiquidsBiomassCellulosicNondiesel2"|
+                       Calcs.RangeCCS$VARIBALE=="LiquidsBiomassCellulosicNondiesel3"|
+                       Calcs.RangeCCS$VARIBALE=="LiquidsBiomassCellulosicNondiesel4"|
+                       Calcs.RangeCCS$VARIBALE=="LiquidsBiomassCellulosicNondiesel5"|
+                       Calcs.RangeCCS$VARIBALE=="LiquidsBiomassCellulosicNondiesel6"] <- "Liq2"
 Calcs.RangeCCS$TechID = paste(Calcs.RangeCCS$CarrierID,"wCCS",Calcs.RangeCCS$Year)
 Calcs.RangeCCS <- by(Calcs.RangeCCS$CCS_Diff,Calcs.RangeCCS$TechID,quantile,c(0,0.1,0.9,1))
 Calcs.RangeCCS=as.data.frame.list(Calcs.RangeCCS)
@@ -819,7 +830,7 @@ colnames(BakerDat)[6] <- "Count"
 colnames(BakerDat)[7] <- "Observations"
 
 rm(Calcs.Costs2,Calcs.CCS2, BakerDat1, BakerDat2, BakerSample,test,count, NumObs)
-rm(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Calcs.RangeFF)
+rm(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Calcs.RangeFF, Calcs.Ranges)
 
 # write.xlsx(Calcs.CCS, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Effect of CCS", append=FALSE, row.names=TRUE, showNA = TRUE)
 # write.xlsx(Calcs.CCSMed, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Mean Effect of CCS", append=TRUE, row.names=FALSE, showNA = TRUE)
