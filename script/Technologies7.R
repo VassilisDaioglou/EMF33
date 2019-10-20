@@ -866,7 +866,7 @@ RangeCCSPen.Eff$variable <-"Efficiency (%pts)"
 
 RangeCCSPen = rbind(RangeCCSPen.CapCo,RangeCCSPen.Eff)
 rm(RangeCCSPen.CapCo,RangeCCSPen.Eff)
-write.xlsx(RangeCCSPen, file="output/BioTech/Diagnostic/CCSPenalties.xlsx", sheetName="CCS Penalty Percentiles", append=FALSE, row.names=TRUE, showNA = TRUE)
+# write.xlsx(RangeCCSPen, file="output/BioTech/Diagnostic/CCSPenalties.xlsx", sheetName="CCS Penalty Percentiles", append=FALSE, row.names=TRUE, showNA = TRUE)
 
 #
 # **** FIGURES FOR DRAFT *****
@@ -1735,6 +1735,60 @@ rm(lay)
 # print(plot(SecCostFinal2100))
 # dev.off()
 # 
+# ---- OUTPUT: SUPPLEMENTARY DATA ----
+SupData = subset(CostEffDataR, select=c(MODEL,SCENARIO,REGION,Year,Prim,CarrierID,Capt,SecEn,Efficiency,CapitalCo,Ctax,Tech,VARIABLE,
+                                     LCOE_Feed,LCOE_Cap,LCOE_OM,LCOE_ctax,LCOE_CDR,LCOE))
+SupData = subset(SupData, !Year==2010)
+SupData$Prim <- gsub("wCCS","",SupData$Prim,fixed=F)  
+SupData$Tech <- gsub("wCCS","",SupData$Tech,fixed=F)  
+SupData$Capt <- gsub("wCCS","With",SupData$Capt,fixed=F)  
+SupData$Capt <- gsub("woCCS","Without",SupData$Capt,fixed=F)  
+
+# Make correction for 2020 since some models display dummy data for that timestep
+SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="ElectricityBiomasswCCS"&SupData$Year==2020] <- SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="ElectricityBiomasswCCS"&SupData$Year==2030]
+SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="ElectricityBiomasswCCS"&SupData$Year==2020] <- SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="ElectricityBiomasswCCS"&SupData$Year==2030]
+
+SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&SupData$Year==2020] <- SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&SupData$Year==2030]
+SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&SupData$Year==2020] <- SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&SupData$Year==2030]
+
+SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="HydrogenBiomasswCCS"&SupData$Year==2020] <- SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="HydrogenBiomasswCCS"&SupData$Year==2030]
+SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="HydrogenBiomasswCCS"&SupData$Year==2020] <- SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="HydrogenBiomasswCCS"&SupData$Year==2030]
+
+SupData$VARIABLE <- NULL
+# For REMIND-MAGPIE there is no CCS data for 2020, use 2030 data instead
+# In order to avoid inconsistency between 2020 (noCCS) data and 2030 (CCS) data, ignore the 2020 values 
+RM2020Data = subset(SupData, MODEL=="REMIND-MAGPIE"&Year==2030)
+RM2020Data$Year <- 2020
+
+SupData = subset(SupData, !(MODEL=="REMIND-MAGPIE"&Year==2020))
+SupData = rbind(SupData,RM2020Data)
+rm(RM2020Data)
+
+SupData = SupData[,c(1:5,12,6:11,13:18)]
+colnames(SupData)[1:18] <-c("Model","Scenario","Region","Year","Primary Carrier","Technology","Secondary Carrier","Carbon Capture",
+                            "Secondary Energy [EJ/yr]","Efficiency [-]","Capital Costs [$/kW(out)]","Carbon Tax [$/tCO2]",
+                            "Feedstock LC [$/MWh]","Capital Cost LC [$/MWh]","O&M LC [$/MWh]","Carbon Tax LC [$/MWh]","Carbon Dioxide Removal LC [$/MWh]",
+                            "Levelised Cost of Energy [$/MWh]")
+
+SupData.defs <- data.frame(Variables = c("Secondary Carrier",
+                                        "Secondary Energy",
+                                        "Feedstock LC",
+                                        "Capital Cost LC",
+                                        "O&M LC",
+                                        "Carbon Dioxide Removal LC",
+                                        "Levelised Cost of Energy"),
+                          Definition = c("Ele = Electricity; Gas = Gasseous fuel, Hyd = Hydrogen, Liq = Liquid fuel",
+                                         "Deployment of secondary energy carrier",
+                                         "Levelised Costs of feedstock",
+                                         "Levelised Costs of capital",
+                                         "Levelised Costs of Carbon emissions",
+                                         "Levelised Costs of Carbon Dioxide removal (benefits)",
+                                         "Overall Levelised Costs of Energy"))
+
+# write.xlsx(SupData, file="output/BioTech/Supplementary_Data.xlsx", sheetName="Supplementary Data", append=FALSE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(SupData.defs, file="output/BioTech/Supplementary_Data.xlsx", sheetName="Notes", append=TRUE, row.names=FALSE, showNA = TRUE)
+
+#
 # **** FIGURES DISSAGREGATED BETWEEN LIQUIDS/OTHER****
 # ---- OUTPUT: DATA FOR EXTERNAL USE ----
 RegSecEn.Liq = subset(RegData.Liq, select=c(MODEL,SCENARIO,REGION,Year,Prim,Capt,SecEn,Tech2))
