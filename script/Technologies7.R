@@ -1781,6 +1781,7 @@ SupData.defs <- data.frame(Variables = c("Secondary Carrier",
                                          "Deployment of secondary energy carrier",
                                          "Levelised Costs of feedstock",
                                          "Levelised Costs of capital",
+                                         "Levelised Costs of operation and maintenance"
                                          "Levelised Costs of Carbon emissions",
                                          "Levelised Costs of Carbon Dioxide removal (benefits)",
                                          "Overall Levelised Costs of Energy"))
