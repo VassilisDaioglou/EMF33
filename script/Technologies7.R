@@ -271,6 +271,10 @@ TechData5$LCOE_Cor = as.numeric(substr(TechData5$LCOE_Cor, start=1, stop=5))
 rm(DiscountRate)
 #
 # ---- LABELS ----
+# Model labels in plots
+uniqueInitials <- c("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+initialShapes <- unlist(lapply(uniqueInitials, utf8ToInt))
+
 scen_labels <- c("R3-B-hi-full"="hi-full","R3-B-hi-ready2050"="hi-ready2050","R3-B-hi-cost100"="hi-cost100","R3-B-hi-limbio"="hi-limbio","R3-B-lo-full"="lo-full","R3-B-lo-ready2050"="lo-ready2050","R3-B-lo-cost100"="lo-cost100","R3-B-lo-limbio"="lo-limbio")
 #Model labels with text wraps                
 model_labels <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","FARM 3.1"="FARM","MESSAGE-GLOBIOM"="MESSAGEix-\nGLOBIOM","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-\nMAgPIE")
@@ -951,7 +955,7 @@ Data$Year <- "Literature"
 
 BioEffCost <- ggplot(subset(GlobalData.BioCor1, Year=="2020"&!(CarrierID=="Gas")&!(TechOrder2=="Other biomass")))+
   geom_point(data=subset(LitData, !(Efficiency=="NA"|CapitalCo=="NA"|CarrierID=="Gas")), aes(x=CapitalCo, y=Efficiency, fill=Capt, colour=Capt), alpha=0.5, shape=21, size=1.5) +
-  geom_point(data=, aes(x=CapitalCo, y=Efficiency, shape=MODEL, colour=Capt), alpha=0.4, size=1.5) +
+  geom_point(data=, aes(x=CapitalCo, y=Efficiency, shape=MODEL, colour=Capt), alpha=0.9, size=1.5) +
   geom_rect(data=subset(Data, !(TechOrder2=="Gas"|TechOrder2=="Other biomass")), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.1) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   ylim(0,1) + xlab(expression("Capital Costs [US$"[2005]*"/kW"[Out]*"]")) + ylab("Conversion Efficiency [-]") +
@@ -961,10 +965,10 @@ BioEffCost <- ggplot(subset(GlobalData.BioCor1, Year=="2020"&!(CarrierID=="Gas")
   theme(legend.position="bottom", legend.text=element_text(size=fontsize1)) +
   scale_colour_manual(values=c("green4","black"),name="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
   scale_fill_manual(values=c("green4","black"),name ="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
-  scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
+  scale_shape_manual(values=initialShapes,
                      name="",
-                     breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
-                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGEix-GLOBIOM","BET","DNE21+")
+                     breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE", "MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","MESSAGEix-GLOBIOM","POLES","REMIND-MAgPIE")
   ) +
   geom_blank(aes(x=x_max)) + geom_blank(aes(x=x_min)) +
   guides(col = guide_legend(nrow = 2)) +
@@ -1018,7 +1022,7 @@ GBioCapOMCost <- ggplot(subset(GlobalData.Bio5,
                                (CarrierID=="Liq"|CarrierID=="Ele"|CarrierID=="Hyd")
                                &!(Tech2=="Other biomass"|Tech2=="1st gen. ethanol")
                                &(variable=="LCOE1"))) +
-  geom_jitter(aes(x=Year, y=value, colour=variable, shape=MODEL),size=1.2, width=0.25, alpha=0.5) +
+  geom_jitter(aes(x=Year, y=value, colour=variable, shape=MODEL),size=2, width=0.25, alpha=0.8) +
   geom_rect(data=Bkgrd, aes(fill = CarrierID), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.03) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + 
   geom_vline(xintercept=1.5, size=0.1, colour="gray10") +
@@ -1028,10 +1032,10 @@ GBioCapOMCost <- ggplot(subset(GlobalData.Bio5,
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="none", legend.text=element_text(size=fontsize1)) +
-  scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
+  scale_shape_manual(values=initialShapes,
                      name="",
-                     breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
-                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGEix-GLOBIOM","BET","DNE21+")
+                     breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE", "MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","MESSAGEix-GLOBIOM","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values="black") +
   scale_fill_manual(values=c("grey","dodgerblue","purple"),
@@ -1048,7 +1052,7 @@ GBioFeedCost <- ggplot(subset(GlobalData.Bio5,
                                (CarrierID=="Liq"|CarrierID=="Ele"|CarrierID=="Hyd")
                                &!(Tech2=="Other biomass"|Tech2=="1st gen. ethanol")
                                &(variable=="LCOE3"|variable=="LCOE3cor"))) +
-  geom_jitter(aes(x=Year, y=value, colour=variable, shape=MODEL),size=1.2, width=0.25, alpha=0.5) +
+  geom_jitter(aes(x=Year, y=value, colour=variable, shape=MODEL),size=2, width=0.25, alpha=0.8) +
   geom_rect(data=Bkgrd, aes(fill = CarrierID), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.03) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + 
   geom_vline(xintercept=1.5, size=0.1, colour="gray10") +
@@ -1058,10 +1062,10 @@ GBioFeedCost <- ggplot(subset(GlobalData.Bio5,
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="none", legend.text=element_text(size=fontsize1)) +
-  scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
+  scale_shape_manual(values=initialShapes,
                      name="",
-                     breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
-                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGEix-GLOBIOM","BET","DNE21+")
+                     breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE", "MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","MESSAGEix-GLOBIOM","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("green4","green4")) +
   scale_fill_manual(values=c("grey","dodgerblue","purple"),
@@ -1079,7 +1083,7 @@ GBioCDRCost <- ggplot(subset(GlobalData.Bio5,
                               &!(Tech2=="Other biomass"|Tech2=="1st gen. ethanol")
                               &(variable=="LCOE"|variable=="LCOEcor")
                               &(Capt=="wCCS"))) +
-  geom_jitter(aes(x=Year, y=value, colour=variable, shape=MODEL),size=1.2, width=0.25, alpha=0.5) +
+  geom_jitter(aes(x=Year, y=value, colour=variable, shape=MODEL),size=2, width=0.25, alpha=0.8) +
   geom_rect(data=subset(Bkgrd, TechOrder=="ElectricitywCCS"|TechOrder=="LignocellulosicwCCS"|TechOrder=="HydrogenwCCS"|TechOrder=="BiodeiselwCCS")
             , aes(fill = CarrierID), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.03) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + 
@@ -1090,10 +1094,10 @@ GBioCDRCost <- ggplot(subset(GlobalData.Bio5,
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="right", legend.text=element_text(size=fontsize1)) +
-  scale_shape_manual(values=c(1,2,3,4,6,8,9,10,11,12),
+  scale_shape_manual(values=initialShapes,
                      name="",
-                     breaks=c("AIM/CGE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE", "MESSAGE-GLOBIOM","BET","DNE21+ v.14"),
-                     labels=c("AIM/CGE","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE","MESSAGEix-GLOBIOM","BET","DNE21+")
+                     breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE", "MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","MESSAGEix-GLOBIOM","POLES","REMIND-MAgPIE")
   ) +
   scale_color_manual(values=c("firebrick","firebrick"),
                      guide=FALSE) +
@@ -1619,13 +1623,13 @@ LCOEvCtax <- ggplot(subset(GlobalData, Capt=="wCCS"&(Year=="2050"|Year=="2100")&
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
   scale_color_manual(values=c("burlywood4","red","darkgoldenrod1","blue","azure4","limegreen","coral2","burlywood","darkolivegreen","darkorchid1"),
-                     breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("AIM","BET","DNE21+","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES","REMIND-MAgPIE"),
-                     guide=FALSE) +
-  scale_shape_manual(values=c(0,1,2,3,4,5,6,8,10,11,13),
                      name="Model",
-                     breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
-                     labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGEix-GLOBIOM","POLES","REMIND-MAgPIE")) +
+                     breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE", "MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","MESSAGEix-GLOBIOM","POLES","REMIND-MAgPIE")) +
+  scale_shape_manual(values=initialShapes,
+                     name="Model",
+                     breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE", "MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","MESSAGEix-GLOBIOM","POLES","REMIND-MAgPIE")) +
   facet_grid(Year~CarrierID, scales="free", labeller=labeller(MODEL= model_labels, CarrierID = carrier_labels))
 LCOEvCtax
 
