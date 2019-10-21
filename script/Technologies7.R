@@ -313,7 +313,7 @@ var_labeler <- c("CapitalCo"  = "Capital Costs [$/kW]",
                  "LCOE1"      = "Non-Energy Costs [$/MWh]",
                  "FeedFrac"   = "Feedstock Fraction of LCOE [-]")
 
-var_labeler2 <- c("CapitalCo"  = "Capital Costs Penatly [$/kW]","Efficiency" = "Efficiency Penalty [-]")
+var_labeler2 <- c("CapitalCo"  = "Capital Costs Penatly [$/kW]","Efficiency" = "Efficiency Penalty [% points]")
 
 #
 # ---- FIGURE DFs GLOBAL ----
@@ -668,8 +668,9 @@ Calcs.CCS$TechOrder <-NULL
 Calcs.CCS <- spread(Calcs.CCS, Capt,value)
 Calcs.CCS$wCCS[is.na(Calcs.CCS$wCCS)] <- 0
 Calcs.CCS = Calcs.CCS %>% mutate(CCS_Diff = wCCS - woCCS)
-Calcs.CCS = Calcs.CCS %>% mutate(Perc_Chang = CCS_Diff/woCCS)
+Calcs.CCS = Calcs.CCS %>% mutate(Perc_Chang = (CCS_Diff/woCCS)*100)
 Calcs.CCS$CarrierID <-substr(Calcs.CCS$VARIABLE, start=1, stop=3)
+Calcs.CCS$CCS_Diff[Calcs.CCS$variable=="Efficiency"] <- Calcs.CCS$CCS_Diff[Calcs.CCS$variable=="Efficiency"] * 100
 
 Calcs.CCSMed=subset(Calcs.CCS, wCCS>0)
 Calcs.CCSMed$CarrierID <-NULL
