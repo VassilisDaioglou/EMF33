@@ -1814,12 +1814,12 @@ CaptureCorr <- ggplot(GlobalData.CR) +
                      name="Model",
                      breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE", "MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
                      labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","MESSAGEix-GLOBIOM","POLES","REMIND-MAgPIE")) +
-  facet_grid(Year~CarrierID, scales="free", labeller=labeller(MODEL= model_labels2))
+  facet_grid(Year~CarrierID, scales="free", labeller=labeller(MODEL= model_labels2, CarrierID=carrier_labels))
 CaptureCorr
 
-png("output/BioTech/Diagnostic/CaptureRate_vs_Deployment.png", width=8*ppi, height=5*ppi, res=ppi)
-print(plot(CaptureCorr))
-dev.off()
+# png("output/BioTech/Diagnostic/CaptureRate_vs_Deployment.png", width=8*ppi, height=5*ppi, res=ppi)
+# print(plot(CaptureCorr))
+# dev.off()
 # 
 # ---- OUTPUT: DATA FOR EXTERNAL USE ----
 RegSecEn.Liq = subset(RegData.Liq, select=c(MODEL,SCENARIO,REGION,Year,Prim,Capt,SecEn,Tech2))
