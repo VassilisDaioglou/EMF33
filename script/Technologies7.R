@@ -1557,22 +1557,6 @@ CCSPen
 
 AssumpHist <- grid.arrange(TechDistr,CCSPen)
 #
-# ---- FIG S3: Regional CV ----
-RegVar <- ggplot(data=subset(Calcs.Reg1, !(CarrierID=="Gas")&(variable2=="CapitalCo"|variable2=="Efficiency"|variable2=="LCOE_Feed")&Year=="2050"),aes(CV_perc, fill=variable2)) +
-  geom_histogram(bins = "20",position="dodge") +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  xlab(expression("Coefficient of Variation [%]")) +  ylab("Count") +
-  theme_bw() +
-  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=2, vjust=1), axis.text.y = element_text(size=fontsize2)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom") +
-  scale_fill_manual(values=c("black","grey60","forestgreen"),
-                    name ="",
-                    breaks=c("CapitalCo","Efficiency","LCOE_Feed"),
-                    labels=c("Capital Costs","Efficiency","Feedstock Cost")) +
-  facet_grid(MODEL~CarrierID, scales="free", labeller=labeller(MODEL=model_labels, CarrierID=carrier_labels))
-RegVar
-#
 # ---- FIG S4: G. Bio Cap+OM Cost ALL ----
 GlobalData.Bio2 = subset(GlobalData.Bio2, Year=="2030"|Year=="2050"| Year=="2100")
 GlobalData.Bio2$Year = as.character(GlobalData.Bio2$Year)
@@ -1720,15 +1704,11 @@ rm(lay)
 # print(plot(AssumpHist))
 # dev.off()
 # 
-# png("output/BioTech/FigS3.png", width=6*ppi, height=8*ppi, res=ppi)
-# print(plot(RegVar))
-# dev.off()
-# 
-# png("output/BioTech/FigS4.png", width=7*ppi, height=7*ppi, res=ppi)
+# png("output/BioTech/FigS3.png", width=7*ppi, height=7*ppi, res=ppi)
 # print(plot(GBioAllCost))
 # dev.off()
 # #
-# png("output/BioTech/FigS5.png", width=6*ppi, height=5*ppi, res=ppi)
+# png("output/BioTech/FigS4.png", width=6*ppi, height=5*ppi, res=ppi)
 # print(plot(LCOEvCtax))
 # dev.off()
 # 
@@ -2308,6 +2288,23 @@ BioSecLiqCosta <- ggplot(RegData.Liq2100a) +
 BioSecLiqCosta
 
 #
+# ---- FIG: Regional CV ----
+RegVar <- ggplot(data=subset(Calcs.Reg1, !(CarrierID=="Gas")&(variable2=="CapitalCo"|variable2=="Efficiency"|variable2=="LCOE_Feed")&Year=="2050"),aes(CV_perc, fill=variable2)) +
+  geom_histogram(bins = "20",position="dodge") +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  xlab(expression("Coefficient of Variation [%]")) +  ylab("Count") +
+  theme_bw() +
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=2, vjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom") +
+  scale_fill_manual(values=c("black","grey60","forestgreen"),
+                    name ="",
+                    breaks=c("CapitalCo","Efficiency","LCOE_Feed"),
+                    labels=c("Capital Costs","Efficiency","Feedstock Cost")) +
+  facet_grid(MODEL~CarrierID, scales="free", labeller=labeller(MODEL=model_labels, CarrierID=carrier_labels))
+RegVar
+#
+
 # ---- OUTPUT: OTHER REGIONAL ----
 # png("output/BioTech/Regional/RBioLiqCost1.png", width=8*ppi, height=5*ppi, res=ppi)
 # print(plot(RBioLiqCost1))
@@ -2356,7 +2353,10 @@ BioSecLiqCosta
 # png("output/BioTech/Regional/BioSecLiqCosta.png", width=7*ppi, height=5*ppi, res=ppi)
 # print(plot(BioSecLiqCosta))
 # dev.off()
-
+#
+# png("output/BioTech/Regional/RegionalVariation.png", width=6*ppi, height=8*ppi, res=ppi)
+# print(plot(RegVar))
+# dev.off()
 #
 # ---- FOR PRESENTATION ----
 # For figures
