@@ -144,7 +144,6 @@ TechDataQuest = melt(TechDataQuest, id.vars=c("MODEL","CARRIER","CarrierID","Cap
 TechDataQuest$QID2 = paste(TechDataQuest$MODEL, TechDataQuest$CARRIER)
 
 CaptureRates = subset(TechDataQuest, (Prim=="Biomass"|Prim=="BiomasswCCS")&variable=="CapRate"&Capt=="wCCS"&value>0&(!CarrierID=="Hea")&(!MODEL=="COFFEE"))
-boxplot(CaptureRates$value~CaptureRates$CarrierID)
 
 l=0
 for (i in unique(TechDataQuest$QID2)){
@@ -1221,7 +1220,7 @@ Diff_LCOE$x_max = x_max[match(Diff_LCOE$MODEL,x_max$MODEL),"x"]
 Diff_LCOE$x_min = x_min[match(Diff_LCOE$MODEL,x_min$MODEL),"x"]
 Diff_LCOE = Diff_LCOE %>% mutate(xlen=((x_min>=0)*x_max)+((x_min<0)*(x_max-x_min)))
   # Merge x&y calculations into dataframe
-GlobalData2_Liq = subset(GlobalData2, Year==2050&CarrierID=="Liq")
+GlobalData2_Liq = subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Liq")
 GlobalData2_Liq$x_diff = Diff_LCOE[match(GlobalData2_Liq$ID,Diff_LCOE$ID),"Diff"]
 GlobalData2_Liq$y_diff = Diff_Frac[match(GlobalData2_Liq$ID,Diff_Frac$ID),"Diff"]
 GlobalData2_Liq$x_len = Diff_LCOE[match(GlobalData2_Liq$ID,Diff_LCOE$ID),"xlen"]
@@ -1256,7 +1255,7 @@ Diff_LCOE$x_max = x_max[match(Diff_LCOE$MODEL,x_max$MODEL),"x"]
 Diff_LCOE$x_min = x_min[match(Diff_LCOE$MODEL,x_min$MODEL),"x"]
 Diff_LCOE = Diff_LCOE %>% mutate(xlen=((x_min>=0)*x_max)+((x_min<0)*(x_max-x_min)))
   # Merge into dataframe
-GlobalData2_Ele = subset(GlobalData2, Year==2050&CarrierID=="Ele")
+GlobalData2_Ele = subset(GlobalData2, (Year==2050|Year==2100)&CarrierID=="Ele")
 GlobalData2_Ele$y_diff = Diff_Frac[match(GlobalData2_Ele$ID,Diff_Frac$ID),"Diff"]
 GlobalData2_Ele$x_diff = Diff_LCOE[match(GlobalData2_Ele$ID,Diff_LCOE$ID),"Diff"]
 GlobalData2_Ele$x_len = Diff_LCOE[match(GlobalData2_Ele$ID,Diff_LCOE$ID),"xlen"]
@@ -1266,7 +1265,7 @@ GlobalData2_Ele$y_len = Diff_Frac[match(GlobalData2_Ele$ID,Diff_Frac$ID),"ylen"]
 GlobalData3 = rbind(GlobalData2_Liq, GlobalData2_Ele)
 # Have to make sure arrow lengths are constant. Draw arrows based on congruent triangles
 GlobalData3 = subset(GlobalData3, select = c(MODEL,SCENARIO,Year,CarrierID,Prim,Capt,SecEnFrac,LCOE,TechOrder2,y_diff,x_diff,x_len,y_len))
-GlobalData3 = subset(GlobalData3, Year==2050)
+GlobalData3 = subset(GlobalData3, Year==2050|Year==2100)
 GlobalData3 = GlobalData3 %>% mutate(tantheta = y_diff/x_diff)
 GlobalData3 = GlobalData3 %>% mutate(theta = atan(tantheta))
 # Due to different x&y scales, have to make an "arrow length multiplier" dependent on its angle
