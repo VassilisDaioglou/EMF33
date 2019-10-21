@@ -143,6 +143,9 @@ TechDataQuest$CaptureRate=pmax(TechDataQuest$CapRate,TechDataQuest$CapRateCor)
 TechDataQuest = melt(TechDataQuest, id.vars=c("MODEL","CARRIER","CarrierID","Capt","Prim"), na.rm=TRUE)
 TechDataQuest$QID2 = paste(TechDataQuest$MODEL, TechDataQuest$CARRIER)
 
+CaptureRates = subset(TechDataQuest, (Prim=="Biomass"|Prim=="BiomasswCCS")&variable=="CapRate"&Capt=="wCCS"&value>0&(!CarrierID=="Hea")&(!MODEL=="COFFEE"))
+boxplot(CaptureRates$value~CaptureRates$CarrierID)
+
 l=0
 for (i in unique(TechDataQuest$QID2)){
   l=l+1
@@ -1557,7 +1560,7 @@ CCSPen
 
 AssumpHist <- grid.arrange(TechDistr,CCSPen)
 #
-# ---- FIG S4: G. Bio Cap+OM Cost ALL ----
+# ---- FIG S3: G. Bio Cap+OM Cost ALL ----
 GlobalData.Bio2 = subset(GlobalData.Bio2, Year=="2030"|Year=="2050"| Year=="2100")
 GlobalData.Bio2$Year = as.character(GlobalData.Bio2$Year)
 # For some models OM and Capital Costs are not dissagregated. For these only present Cap costs
@@ -1597,7 +1600,7 @@ GBioAllCost <- ggplot(subset(GlobalData.Bio2, (CarrierID=="Liq"|CarrierID=="Ele"
 GBioAllCost
 
 #
-# ---- FIG S5: LCOE vs Ctax ----
+# ---- FIG S4: LCOE vs Ctax ----
 LCOEvCtax <- ggplot(subset(GlobalData, Capt=="wCCS"&(Year=="2050"|Year=="2100")&Prim=="Biomass"&SecEn>0.1)) + 
   geom_point(aes(x=LCOE, y=Ctax, colour=MODEL, shape=MODEL), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
@@ -1619,7 +1622,7 @@ LCOEvCtax <- ggplot(subset(GlobalData, Capt=="wCCS"&(Year=="2050"|Year=="2100")&
 LCOEvCtax
 
 #
-# ---- FIG S6: G. Cost vs. Use Bio+Fossil 2100----
+# ---- FIG S5: G. Cost vs. Use Bio+Fossil 2100----
 GBioLiqSecCost2100 <- ggplot(subset(GlobalData2, CarrierID=="Liq"&Year=="2100"&SecEnFrac>0.01)) + 
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=TechOrder2, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
@@ -1773,6 +1776,51 @@ SupData.defs <- data.frame(Variables = c("Secondary Carrier",
 
 #
 # **** FIGURES DISSAGREGATED BETWEEN LIQUIDS/OTHER****
+# ---- Effects of Caputre Rates ----
+
+CaptureRates$Tech = paste(CaptureRates$CARRIER) 
+CaptureRates$Tech <- gsub("Biomass","",CaptureRates$Tech,fixed=F)  
+CaptureRates$Tech <- gsub("woCCS","",CaptureRates$Tech,fixed=F)  
+CaptureRates$Tech <- gsub("wCCS","",CaptureRates$Tech,fixed=F)  
+CaptureRates$Tech <- gsub("LiquidsBiodiesel","Biodeisel",CaptureRates$Tech,fixed=F)  
+CaptureRates$Tech <- gsub("LiquidsCellulosicNondiesel","Lignocellulosic",CaptureRates$Tech,fixed=F)  
+CaptureRates$Tech <- gsub("LiquidsConventionalthanol","1st gen. ethanol",CaptureRates$Tech,fixed=F)  
+CaptureRates$Tech <- gsub("LiquidsOther","Other biomass",CaptureRates$Tech,fixed=F)  
+CaptureRates = subset(CaptureRates, select=c(MODEL,CarrierID,Capt,variable,value,Tech))
+CaptureRates=spread(CaptureRates,variable,value)
+CaptureRates$ID = paste(CaptureRates$MODEL,CaptureRates$Tech)
+
+
+GlobalData.CR = subset(GlobalData3, (Year=="2050"|Year=="2100") & Prim=="Biomass" & Capt=="wCCS")
+GlobalData.CR = subset(GlobalData.CR, select=c(MODEL,Year,CarrierID,Prim,Capt,SecEnFrac,TechOrder2))
+GlobalData.CR$ID = paste(GlobalData.CR$MODEL,GlobalData.CR$TechOrder2)
+
+GlobalData.CR$CaptRate = CaptureRates[match(GlobalData.CR$ID,CaptureRates$ID),5]
+
+CaptureCorr <- ggplot(GlobalData.CR) + 
+  geom_point(aes(x=CaptRate, y=SecEnFrac, colour=MODEL, shape=MODEL), size=2) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ylab("Fraction of Secondary Energy (%)") + xlab("Capture Rate [-]") +
+  ylim(0,100) + xlim(0,1) + theme_bw() +
+  theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
+  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(panel.border = element_rect(colour = "grey", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
+  scale_color_manual(values=c("burlywood4","red","darkgoldenrod1","blue","azure4","limegreen","coral2","burlywood","darkolivegreen","darkorchid1"),
+                     name="Model",
+                     breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE", "MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","MESSAGEix-GLOBIOM","POLES","REMIND-MAgPIE")) +
+  scale_shape_manual(values=initialShapes,
+                     name="Model",
+                     breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE", "MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("AIM/CGE","BET","DNE21+","GCAM","GRAPE-15","IMACLIM","IMAGE","MESSAGEix-GLOBIOM","POLES","REMIND-MAgPIE")) +
+  facet_grid(Year~CarrierID, scales="free", labeller=labeller(MODEL= model_labels2))
+CaptureCorr
+
+png("output/BioTech/Diagnostic/CaptureRate_vs_Deployment.png", width=8*ppi, height=5*ppi, res=ppi)
+print(plot(CaptureCorr))
+dev.off()
+# 
 # ---- OUTPUT: DATA FOR EXTERNAL USE ----
 RegSecEn.Liq = subset(RegData.Liq, select=c(MODEL,SCENARIO,REGION,Year,Prim,Capt,SecEn,Tech2))
 RegSecEn.BioLiqIMAGE = subset(RegSecEn.Liq, MODEL=="IMAGE"&(Prim=="Biomass"|Prim=="BiomasswCCS"))
