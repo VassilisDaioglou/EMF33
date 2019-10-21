@@ -1755,7 +1755,7 @@ rm(lay)
 # print(plot(LCOEvCtax))
 # dev.off()
 # 
-# png("output/BioTech/FigS5.png", width=8*ppi, height=5*ppi, res=ppi)
+# png("output/BioTech/FigS5.png", width=5*ppi, height=5*ppi, res=ppi)
 # print(plot(CaptureCorr))
 # dev.off()
 #
