@@ -1603,7 +1603,7 @@ GBioAllCost
 LCOEvCtax <- ggplot(subset(GlobalData, Capt=="wCCS"&(Year=="2050"|Year=="2100")&Prim=="Biomass"&SecEn>0.1)) + 
   geom_point(aes(x=LCOE, y=Ctax, colour=MODEL, shape=MODEL), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
-  ylab(expression("Carbon tax, US$"[2005]*"/tCO"[2])) + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+  ylab(expression("Carbon price, US$"[2005]*"/tCO"[2])) + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
   ylim(0,3000) +  theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="plain")) +  theme(strip.text.y = element_text(size = fontsize1, face="plain")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
@@ -1794,8 +1794,8 @@ rm(RM2020Data)
 
 SupData = SupData[,c(1:5,12,6:11,13:18)]
 colnames(SupData)[1:18] <-c("Model","Scenario","Region","Year","Primary Carrier","Technology","Secondary Carrier","Carbon Capture",
-                            "Secondary Energy [EJ/yr]","Efficiency [-]","Capital Costs [$/kW(out)]","Carbon Tax [$/tCO2]",
-                            "Feedstock LC [$/MWh]","Capital Cost LC [$/MWh]","O&M LC [$/MWh]","Carbon Tax LC [$/MWh]","Carbon Dioxide Removal LC [$/MWh]",
+                            "Secondary Energy [EJ/yr]","Efficiency [-]","Capital Costs [$/kW(out)]","Carbon Price [$/tCO2]",
+                            "Feedstock LC [$/MWh]","Capital Cost LC [$/MWh]","O&M LC [$/MWh]","Carbon Price LC [$/MWh]","Carbon Dioxide Removal LC [$/MWh]",
                             "Levelised Cost of Energy [$/MWh]")
 
 SupData.defs <- data.frame(Variables = c("Secondary Carrier",
@@ -1803,7 +1803,7 @@ SupData.defs <- data.frame(Variables = c("Secondary Carrier",
                                         "Feedstock LC",
                                         "Capital Cost LC",
                                         "O&M LC",
-                                        "Carbon Tax LC",
+                                        "Carbon Price LC",
                                         "Carbon Dioxide Removal LC",
                                         "Levelised Cost of Energy"),
                           Definition = c("Ele = Electricity; Gas = Gasseous fuel, Hyd = Hydrogen, Liq = Liquid fuel",
