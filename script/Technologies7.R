@@ -893,7 +893,7 @@ GBioLiqEleSec <- ggplot(subset(SecEnTot1, Prim=="Biomass"&!(Year=="2000"|Year=="
   facet_wrap(~MODEL, nrow=1, labeller=labeller(MODEL=model_labels, TechOrder3=carrier_labels))
 GBioLiqEleSec
 
-GBioSecFrac <- ggplot(subset(SecEnTot2, SCENARIO==ActScen&REGION=="World"&!(CarrierID=="Hea")&!(Year=="2050"))) + 
+GBioSecFrac <- ggplot(subset(SecEnTot2, SCENARIO==ActScen&REGION=="World"&!(CarrierID=="Hea")&!(Year=="2050")&!(MODEL=="COFFEE"|MODEL=="FARM 3.1"))) + 
   geom_point(aes(x=Year, y=BioFrac, colour=TechOrder3, shape=TechOrder3), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("B: FRACTION OF BIOENERGY TECHNOLOGIES IN RESPECTIVE ENERGY CARRIER") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
