@@ -835,6 +835,7 @@ for(i in 1:nrow(BakerDat2)){
 BakerDat=rbind(BakerDat1,BakerDat2)
 colnames(BakerDat)[6] <- "Count"
 colnames(BakerDat)[7] <- "Observations"
+BakerDat = BakerDat  %>% mutate(Percentage = 100 * (Count/Observations))
 
 rm(Calcs.Costs2,Calcs.CCS2, BakerDat1, BakerDat2, BakerSample,test,count, NumObs)
 rm(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Calcs.RangeFF, Calcs.Ranges)
