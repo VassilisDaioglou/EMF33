@@ -1299,7 +1299,7 @@ GBioLiqSecCost2b <- ggplot(subset(GlobalData3, CarrierID=="Liq"&Year=="2050"&Sec
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=TechOrder2, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("A: DEPLOYMENT OF LIQUID TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
-  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+  ylab("Market Share of Energy Carrier (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
   ylim(0,100) + theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
@@ -1322,7 +1322,7 @@ GBioOthSecCost2b <- ggplot(GBioOthSecCost3Dat) +
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=Prim, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("B: DEPLOYMENT OF ELECTRICITY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
-  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  ylab("Market Share of Energy Carrier (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
   scale_y_continuous(breaks=c(0,10,20,30,40,50,60), limits=c(0,65))+
   theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
@@ -1404,7 +1404,7 @@ GBioLiqSecCost2d <- ggplot(subset(GlobalData4, CarrierID=="Liq"&Year=="2050"&Sec
             arrow=arrow(angle=30, length=unit(arrowsize,"cm"), ends="last", type="open")) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("A: DEPLOYMENT OF LIQUID TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
-  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
+  ylab("Market Share of Energy Carrier (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
   ylim(0,100) + theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
@@ -1427,7 +1427,7 @@ GBioOthSecCost2d <- ggplot(GBioOthSecCost3Dat) +
             arrow=arrow(angle=30, length=unit(arrowsize,"cm"), ends="last", type="open")) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("B: DEPLOYMENT OF ELECTRICITY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
-  ylab("Fraction of Secondary Energy (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
+  ylab("Market Share of Energy Carrier (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
   scale_y_continuous(breaks=c(10,20,30,40,50))+
   theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
@@ -1745,10 +1745,6 @@ rm(lay)
 # print(plot(CaptureCorr))
 # dev.off()
 #
-# png("output/BioTech/FigS6.png", width=8*ppi, height=9*ppi, res=ppi)
-# print(plot(SecCostFinal2100))
-# dev.off()
-# 
 # png("output/BioTech/FigS6.png", width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(SecCostFinal2d))
 # dev.off()
