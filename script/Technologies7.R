@@ -1645,7 +1645,7 @@ GlobalData.CR$CaptRate = CaptureRates[match(GlobalData.CR$ID,CaptureRates$ID),5]
 CaptureCorr <- ggplot(GlobalData.CR) + 
   geom_point(aes(x=CaptRate, y=SecEnFrac, colour=MODEL, shape=MODEL), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
-  ylab("Fraction of Secondary Energy (%)") + xlab("Capture Rate [-]") +
+  ylab("Market Share of Energy Carrier (%)") + xlab("Capture Rate [-]") +
   ylim(0,100) + xlim(0,1) + theme_bw() +
   theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
   theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
