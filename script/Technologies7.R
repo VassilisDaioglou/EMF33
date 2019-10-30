@@ -1293,7 +1293,7 @@ GlobalData3 = GlobalData3 %>% mutate(yend = SecEnFrac+dy)
 #
 # ---- ...fig4b----
 GBioLiqSecCost2b <- ggplot(subset(GlobalData3, CarrierID=="Liq"&Year=="2050"&SecEnFrac>0.05)) + 
-  geom_segment(aes(x=LCOE, xend=xend, y = SecEnFrac, yend=yend, colour=TechOrder2), alpha=0.3,
+  geom_segment(aes(x=LCOE, xend=xend, y = SecEnFrac, yend=yend, colour=TechOrder2), alpha=0.5,
               arrow=arrow(angle=30, length=unit(arrowsize,"cm"), ends="last", type="open")) +
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=TechOrder2, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
@@ -1316,7 +1316,7 @@ GBioLiqSecCost2b
 GBioOthSecCost3Dat = subset(GlobalData3, CarrierID=="Ele"&Year=="2050"&SecEnFrac>0.05)
 GBioOthSecCost3Dat$Year = as.numeric(substr(GBioOthSecCost3Dat$Year, start=1, stop=4))
 GBioOthSecCost2b <- ggplot(GBioOthSecCost3Dat) + 
-  geom_segment(aes(x=LCOE, xend=xend, y = SecEnFrac, yend=yend, colour=Prim), alpha=0.3,
+  geom_segment(aes(x=LCOE, xend=xend, y = SecEnFrac, yend=yend, colour=Prim), alpha=0.5,
               arrow=arrow(angle=30, length=unit(arrowsize,"cm"), ends="last", type="open")) +
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=Prim, shape=Capt), size=2) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
@@ -1399,7 +1399,7 @@ GlobalData4$Year <- as.numeric(GlobalData4$Year)
 GBioLiqSecCost2d <- ggplot(subset(GlobalData4, CarrierID=="Liq"&Year=="2050"&SecEnFrac>0.1)) + 
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=TechOrder2, shape=Capt), size=2) +
   geom_path(data=subset(GlobalData4, CarrierID=="Liq"&!(Year==2030)&SecEnFrac>0.1), 
-            aes(x=LCOE, y = SecEnFrac, group = VARIABLE, colour = TechOrder2), alpha=0.3,
+            aes(x=LCOE, y = SecEnFrac, group = VARIABLE, colour = TechOrder2), alpha=0.5,
             arrow=arrow(angle=30, length=unit(arrowsize,"cm"), ends="last", type="open")) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("A: DEPLOYMENT OF LIQUID TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
@@ -1422,7 +1422,7 @@ GBioOthSecCost3Dat$Year = as.numeric(substr(GBioOthSecCost3Dat$Year, start=1, st
 GBioOthSecCost2d <- ggplot(GBioOthSecCost3Dat) + 
   geom_point(aes(x=LCOE, y=SecEnFrac, colour=Prim, shape=Capt), size=2) +
   geom_path(data=subset(GlobalData4, CarrierID=="Ele"&!(Year==2030)&SecEnFrac>0.1), 
-            aes(x=LCOE, y = SecEnFrac, group = VARIABLE, colour = Prim), alpha=0.3,
+            aes(x=LCOE, y = SecEnFrac, group = VARIABLE, colour = Prim), alpha=0.5,
             arrow=arrow(angle=30, length=unit(arrowsize,"cm"), ends="last", type="open")) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + geom_vline(xintercept=0,size = 0.1, colour='black') +
   ggtitle("B: DEPLOYMENT OF ELECTRICITY TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
@@ -1715,28 +1715,13 @@ rm(lay)
 # dev.off()
 # 
 # png("output/BioTech/Fig3.png", width=7*ppi, height=7*ppi, res=ppi)
-# print(plot(GBioAllCost4))
-# dev.off()
-# 
-# png("output/BioTech/Fig3_Revised.png", width=7*ppi, height=7*ppi, res=ppi)
 # print(plot(GBioAllCostPanel))
 # dev.off()
 # 
 # png("output/BioTech/Fig4.png", width=8*ppi, height=9*ppi, res=ppi)
-# print(plot(SecCostFinal2))
-# dev.off()
-# 
-# png("output/BioTech/Fig4b.png", width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(SecCostFinal2b))
 # dev.off()
 # 
-# png("output/BioTech/Fig4c.png", width=8*ppi, height=9*ppi, res=ppi)
-# print(plot(SecCostFinal2c))
-# dev.off()
-# 
-# png("output/BioTech/Fig4d.png", width=8*ppi, height=9*ppi, res=ppi)
-# print(plot(SecCostFinal2d))
-# dev.off()
 # #
 # # ---- OUTPUT: SUPPLEMENTARY INFORMATION ----
 # png("output/BioTech/FigS1.png", width=7*ppi, height=10*ppi, res=ppi)
@@ -1763,6 +1748,9 @@ rm(lay)
 # print(plot(SecCostFinal2100))
 # dev.off()
 # 
+# png("output/BioTech/FigS6.png", width=8*ppi, height=9*ppi, res=ppi)
+# print(plot(SecCostFinal2d))
+# dev.off()
 # ---- OUTPUT: SUPPLEMENTARY DATA ----
 SupData = subset(CostEffDataR, select=c(MODEL,SCENARIO,REGION,Year,Prim,CarrierID,Capt,SecEn,Efficiency,CapitalCo,Ctax,Tech,VARIABLE,
                                      LCOE_Feed,LCOE_Cap,LCOE_OM,LCOE_ctax,LCOE_CDR,LCOE))
