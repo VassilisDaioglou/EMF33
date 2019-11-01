@@ -1460,7 +1460,7 @@ EUTrade <-ggplot(data=subset(BioTradVol, REGION=="EU"&MODEL=="IMAGE"&(SCENARIO==
                  aes(x=Year, y=TradePrimBiomassVol, colour=ScenOrder)) + 
   geom_line(size=1)+
   geom_hline(yintercept=0,size = 0.1, colour='black') +
-  xlim(2010,2100) +
+  xlim(2010,2050) +
   ggtitle("EU Bioenergy Net Trade") +
   theme_bw() +
   theme(text= element_text(size=8, face="plain"), axis.text.x = element_text(angle=66, size=8, hjust=1), axis.text.y = element_text(size=8)) +
@@ -1480,7 +1480,7 @@ EUBioPrim <-ggplot(data=subset(EneTrade2, REGION=="EU"&MODEL=="IMAGE"&(SCENARIO=
                  aes(x=Year, y=value, colour=SCENARIO)) + 
   geom_line(size=1)+
   geom_hline(yintercept=0,size = 0.1, colour='black') +
-  xlim(2010,2100) +
+  xlim(2010,2050) +
   ggtitle("EU Primary Biomass Consumption") +
   theme_bw() +
   theme(text= element_text(size=8, face="plain"), axis.text.x = element_text(angle=66, size=8, hjust=1), axis.text.y = element_text(size=8)) +
