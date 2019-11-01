@@ -1455,9 +1455,35 @@ FigTrad2C <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&SCENARIO
   theme(strip.text.x = element_text(size = 6.5), strip.text.y = element_text(size = FSizeStrip))
 FigTrad2C
 
+# EU Net Trade Line
+EUTrade <-ggplot(data=subset(BioTradVol, REGION=="EU"&MODEL=="IMAGE"&(SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full")),
+                 aes(x=Year, y=TradePrimBiomassVol, colour=ScenOrder)) + 
+  #geom_bar(stat="identity", position="dodge")+
+  geom_line(size=1)+
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  xlim(2010,2100) +
+  # Text
+  ggtitle("EU Bioenergy Net Trade") +
+  theme_bw() +
+  theme(text= element_text(size=8, face="plain"), axis.text.x = element_text(angle=66, size=8, hjust=1), axis.text.y = element_text(size=8)) +
+  theme(legend.title=element_blank(), legend.position="right") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  ylab(expression(paste(EJ[Primary],"/yr",""))) +
+  xlab("") +
+  scale_colour_manual(values=c("black", "red", "#FFB90F","forestgreen"), 
+                      name ="Scenarios",
+                      breaks=c("R3-BASE-0-full","R3-B-hi-full","R3-B-lo-full","R3-B-vlo-full"),
+                      labels=c("Baseline",">2C","2C","1.5C")
+  ) #+
+EUTrade
+
 #
 # png(file = "output/BioTrade/Presentations/FigTrad2C.png", width = 6.5*ppi, height = 2.6*ppi, units = "px", res = ppi)
 # plot(FigTrad2C)
+# dev.off()
+# 
+# png(file = "output/BioTrade/Presentations/EUTrade.png", width = 5*ppi, height = 3*ppi, units = "px", res = ppi)
+# plot(EUTrade)
 # dev.off()
 # 
 
