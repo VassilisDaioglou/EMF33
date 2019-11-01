@@ -55,7 +55,8 @@ EUEmis <- ggplot(data=subset(Emis, REGION=="EU"&MODEL=="IMAGE"&(SCENARIO=="R3-BA
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(legend.title=element_blank(), legend.position="right") +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  ylab(expression(paste(EJ[Primary],"/yr",""))) +
+  ylab(expression(paste("Mt ",CO[2],"/yr",""))) +
+  # ylab(expression(paste(EJ[Primary],"/yr",""))) +
   xlab("") +
   scale_colour_manual(values=c("black", "red","forestgreen"), 
                       name ="Scenarios",
@@ -63,3 +64,8 @@ EUEmis <- ggplot(data=subset(Emis, REGION=="EU"&MODEL=="IMAGE"&(SCENARIO=="R3-BA
                       labels=c("Baseline",">2°C","2°C")
   ) 
 EUEmis
+
+
+# png(file = "output/Emissions//EUEmis.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
+# plot(EUEmis)
+# dev.off()
