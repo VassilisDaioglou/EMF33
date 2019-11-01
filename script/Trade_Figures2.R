@@ -1476,7 +1476,7 @@ EUTrade <-ggplot(data=subset(BioTradVol, REGION=="EU"&MODEL=="IMAGE"&(SCENARIO==
 EUTrade
 
 # EU Biomass use
-EUBioPrim <-ggplot(data=subset(EneTrade2, REGION=="EU"&MODEL=="IMAGE"&(SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full")&variable=="PrimBiomass"),
+EUBioPrim <-ggplot(data=subset(EneTrade2, REGION=="EU"&MODEL=="IMAGE"&(SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full")&variable=="PrimBiomass"),
                  aes(x=Year, y=value, colour=SCENARIO)) + 
   geom_line(size=1)+
   geom_hline(yintercept=0,size = 0.1, colour='black') +
@@ -1488,10 +1488,10 @@ EUBioPrim <-ggplot(data=subset(EneTrade2, REGION=="EU"&MODEL=="IMAGE"&(SCENARIO=
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   ylab(expression(paste(EJ[Primary],"/yr",""))) +
   xlab("") +
-  scale_colour_manual(values=c("black", "red", "#FFB90F","forestgreen"), 
+  scale_colour_manual(values=c("black", "red","forestgreen"), 
                       name ="Scenarios",
-                      breaks=c("R3-BASE-0-full","R3-B-hi-full","R3-B-lo-full","R3-B-vlo-full"),
-                      labels=c("Baseline",">2C","2C","1.5C")
+                      breaks=c("R3-BASE-0-full","R3-B-hi-full","R3-B-lo-full"),
+                      labels=c("Baseline",">2°C","2°C")
   ) #+
 EUBioPrim
 
