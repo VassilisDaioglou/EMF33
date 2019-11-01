@@ -649,6 +649,20 @@ TechData5.Diag = subset(TechData4,  !(REGION=="MAF"|REGION=="REF"))
 # write.csv(PriceData, file = "data/Technology/PriceDATA.csv")
 # write.csv(SecEnTot, file = "data/Technology/SecEnTot.csv")
 
+# ---- EMISSIONS ----
+Emis = subset(DATA, VARID=="Emissions|") 
+Emis$VARID <- substr(Emis$VARIABLE, start=1, stop=13)
+Emis = subset(Emis, VARID=="Emissions|CO2")
+Emis$VARIABLE <- sub("Carbon Capture and Storage","CCS",Emis$VARIABLE,fixed=F)
+Emis$VARIABLE <- sub("Fossil Fuels and Industry","FFI",Emis$VARIABLE,fixed=F)
+Emis$VARIABLE <- sub("Land Use","Land",Emis$VARIABLE,fixed=F)
+Emis$VARIABLE <- sub("Emissions","Emis",Emis$VARIABLE,fixed=F)
+
+Emis = subset(Emis, SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full")
+
+# write.csv(Emis, file = "data/Emissions/EmisCO2.csv")
+
+#
 # ---- DIAGNOSTIC ----
 TechDiag = subset(DATA, SCENARIO=="R3-B-lo-full"&Year=="2050"&REGION=="OECD90")
 TechDiag = subset(TechDiag, VARID=="Capital Co"|VARID=="Efficiency"|VARID=="OM Cost|Fi"|VARID=="OM Cost|Va"|
