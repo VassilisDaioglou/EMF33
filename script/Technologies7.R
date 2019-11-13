@@ -1029,7 +1029,7 @@ GBioCapOMCost <- ggplot(subset(GlobalData.Bio5,
   geom_jitter(aes(x=Year, y=value, colour=variable, shape=MODEL),size=2, width=0.25, alpha=0.8) +
   geom_rect(data=Bkgrd, aes(fill = CarrierID), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.03) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + 
-  geom_vline(xintercept=1.5, size=0.1, colour="gray10") +
+  geom_vline(xintercept=1.5, size=0.3, colour="gray10") +
   ggtitle("Capital and O&M Costs") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
   theme_bw() +  
@@ -1059,7 +1059,7 @@ GBioFeedCost <- ggplot(subset(GlobalData.Bio5,
   geom_jitter(aes(x=Year, y=value, colour=variable, shape=MODEL),size=2, width=0.25, alpha=0.8) +
   geom_rect(data=Bkgrd, aes(fill = CarrierID), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.03) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + 
-  geom_vline(xintercept=1.5, size=0.1, colour="gray10") +
+  geom_vline(xintercept=1.5, size=0.3, colour="gray10") +
   ggtitle("+ Feedstock Costs") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
   theme_bw() +  
@@ -1091,7 +1091,7 @@ GBioCDRCost <- ggplot(subset(GlobalData.Bio5,
   geom_rect(data=subset(Bkgrd, TechOrder=="ElectricitywCCS"|TechOrder=="LignocellulosicwCCS"|TechOrder=="HydrogenwCCS"|TechOrder=="BiodeiselwCCS")
             , aes(fill = CarrierID), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf, alpha = 0.03) +
   geom_hline(yintercept=0,size = 0.1, colour='black') + 
-  geom_vline(xintercept=1.5, size=0.1, colour="gray10") +
+  geom_vline(xintercept=1.5, size=0.3, colour="gray10") +
   ggtitle("+ CDR") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   xlab("") +  ylab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
   theme_bw() + 
