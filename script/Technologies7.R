@@ -510,7 +510,6 @@ GlobalData.Bio1cor$LCOEcor_max = pmin(GlobalData.Bio1cor$LCOE,500)
 GlobalData.Bio1cor$LCOE[GlobalData.Bio1cor$LCOEcor_max==500] <- NA
 GlobalData.Bio1cor$LCOEcor_max[!GlobalData.Bio1cor$LCOEcor_max==500] <- NA
 
-# TradDATA[is.na(TradDATA)]<-0
 GlobalData.Bio1cor$LCOEcor_min[is.na(GlobalData.Bio1cor$LCOEcor_min)] <- 0
 GlobalData.Bio1cor$LCOEcor_max[is.na(GlobalData.Bio1cor$LCOEcor_max)] <- 0
 GlobalData.Bio1cor = GlobalData.Bio1cor %>% mutate(LCOEcor = LCOEcor_min+LCOEcor_max)
