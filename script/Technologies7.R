@@ -175,6 +175,9 @@ TechData4 = TechData3
 
 # Assign "Liquids|Biomass|Other for specific models
 # For MESSAGE: Ethanol synthesis via biomass gasification (email Matt Gidden 26/03/2018)
+#               Also, have to correct efficiencies (email Matt Gidden 26/04/2020):
+#                   LiquidsBiomassCellulosicNondieselwCCS from 0.366 -> 0.406
+#                   LiquidsBiomassCellulosicNondieselwoCCS from 0.37 -> 0.41
 # For GRAPE: That is biomass part of CBTL (coal-biomass to liquids),it could be "advanced biofuel" using FT processes (emails Etsushi Kato 26&27/03/2018)
 # For GRAPE, LiquidsBiomassOtherwCCS is not used, and in the questionnaires no liquids+CCS option is listed. So will remove from dataset
 # For IMACLIM: "Other" includes a mix of 1st generation ethanol and biodiesel, as those are not separated in the model (email Florian Leblanc 27/03/2018)
@@ -183,6 +186,9 @@ TechData4 = TechData3
 TechData4$VARIABLE2 = TechData4$VARIABLE
 TechData4$VARIABLE2[TechData4$MODEL=="MESSAGE-GLOBIOM"&TechData4$VARIABLE=="LiquidsBiomassOtherwCCS"] <- "LiquidsBiomassCellulosicNondieselwCCS"
 TechData4$VARIABLE2[TechData4$MODEL=="MESSAGE-GLOBIOM"&TechData4$VARIABLE=="LiquidsBiomassOtherwoCCS"] <- "LiquidsBiomassCellulosicNondieselwoCCS"
+
+TechData4$Efficiency[TechData4$MODEL=="MESSAGE-GLOBIOM"&TechData4$VARIABLE=="LiquidsBiomassOtherwCCS"] <- 0.406
+TechData4$Efficiency[TechData4$MODEL=="MESSAGE-GLOBIOM"&TechData4$VARIABLE=="LiquidsBiomassOtherwoCCS"] <- 0.41
 
 TechData4$VARIABLE2[TechData4$MODEL=="GRAPE-15"&TechData4$VARIABLE=="LiquidsBiomassOtherwCCS"] <- "LiquidsBiomassCellulosicNondieselwCCS2"
 TechData4$VARIABLE2[TechData4$MODEL=="GRAPE-15"&TechData4$VARIABLE=="LiquidsBiomassOtherwoCCS"] <- "LiquidsBiomassCellulosicNondieselwoCCS2"
@@ -1743,7 +1749,7 @@ rm(lay)
 # png("output/BioTech/FigS5.png", width=5.2*ppi, height=5*ppi, res=ppi)
 # print(plot(CaptureCorr))
 # dev.off()
-#
+# 
 # png("output/BioTech/FigS6.png", width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(SecCostFinal2d))
 # dev.off()
