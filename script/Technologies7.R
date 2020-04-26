@@ -1747,6 +1747,7 @@ rm(lay)
 # png("output/BioTech/FigS6.png", width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(SecCostFinal2d))
 # dev.off()
+
 # ---- OUTPUT: SUPPLEMENTARY DATA ----
 SupData = subset(CostEffDataR, select=c(MODEL,SCENARIO,REGION,Year,Prim,CarrierID,Capt,SecEn,Efficiency,CapitalCo,Ctax,Tech,VARIABLE,
                                      LCOE_Feed,LCOE_Cap,LCOE_OM,LCOE_ctax,LCOE_CDR,LCOE))
@@ -1757,26 +1758,36 @@ SupData$Capt <- gsub("wCCS","With",SupData$Capt,fixed=F)
 SupData$Capt <- gsub("woCCS","Without",SupData$Capt,fixed=F)  
 
 # Make correction for 2020 since some models display dummy data for that timestep
-SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="ElectricityBiomasswCCS"&SupData$Year==2020] <- SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="ElectricityBiomasswCCS"&SupData$Year==2030]
-SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="ElectricityBiomasswCCS"&SupData$Year==2020] <- SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="ElectricityBiomasswCCS"&SupData$Year==2030]
+SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="ElectricityBiomasswCCS"&SupData$Year==2020] <- NA
+SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="ElectricityBiomasswCCS"&SupData$Year==2020] <- NA
 
-SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&SupData$Year==2020] <- SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&SupData$Year==2030]
-SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&SupData$Year==2020] <- SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&SupData$Year==2030]
+SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&SupData$Year==2020] <- NA
+SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="LiquidsBiomassCellulosicNondieselwCCS"&SupData$Year==2020] <- NA
 
-SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="HydrogenBiomasswCCS"&SupData$Year==2020] <- SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="HydrogenBiomasswCCS"&SupData$Year==2030]
-SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="HydrogenBiomasswCCS"&SupData$Year==2020] <- SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="HydrogenBiomasswCCS"&SupData$Year==2030]
+SupData$Efficiency[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="HydrogenBiomasswCCS"&SupData$Year==2020] <- NA
+SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="HydrogenBiomasswCCS"&SupData$Year==2020] <- NA
+
+SupData$MODEL[SupData$MODEL=="MESSAGE-GLOBIOM"] <- "MESSAGEix-GLOBIOM"
+
 
 SupData$VARIABLE <- NULL
 # For REMIND-MAGPIE there is no CCS data for 2020, use 2030 data instead
 # In order to avoid inconsistency between 2020 (noCCS) data and 2030 (CCS) data, ignore the 2020 values 
-RM2020Data = subset(SupData, MODEL=="REMIND-MAGPIE"&Year==2030)
+RM2020Data = subset(SupData, MODEL=="REMIND-MAGPIE"&Year==2030&Prim=="Biomass"&Capt=="With")
 RM2020Data$Year <- 2020
+RM2020Data$Efficiency <- NA
 
-SupData = subset(SupData, !(MODEL=="REMIND-MAGPIE"&Year==2020))
+SupData = subset(SupData, !(MODEL=="REMIND-MAGPIE"&Year==2020&Prim=="Biomass"&Capt=="With"))
 SupData = rbind(SupData,RM2020Data)
 rm(RM2020Data)
 
+# Reorder columns
 SupData = SupData[,c(1:5,12,6:11,13:18)]
+
+# If efficiency is NA (because tech no available), make sure all technoeconomics are NA
+SupData = SupData %>% mutate_at(.vars = c("SecEn","CapitalCo","LCOE_Feed","LCOE_Cap","LCOE_OM","LCOE_ctax","LCOE_CDR","LCOE"), 
+                                funs(ifelse(is.na(Efficiency), NA, .)))
+
 colnames(SupData)[1:18] <-c("Model","Scenario","Region","Year","Primary Carrier","Technology","Secondary Carrier","Carbon Capture",
                             "Secondary Energy [EJ/yr]","Efficiency [-]","Capital Costs [$/kW(out)]","Carbon Price [$/tCO2]",
                             "Feedstock LC [$/MWh]","Capital Cost LC [$/MWh]","O&M LC [$/MWh]","Carbon Price LC [$/MWh]","Carbon Dioxide Removal LC [$/MWh]",
@@ -1789,7 +1800,8 @@ SupData.defs <- data.frame(Variables = c("Secondary Carrier",
                                         "O&M LC",
                                         "Carbon Price LC",
                                         "Carbon Dioxide Removal LC",
-                                        "Levelised Cost of Energy"),
+                                        "Levelised Cost of Energy",
+                                        "General"),
                           Definition = c("Ele = Electricity; Gas = Gasseous fuel, Hyd = Hydrogen, Liq = Liquid fuel",
                                          "Deployment of secondary energy carrier",
                                          "Levelised Costs of feedstock",
@@ -1797,7 +1809,8 @@ SupData.defs <- data.frame(Variables = c("Secondary Carrier",
                                          "Levelised Costs of operation and maintenance",
                                          "Levelised Costs of Carbon emissions",
                                          "Levelised Costs of Carbon Dioxide removal (benefits)",
-                                         "Overall Levelised Costs of Energy"))
+                                         "Overall Levelised Costs of Energy",
+                                         "'NA' means carrier not available in that timestep"))
 
 # write.xlsx(SupData, file="output/BioTech/Supplementary_Data.xlsx", sheetName="Supplementary Data", append=FALSE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(SupData.defs, file="output/BioTech/Supplementary_Data.xlsx", sheetName="Notes", append=TRUE, row.names=FALSE, showNA = TRUE)
@@ -2679,5 +2692,26 @@ EleDepCost2
 # print(plot(EleDepCost2))
 # dev.off()
 
-
+# ---- REMOVE VARIABLES ----
+rm(BioCostR2,BioEffCost,BioEffCostPre,BioEffCostPre2,BioEffR2,
+   BioSecEleCost,BioSecEleCosta,BioSecLiqCost,BioSecLiqCosta,
+   BioStrat,BioStrat2,
+   CCSPen,CaptureCorr,
+   EleCost1,EleCost2,EleCost3,EleDepCost1,EleDepCost2,
+   EleVSBioFrac,
+   GBioAllCost,GBioAllCost4,GBioAllCostPanel,
+   GBioCapOMCost,GBioCDRCost,GBioFeedCost,
+   GBioAllSecCost,GBioCost1Final,
+   GBioLiqCost1,GBioLiqCost2,GBioLiqCost4,
+   GBioLiqEleSec,GBioLiqSecCost,GBioLiqSecCost2,GBioLiqSecCost2100,GBioLiqSecCost2b,GBioLiqSecCost2c,GBioLiqSecCost2d,
+   GBioOthCost1,GBioOthCost2,GBioOthCost4,
+   GBioOthSecCost,GBioOthSecCost2,GBioOthSecCost2100,GBioOthSecCost2b,GBioOthSecCost2c,GBioOthSecCost2d,
+   GBioSecFrac,
+   LCOEvCtax,
+   LiqDepCost1,LiqDepCost2,
+   RBioLiqCost1,RBioLiqCost2,RBioLiqCost4,
+   RBioOthCost1,RBioOthCost2,RBioOthCost4,
+   RegVar,
+   SecCostFinal2,SecCostFinal2100,SecCostFinal2b,SecCostFinal2c,SecCostFinal2d,
+   TechDistr)
 # ---- END ---- 
