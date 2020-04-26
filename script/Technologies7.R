@@ -1781,6 +1781,16 @@ SupData = subset(SupData, !(MODEL=="REMIND-MAGPIE"&Year==2020&Prim=="Biomass"&Ca
 SupData = rbind(SupData,RM2020Data)
 rm(RM2020Data)
 
+# For BET, GRAPE-15, and POLES there is no CCS before 2030
+SupData$Efficiency[(SupData$MODEL=="BET"|SupData$MODEL=="GRAPE-15"|SupData$MODEL=="POLES EMF33")
+                   &SupData$Capt=="With"&SupData$Prim=="Biomass"&SupData$Year==2020] <- NA
+
+# For GCAM Bio-Electricity-CCS not available before 2030 
+SupData$Efficiency[SupData$MODEL=="GCAM_EMF33"&SupData$Capt=="With"&SupData$Prim=="Biomass"&SupData$CarrierID=="Ele"&SupData$Year==2020] <- NA
+
+# For IMAGE Bio-Liquids-CCS not available before 2030 
+SupData$Efficiency[SupData$MODEL=="IMAGE"&SupData$Capt=="With"&SupData$Prim=="Biomass"&SupData$CarrierID=="Liq"&SupData$Year==2020] <- NA
+
 # Reorder columns
 SupData = SupData[,c(1:5,12,6:11,13:18)]
 
