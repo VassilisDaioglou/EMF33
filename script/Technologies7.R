@@ -368,6 +368,9 @@ CostEffData = CostEffData %>% mutate(LCOE2 = LCOE1+LCOE_Feed)
 CostEffData = CostEffData %>% mutate(LCOE3 = LCOE2+LCOE_ctax)
 CostEffDataR=subset(CostEffData, !(REGION=="World"))
 
+#  For MESSAGEix-GLOBIOM some electricity variables are double counted (Wind|Electricity = Wind|Electricity|Onshore) 
+CostEffDataR = subset(CostEffDataR, !(MODEL=="MESSAGE-GLOBIOM" & Prim == "Wind" & VARIABLE == "ElectricityWind"))
+
 # Global Data
 CostEffDataR$GlobID = paste(CostEffDataR$MODEL, CostEffDataR$SCENARIO, CostEffDataR$Year, CostEffDataR$VARIABLE)
 EffGlob <- aggregate(CostEffDataR$Efficiency, by=list(MODEL=CostEffDataR$MODEL, SCENARIO=CostEffDataR$SCENARIO, VARIABLE=CostEffDataR$VARIABLE, Year=CostEffDataR$Year, CarrierID=CostEffDataR$CarrierID, Prim=CostEffDataR$Prim, Tech=CostEffDataR$Tech, GlobID=CostEffDataR$GlobID, Capt=CostEffDataR$Capt), FUN=mean, na.rm=TRUE) 
@@ -1319,7 +1322,7 @@ GBioLiqSecCost2b <- ggplot(subset(GlobalData3, CarrierID=="Liq"&Year=="2050"&Sec
   facet_wrap(~MODEL, scales="free", ncol=5, labeller=labeller(MODEL= model_labels2))
 GBioLiqSecCost2b
 
-GBioOthSecCost3Dat = subset(GlobalData3, CarrierID=="Ele"&Year=="2050"&SecEnFrac>0.05)
+GBioOthSecCost3Dat = subset(GlobalData3, CarrierID=="Ele"&Year=="2050"&SecEnFrac>0.06)
 GBioOthSecCost3Dat$Year = as.numeric(substr(GBioOthSecCost3Dat$Year, start=1, stop=4))
 GBioOthSecCost2b <- ggplot(GBioOthSecCost3Dat) + 
   geom_segment(aes(x=LCOE, xend=xend, y = SecEnFrac, yend=yend, colour=Prim), alpha=0.5,
@@ -1369,7 +1372,7 @@ GBioLiqSecCost2c <- ggplot(subset(GlobalData3, CarrierID=="Liq"&Year=="2050"&Sec
   facet_wrap(~MODEL, scales="free", ncol=5, labeller=labeller(MODEL= model_labels2))
 GBioLiqSecCost2c
 
-GBioOthSecCost3Dat = subset(GlobalData3, CarrierID=="Ele"&Year=="2050"&SecEnFrac>0.05)
+GBioOthSecCost3Dat = subset(GlobalData3, CarrierID=="Ele"&Year=="2050"&SecEnFrac>0.06)
 GBioOthSecCost3Dat$Year = as.numeric(substr(GBioOthSecCost3Dat$Year, start=1, stop=4))
 GBioOthSecCost2c <- ggplot(GBioOthSecCost3Dat) + 
   geom_segment(aes(x=LCOE, xend=LCOE+x_diff, y = SecEnFrac, yend=SecEnFrac+y_diff, colour=Prim), alpha=0.3,
@@ -1826,9 +1829,6 @@ SupData$Efficiency[SupData$MODEL=="GCAM_EMF33"&SupData$Capt=="With"&SupData$Prim
 
 # For IMAGE Bio-Liquids-CCS not available before 2030 
 SupData$Efficiency[SupData$MODEL=="IMAGE"&SupData$Capt=="With"&SupData$Prim=="Biomass"&SupData$CarrierID=="Liq"&SupData$Year==2020] <- NA
-
-#  For MESSAGEix-GLOBIOM some electricity variables are double counted (Wind|Electricity = Wind|Electricity|Onshore) 
-# SupData = subset(SupData, !(MODEL=="MESSAGEix-GLOBIOM" & Prim == "Wind" & Tech == "Electricity"))
 
 # Reorder columns
 SupData = SupData[,c(1:5,12,6:11,13:18)]
@@ -2744,13 +2744,13 @@ EleDepCost2
 # dev.off()
 
 # ---- REMOVE VARIABLES ----
-rm(BioCostR2,BioEffCost,BioEffCostPre,BioEffCostPre2,BioEffR2,
+rm(BioCostR2,BioEffCostPre,BioEffCostPre2,BioEffR2,
    BioSecEleCost,BioSecEleCosta,BioSecLiqCost,BioSecLiqCosta,
    BioStrat,BioStrat2,
-   CCSPen,CaptureCorr,
+   CCSPen,
    EleCost1,EleCost2,EleCost3,EleDepCost1,EleDepCost2,
    EleVSBioFrac,
-   GBioAllCost,GBioAllCost4,GBioAllCostPanel,
+   GBioAllCost4,
    GBioCapOMCost,GBioCDRCost,GBioFeedCost,
    GBioAllSecCost,GBioCost1Final,
    GBioLiqCost1,GBioLiqCost2,GBioLiqCost4,
@@ -2758,11 +2758,10 @@ rm(BioCostR2,BioEffCost,BioEffCostPre,BioEffCostPre2,BioEffR2,
    GBioOthCost1,GBioOthCost2,GBioOthCost4,
    GBioOthSecCost,GBioOthSecCost2,GBioOthSecCost2100,GBioOthSecCost2b,GBioOthSecCost2c,GBioOthSecCost2d,
    GBioSecFrac,
-   LCOEvCtax,
    LiqDepCost1,LiqDepCost2,
    RBioLiqCost1,RBioLiqCost2,RBioLiqCost4,
    RBioOthCost1,RBioOthCost2,RBioOthCost4,
    RegVar,
-   SecCostFinal2,SecCostFinal2100,SecCostFinal2b,SecCostFinal2c,SecCostFinal2d,
+   SecCostFinal2,SecCostFinal2100,SecCostFinal2c,
    TechDistr)
 # ---- END ---- 
