@@ -1775,8 +1775,38 @@ SupData$CapitalCo[SupData$MODEL=="MESSAGE-GLOBIOM"&SupData$VARIABLE=="HydrogenBi
 
 SupData$MODEL[SupData$MODEL=="MESSAGE-GLOBIOM"] <- "MESSAGEix-GLOBIOM"
 
+# Improve identification of renewable technologies (i.e. if they are PV/CSP/Onshore/Offshore)
+colnames(SupData)[colnames(SupData)=="VARIABLE"] <- "Detail"
 
-SupData$VARIABLE <- NULL
+SupData$Detail <- gsub("Hydrogen","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Liquids","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Electricity","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Gases","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Biomass","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Wind","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Hydro","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Nuclear","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Solar","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Oil","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Coal","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Gas","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Hydro","",SupData$Detail,fixed=F)
+SupData$Detail <- gsub("Geothermal","",SupData$Detail,fixed=F)
+SupData$Detail <- gsub("wCCS","",SupData$Detail,fixed=F)
+SupData$Detail <- gsub("woCCS","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("1","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("2","",SupData$Detail,fixed=F) 
+SupData$Detail <- gsub("3","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("4","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("5","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("6","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Biodiesel","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("CellulosicNondiesel","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("Conventionalthanol","",SupData$Detail,fixed=F)  
+SupData$Detail <- gsub("offshore","Offshore",SupData$Detail,fixed=F)  
+
+SupData$Tech <- paste(SupData$Tech, SupData$Detail)
+SupData$Detail <- NULL
 # For REMIND-MAGPIE there is no CCS data for 2020, use 2030 data instead
 # In order to avoid inconsistency between 2020 (noCCS) data and 2030 (CCS) data, ignore the 2020 values 
 RM2020Data = subset(SupData, MODEL=="REMIND-MAGPIE"&Year==2030&Prim=="Biomass"&Capt=="With")
@@ -1796,6 +1826,9 @@ SupData$Efficiency[SupData$MODEL=="GCAM_EMF33"&SupData$Capt=="With"&SupData$Prim
 
 # For IMAGE Bio-Liquids-CCS not available before 2030 
 SupData$Efficiency[SupData$MODEL=="IMAGE"&SupData$Capt=="With"&SupData$Prim=="Biomass"&SupData$CarrierID=="Liq"&SupData$Year==2020] <- NA
+
+#  For MESSAGEix-GLOBIOM some electricity variables are double counted (Wind|Electricity = Wind|Electricity|Onshore) 
+# SupData = subset(SupData, !(MODEL=="MESSAGEix-GLOBIOM" & Prim == "Wind" & Tech == "Electricity"))
 
 # Reorder columns
 SupData = SupData[,c(1:5,12,6:11,13:18)]
@@ -1827,6 +1860,8 @@ SupData.defs <- data.frame(Variables = c("Secondary Carrier",
                                          "Levelised Costs of Carbon Dioxide removal (benefits)",
                                          "Overall Levelised Costs of Energy",
                                          "'NA' means carrier not available in that timestep"))
+
+
 
 # write.xlsx(SupData, file="output/BioTech/Supplementary_Data.xlsx", sheetName="Supplementary Data", append=FALSE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(SupData.defs, file="output/BioTech/Supplementary_Data.xlsx", sheetName="Notes", append=TRUE, row.names=FALSE, showNA = TRUE)
