@@ -1207,6 +1207,7 @@ FigBiovsAgri
 # write.xlsx(DriversBudg.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(SecurityTest.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Security Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(EneTradeMed, file="output/BioTrade/Statistics.xlsx", sheetName="Medians", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(EneTradeGrMod, file="output/BioTrade/Statistics.xlsx", sheetName="Growth Rates (per model)", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(EneTradeGr, file="output/BioTrade/Statistics.xlsx", sheetName="Growth Rates", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(BiomassTrade, file="output/BioTrade/Statistics.xlsx", sheetName="Biomass Trade Summary", append=TRUE, row.names=FALSE, showNA = TRUE)
 #
