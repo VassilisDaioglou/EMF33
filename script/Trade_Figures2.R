@@ -83,14 +83,17 @@ Trade2= Trade2 %>% mutate(BioImpFrac=((1-BioExporter)*(TradePrimBiomassVol/PrimB
 
 # ---- RESULTS FOR PAPER ----
 # Global Net Trade of different energy carriers
-EneTrade=subset(Trade2, REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
-EneTrade <- subset(EneTrade, select=c('MODEL','SCENARIO','Year','REGION','Prim','PrimBiomass','TradePrimBiomassVol', 'TradePrimCoalVol','TradePrimOilVol','TradePrimGasVol','TradeSecLiquidsBiomassVol','TradeSecSolidsBiomassVol'))  
-EneTrade <- melt(EneTrade, measure.vars=c('Prim','PrimBiomass','TradePrimBiomassVol', 'TradePrimCoalVol','TradePrimOilVol','TradePrimGasVol','TradeSecLiquidsBiomassVol','TradeSecSolidsBiomassVol'))  
-EneTrade$value[EneTrade$value<0] <-0
-EneTrade <- spread(EneTrade,REGION,value)
-EneTrade[is.na(EneTrade)]<-0
-EneTrade= EneTrade %>% mutate(Global=(Brazil+EAsia+EU+MAF+RAsia+REF+RLAM+ROECD90+USA)) # Total Global Exports
-BiomassTrade = subset(EneTrade, variable=="PrimBiomass"|variable=="TradePrimBiomassVol"|variable=="TradeSecLiquidsBiomassVol"|variable=="TradeSecSolidsBiomassVol")
+EneTrade.all=subset(Trade2, REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
+EneTrade.all <- subset(EneTrade.all, select=c('MODEL','SCENARIO','Year','REGION','Prim','PrimBiomass','TradePrimBiomassVol', 'TradePrimCoalVol','TradePrimOilVol','TradePrimGasVol','TradeSecLiquidsBiomassVol','TradeSecSolidsBiomassVol'))  
+EneTrade.all <- melt(EneTrade.all, measure.vars=c('Prim','PrimBiomass','TradePrimBiomassVol', 'TradePrimCoalVol','TradePrimOilVol','TradePrimGasVol','TradeSecLiquidsBiomassVol','TradeSecSolidsBiomassVol'))  
+EneTrade.all$value[EneTrade.all$value<0] <-0
+EneTrade.all <- spread(EneTrade.all,REGION,value)
+EneTrade.all[is.na(EneTrade.all)]<-0
+EneTrade.all= EneTrade.all %>% mutate(Global=(Brazil+EAsia+EU+MAF+RAsia+REF+RLAM+ROECD90+USA)) # Total Global Exports
+
+BiomassTrade = subset(EneTrade.all, variable=="PrimBiomass"|variable=="TradePrimBiomassVol"|variable=="TradeSecLiquidsBiomassVol"|variable=="TradeSecSolidsBiomassVol")
+
+EneTrade = EneTrade.all
 EneTrade[,5:13]<- list(NULL)
 EneTrade = subset(EneTrade, !(EneTrade$Global==0))
 EneTradeMed <- aggregate(EneTrade$Global, by=list(Year=EneTrade$Year,Variable=EneTrade$variable), FUN=median, na.rm=TRUE)
@@ -606,7 +609,7 @@ var_labels <- c("Trade|Primary Energy|Biomass|Volume"="Biomass","Trade|Primary E
 model_labels <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM-NLU","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE","FARM 3.1"="FARM")
 model_labels2 <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM-NLU","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND\n-MAgPIE","FARM 3.1"="FARM")
 region_label <- c("EU"="EU","USA"="USA","ROECD90"="Rest OECD","EAsia"="East Asia","RAsia"="Rest Asia","Brazil"="Brazil","RLAM"="Rest Lat.Am.","REF"="Former USSR","MAF"="M.East & Africa","NetTrade"="Global (gross)","Global"="Global (gross)","World"="Global")
-region_label2 <- c("EU"="EU","USA"="USA","ROECD90"="Rest OECD","EAsia"="East Asia","RAsia"="Rest Asia","Brazil"="Brazil","RLAM"="Rest\n Lat.Am.","REF"="Former\n USSR","MAF"="M.East\n & Africa","NetTrade"="Global (gross)","Global"="Global (gross)","World"="Global")
+region_label2 <- c("EU"="EU","USA"="USA","ROECD90"="Rest of OECD","EAsia"="East Asia","RAsia"="Rest of Asia","Brazil"="Brazil","RLAM"="Rest of\n Lat.Am.","REF"="Former\n USSR","MAF"="M.East\n & Africa","NetTrade"="Global (gross)","Global"="Global (gross)","World"="Global")
 #  
 # ---- FIG.1/S1: VOLUME PRODUCTION/TRADE ----
 FigProd <- ggplot(data=subset(BioProd, variable=="BioProd"&(!REGION=="World")), mapping=aes(x=Year, y=value, fill=RegOrder)) +
