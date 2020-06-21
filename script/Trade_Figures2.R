@@ -801,8 +801,8 @@ SecurityFig <- ggplot() +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(text= element_text(size=7, face="plain")) +
   theme(legend.text=element_text(size=FSizeLeg), legend.title=element_text(size=FSizeLeg,face="bold")) +
-  ylab("Bioenergy fraction of TPES [-]") +
-  xlab("Bioenergy Import Fraction [-]") +
+  ylab("Fraction of TPES [-]") +
+  xlab("Trade Fraction [-]") +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
                      name="",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
@@ -811,14 +811,14 @@ SecurityFig <- ggplot() +
   scale_color_manual(values=c("black","blue2","brown2"),
                      name="",
                      breaks=c("2010","2050","2100"),
-                     labels=c("2010 (Fossil only)","2050","2100")
+                     labels=c("2010 \n(Fossil)","2050 \n(Bioenergy)","2100 \n(Bioenergy)")
   ) +
   facet_grid(RegOrder ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,RegOrder = region_label))  +
   theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
 SecurityFig
 
 SecurityFig2 <- ggplot() +  
-  geom_point(data=subset(Security1, !(SCENARIO=="R3-B-hi-full")&REGION=="World")
+  geom_point(data=subset(Security1, !(SCENARIO=="R3-B-hi-full")&(REGION=="World"|REGION=="EAsia"|REGION=="EU"|REGION=="USA"))
              , mapping=aes(x=value.x, y=value.y, color=Year, shape=ModelOrder), alpha=0.75) +
   # Limits
   coord_cartesian(ylim=c(0, 1), xlim=c(0, 1)) + 
@@ -829,9 +829,9 @@ SecurityFig2 <- ggplot() +
   theme(text= element_text(size=6, face="bold"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(text= element_text(size=7, face="plain")) +
-  theme(legend.title=element_blank(), legend.position="bottom", legend.text=element_text(size=FSizeLeg)) +
-  ylab("Bioenergy fraction of TPES [-]") +
-  xlab("Bioenergy Trade Fraction [-]") +
+  theme(legend.title=element_blank(), legend.position="right", legend.text=element_text(size=FSizeLeg)) +
+  ylab("Fraction of TPES [-]") +
+  xlab("Trade Fraction [-]") +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
                      name="",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
@@ -840,9 +840,9 @@ SecurityFig2 <- ggplot() +
   scale_color_manual(values=c("black","blue2","brown2"),
                      name="Year",
                      breaks=c("2010","2050","2100"),
-                     labels=c("2010 \n(Fossil only)","2050","2100")
+                     labels=c("2010 \n(Fossil)","2050 \n(Bioenergy)","2100 \n(Bioenergy)")
   ) +
-  facet_grid(. ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,RegOrder = region_label)) +
+  facet_grid(RegOrder ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,RegOrder = region_label)) +
   theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip)) 
 SecurityFig2
 
@@ -1176,7 +1176,7 @@ FigBiovsAgri
 # plot(legend)
 # dev.off()
 # 
-# png(file = "output/BioTrade/Fig3.png", width=6*ppi, height=3*ppi, res=ppi)
+# png(file = "output/BioTrade/Fig3.png", width=5*ppi, height=5*ppi, res=ppi)
 # plot(SecurityFig2)
 # dev.off()
 # 
