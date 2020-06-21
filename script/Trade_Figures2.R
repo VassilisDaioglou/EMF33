@@ -121,18 +121,17 @@ Ranges.med$MODEL <- "Median"
 BiomassTrade= rbind(BiomassTrade,Ranges.max,Ranges.min,Ranges.med)
 
 # Growth Rates
+  # Per model
+EneTradeGrMod = EneTrade
+EneTradeGrMod <- spread(EneTradeGrMod, Year, Global)
+colnames(EneTradeGrMod)[4:13] <- c("yr2010","yr2020","yr2030","yr2040","yr2050","yr2060","yr2070","yr2080","yr2090","yr2100")
+EneTradeGrMod= EneTradeGrMod %>% mutate(GR_2020to2050=(((yr2050/yr2020)^(1/(2050-2020)))-1)*100) # Total Global Exports
+EneTradeGrMod= EneTradeGrMod %>% mutate(GR_2020to2100=(((yr2100/yr2020)^(1/(2100-2020)))-1)*100) # Total Global Exports
+
+  # Based on model medians
 EneTradeGr = subset(EneTradeMed, Variable=="TradePrimBiomassVol")
 EneTradeGr <- spread(EneTradeGr,Year,x)
-names(EneTradeGr)[names(EneTradeGr)=="2010"] <- "yr2010"
-names(EneTradeGr)[names(EneTradeGr)=="2020"] <- "yr2020"
-names(EneTradeGr)[names(EneTradeGr)=="2030"] <- "yr2030"
-names(EneTradeGr)[names(EneTradeGr)=="2040"] <- "yr2040"
-names(EneTradeGr)[names(EneTradeGr)=="2050"] <- "yr2050"
-names(EneTradeGr)[names(EneTradeGr)=="2060"] <- "yr2060"
-names(EneTradeGr)[names(EneTradeGr)=="2070"] <- "yr2070"
-names(EneTradeGr)[names(EneTradeGr)=="2080"] <- "yr2080"
-names(EneTradeGr)[names(EneTradeGr)=="2090"] <- "yr2090"
-names(EneTradeGr)[names(EneTradeGr)=="2100"] <- "yr2100"
+colnames(EneTradeGr)[3:12] <- c("yr2010","yr2020","yr2030","yr2040","yr2050","yr2060","yr2070","yr2080","yr2090","yr2100")
 EneTradeGr= EneTradeGr %>% mutate(GR_2020to2050=(((yr2050/yr2020)^(1/(2050-2020)))-1)*100) # Total Global Exports
 EneTradeGr= EneTradeGr %>% mutate(GR_2020to2100=(((yr2100/yr2020)^(1/(2100-2020)))-1)*100) # Total Global Exports
 
