@@ -164,7 +164,7 @@ BioProd = subset(BioProd, !(REGION=="OECD90"|REGION=="LAM"|REGION=="ASIA"))
 BioProd = melt(BioProd, id.vars=c("MODEL","SCENARIO","Year","REGION"))
 BioProd$RegOrder = factor(BioProd$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","World")) 
 BioProd$ScenOrder = factor(BioProd$SCENARIO, levels=c('R3-BASE-0-full','R3-B-hi-full','R3-B-lo-full','R3-B-vlo-full'))
-BioProd=subset(BioProd, Year=="2020"|Year=="2040"|Year=="2060"|Year=="2080"|Year=="2100")
+BioProd=subset(BioProd, Year=="2020"|Year=="2040"|Year=="2050"|Year=="2060"|Year=="2080"|Year=="2100")
 BioProd=subset(BioProd, MODEL %in% BioTradCheck$MODEL)
 
 # Check proportion of models that agree on exporters/importers
@@ -686,7 +686,7 @@ FigTrad2
 # Map of Importers / Exporters / No Agreement
 l=0
 for(i in unique(ModelAgree$SCENARIO))
-{ for(j in c(2060,2100))
+{ for(j in c(2050,2100))
 {
   l=l+1
   ModelAgree.1=subset(ModelAgree, SCENARIO==i&Year==j)
@@ -741,19 +741,24 @@ legend <- ggplot() +
                        guide_legend(title="Portion of Global Trade (%)"))
 legend
 
-`MapTradFrac_R3-BASE-0-full_2060`
-`MapTradFrac_R3-B-hi-full_2060`
-`MapTradFrac_R3-B-lo-full_2060`
-`MapTradFrac_R3-B-vlo-full_2060`
-
-`MapTradFrac_R3-BASE-0-full_2100`
-`MapTradFrac_R3-B-hi-full_2100`
-`MapTradFrac_R3-B-lo-full_2100`
-`MapTradFrac_R3-B-vlo-full_2100`
+# `MapTradFrac_R3-BASE-0-full_2050`
+# `MapTradFrac_R3-B-hi-full_2050`
+# `MapTradFrac_R3-B-lo-full_2050`
+# `MapTradFrac_R3-B-vlo-full_2050`
+# 
+# `MapTradFrac_R3-BASE-0-full_2060`
+# `MapTradFrac_R3-B-hi-full_2060`
+# `MapTradFrac_R3-B-lo-full_2060`
+# `MapTradFrac_R3-B-vlo-full_2060`
+# 
+# `MapTradFrac_R3-BASE-0-full_2100`
+# `MapTradFrac_R3-B-hi-full_2100`
+# `MapTradFrac_R3-B-lo-full_2100`
+# `MapTradFrac_R3-B-vlo-full_2100`
 
 lay<-rbind(1,2)
 
-MapTradFracAll <- cowplot::ggdraw(grid.arrange(`MapTradFrac_R3-B-lo-full_2060`,
+MapTradFracAll <- cowplot::ggdraw(grid.arrange(`MapTradFrac_R3-B-lo-full_2050`,
                                    `MapTradFrac_R3-B-lo-full_2100`,
                                    layout_matrix=lay)) + 
                 theme(plot.background = element_rect(fill="white", color = NA))
