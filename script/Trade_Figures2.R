@@ -582,6 +582,12 @@ colnames(SecurityTest.Tuk)[6] <- 'p_adj'
 
 boxplot(SecurityTest.Tuk$p_adj~SecurityTest.Tuk$names)
 
+
+# ---- TRADE VALUES
+# Relevant only for IMAGE and POLES
+TradeValues = subset(Trade3, (MODEL=="IMAGE"|MODEL=="POLES EMF33") & (Year=="2030"|Year=="2050"))
+TradeValues = subset(TradeValues, select =c(MODEL,SCENARIO,Year,TradePrimBiomassVal))
+
 # ---- LABELS ----
 scen_labels <- c("Fossil"="Fossil (2010)",
                  "R3-BASE-0-full"="Baseline",
