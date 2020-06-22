@@ -322,6 +322,33 @@ SWDiversity1=subset(SWDiversity, SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-ful
 SWDiversity1$ScenOrder = factor(SWDiversity1$SCENARIO, levels=c('R3-BASE-0-full','R3-B-hi-full','R3-B-lo-full','R3-B-vlo-full'))
 SWDiversity1$Year <- factor(SWDiversity1$Year)
 
+  # Determine SW change with respect to baseline
+SWDiversity2 = SWDiversity1
+SWDiversity2$SCENARIO <- NULL
+SWDiversity2.Exp = subset(SWDiversity2, select = -c(SWIndex))
+SWDiversity2.Exp = spread(SWDiversity2.Exp, ScenOrder, NetExport)
+colnames(SWDiversity2.Exp)[3:6] <- c("base","hi","lo","vlo")
+SWDiversity2.Exp = SWDiversity2.Exp %>% mutate(Diff_hi_base = hi - base)
+SWDiversity2.Exp = SWDiversity2.Exp %>% mutate(Diff_lo_base = lo - base)
+SWDiversity2.Exp = SWDiversity2.Exp %>% mutate(Diff_vlo_base = vlo - base)
+SWDiversity2.Exp$VARIABLE <- "NetExport"
+
+SWDiversity2.SWI = subset(SWDiversity2, select = -c(NetExport))
+SWDiversity2.SWI = spread(SWDiversity2.SWI, ScenOrder, SWIndex)
+colnames(SWDiversity2.SWI)[3:6] <- c("base","hi","lo","vlo")
+SWDiversity2.SWI = SWDiversity2.SWI %>% mutate(Diff_hi_base = hi - base)
+SWDiversity2.SWI = SWDiversity2.SWI %>% mutate(Diff_lo_base = lo - base)
+SWDiversity2.SWI = SWDiversity2.SWI %>% mutate(Diff_vlo_base = vlo - base)
+SWDiversity2.SWI$VARIABLE <- "SWIndex"
+
+SWDiversity2 = rbind(SWDiversity2.Exp,SWDiversity2.SWI)
+rm(SWDiversity2.Exp,SWDiversity2.SWI)
+SWDiversity2 = subset(SWDiversity2, select = -c(base,hi,lo,vlo))
+SWDiversity2 <- melt(SWDiversity2, measure.vars=c("Diff_hi_base","Diff_lo_base","Diff_vlo_base"))
+SWDiversity2 = spread(SWDiversity2,VARIABLE,value)
+colnames(SWDiversity2)[3] <- "SCENARIO"
+SWDiversity2$ScenOrder = factor(SWDiversity2$SCENARIO, levels=c("Diff_hi_base","Diff_lo_base","Diff_vlo_base"))
+  
 # Relative biomass prices
 BioPrice.min <- aggregate(BioPrice$value, by=list(MODEL=BioPrice$MODEL, SCENARIO=BioPrice$SCENARIO, VARIABLE=BioPrice$VARIABLE, Year=BioPrice$Year), FUN=min, na.rm=TRUE)
 BioPrice.min = subset(BioPrice.min, x>0)
@@ -611,6 +638,10 @@ scen_labels <- c("Fossil"="Fossil (2010)",
 scen_labels2 <- c("R3-B-hi-full"=">2°C Scenario",
                   "R3-B-lo-full"="Approx. 2°C Scenario", 
                   "R3-B-vlo-full"="Approx. 1.5°C Scenario")
+
+scen_labels3 <- c("Diff_hi_base" = "Budget1600 - Baseline",
+                  "Diff_lo_base" = "Budget1000 - Baseline",
+                  "Diff_vlo_base" = "Budget400 - Baseline")
 var_labels <- c("Trade|Primary Energy|Biomass|Volume"="Biomass","Trade|Primary Energy|Coal|Volume"="Coal","Trade|Primary Energy|Gas|Volume"="Gas","Trade|Primary Energy|Oil|Volume"="Oil")
 model_labels <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM-NLU","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE","FARM 3.1"="FARM")
 model_labels2 <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM-NLU","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND\n-MAgPIE","FARM 3.1"="FARM")
@@ -876,6 +907,34 @@ SupplyDiversity <-ggplot() +
   facet_grid( ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,MODEL = model_labels)) +
   theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
 SupplyDiversity
+
+SupplyDiversityDiff <-ggplot() + 
+  geom_point(SWDiversity2, mapping=aes(x=SWIndex, y=NetExport, colour=Year, shape=MODEL ), alpha=0.75) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  # xlim(0,2) +
+  # Text
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(legend.title=element_blank(), legend.position="bottom") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(text= element_text(size=7, face="plain")) +
+  theme(legend.text=element_text(size=FSizeLeg)) +
+  ylab(expression(paste("Change in Global Trade,", EJ[Primary],"/yr",""))) +
+  xlab("Change in Diversity of Bioenergy Supply Regions (Shannon-Weiner)") +
+  scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
+                     name="",
+                     breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
+                     labels=c("AIM/CGE","COFFEE","GCAM","GRAPE-15","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE")
+  ) +
+  scale_color_manual(values=c("blue2","brown2"),
+                     name="Year",
+                     breaks=c("2050","2100"),
+                     labels=c("2050","2100")
+  ) +
+  facet_grid( ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels3, MODEL = model_labels)) +
+  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+SupplyDiversityDiff
+
 #
 # ---- FIG.S2: FOSSIL+BIO TRADE ----
 # Bio and Fossil energy trade
@@ -1182,7 +1241,7 @@ FigBiovsAgri
 # dev.off()
 # 
 # png(file = "output/BioTrade/Fig4.png", width=6*ppi, height=3*ppi, res=ppi)
-# plot(SupplyDiversity)
+# plot(SupplyDiversityDiff)
 # dev.off()
 # 
 # 
