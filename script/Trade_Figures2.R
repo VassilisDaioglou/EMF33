@@ -406,6 +406,7 @@ SecurityCompare$ScenOrder = factor(SecurityCompare$ScenID, levels=c('Fossil','Ba
 SecurityCompare=subset(SecurityCompare, Indicator<2.01)
 SecurityCompare$RegOrder = factor(SecurityCompare$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","World")) 
 SecurityCompare$ModelOrder = factor(SecurityCompare$MODEL, levels=c("Fossil","AIM/CGE","BET","COFFEE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"))
+SecurityCompare = unique(SecurityCompare) # Removes some duplicate observations
 
 Drivers=subset(Trade2, REGION=="Brazil"|REGION=="RLAM"|REGION=="USA"|REGION=="EU"|REGION=="ROECD90"|REGION=="MAF"|REGION=="EAsia"|REGION=="RAsia"|REGION=="REF")
 Drivers = subset(Drivers, SCENARIO=="R3-B-hi-full"|
@@ -1216,6 +1217,7 @@ FigBiovsAgri
 # write.xlsx(DiversityTest.TtestDF, file="output/BioTrade/Statistics.xlsx", sheetName="Diversity of Supply", row.names=TRUE, showNA = TRUE)
 # write.xlsx(DriversTech.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Technology)", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(DriversBudg.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(SecurityCompare, file="output/BioTrade/Statistics.xlsx", sheetName="Security Compound Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(SecurityTest.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Security Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(EneTradeMed, file="output/BioTrade/Statistics.xlsx", sheetName="Medians", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(EneTradeGrMod, file="output/BioTrade/Statistics.xlsx", sheetName="Growth Rates (per model)", append=TRUE, row.names=FALSE, showNA = TRUE)
