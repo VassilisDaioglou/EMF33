@@ -645,11 +645,11 @@ scen_labels3 <- c("Diff_hi_base" = "Budget1600 - Baseline",
 var_labels <- c("Trade|Primary Energy|Biomass|Volume"="Biomass","Trade|Primary Energy|Coal|Volume"="Coal","Trade|Primary Energy|Gas|Volume"="Gas","Trade|Primary Energy|Oil|Volume"="Oil")
 model_labels <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM-NLU","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-MAgPIE","FARM 3.1"="FARM")
 model_labels2 <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21","MESSAGE-GLOBIOM"="MESSAGE","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM-NLU","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND\n-MAgPIE","FARM 3.1"="FARM")
-region_label <- c("EU"="EU","USA"="USA","ROECD90"="Rest OECD","EAsia"="East Asia","RAsia"="Rest Asia","Brazil"="Brazil","RLAM"="Rest Lat.Am.","REF"="Former USSR","MAF"="M.East & Africa","NetTrade"="Global (gross)","Global"="Global (gross)","World"="Global")
-region_label2 <- c("EU"="EU","USA"="USA","ROECD90"="Rest of OECD","EAsia"="East Asia","RAsia"="Rest of Asia","Brazil"="Brazil","RLAM"="Rest of\n Lat.Am.","REF"="Former\n USSR","MAF"="M.East\n & Africa","NetTrade"="Global (gross)","Global"="Global (gross)","World"="Global")
+region_label <- c("EU"="EU","USA"="USA","ROECD90"="Rest of OECD","EAsia"="East Asia","RAsia"="Rest of Asia","Brazil"="Brazil","RLAM"="Rest of Lat.Am.","REF"="Former USSR","MAF"="M.East & Africa","NetTrade"="Global (gross)","Global"="Global (gross)","World"="Global")
+region_label2 <- c("EU"="EU","USA"="USA","ROECD90"="Rest of \nOECD","EAsia"="East Asia","RAsia"="Rest of Asia","Brazil"="Brazil","RLAM"="Rest of\n Lat. Am.","REF"="Former\n USSR","MAF"="M.East\n & Africa","NetTrade"="Global (gross)","Global"="Global (gross)","World"="Global")
 #  
 # ---- FIG.1/S1: VOLUME PRODUCTION/TRADE ----
-FigProd <- ggplot(data=subset(BioProd, variable=="BioProd"&(!REGION=="World")), mapping=aes(x=Year, y=value, fill=RegOrder)) +
+FigProd <- ggplot(data=subset(BioProd, variable=="BioProd"&(!REGION=="World") &(!Year==2050)), mapping=aes(x=Year, y=value, fill=RegOrder)) +
   geom_bar(stat="identity") +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   ggtitle("A: Regional Primary Bioenergy Production") + theme(plot.title = element_text(lineheight=20, face="bold")) +
@@ -662,14 +662,14 @@ FigProd <- ggplot(data=subset(BioProd, variable=="BioProd"&(!REGION=="World")), 
   scale_fill_manual(values=c("forestgreen","greenyellow","navy","dodgerblue","cadetblue1","brown","blueviolet","pink","red"),
                       name ="Regions",
                       breaks=c("Brazil","RLAM","USA","EU","ROECD90","MAF","EAsia","RAsia","REF"),
-                      labels=c("Brazil","Rest Lat.Am.","USA","EU","Rest OECD","M. East & Africa","East Asia","Rest Asia","Former USSR"),
+                      labels=c("Brazil","Rest of Lat.Am.","USA","EU","Rest of OECD","M. East & Africa","East Asia","Rest of Asia","Former USSR"),
                       guide=FALSE
   ) +
   facet_grid(ScenOrder ~ MODEL, labeller=labeller(MODEL=model_labels2, ScenOrder=scen_labels)) +
   theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
 FigProd
 
-FigTrad <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(!REGION=="World")), mapping=aes(x=Year, y=value, fill=RegOrder)) +
+FigTrad <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(!REGION=="World")&(!Year==2050)), mapping=aes(x=Year, y=value, fill=RegOrder)) +
   geom_bar(stat="identity") +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   ggtitle("B: Regional Primary Bioenergy Net Trade") + theme(plot.title = element_text(lineheight=20, face="bold")) +
@@ -683,7 +683,7 @@ FigTrad <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(!REGION==
   scale_fill_manual(values=c("forestgreen","greenyellow","navy","dodgerblue","cadetblue1","brown","blueviolet","pink","red"),
                     name ="",
                     breaks=c("Brazil","RLAM","USA","EU","ROECD90","MAF","EAsia","RAsia","REF"),
-                    labels=c("Brazil","Rest Lat.Am.","USA","EU","Rest OECD","M. East & Africa","East Asia","Rest Asia","Former USSR")
+                    labels=c("Brazil","Rest of Lat.Am.","USA","EU","Rest of OECD","M. East & Africa","East Asia","Rest of Asia","Former USSR")
   ) +
   facet_grid(ScenOrder ~ MODEL, labeller=labeller(MODEL=model_labels2, ScenOrder=scen_labels)) +
   theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
@@ -692,7 +692,7 @@ FigTrad
 lay<-rbind(1,1,1,2,2,2,2) 
 FigTradeFull <- grid.arrange(FigProd,FigTrad, layout_matrix=lay)
 
-FigTrad2 <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full")&!REGION=="World")
+FigTrad2 <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full")&!REGION=="World"&(!Year==2050))
                    , mapping=aes(x=Year, y=value, fill=RegOrder)) +
   geom_bar(stat="identity") +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
@@ -706,7 +706,7 @@ FigTrad2 <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(SCENARIO
   scale_fill_manual(values=c("forestgreen","greenyellow","navy","dodgerblue","cadetblue1","brown","blueviolet","pink","red"),
                     name ="",
                     breaks=c("Brazil","RLAM","USA","EU","ROECD90","MAF","EAsia","RAsia","REF"),
-                    labels=c("Brazil","Rest Lat.Am.","USA","EU","Rest OECD","M. East & Africa","East Asia","Rest Asia","Former USSR")
+                    labels=c("Brazil","Rest of Lat.Am.","USA","EU","Rest of OECD","M. East & Africa","East Asia","Rest of Asia","Former USSR")
   ) +
   facet_grid(ScenOrder ~ MODEL, labeller=labeller(MODEL=model_labels2, ScenOrder=scen_labels)) +
   theme(strip.text.x = element_text(size = 6.5), strip.text.y = element_text(size = FSizeStrip))
@@ -1272,7 +1272,7 @@ FigBiovsAgri
 # png(file = "output/BioTrade/FigS7.png", width = 5*ppi, height = 9*ppi, units = "px", res = ppi)
 # plot(FigBiovsAgri)
 # dev.off()
-#
+
 # write.xlsx(DiversityTest.TtestDF, file="output/BioTrade/Statistics.xlsx", sheetName="Diversity of Supply", row.names=TRUE, showNA = TRUE)
 # write.xlsx(DriversTech.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Technology)", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(DriversBudg.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
