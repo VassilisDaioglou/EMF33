@@ -881,14 +881,13 @@ SecurityFig2
 #
 # ---- FIG.4: S-W DIVERSITY ----
 SupplyDiversity <-ggplot() + 
-  #geom_point(data=SWDiversity1, mapping=aes(x=SWIndex, y=NetExport, colour=Year, shape=MODEL ),position = position_jitter(w = 0.05, h = 0), alpha=0.75) +
   geom_point(data=subset(SWDiversity1, !SCENARIO=="R3-B-hi-full"), mapping=aes(x=SWIndex, y=NetExport, colour=Year, shape=MODEL ), alpha=0.75) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   xlim(0,2) +
   # Text
   theme_bw() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
-  theme(legend.title=element_blank(), legend.position="bottom") +
+  theme(legend.title=element_blank(), legend.position="none") +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(text= element_text(size=7, face="plain")) +
   theme(legend.text=element_text(size=FSizeLeg)) +
@@ -909,8 +908,9 @@ SupplyDiversity <-ggplot() +
 SupplyDiversity
 
 SupplyDiversityDiff <-ggplot() + 
-  geom_point(SWDiversity2, mapping=aes(x=SWIndex, y=NetExport, colour=Year, shape=MODEL ), alpha=0.75) +
+  geom_point(subset(SWDiversity2, !ScenOrder=="Diff_hi_base"), mapping=aes(x=SWIndex, y=NetExport, colour=Year, shape=MODEL ), alpha=0.75) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=0,size = 0.1, colour='black') +
   # xlim(0,2) +
   # Text
   theme_bw() +
@@ -934,6 +934,16 @@ SupplyDiversityDiff <-ggplot() +
   facet_grid( ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels3, MODEL = model_labels)) +
   theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
 SupplyDiversityDiff
+
+lay <- rbind(c(1,1,1,1,1,1,1),
+              c(1,1,1,1,1,1,1),
+             c(1,1,1,1,1,1,1),
+             c(NA,2,2,2,2,2,NA),
+             c(NA,2,2,2,2,2,NA),
+             c(NA,2,2,2,2,2,NA),
+              c(NA,2,2,2,2,2,NA))
+SupplyDiversityFinal <- grid.arrange(SupplyDiversity,SupplyDiversityDiff, layout_matrix=lay)
+
 
 #
 # ---- FIG.S2: FOSSIL+BIO TRADE ----
@@ -1240,8 +1250,8 @@ FigBiovsAgri
 # plot(SecurityFig2)
 # dev.off()
 # 
-# png(file = "output/BioTrade/Fig4.png", width=6*ppi, height=3*ppi, res=ppi)
-# plot(SupplyDiversityDiff)
+# png(file = "output/BioTrade/Fig4.png", width=6*ppi, height=6*ppi, res=ppi)
+# plot(SupplyDiversityFinal)
 # dev.off()
 # 
 # 
