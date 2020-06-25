@@ -1235,6 +1235,47 @@ FigBiovsAgri <-ggplot(data=subset(BiovsAgri, SCENARIO=="R3-B-lo-full"), aes(x=Ye
 FigBiovsAgri
 
 #
+# ---- Supplementary Data ----
+SupData = Trade2
+SupData = SupData %>% mutate(SupData=PrimBiomass+TradePrimBiomassVol)
+SupData$SupData[SupData$SupData<0] <-0
+SupData = subset(SupData, SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full"|SCENARIO=="R3-BASE-0-full"|
+                   SCENARIO=="R3-B-hi-nobeccs"|SCENARIO=="R3-B-hi-nofuel"|SCENARIO=="R3-B-hi-none")
+SupData = subset(SupData, !(REGION=="OECD90"|REGION=="LAM"|REGION=="ASIA"))
+SupData = melt(SupData, id.vars=c("MODEL","SCENARIO","Year","REGION"))
+SupData=subset(SupData, Year=="2020"|Year=="2040"|Year=="2050"|Year=="2060"|Year=="2080"|Year=="2100")
+SupData = spread(SupData, Year, value)
+SupData$REGION = factor(SupData$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","World")) 
+SupData$SCENARIO = factor(SupData$SCENARIO, levels=c('R3-BASE-0-full','R3-B-hi-full','R3-B-lo-full','R3-B-vlo-full','R3-B-hi-nobeccs','R3-B-hi-nofuel','R3-B-hi-none'))
+ActVars <- c('PrimBiomass',"TradePrimBiomassVal","TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol")
+SupData = subset(SupData, variable %in% ActVars)
+SupData = subset(SupData, !(variable=="TradePrimBiomassVal"&
+                              (MODEL=="AIM/CGE"|MODEL=="BET"|MODEL=="COFFEE"|MODEL=="DNE21+ v.14"|MODEL=="GCAM_EMF33"|
+                                 MODEL=="GRAPE-15"|MODEL=="IMACLIM-NLU"|MODEL=="REMIND-MAGPIE")))
+
+ScenDF <- data.frame(ORIGINAL = c('R3-BASE-0-full','R3-B-hi-full','R3-B-hi-nofuel','R3-B-hi-nobeccs','R3-B-hi-none','R3-B-lo-full','R3-B-vlo-full'),
+                     NEW = c('Baseline','Budget1600','Budget1600-Nofuel','Budget1600-NoBECCS','Budget1600-None','Budget1000','Budget400'))
+RegDF <- data.frame(ORIGINAL = c('EU','USA','ROECD90','EAsia','RAsia','Brazil','RLAM','REF','MAF','NetTrade','Global','World'),
+                    NEW = c("EU","USA","Rest of OECD","East Asia","Rest of Asia","Brazil","Rest of Lat.Am.","Former USSR","M.East & Africa","Global (gross)","Global (gross)","Global"))
+ModDF <- data.frame(ORIGINAL = c("AIM/CGE","BET","COFFEE","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
+                    NEW = c("AIM/CGE","BET","COFFEE","DNE21","GCAM","GRAPE","IMACLIM-NLU","IMAGE","POLES","REMIND-MAgPIE"))
+VarDF <- data.frame(ORIGINAL = c("PrimBiomass","TradePrimBiomassVal","TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol"),
+                    NEW = c("Primary Biomass Consumption","Primary Biomass Net Trade (value)","Primary Biomass Net Trade (volume)",
+                            "Primary Coal Net Trade (volume)","Primary Nat. Gas Net Trade (volume)","Primary Oil Net Trade (volume)"))
+UnitDF <- data.frame(ORIGINAL = c("Primary Biomass Consumption","Primary Biomass Net Trade (value)","Primary Biomass Net Trade (volume)","Primary Coal Net Trade (volume)","Primary Nat. Gas Net Trade (volume)","Primary Oil Net Trade (volume)"),
+                     NEW = c("EJ/yr","Bill. $/yr","EJ/yr","EJ/yr","EJ/yr","EJ/yr"))
+
+SupData$ScenName <- ScenDF[match(SupData$SCENARIO, ScenDF$ORIGINAL),"NEW"]
+SupData$RegName <- RegDF[match(SupData$REGION, RegDF$ORIGINAL),"NEW"]
+SupData$ModName <- ModDF[match(SupData$MODEL, ModDF$ORIGINAL),"NEW"]
+SupData$VarName <- VarDF[match(SupData$variable, VarDF$ORIGINAL),"NEW"]
+SupData$Unit <- UnitDF[match(SupData$VarName, UnitDF$ORIGINAL),"NEW"]
+
+SupData = subset(SupData, selec=-c(MODEL,SCENARIO,REGION,variable))
+SupData = SupData[,c(9,7,8,10,11,1:6)]
+colnames(SupData)[1:5] <- c("Model","Scenario","Region","Variable","Unit")
+
+#
 # # ---- OUTPUTS FOR PAPER----
 # png(file = "output/BioTrade/Fig1.png", width = 6.5*ppi, height = 4*ppi, units = "px", res = ppi)
 # plot(FigTrad2)
@@ -1285,6 +1326,8 @@ FigBiovsAgri
 # plot(FigBiovsAgri)
 # dev.off()
 # 
+# write.xlsx(SupData, file="output/BioTrade/SupplementaryData.xlsx", sheetName="Supplementary Data", row.names=FALSE, showNA = TRUE)
+#
 # write.xlsx(DiversityTest.TtestDF, file="output/BioTrade/Statistics.xlsx", sheetName="Diversity of Supply", row.names=TRUE, showNA = TRUE)
 # write.xlsx(DriversTech.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Technology)", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(DriversBudg.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
