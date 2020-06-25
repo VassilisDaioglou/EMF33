@@ -23,10 +23,13 @@ library(scales)
 # setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - Documents/EMF33/Scenario results/R-Scripts")
 setwd("C:/Users/Asus/Documents/GitHub/EMF33")
 
-# ---- READ DATA FILE ----
+# ---- CONSTANTS ----
 ppi <- 600
 FSizeStrip = 6.5
 FSizeLeg = 6.5
+ActiveModel = c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE")
+
+# ---- READ DATA FILE ----
 NewReg=read.csv("data/Trade/TradeRegData.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 BioPrice=read.csv("data/Trade/TradeRegPrice.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 # Delete extra column created when data in imported
@@ -47,7 +50,7 @@ rm(NewReg.World)
 # Spread Data to creat columns for each of the variables
 Trade = NewReg
 Trade1=spread(Trade, variable, value, drop=TRUE)
-
+Trade1 = subset(Trade1, MODEL %in% ActiveModel)
 # ---- PROCESS DATA ----
 # Identify biomass and fossil exporters
 Trade1$BioExporter = ifelse(Trade1$REGION=="World",0,
@@ -666,7 +669,7 @@ FigProd <- ggplot(data=subset(BioProd, variable=="BioProd"&(!REGION=="World") &(
                       guide=FALSE
   ) +
   facet_grid(ScenOrder ~ MODEL, labeller=labeller(MODEL=model_labels2, ScenOrder=scen_labels)) +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 FigProd
 
 FigTrad <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(!REGION=="World")&(!Year==2050)), mapping=aes(x=Year, y=value, fill=RegOrder)) +
@@ -677,7 +680,7 @@ FigTrad <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(!REGION==
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, vjust=0.5), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.title=element_blank(), legend.position="bottom", legend.text=element_text(size=FSizeLeg)) +
-  ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
+  ylab(expression(paste("Regional Net Trade,", EJ[Primary],"/yr",""))) +
   xlab("") +
   scale_x_continuous(breaks=seq(2020, 2100, 20)) +
   scale_fill_manual(values=c("forestgreen","greenyellow","navy","dodgerblue","cadetblue1","brown","blueviolet","pink","red"),
@@ -686,7 +689,7 @@ FigTrad <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(!REGION==
                     labels=c("Brazil","Rest of Lat.Am.","USA","EU","Rest of OECD","M. East & Africa","East Asia","Rest of Asia","Former USSR")
   ) +
   facet_grid(ScenOrder ~ MODEL, labeller=labeller(MODEL=model_labels2, ScenOrder=scen_labels)) +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 FigTrad
 
 lay<-rbind(1,1,1,2,2,2,2) 
@@ -700,7 +703,7 @@ FigTrad2 <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(SCENARIO
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, vjust=0.5), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.title=element_blank(), legend.position="bottom", legend.text=element_text(size=FSizeLeg)) +
-  ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
+  ylab(expression(paste("Regional Net Trade,", EJ[Primary],"/yr",""))) +
   xlab("") +
   scale_x_continuous(breaks=seq(2020, 2100, 20)) +
   scale_fill_manual(values=c("forestgreen","greenyellow","navy","dodgerblue","cadetblue1","brown","blueviolet","pink","red"),
@@ -709,7 +712,7 @@ FigTrad2 <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(SCENARIO
                     labels=c("Brazil","Rest of Lat.Am.","USA","EU","Rest of OECD","M. East & Africa","East Asia","Rest of Asia","Former USSR")
   ) +
   facet_grid(ScenOrder ~ MODEL, labeller=labeller(MODEL=model_labels2, ScenOrder=scen_labels)) +
-  theme(strip.text.x = element_text(size = 6.5), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 FigTrad2
 #
 # ---- FIG.2: MAP ----
@@ -818,7 +821,7 @@ MapImpExp <- ggplot() +
 MapImpExp
 
 #
-# ---- FIG.3: SECURITY ----
+# ---- FIG.3/S5: SECURITY ----
 Security1=subset(Security1, MODEL %in% BioTradCheck$MODEL)
 SecurityFig <- ggplot() +  
   geom_point(data=subset(Security1, !(SCENARIO=="R3-B-hi-full"|REGION=="World"))
@@ -834,7 +837,7 @@ SecurityFig <- ggplot() +
   theme(text= element_text(size=7, face="plain")) +
   theme(legend.text=element_text(size=FSizeLeg), legend.title=element_text(size=FSizeLeg,face="bold")) +
   ylab("Fraction of TPES [-]") +
-  xlab("Trade Fraction [-]") +
+  xlab("Net Trade Fraction [-]") +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
                      name="",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
@@ -846,7 +849,7 @@ SecurityFig <- ggplot() +
                      labels=c("2010 \n(Fossil)","2050 \n(Bioenergy)","2100 \n(Bioenergy)")
   ) +
   facet_grid(RegOrder ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,RegOrder = region_label))  +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 SecurityFig
 
 SecurityFig2 <- ggplot() +  
@@ -863,7 +866,7 @@ SecurityFig2 <- ggplot() +
   theme(text= element_text(size=7, face="plain")) +
   theme(legend.title=element_blank(), legend.position="right", legend.text=element_text(size=FSizeLeg)) +
   ylab("Fraction of TPES [-]") +
-  xlab("Trade Fraction [-]") +
+  xlab("Net Trade Fraction [-]") +
   scale_shape_manual(values=c(19,12,1,2,3,4,6,8,9),
                      name="",
                      breaks=c("Fossil","AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
@@ -875,7 +878,7 @@ SecurityFig2 <- ggplot() +
                      labels=c("2010 \n(Fossil)","2050 \n(Bioenergy)","2100 \n(Bioenergy)")
   ) +
   facet_grid(RegOrder ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,RegOrder = region_label)) +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip)) 
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold")) 
 SecurityFig2
 
 #
@@ -904,7 +907,7 @@ SupplyDiversity <-ggplot() +
                      labels=c("2050","2100")
   ) +
   facet_grid( ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels,MODEL = model_labels)) +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 SupplyDiversity
 
 SupplyDiversityDiff <-ggplot() + 
@@ -932,7 +935,7 @@ SupplyDiversityDiff <-ggplot() +
                      labels=c("2050","2100")
   ) +
   facet_grid( ~ ScenOrder, labeller=labeller(ScenOrder = scen_labels3, MODEL = model_labels)) +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 SupplyDiversityDiff
 
 lay <- rbind(c(1,1,1,1,1,1,1),
@@ -952,7 +955,6 @@ EneTradeAll = subset(Trade2, select=c(MODEL,SCENARIO,Year,REGION,TradePrimBiomas
 EneTradeAll = subset(EneTradeAll, SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full"|SCENARIO=="R3-BASE-0-full")
 EneTradeAll = subset(EneTradeAll, !(REGION=="OECD90"|REGION=="LAM"|REGION=="ASIA"))
 EneTradeAll = melt(EneTradeAll, measure.vars = c("TradePrimBiomassVol","TradePrimCoalVol","TradePrimGasVol","TradePrimOilVol","TradeSecLiquidsBiomassVol"))
-EneTradeAll = subset(EneTradeAll, MODEL=="AIM/CGE"|MODEL=="COFFEE"|MODEL=="GCAM_EMF33"|MODEL=="GRAPE-15"|MODEL=="IMACLIM-NLU"|MODEL=="IMAGE"|MODEL=="POLES EMF33"|MODEL=="REMIND-MAGPIE") 
 EneTradeAll$RegOrder = factor(EneTradeAll$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","World")) 
 
 EneTradeAll.Hi = subset(EneTradeAll, SCENARIO=="R3-B-hi-full"&!(variable=="TradeSecLiquidsBiomassVol"))
@@ -969,7 +971,7 @@ FFandBioHi <- ggplot(data=EneTradeAll.Hi, mapping=aes(x=Year, y=value, fill=vari
   theme_bw() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
+  ylab(expression(paste("Regional Net Trade,", EJ[Primary],"/yr",""))) +
   theme(legend.text=element_text(size=FSizeLeg)) +
   xlab("") +
   xlim(2010,2100) +
@@ -979,7 +981,7 @@ FFandBioHi <- ggplot(data=EneTradeAll.Hi, mapping=aes(x=Year, y=value, fill=vari
                     labels=c("Bioenergy","Coal","Naturel Gas","Oil")
   ) +
   facet_grid(MODEL ~ RegOrder, labeller=labeller(MODEL=model_labels, RegOrder=region_label2), scales="free_y") +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 FFandBioHi
 
 FFandBioLo <- ggplot(data=EneTradeAll.Lo, mapping=aes(x=Year, y=value, fill=variable)) +
@@ -990,7 +992,7 @@ FFandBioLo <- ggplot(data=EneTradeAll.Lo, mapping=aes(x=Year, y=value, fill=vari
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.text=element_text(size=FSizeLeg)) +
-  ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
+  ylab(expression(paste("Regional Net Trade,", EJ[Primary],"/yr",""))) +
   xlab("") +
   xlim(2010,2100) +
   scale_fill_manual(values=c("forestgreen","Black","grey36","grey","red"),
@@ -999,7 +1001,7 @@ FFandBioLo <- ggplot(data=EneTradeAll.Lo, mapping=aes(x=Year, y=value, fill=vari
                     labels=c("Bioenergy","Coal","Naturel Gas","Oil")
   ) +
   facet_grid(MODEL ~ RegOrder, labeller=labeller(MODEL=model_labels, RegOrder=region_label2), scales="free_y") +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 FFandBioLo
 
 LiqTradeLo <- ggplot(data=LiqTrade.Lo, mapping=aes(x=Year, y=value, fill=variable)) +
@@ -1010,7 +1012,7 @@ LiqTradeLo <- ggplot(data=LiqTrade.Lo, mapping=aes(x=Year, y=value, fill=variabl
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.text=element_text(size=FSizeLeg)) +
-  ylab(expression(paste("Regional Trade,", EJ[Primary],"/yr",""))) +
+  ylab(expression(paste("Regional Net Trade,", EJ[Primary],"/yr",""))) +
   xlab("") +
   xlim(2010,2100) +
   scale_fill_manual(values=c("grey","forestgreen","red"),
@@ -1019,7 +1021,7 @@ LiqTradeLo <- ggplot(data=LiqTrade.Lo, mapping=aes(x=Year, y=value, fill=variabl
                     labels=c("Bioliquids","Oil")
   ) +
   facet_grid(MODEL ~ RegOrder, labeller=labeller(MODEL=model_labels, RegOrder=region_label2), scales="free_y") +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 LiqTradeLo
 
 #
@@ -1040,7 +1042,7 @@ ExportFrac <- ggplot() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.text=element_text(size=FSizeLeg)) +
-  ylab("Bioenergy Trade Fraction [-]") +
+  ylab("Bioenergy Net Trade Fraction [-]") +
   xlab("") + 
   scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
                      name="",
@@ -1050,10 +1052,10 @@ ExportFrac <- ggplot() +
   scale_color_manual(values=c("forestgreen","magenta"),
                      name="",
                      breaks=c("BioExpFrac","BioImpFrac"),
-                     labels=c("Dependence on Exports","Dependence on Imports")
+                     labels=c("Dependence on \nNet Exports","Dependence on \nNet Imports")
   )+
   facet_grid(RegOrder ~ScenOrder , labeller=labeller(RegOrder = region_label, ScenOrder = scen_labels)) +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 ExportFrac
 #
 # ---- FIG.S4: TRADE vs. BUDGET ----
@@ -1094,11 +1096,11 @@ TradeComparePointGlobal <- ggplot() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.text=element_text(size=FSizeLeg)) +
-  ylab(expression(paste("Cumulative Bioenergy Trade ", EJ[Primary]," (2010-2100)",""))) +
+  ylab(expression(paste("Cumulative Bioenergy Net Trade ", EJ[Primary]," (2010-2100)",""))) +
   xlab("") +
   theme(legend.position="bottom") +
   facet_wrap(~ModelOrder, nrow=2, labeller=labeller(RegOrder = region_label, ModelOrder = model_labels)) +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 TradeComparePointGlobal
 
 TradeComparePoint <- ggplot() +
@@ -1116,7 +1118,7 @@ TradeComparePoint <- ggplot() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.text=element_text(size=FSizeLeg)) +
-  ylab(expression(paste("Cumulative BioenergyTrade", EJ[Primary],"/yr (2010-2100)",""))) +
+  ylab(expression(paste("Cumulative Bioenergy Net Trade", EJ[Primary],"/yr (2010-2100)",""))) +
   xlab("") +
   scale_shape_manual(values=c(12,1,2,3,4,6,8,10,0,0),
                      name="",
@@ -1132,7 +1134,7 @@ TradeComparePoint <- ggplot() +
   scale_fill_manual(values="red",name="",breaks="NetTrade",labels="Global",guide=FALSE) +
   theme(legend.position="bottom") +
   facet_wrap(~RegOrder, nrow=2, labeller=labeller(RegOrder = region_label), scale="free_y") +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 TradeComparePoint
 
 TradeCompareBox <- ggplot(Drivers, aes(x=ScenOrder, y=CumNetTrade, fill=ScenOrder)) +
@@ -1142,7 +1144,7 @@ TradeCompareBox <- ggplot(Drivers, aes(x=ScenOrder, y=CumNetTrade, fill=ScenOrde
   theme(text= element_text(size=7, face="plain"), axis.text.x = element_text(angle=90, size=7), axis.text.y = element_text(size=7)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.text=element_text(size=FSizeLeg)) +
-  ylab(expression(paste("Cumulative BioenergyTrade", EJ[Primary],"/yr (2010-2100)",""))) +
+  ylab(expression(paste("Cumulative Bioenergy Net Trade", EJ[Primary],"/yr (2010-2100)",""))) +
   xlab("") +
   scale_fill_manual(values=c("green",
                              "blue",
@@ -1165,7 +1167,7 @@ TradeCompareBox <- ggplot(Drivers, aes(x=ScenOrder, y=CumNetTrade, fill=ScenOrde
                              "Vlo")
   ) +
   facet_wrap(~RegOrder,nrow=2, labeller=labeller(RegOrder = region_label)) +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 TradeCompareBox
 
 # ---- FIG.S6: SECURITY ACROSS BUDGETS ----
@@ -1198,7 +1200,7 @@ SecurityCompareFig <-ggplot() +
                      guide=FALSE
   ) +
   facet_grid(RegOrder~Year, labeller=labeller(RegOrder = region_label2, ScenOrder= scen_labels)) +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 SecurityCompareFig
 #
 # ---- FIG.S7: BIO TRADE VS. AGRI PROD ----
@@ -1229,7 +1231,7 @@ FigBiovsAgri <-ggplot(data=subset(BiovsAgri, SCENARIO=="R3-B-lo-full"), aes(x=Ye
                         labels=c("Food","Energy Crops")
   ) +
   facet_grid(RegOrder ~ MODEL, labeller=labeller(MODEL = model_labels, RegOrder = region_label), scales="free_y") +
-  theme(strip.text.x = element_text(size = FSizeStrip), strip.text.y = element_text(size = FSizeStrip))
+  theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold"))
 FigBiovsAgri
 
 #
@@ -1282,7 +1284,7 @@ FigBiovsAgri
 # png(file = "output/BioTrade/FigS7.png", width = 5*ppi, height = 9*ppi, units = "px", res = ppi)
 # plot(FigBiovsAgri)
 # dev.off()
-
+# 
 # write.xlsx(DiversityTest.TtestDF, file="output/BioTrade/Statistics.xlsx", sheetName="Diversity of Supply", row.names=TRUE, showNA = TRUE)
 # write.xlsx(DriversTech.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Technology)", append=TRUE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(DriversBudg.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
