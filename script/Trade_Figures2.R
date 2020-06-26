@@ -1235,7 +1235,7 @@ FigBiovsAgri <-ggplot(data=subset(BiovsAgri, SCENARIO=="R3-B-lo-full"), aes(x=Ye
 FigBiovsAgri
 
 #
-# ---- Supplementary Data ----
+# ---- SUPPLEMENTARY DATA ----
 SupData = Trade2
 SupData = SupData %>% mutate(SupData=PrimBiomass+TradePrimBiomassVol)
 SupData$SupData[SupData$SupData<0] <-0
@@ -1243,7 +1243,7 @@ SupData = subset(SupData, SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCEN
                    SCENARIO=="R3-B-hi-nobeccs"|SCENARIO=="R3-B-hi-nofuel"|SCENARIO=="R3-B-hi-none")
 SupData = subset(SupData, !(REGION=="OECD90"|REGION=="LAM"|REGION=="ASIA"))
 SupData = melt(SupData, id.vars=c("MODEL","SCENARIO","Year","REGION"))
-SupData=subset(SupData, Year=="2020"|Year=="2040"|Year=="2050"|Year=="2060"|Year=="2080"|Year=="2100")
+SupData=subset(SupData, !Year=="2010")
 SupData = spread(SupData, Year, value)
 SupData$REGION = factor(SupData$REGION, levels=c('Brazil','RLAM','USA','EU','ROECD90',"MAF","EAsia","RAsia","REF","World")) 
 SupData$SCENARIO = factor(SupData$SCENARIO, levels=c('R3-BASE-0-full','R3-B-hi-full','R3-B-lo-full','R3-B-vlo-full','R3-B-hi-nobeccs','R3-B-hi-nofuel','R3-B-hi-none'))
@@ -1272,7 +1272,7 @@ SupData$VarName <- VarDF[match(SupData$variable, VarDF$ORIGINAL),"NEW"]
 SupData$Unit <- UnitDF[match(SupData$VarName, UnitDF$ORIGINAL),"NEW"]
 
 SupData = subset(SupData, selec=-c(MODEL,SCENARIO,REGION,variable))
-SupData = SupData[,c(9,7,8,10,11,1:6)]
+SupData = SupData[,c(12,10,11,13,14,1:9)]
 colnames(SupData)[1:5] <- c("Model","Scenario","Region","Variable","Unit")
 
 #
