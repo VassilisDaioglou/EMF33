@@ -6,7 +6,6 @@
 rm(list=ls()) 
 
 # Load Libraries
-#library(reshape);
 library(reshape2);
 library(ggplot2);
 library(plyr);
@@ -16,18 +15,18 @@ library(tidyr)
 library(xlsx)
 
 # set directory path for csv file
-# setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - documents/EMF33/Scenario results/R-Scripts/")
 setwd("C:/Users/Asus/Documents/GitHub/EMF33")
 
 # ---- READ DATA ----
 DATA=read.csv("data/emf33demr3r_compare_20180219-164947.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 DATA=melt(DATA, id.vars=c("MODEL","SCENARIO","REGION","VARIABLE","UNIT"), variable_name="Year", value.name="value", na.rm=FALSE)
 colnames(DATA)[6]<-"Year"
-#DATA = melt(DATA, id.vars=c("MODEL","SCENARIO","REGION","VARIABLE","UNIT"), variable_name="Year")
 DATA$Year = as.numeric(substr(DATA$Year, start=2, stop=5))
 DATA = na.omit(DATA)
 
-# ---- TRADE DF ----
+# ---- TRADE DATAFRAME ----
+# Produce dataframe to be used in the processing of "Bioenergy trade" results
+
 # Read in and add extra data from GRAPE-15 (secondary bioliquids trade to primary equivalent)
 NewGRAPE=read.csv("data/Trade/GRAPE_trade_secondary_energy_liquids_biomass_primary_eq.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 NewGRAPE=melt(NewGRAPE, id.vars=c("MODEL","SCENARIO","REGION","VARIABLE","UNIT"), variable.name="Year", value.name="value", na.rm=FALSE)
@@ -87,9 +86,7 @@ TradData1.COF = subset(TradData1.COF, SCENARIO=="R3-BASE-0-full"|
                           SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-hi-limbio"|SCENARIO=="R3-B-hi-nofuel"|SCENARIO=="R3-B-hi-none"|SCENARIO=="R3-B-hi-nobeccs"|
                           SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-lo-limbio"|SCENARIO=="R3-B-lo-nofuel"|SCENARIO=="R3-B-lo-none"|SCENARIO=="R3-B-lo-nobeccs"|
                           SCENARIO=="R3-B-vlo-full")
-#TradData1.COF$VARIABLE <-gsub("Primary Energy|Biomass","Primary Energy|Biomass|Modern",TradData1.COF$VARIABLE,fixed=F)
 TradData1.COF$VARIABLE <- "Primary Energy|Biomass|Modern"
-
 
 # Specifically for IMACLIM: Remove "Trade|Primary Energy|Biomass|Volume" from snapshot, and use one from new dataset.
 NewIMACLIM1 =  subset(NewIMACLIM, SCENARIO=="R3-BASE-0-full"|
@@ -111,7 +108,9 @@ TradDATA = rbind(TradDATA1.RYVS,TradData1.COF,NewIMACLIM1)
 # write.csv(TradDATA, file = "data/Trade/TradDATA.csv")
 # write.csv(BioPrice, file = "data/Trade/TradPrice.csv")
 
-# ---- TECH DF ----
+# ---- TECHNOLOGIES DATAFRAME ----
+# Produce dataframe to be used in the processing of "Bioenergy Technologies" results
+
 DATA$VARID <- substr(DATA$VARIABLE, start=1, stop=10)
 
 # For DNE21+ there is a technology producing liquid fuels reported under "Secondary Energy|Liquids|Other".
@@ -369,7 +368,6 @@ PrimPrice$Prim <- sub("[[:punct:]]","",PrimPrice$VARIABLE,fixed=F)
 PrimPrice$Prim <- sub("[[:space:]]","",PrimPrice$Prim,fixed=F) 
 PrimPrice$Prim <- sub("PricePrimaryEnergy","",PrimPrice$Prim,fixed=F) 
 PrimPrice$Prim <- sub("[[:punct:]]","",PrimPrice$Prim,fixed=F) 
-# PrimPrice$Prim <- sub("Delivered","",PrimPrice$Prim,fixed=F) 
 PrimPrice$Prim <- sub("[[:punct:]]","",PrimPrice$Prim,fixed=F) 
 PrimPrice$VARIABLE <- sub("[[:punct:]]","",PrimPrice$VARIABLE,fixed=F) 
 PrimPrice$VARIABLE <- sub("[[:punct:]]","",PrimPrice$VARIABLE,fixed=F) 
@@ -729,5 +727,3 @@ colnames(TechDiag)[3] <- "SUBMISSION STATUS"
 TechDiag=spread(TechDiag,MODEL,"SUBMISSION STATUS")
 
 # write.csv(TechDiag, file = "output/BioTech/Diagnostic/SubmissionStatus.csv")
-
-#source(file="script/TradeData2.R")
