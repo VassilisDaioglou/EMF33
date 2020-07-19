@@ -19,10 +19,6 @@ library(mapdata)
 library(gridExtra)
 library(scales)
 
-# set directory path for csv file
-# setwd("~/disks/y/ontwapps/Timer/Users/Vassilis/Projects - Documents/EMF33/Scenario results/R-Scripts")
-setwd("C:/Users/Asus/Documents/GitHub/EMF33")
-
 # ---- CONSTANTS ----
 ppi <- 600
 FSizeStrip = 6.5
@@ -30,8 +26,8 @@ FSizeLeg = 6.5
 ActiveModel = c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE")
 
 # ---- READ DATA FILE ----
-NewReg=read.csv("data/Trade/TradeRegData.csv", sep=",", dec=".", stringsAsFactors = FALSE)
-BioPrice=read.csv("data/Trade/TradeRegPrice.csv", sep=",", dec=".", stringsAsFactors = FALSE)
+NewReg=read.csv(paste0(getwd(),"/data/Trade/TradeRegData.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
+BioPrice=read.csv(paste0(getwd(),"/data/Trade/TradeRegPrice.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
 # Delete extra column created when data in imported
 NewReg$X <-NULL
 NewReg$Year = as.numeric(substr(NewReg$Year, start=1, stop=4))
@@ -236,7 +232,6 @@ ModelAgree.ModelImp = subset(ModelAgree.Model, TradeFrac < 0)
 ModelAgree.ModelImpMed <- aggregate(ModelAgree.ModelImp$TradeFrac, by=list(SCENARIO=ModelAgree.ModelImp$SCENARIO,Year=ModelAgree.ModelImp$Year,ScenOrder=ModelAgree.ModelImp$ScenOrder, REGION=ModelAgree.ModelImp$REGION), FUN=median, na.rm=TRUE)
 ModelAgree.ModelMed = rbind(ModelAgree.ModelImpMed,ModelAgree.ModelExpMed)
 
-#
 Trade3=subset(Trade2, MODEL %in%BioTradCheck$MODEL)
 Trade3=subset(Trade3, select=-c(TradePrimCoalVol,TradePrimCoalVal,TradePrimOilVol,TradePrimOilVal,TradePrimGasVol,TradePrimGasVal,
                                 Prim,PrimBiomass,PrimFossil,TradeSecLiquidsBiomassVol,TradeSecSolidsBiomassVol,
@@ -776,21 +771,6 @@ legend <- ggplot() +
                        guide_legend(title="Portion of Global Trade (%)"))
 legend
 
-# `MapTradFrac_R3-BASE-0-full_2050`
-# `MapTradFrac_R3-B-hi-full_2050`
-# `MapTradFrac_R3-B-lo-full_2050`
-# `MapTradFrac_R3-B-vlo-full_2050`
-# 
-# `MapTradFrac_R3-BASE-0-full_2060`
-# `MapTradFrac_R3-B-hi-full_2060`
-# `MapTradFrac_R3-B-lo-full_2060`
-# `MapTradFrac_R3-B-vlo-full_2060`
-# 
-# `MapTradFrac_R3-BASE-0-full_2100`
-# `MapTradFrac_R3-B-hi-full_2100`
-# `MapTradFrac_R3-B-lo-full_2100`
-# `MapTradFrac_R3-B-vlo-full_2100`
-
 lay<-rbind(1,2)
 
 MapTradFracAll <- cowplot::ggdraw(grid.arrange(`MapTradFrac_R3-B-lo-full_2050`,
@@ -801,7 +781,6 @@ MapTradFracAll
 
 MapImpExp <- ggplot() +
   geom_polygon(data =map.EMF2, aes(x=long, y = lat, group=group,fill=ModelFraction), color="grey40", size = 0.1, alpha=0.9) + 
-  #geom_map(data=map.EMF, map=map.EMF, aes(map_id=EMFRegion, x=long, y=lat, fill=ModelFraction))
   coord_fixed(1) +
   theme_bw() +
   theme(text= element_text(size=6, face="plain")) +
@@ -809,10 +788,6 @@ MapImpExp <- ggplot() +
   theme(axis.text = element_blank(), axis.ticks =element_blank(), axis.title = element_blank()) +
   theme(legend.position="bottom") +
   theme(legend.text = element_text(angle=0, size=6), legend.direction="vertical") +
-  # scale_fill_gradientn(colours = c("red","white","white","white","forestgreen"),
-  #                     breaks = c(-100,-66, 0,66, 100),
-  #                     labels = c("100% (Import)","","No agreement","","100% (Export)"),
-  #                     guide_legend(title="Agreement Across Models")) +
   scale_fill_manual(values=c("forestgreen", "firebrick", "gainsboro"),
                     name ="Agreement Across Models",
                     breaks=c(">66% Export",">66% Import","No Agreement"),
@@ -914,8 +889,6 @@ SupplyDiversityDiff <-ggplot() +
   geom_point(subset(SWDiversity2, !ScenOrder=="Diff_hi_base"), mapping=aes(x=SWIndex, y=NetExport, colour=Year, shape=MODEL ), alpha=0.75) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=0,size = 0.1, colour='black') +
-  # xlim(0,2) +
-  # Text
   theme_bw() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(legend.title=element_blank(), legend.position="bottom") +
@@ -1029,7 +1002,6 @@ LiqTradeLo
 BioTradFrac1=subset(BioTradFrac1, MODEL %in% BioTradCheck$MODEL)
 ExportFrac <- ggplot() +
   geom_jitter(data=BioTradFrac1, mapping=aes(x=Year, y=value, shape=MODEL, colour=variable), size = 1, width=9, alpha = 0.8) +
-  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1)) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=2075, size=0.1, colour="gray2") +
   coord_cartesian(ylim=c(-1, 1)) +
@@ -1104,7 +1076,6 @@ TradeComparePointGlobal <- ggplot() +
 TradeComparePointGlobal
 
 TradeComparePoint <- ggplot() +
-  #geom_blank(data=axis, mapping=aes(x=ScenOrder2, y=CumNetTrade)) +
   geom_rect(data=Glob1, aes(fill = RegOrder),
             xmin = as.numeric(Glob1$ScenOrder2[[1]]) -1,
             xmax = as.numeric(Glob1$ScenOrder2[[6]]) +1,
@@ -1175,8 +1146,6 @@ SecurityCompare=subset(SecurityCompare, MODEL %in% BioTradCheck$MODEL)
 SecurityCompare=subset(SecurityCompare, SCENARIO=="Fossil"|SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full")
 SecurityCompare$ScenNames = scen_labels[SecurityCompare$SCENARIO]
 SecurityCompare$ScenOrder2  = factor(SecurityCompare$ScenNames, levels=c("Baseline","Budget1600","Budget1000","Budget400","Fossil (2010)"))
-#SecurityCompareBox <- ggplot(SecurityCompare, aes(x=ScenOrder, y=Indicator, fill=ScenOrder)) +
-#  geom_boxplot(lwd=0.3, outlier.shape = 1) +
 SecurityCompare.Corr =SecurityCompare[!duplicated(SecurityCompare),]
 SecurityCompareFig <-ggplot() +
   geom_point(data=SecurityCompare.Corr, mapping=aes(x=ScenOrder2, y=Indicator, colour=ModelOrder, shape=ModelOrder),position = position_jitter(w = 0.25, h = 0), alpha = 0.75) +
@@ -1277,102 +1246,102 @@ colnames(SupData)[1:5] <- c("Model","Scenario","Region","Variable","Unit")
 
 #
 # # ---- OUTPUTS FOR PAPER----
-# png(file = "output/BioTrade/Fig1.png", width = 6.5*ppi, height = 4*ppi, units = "px", res = ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/Fig1.png"), width = 6.5*ppi, height = 4*ppi, units = "px", res = ppi)
 # plot(FigTrad2)
 # dev.off()
 # 
-# png(file = "output/BioTrade/Fig2a.png", width=2.8*ppi, height=2.8*ppi, res=ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/Fig2a.png"), width=2.8*ppi, height=2.8*ppi, res=ppi)
 # plot(MapTradFracAll)
 # dev.off()
 # 
-# png(file = "output/BioTrade/Fig2b.png", width=3*ppi, height=4*ppi, res=ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/Fig2b.png"), width=3*ppi, height=4*ppi, res=ppi)
 # plot(legend)
 # dev.off()
 # 
-# png(file = "output/BioTrade/Fig3.png", width=5*ppi, height=5*ppi, res=ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/Fig3.png"), width=5*ppi, height=5*ppi, res=ppi)
 # plot(SecurityFig2)
 # dev.off()
 # 
-# png(file = "output/BioTrade/Fig4.png", width=6*ppi, height=6*ppi, res=ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/Fig4.png"), width=6*ppi, height=6*ppi, res=ppi)
 # plot(SupplyDiversityFinal)
 # dev.off()
 # 
 # 
-# png(file = "output/BioTrade/FigS1.png", width = 6*ppi, height = 8*ppi, units = "px", res = ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/FigS1.png"), width = 6*ppi, height = 8*ppi, units = "px", res = ppi)
 # plot(FigTradeFull)
 # dev.off()
 # 
-# png(file = "output/BioTrade/FigS2.png", width=8*ppi, height=8*ppi, res=ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/FigS2.png"), width=8*ppi, height=8*ppi, res=ppi)
 # print(plot(FFandBioLo))
 # dev.off()
 # 
-# png(file = "output/BioTrade/FigS3.png", width=5*ppi, height=8*ppi, res=ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/FigS3.png"), width=5*ppi, height=8*ppi, res=ppi)
 # print(plot(ExportFrac))
 # dev.off()
 # 
-# png(file = "output/BioTrade/FigS4.png", width=7*ppi, height=5*ppi, res=ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/FigS4.png"), width=7*ppi, height=5*ppi, res=ppi)
 # print(plot(TradeComparePointGlobal))
 # dev.off()
 # 
-# png(file = "output/BioTrade/FigS5.png", width=5*ppi, height=8*ppi, res=ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/FigS5.png"), width=5*ppi, height=8*ppi, res=ppi)
 # plot(SecurityFig)
 # dev.off()
 # 
-# png(file = "output/BioTrade/FigS6.png", width=5*ppi, height=8*ppi, res=ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/FigS6.png"), width=5*ppi, height=8*ppi, res=ppi)
 # print(plot(SecurityCompareFig))
 # dev.off()
 # 
-# png(file = "output/BioTrade/FigS7.png", width = 5*ppi, height = 9*ppi, units = "px", res = ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/FigS7.png"), width = 5*ppi, height = 9*ppi, units = "px", res = ppi)
 # plot(FigBiovsAgri)
 # dev.off()
 # 
-# write.xlsx(SupData, file="output/BioTrade/SupplementaryData.xlsx", sheetName="Supplementary Data", row.names=FALSE, showNA = TRUE)
+# write.xlsx(SupData, file=paste0(getwd(),"/output/BioTrade/SupplementaryData.xlsx"), sheetName="Supplementary Data", row.names=FALSE, showNA = TRUE)
 #
-# write.xlsx(DiversityTest.TtestDF, file="output/BioTrade/Statistics.xlsx", sheetName="Diversity of Supply", row.names=TRUE, showNA = TRUE)
-# write.xlsx(DriversTech.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Technology)", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(DriversBudg.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(SecurityCompare, file="output/BioTrade/Statistics.xlsx", sheetName="Security Compound Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(SecurityTest.Ttest, file="output/BioTrade/Statistics.xlsx", sheetName="Security Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(EneTradeMed, file="output/BioTrade/Statistics.xlsx", sheetName="Medians", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(EneTradeGrMod, file="output/BioTrade/Statistics.xlsx", sheetName="Growth Rates (per model)", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(EneTradeGr, file="output/BioTrade/Statistics.xlsx", sheetName="Growth Rates", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(BiomassTrade, file="output/BioTrade/Statistics.xlsx", sheetName="Biomass Trade Summary", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(DiversityTest.TtestDF, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Diversity of Supply", row.names=TRUE, showNA = TRUE)
+# write.xlsx(DriversTech.Ttest, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Drivers of Trade (Technology)", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(DriversBudg.Ttest, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(SecurityCompare, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Security Compound Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(SecurityTest.Ttest, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Security Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(EneTradeMed, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Medians", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(EneTradeGrMod, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Growth Rates (per model)", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(EneTradeGr, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Growth Rates", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(BiomassTrade, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Biomass Trade Summary", append=TRUE, row.names=FALSE, showNA = TRUE)
 #
 #
 # ---- OTHER OUTPUTS ----
-# png("output/BioTrade/BioProdTrade.png", width=6*ppi, height=8*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTrade/BioProdTrade.png"), width=6*ppi, height=8*ppi, res=ppi)
 # print(plot(FigTradeFull))
 # dev.off()
 # 
-# png("output/BioTrade/BioTradeVolume.png", width=6*ppi, height=8*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTrade/BioTradeVolume.png"), width=6*ppi, height=8*ppi, res=ppi)
 # print(plot(Trade_BioVol))
 # dev.off()
 # 
-# png("output/BioTrade/BioTradeValue2.png", width=8*ppi, height=5*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTrade/BioTradeValue2.png"), width=8*ppi, height=5*ppi, res=ppi)
 # print(plot(Trade_BioVal))
 # dev.off()
 # 
-# png("output/BioTrade/MapTradFrac.jpg", width=4.9*ppi, height=5*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTrade/MapTradFrac.jpg"), width=4.9*ppi, height=5*ppi, res=ppi)
 # print(plot(MapTradFracAll))
 # dev.off()
 # 
-# png("output/BioTrade/Security.png", width=6*ppi, height=8*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTrade/Security.png"), width=6*ppi, height=8*ppi, res=ppi)
 # print(plot(SecurityFig))
 # dev.off()
 # 
-# png("output/BioTrade/SupplyDiversity.png", width=6.5*ppi, height=3*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTrade/SupplyDiversity.png"), width=6.5*ppi, height=3*ppi, res=ppi)
 # print(plot(SupplyDiversity))
 # dev.off()
 # 
-# png("output/BioTrade/BioExportFracRCP.png", width=5*ppi, height=8*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTrade/BioExportFracRCP.png"), width=5*ppi, height=8*ppi, res=ppi)
 # print(plot(ExportFracRCP))
 # dev.off()
 # 
-# png("output/BioTrade/Carriers.png", width=8*ppi, height=8*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTrade/Carriers.png"), width=8*ppi, height=8*ppi, res=ppi)
 # print(plot(Carriers1))
 # dev.off()
 # 
-# png("output/BioTrade/FFandBioHi.png", width=8*ppi, height=8*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTrade/FFandBioHi.png"), width=8*ppi, height=8*ppi, res=ppi)
 # print(plot(FFandBioHi))
 # dev.off()
 # 
@@ -1393,7 +1362,6 @@ BioTradFracRCP1$ScenOrder = factor(BioTradFracRCP1$SCENARIO, levels=c('R3-BASE-0
 BioTradFracRCP1=subset(BioTradFracRCP1, MODEL %in% BioTradCheck$MODEL)
 ExportFracRCP <- ggplot() +
   geom_jitter(data=BioTradFracRCP1, mapping=aes(x=Year, y=value, shape=MODEL, colour=variable), size = 1.5, width=7.5) +
-  #geom_jitter(position = position_jitter(width = 0.1, height = 0.1)) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   coord_cartesian(ylim=c(-1, 1)) +
   scale_y_continuous(breaks=seq(-1,1,0.5)) +
@@ -1486,12 +1454,9 @@ Trade_BioVal
 
 Trade_BioVal <-ggplot() +
   geom_point(data=subset(BioPrice.Norm, VARIABLE=="BiomassMarket"&(Year=="2050"|Year=="2100")&SCENARIO=="R3-B-hi-full")
-             , aes(x=RegOrder ,y=NormPric, colour=ScenOrder, shape=MODEL)) +#,position = position_jitter(w = 0.5, h = 0)) + 
-  #geom_line(size=0.2)+
+             , aes(x=RegOrder ,y=NormPric, colour=ScenOrder, shape=MODEL)) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=c(1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5), size=0.1, colour="gray") +
-  #xlim(2010,2100) +
-  #scale_y_continuous(breaks=seq(-600, 600, 200)) +
   theme_bw() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(legend.title=element_blank(), legend.position="bottom") +
@@ -1500,17 +1465,11 @@ Trade_BioVal <-ggplot() +
   theme(text= element_text(size=7, face="plain")) +
   ylab( expression(paste("Billion US","$"[2005],"/yr",""))) +
   xlab("") +
-  # scale_colour_manual(values=c("#006400", "#FFB90F", "#0000FF","#8B4513","#838B8B","firebrick1","#00BFFF","#8A2BE2","#000000"), 
-  #                     name ="Regions",
-  #                     breaks=c("EU","USA","ROECD90","Brazil","RLAM","MAF","EAsia","RAsia","REF"),
-  #                     labels=c("EU","USA","Rest OECD","Brazil","Rest Lat.Am.","M. East & Africa","East Asia","Rest Asia","Former USSR")
-  # ) +
   scale_shape_manual(values=c(12,1,2,3,4,6,8,10),
                      name="",
                      breaks=c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE"),
                      labels=c("AIM","COFFEE","GCAM","GRAPE-15","IMACLIM","IMAGE","POLES","REMIND-MAgPIE")
   ) +
-  #facet_grid(Year ~ MODEL, labeller=labeller(RegOrder = region_label), scale="free_y")
   facet_wrap(Year ~ MODEL, nrow = 2, labeller=labeller(MODEL= model_labels,RegOrder = region_label), scale="free_y")
 Trade_BioVal
 
@@ -1522,16 +1481,11 @@ PricTrade1=na.omit(PricTrade1)
 FigPricTrad <-ggplot() + 
   geom_point(data=PricTrade1,aes(x=TradePrimBiomassVol, y=BioPrice, colour=REGION, shape=MODEL)) + 
   geom_hline(yintercept=0,size = 0.1, colour='black') +
-  #xlim(2010,2100) +
-  #scale_y_continuous(breaks=seq(-600, 600, 200)) +
   theme_bw() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(legend.title=element_blank(), legend.position="bottom") +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(text= element_text(size=7, face="plain")) +
-  #ylab( expression(paste("Billion US$/yr",""))) +
-  # ylab( expression(paste("Billion US","$"[2005],"/yr",""))) +
-  # xlab("") +
   # Legend                      Brazil      EAsia      EU        MAF      RASIA     REF       RLAM      ROECD90   USA
   scale_colour_manual(values=c("#006400", "#FFB90F", "#0000FF","#8B4513","#838B8B","firebrick1","#00BFFF","#8A2BE2","#000000"), 
                       name ="Regions",
@@ -1545,9 +1499,6 @@ FigPricTrad <-ggplot() +
   ) + 
   facet_grid(MODEL~Year, scales="free_y")
 FigPricTrad
-
-#facet_grid(RegOrder ~SCENARIO , labeller=labeller(RegOrder = region_label, SCENARIO = scen_labels))
-#
 
 #
 # ---- END ----
@@ -1602,7 +1553,7 @@ EUTrade <-ggplot(data=subset(BioTradVol, REGION=="EU"&MODEL=="IMAGE"&(SCENARIO==
                       name ="Scenarios",
                       breaks=c("R3-BASE-0-full","R3-B-hi-full","R3-B-lo-full","R3-B-vlo-full"),
                       labels=c("Baseline",">2C","2C","1.5C")
-  ) #+
+  )
 EUTrade
 
 # EU Biomass use
@@ -1626,16 +1577,14 @@ EUBioPrim <-ggplot(data=subset(EneTrade2, REGION=="EU"&MODEL=="IMAGE"&(SCENARIO=
 EUBioPrim
 
 #
-# png(file = "output/BioTrade/Presentations/FigTrad2C.png", width = 6.5*ppi, height = 2.6*ppi, units = "px", res = ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/Presentations/FigTrad2C.png"), width = 6.5*ppi, height = 2.6*ppi, units = "px", res = ppi)
 # plot(FigTrad2C)
 # dev.off()
 # 
-# png(file = "output/BioTrade/Presentations/EUTrade.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/Presentations/EUTrade.png"), width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
 # plot(EUTrade)
 # dev.off()
 # 
-# png(file = "output/BioTrade/Presentations/EUBioPrim.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
+# png(file = paste0(getwd(),"/output/BioTrade/Presentations/EUBioPrim.png"), width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
 # plot(EUBioPrim)
 # dev.off()
-
-

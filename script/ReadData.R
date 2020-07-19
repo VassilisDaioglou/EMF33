@@ -14,11 +14,8 @@ library(data.table);
 library(tidyr)
 library(xlsx)
 
-# set directory path for csv file
-setwd("C:/Users/Asus/Documents/GitHub/EMF33")
-
 # ---- READ DATA ----
-DATA=read.csv("data/emf33demr3r_compare_20180219-164947.csv", sep=",", dec=".", stringsAsFactors = FALSE)
+DATA=read.csv(paste0(getwd(),"/data/emf33demr3r_compare_20180219-164947.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
 DATA=melt(DATA, id.vars=c("MODEL","SCENARIO","REGION","VARIABLE","UNIT"), variable_name="Year", value.name="value", na.rm=FALSE)
 colnames(DATA)[6]<-"Year"
 DATA$Year = as.numeric(substr(DATA$Year, start=2, stop=5))
@@ -28,14 +25,14 @@ DATA = na.omit(DATA)
 # Produce dataframe to be used in the processing of "Bioenergy trade" results
 
 # Read in and add extra data from GRAPE-15 (secondary bioliquids trade to primary equivalent)
-NewGRAPE=read.csv("data/Trade/GRAPE_trade_secondary_energy_liquids_biomass_primary_eq.csv", sep=",", dec=".", stringsAsFactors = FALSE)
+NewGRAPE=read.csv(paste0(getwd(),"/data/Trade/GRAPE_trade_secondary_energy_liquids_biomass_primary_eq.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
 NewGRAPE=melt(NewGRAPE, id.vars=c("MODEL","SCENARIO","REGION","VARIABLE","UNIT"), variable.name="Year", value.name="value", na.rm=FALSE)
 colnames(NewGRAPE)[6]<-"Year"
 NewGRAPE$Year = as.numeric(substr(NewGRAPE$Year, start=2, stop=5))
 NewGRAPE = na.omit(NewGRAPE)
 
 # Read in and add extra data from IMACLIM (Trade|Primary Energy|Biomass|Volume is prim+sec)
-NewIMACLIM=read.csv("data/Trade/Imaclim_emf33_trade_biom_20112017.csv", sep=",", dec=".", stringsAsFactors=FALSE)
+NewIMACLIM=read.csv(paste0(getwd(),"/data/Trade/Imaclim_emf33_trade_biom_20112017.csv"), sep=",", dec=".", stringsAsFactors=FALSE)
 NewIMACLIM=melt(NewIMACLIM, id.vars=c("MODEL","SCENARIO","REGION","VARIABLE","UNIT"), variable.name="Year", value.name="value", na.rm=FALSE)
 colnames(NewIMACLIM)[6]<-"Year"
 NewIMACLIM$Year = as.numeric(substr(NewIMACLIM$Year, start=2, stop=5))
@@ -105,8 +102,10 @@ BioPrice = subset(BioPrice, SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-hi-full"|
 TradDATA1.RYVS = subset(TradDATA1.RYVS, !(MODEL=="COFFEE"&VARIABLE=="Primary Energy|Biomass|Modern"))
 TradDATA1.RYVS = subset(TradDATA1.RYVS, !(MODEL=="IMACLIM-NLU"&VARIABLE=="Trade|Primary Energy|Biomass|Volume"))
 TradDATA = rbind(TradDATA1.RYVS,TradData1.COF,NewIMACLIM1)
-# write.csv(TradDATA, file = "data/Trade/TradDATA.csv")
-# write.csv(BioPrice, file = "data/Trade/TradPrice.csv")
+
+# ---- OUTPUT: TRADE ANALYSIS ----
+# write.csv(TradDATA, file = paste0(getwd(),"/data/Trade/TradDATA.csv"))
+# write.csv(BioPrice, file = paste0(getwd(),"/data/Trade/TradPrice.csv"))
 
 # ---- TECHNOLOGIES DATAFRAME ----
 # Produce dataframe to be used in the processing of "Bioenergy Technologies" results
@@ -634,18 +633,18 @@ TechData4$CapitalCo[TechData4$MODEL=="REMIND-MAGPIE" & TechData4$REGION=="REF"] 
 TechData4$OMCostFi[TechData4$MODEL=="REMIND-MAGPIE" & TechData4$REGION=="REF"] <- (TechData4$OMCostFi[TechData4$MODEL=="REMIND-MAGPIE" & TechData4$REGION=="REF"]/1)
 TechData4$OMCostVa[TechData4$MODEL=="REMIND-MAGPIE" & TechData4$REGION=="REF"] <- (TechData4$OMCostVa[TechData4$MODEL=="REMIND-MAGPIE" & TechData4$REGION=="REF"]/1)
 
-# ---- OUTPUT ----
+# ---- OUTPUT: TECHNOLOGY ANALYSIS ----
 TechData5 = subset(TechData4,  !(REGION=="ASIA"|REGION=="LAM"|REGION=="MAF"|REGION=="OECD90"|REGION=="REF"))
 TechData5.RCP = subset(TechData4,  REGION=="ASIA"|REGION=="LAM"|REGION=="MAF"|REGION=="OECD90"|REGION=="REF")
 
 #TechData5=TechData4
 TechData5.Diag = subset(TechData4,  !(REGION=="MAF"|REGION=="REF"))
 
-# write.csv(TechData5, file = "data/Technology/TechDATA.csv")
-# write.csv(TechData5.RCP, file = "data/Technology/TechDATA_RCP.csv")
-# write.csv(TechData5.Diag, file = "data/Technology/TechDATA_Reg.csv")
-# write.csv(PriceData, file = "data/Technology/PriceDATA.csv")
-# write.csv(SecEnTot, file = "data/Technology/SecEnTot.csv")
+# write.csv(TechData5, file = paste0(getwd(),"/data/Technology/TechDATA.csv"))
+# write.csv(TechData5.RCP, file = paste0(getwd(),"/data/Technology/TechDATA_RCP.csv"))
+# write.csv(TechData5.Diag, file = paste0(getwd(),"/data/Technology/TechDATA_Reg.csv"))
+# write.csv(PriceData, file = paste0(getwd(),"/data/Technology/PriceDATA.csv"))
+# write.csv(SecEnTot, file = paste0(getwd(),"/data/Technology/SecEnTot.csv"))
 
 # ---- EMISSIONS ----
 Emis = subset(DATA, VARID=="Emissions|") 
@@ -658,7 +657,7 @@ Emis$VARIABLE <- sub("Emissions","Emis",Emis$VARIABLE,fixed=F)
 
 Emis = subset(Emis, SCENARIO=="R3-BASE-0-full"|SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full")
 
-# write.csv(Emis, file = "data/Emissions/EmisCO2.csv")
+# write.csv(Emis, file = paste0(getwd(),"/data/Emissions/EmisCO2.csv"))
 
 #
 # ---- DIAGNOSTIC ----
@@ -726,4 +725,4 @@ colnames(TechDiag)[3] <- "SUBMISSION STATUS"
 
 TechDiag=spread(TechDiag,MODEL,"SUBMISSION STATUS")
 
-# write.csv(TechDiag, file = "output/BioTech/Diagnostic/SubmissionStatus.csv")
+# write.csv(TechDiag, file = paste0(getwd(),"/output/BioTech/Diagnostic/SubmissionStatus.csv"))
