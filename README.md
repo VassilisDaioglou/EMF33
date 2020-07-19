@@ -5,11 +5,12 @@ Repository of R-scripts for processing EMF-33 results for the "Technologies" and
 *Contact: v.daioglou@uu.nl | @vassican*
 
 ## Process
-This script process a snapshot of the entire EMF-33 database (available here: https://tntcat.iiasa.ac.at/EMF30BIODB/dsd?Action=htmlpage&page=welcome)\
+This script process a snapshot of the entire EMF-33 database: \
+https://tntcat.iiasa.ac.at/EMF30BIODB/dsd?Action=htmlpage&page=welcome)
 
-This is read in from the ***ReadData.R*** script to produce scaled down datasets to be further processed for each specific cross-cut.\
+This is processed in the ***ReadData.R*** script to produce scaled down datasets to be further processed for each specific cross-cut.
 
-Additional data (model results not reported on EMF-33 database or external literature) are provided in this repository in the *data* folder.\
+Additional data (model results not reported on EMF-33 database or external literature) are provided in this repository in the *data* folder.
 
 ## Scripts
 - ***ReadData.R:*** Reads in raw data from EMF-33 database and subsets into relevant datasets for *Technologies.R* and *Trade.R*
