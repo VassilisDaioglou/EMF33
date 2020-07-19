@@ -30,14 +30,11 @@ ActScen = "R3-B-lo-full"
 # Active Years
 ActiveYears = c("2010","2020","2030","2040","2050","2060","2070","2080","2090","2100")
 
-# set directory path for csv file
-setwd("C:/Users/Asus/Documents/GitHub/EMF33")
-
 # Read Data Files
-TechData2=read.csv("data/Technology/TechDATA.csv", sep=",", dec=".", stringsAsFactors = FALSE)
-PriceData=read.csv("data/Technology/PriceDATA.csv", sep=",", dec=".", stringsAsFactors = FALSE)
-SecEnTot=read.csv("data/Technology/SecEnTot.csv", sep=",", dec=".", stringsAsFactors = FALSE)
-BakerDat=read.csv("data/Technology/BakerElicitation.csv", sep=",", dec=".", stringsAsFactors = FALSE)
+TechData2=read.csv(paste0(getwd(),"/data/Technology/TechDATA.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
+PriceData=read.csv(paste0(getwd(),"/data/Technology/PriceDATA.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
+SecEnTot=read.csv(paste0(getwd(),"/data/Technology/SecEnTot.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
+BakerDat=read.csv(paste0(getwd(),"/data/Technology/BakerElicitation.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
 TechData2$X <-NULL
 PriceData$X <-NULL
 SecEnTot$X <- NULL
@@ -143,7 +140,7 @@ rm(TechData2.temp,TechData2.temp2,CCPrim,CDRPrim,CapRate,CF,Lifetime)
 TechData3 = TechData2
 TechData3$QID <- gsub("2|3|4","",TechData3$VARIABLE,fixed=F)
 TechData3$QID2 = paste(TechData3$MODEL,TechData3$QID)
-TechDataQuest=read.xlsx("data/Technology/QuestionnaireDATA.xlsx", sheetIndex=1)
+TechDataQuest=read.xlsx(paste0(getwd(),"/data/Technology/QuestionnaireDATA.xlsx"), sheetIndex=1)
 TechDataQuest$X <-NULL
 TechDataQuest$CaptureRate=pmax(TechDataQuest$CapRate,TechDataQuest$CapRateCor)
 TechDataQuest = melt(TechDataQuest, id.vars=c("MODEL","CARRIER","CarrierID","Capt","Prim"), na.rm=TRUE)
@@ -331,7 +328,7 @@ LCOEGlob <- aggregate(CostEffDataR$LCOE, by=list(MODEL=CostEffDataR$MODEL, SCENA
 CtaxGlob <- aggregate(CostEffDataR$Ctax, by=list(MODEL=CostEffDataR$MODEL, SCENARIO=CostEffDataR$SCENARIO, VARIABLE=CostEffDataR$VARIABLE, Year=CostEffDataR$Year, CarrierID=CostEffDataR$CarrierID, Prim=CostEffDataR$Prim, Tech=CostEffDataR$Tech, GlobID=CostEffDataR$GlobID, Capt=CostEffDataR$Capt), FUN=mean, na.rm=TRUE)
 
 # In order to get global totals of secondary energy have to sum across RCP regions. Cannot use "world" region because some models do not report results there
-TechDATA.RCP=read.csv("data/Technology/TechDATA_RCP.csv", sep=",", dec=".", stringsAsFactors = FALSE)
+TechDATA.RCP=read.csv(paste0(getwd(),"/data/Technology/TechDATA_RCP.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
 TechDATA.RCP$X <- NULL
 TechDATA.RCP$GlobID = paste(TechDATA.RCP$MODEL,TechDATA.RCP$SCENARIO,TechDATA.RCP$Year,TechDATA.RCP$VARIABLE)
 TechDATA.RCP$SecEn[is.na(TechDATA.RCP$SecEn)] <- 0
@@ -491,7 +488,7 @@ GlobalData.Liq = subset(GlobalData, CarrierID=="Liq")
 GlobPriceUse.Bio = subset(GlobalData.Bio, select=-c(SCENARIO,VARIABLE,Efficiency,CapitalCo,LCOE_Cap,LCOE1,LCOE2,Ctax))
 
 # Literature data
-LitData=read.xlsx("data/Technology/LitData.xlsx", sheetIndex=3)
+LitData=read.xlsx(paste0(getwd(),"/data/Technology/LitData.xlsx"), sheetIndex=3)
 LitData$X <-NULL
 LitData$Tech2 <- gsub("wCCS","",LitData$Tech,fixed=F)  
 LitData$TechOrder2 = factor(LitData$Tech2, levels=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Other biomass","Liquids","Electricity","Hydrogen","Gas"))
@@ -786,13 +783,13 @@ BakerDat = BakerDat  %>% mutate(Percentage = 100 * (Count/Observations))
 rm(Calcs.Costs2,Calcs.CCS2, BakerDat1, BakerDat2, BakerSample,test,count, NumObs)
 rm(Calcs.RangeC, Calcs.RangeE, Calcs.RangeN, Calcs.RangeCCS, Calcs.RangeFF, Calcs.Ranges)
 
-# write.xlsx(Calcs.CCS, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Effect of CCS", append=FALSE, row.names=TRUE, showNA = TRUE)
-# write.xlsx(Calcs.CCSMed, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Mean Effect of CCS", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(Calcs.Costs, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Cost Components", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(Calcs.CostsMed, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Mean Cost Components", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(Calcs.Reg1, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Regional Variation", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(Calcs.Range, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="Percentile Ranges", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(BakerDat, file="output/BioTech/Diagnostic/TechDiagnostics.xlsx", sheetName="R&D category Count2", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(Calcs.CCS, file=paste0(getwd(),"/output/BioTech/Diagnostic/TechDiagnostics.xlsx"), sheetName="Effect of CCS", append=FALSE, row.names=TRUE, showNA = TRUE)
+# write.xlsx(Calcs.CCSMed, file=paste0(getwd(),"/output/BioTech/Diagnostic/TechDiagnostics.xlsx"), sheetName="Mean Effect of CCS", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(Calcs.Costs, file=paste0(getwd(),"/output/BioTech/Diagnostic/TechDiagnostics.xlsx"), sheetName="Cost Components", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(Calcs.CostsMed, file=paste0(getwd(),"/output/BioTech/Diagnostic/TechDiagnostics.xlsx"), sheetName="Mean Cost Components", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(Calcs.Reg1, file=paste0(getwd(),"/output/BioTech/Diagnostic/TechDiagnostics.xlsx"), sheetName="Regional Variation", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(Calcs.Range, file=paste0(getwd(),"/output/BioTech/Diagnostic/TechDiagnostics.xlsx"), sheetName="Percentile Ranges", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(BakerDat, file=paste0(getwd(),"/output/BioTech/Diagnostic/TechDiagnostics.xlsx"), sheetName="R&D category Count2", append=TRUE, row.names=FALSE, showNA = TRUE)
 
 # Range of CCS penalties
 RangeCCSPen.CapCo = Calcs.CCS
@@ -816,7 +813,7 @@ RangeCCSPen.Eff$variable <-"Efficiency (%pts)"
 
 RangeCCSPen = rbind(RangeCCSPen.CapCo,RangeCCSPen.Eff)
 rm(RangeCCSPen.CapCo,RangeCCSPen.Eff)
-# write.xlsx(RangeCCSPen, file="output/BioTech/Diagnostic/CCSPenalties.xlsx", sheetName="CCS Penalty Percentiles", append=FALSE, row.names=TRUE, showNA = TRUE)
+# write.xlsx(RangeCCSPen, file=paste0(getwd(),"/output/BioTech/Diagnostic/CCSPenalties.xlsx"), sheetName="CCS Penalty Percentiles", append=FALSE, row.names=TRUE, showNA = TRUE)
 
 #
 # ---- LABELS ----
@@ -1509,45 +1506,45 @@ FigS6 <- grid.arrange(GBioLiqSecCost2,GBioOthSecCost2, layout_matrix=lay)
 
 #
 # # # # ---- OUTPUT: FIGURES FOR MANUSCRIPT----
-# png("output/BioTech/Fig1.png", width=10*ppi, height=5.5*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTech/Fig1.png"), width=10*ppi, height=5.5*ppi, res=ppi)
 # print(plot(Fig1))
 # dev.off()
 # 
-# png("output/BioTech/Fig2.png", width=6*ppi, height=4*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTech/Fig2.png"), width=6*ppi, height=4*ppi, res=ppi)
 # print(plot(Fig2))
 # dev.off()
 # 
-# png("output/BioTech/Fig3.png", width=7*ppi, height=7*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTech/Fig3.png"), width=7*ppi, height=7*ppi, res=ppi)
 # print(plot(Fig3))
 # dev.off()
 # 
-# png("output/BioTech/Fig4.png", width=8*ppi, height=9*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTech/Fig4.png"), width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(Fig4))
 # dev.off()
 # 
 # #
 # # ---- OUTPUT: SUPPLEMENTARY INFORMATION ----
-# png("output/BioTech/FigS1.png", width=7*ppi, height=10*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTech/FigS1.png"), width=7*ppi, height=10*ppi, res=ppi)
 # print(plot(FigS1))
 # dev.off()
 # 
-# png("output/BioTech/FigS2.png", width=7*ppi, height=5*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTech/FigS2.png"), width=7*ppi, height=5*ppi, res=ppi)
 # print(plot(FigS2))
 # dev.off()
 # 
-# png("output/BioTech/FigS3.png", width=7*ppi, height=7*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTech/FigS3.png"), width=7*ppi, height=7*ppi, res=ppi)
 # print(plot(FigS3))
 # dev.off()
 # #
-# png("output/BioTech/FigS4.png", width=6*ppi, height=5*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTech/FigS4.png"), width=6*ppi, height=5*ppi, res=ppi)
 # print(plot(FigS4))
 # dev.off()
 # 
-# png("output/BioTech/FigS5.png", width=5.2*ppi, height=5*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTech/FigS5.png"), width=5.2*ppi, height=5*ppi, res=ppi)
 # print(plot(FigS5))
 # dev.off()
 # 
-# png("output/BioTech/FigS6.png", width=8*ppi, height=9*ppi, res=ppi)
+# png(paste0(getwd(),"/output/BioTech/FigS6.png"), width=8*ppi, height=9*ppi, res=ppi)
 # print(plot(FigS6))
 # dev.off()
 # 
@@ -1657,8 +1654,8 @@ SupData.defs <- data.frame(Variables = c("Secondary Carrier",
 
 
 
-# write.xlsx(SupData, file="output/BioTech/Supplementary_Data.xlsx", sheetName="Supplementary Data", append=FALSE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(SupData.defs, file="output/BioTech/Supplementary_Data.xlsx", sheetName="Notes", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(SupData, file=paste0(getwd(),"/output/BioTech/Supplementary_Data.xlsx"), sheetName="Supplementary Data", append=FALSE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(SupData.defs, file=paste0(getwd(),"/output/BioTech/Supplementary_Data.xlsx"), sheetName="Notes", append=TRUE, row.names=FALSE, showNA = TRUE)
 
 #
 # ---- *** OTHER DATA PROCESSING - NOT FOR MANUSCRIPT *** ----
@@ -1684,8 +1681,8 @@ SupData.defs <- data.frame(Variables = c("Secondary Carrier",
 #                                          "Scenario with a global 1000GtCO2 emission budget, consistent with a 2degree climate target. Model default settings on biomass supply and technology availability ",
 #                                          "Secondary Energy (biofuel) in EJ/yr"))
 
-# write.xlsx(RegSecEn.BioLiqIMAGE, file="output/BioTech/Other/IMAGE_Secondary_Bioliquids_EMF33.xlsx", sheetName="Secondary Biofuels Deployment", row.names=FALSE, showNA = TRUE)
-# write.xlsx(SecBioLiqDefs, file="output/BioTech/Other/IMAGE_Secondary_Bioliquids_EMF33.xlsx", sheetName="Definitions", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(RegSecEn.BioLiqIMAGE, file=paste0(getwd(),"/output/BioTech/Other/IMAGE_Secondary_Bioliquids_EMF33.xlsx"), sheetName="Secondary Biofuels Deployment", row.names=FALSE, showNA = TRUE)
+# write.xlsx(SecBioLiqDefs, file=paste0(getwd(),"/output/BioTech/Other/IMAGE_Secondary_Bioliquids_EMF33.xlsx"), sheetName="Definitions", append=TRUE, row.names=FALSE, showNA = TRUE)
 
 #
 # ---- FIG: G. Bio Cost Components ----
