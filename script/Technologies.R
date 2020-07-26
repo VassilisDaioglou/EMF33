@@ -41,9 +41,9 @@ SecEnTot$X <- NULL
 
 # ---- CONSTANTS ----
 # For figures
-fontsize1 = 7 # For Panels, legends and axes (labels)
-fontsize2 = 6 # For axes (scale)
-fontsize3 = 8 # For chart titles
+fontsize1 = 8 # For Panels, legends and axes (labels)
+fontsize2 = 8 # For axes (scale)
+fontsize3 = 9 # For chart titles
 arrowsize = 0.15
 #Capital recovery Factor assumes a rate of 2% for 20 years
 DiscountRate = 0.05
@@ -948,9 +948,9 @@ Fig2 <- ggplot(subset(GlobalData.BioCor1, Year=="2020"&!(CarrierID=="Gas")&!(Tec
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   ylim(0,1) + xlab(expression("Capital Costs [US$"[2005]*"/kW"[Out]*"]")) + ylab("Conversion Efficiency [-]") +
   theme_bw() +
-  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(text= element_text(size=fontsize1-1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom", legend.text=element_text(size=fontsize1)) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize1-1)) +
   scale_colour_manual(values=c("green4","black"),name="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
   scale_fill_manual(values=c("green4","black"),name ="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
   scale_shape_manual(values=initialShapes,
@@ -1196,10 +1196,10 @@ GBioLiqSecCost <- ggplot(subset(GlobalData3, CarrierID=="Liq"&Year=="2050"&SecEn
   ggtitle("A: DEPLOYMENT OF LIQUID TECHNOLOGIES") + theme(plot.title = element_text(face="bold", size=fontsize3)) +
   ylab("Market Share of Energy Carrier (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) +
   ylim(0,100) + theme_bw() +
-  theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
-  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(strip.text.x = element_text(size = fontsize1+1, face="plain")) +
+  theme(text= element_text(size=fontsize1+1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "grey", fill=NA, size=0.2)) +
-  theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize1+1), legend.title=element_text(face="bold.italic"), legend.box = "vertical") +
   scale_colour_manual(values=c("chocolate","purple","forestgreen","black"),
                       name ="CONVERSION TECHNOLOGY:",
                       breaks=c("1st gen. ethanol","Biodeisel","Lignocellulosic","Liquids"),
@@ -1220,10 +1220,10 @@ GBioOthSecCost <- ggplot(GBioOthSecCost3Dat) +
   ylab("Market Share of Energy Carrier (%)") + xlab(expression("Levelised Cost of Energy, US$"[2005]*"/MWh")) + 
   scale_y_continuous(breaks=c(0,10,20,30,40,50,60), limits=c(0,65))+
   theme_bw() +
-  theme(strip.text.x = element_text(size = fontsize1, face="plain")) +
-  theme(text= element_text(size=fontsize1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
+  theme(strip.text.x = element_text(size = fontsize1+1, face="plain")) +
+  theme(text= element_text(size=fontsize1+1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom", legend.text=element_text(size=fontsize1), legend.title=element_text(face="bold.italic")) +
+  theme(legend.position="bottom", legend.text=element_text(size=fontsize1+1), legend.title=element_text(face="bold.italic"), legend.box = "vertical") +
   scale_colour_manual(values=c("green3", "black","purple","brown","blue","pink2","orange","skyblue3"),
                       name ="PRMARY ENERGY CARRIER:", 
                       breaks=c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind"),
@@ -1235,6 +1235,7 @@ GBioOthSecCost
 lay<-rbind(1,1,1,1,1,1,1,1,1,1,1,1,1,
            2,2,2,2,2,2,2,2,2,2,2,2,2,2) 
 Fig4 <- grid.arrange(GBioLiqSecCost,GBioOthSecCost, layout_matrix=lay)
+
 
 #
 # ---- FIG S1: Regional Parameters ----
@@ -1518,7 +1519,7 @@ FigS6 <- grid.arrange(GBioLiqSecCost2,GBioOthSecCost2, layout_matrix=lay)
 # print(plot(Fig3))
 # dev.off()
 # 
-# png(paste0(getwd(),"/GitHub/EMF33/output/BioTech/Fig4.png"), width=8*ppi, height=9*ppi, res=ppi)
+# png(paste0(getwd(),"/GitHub/EMF33/output/BioTech/Fig4.png"), width=8*ppi, height=10*ppi, res=ppi)
 # print(plot(Fig4))
 # dev.off()
 # 
