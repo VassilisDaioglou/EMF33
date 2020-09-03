@@ -26,8 +26,8 @@ FSizeLeg = 6.5
 ActiveModel = c("AIM/CGE","COFFEE","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33","REMIND-MAGPIE")
 
 # ---- READ DATA FILE ----
-NewReg=read.csv(paste0(getwd(),"/data/Trade/TradeRegData.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
-BioPrice=read.csv(paste0(getwd(),"/data/Trade/TradeRegPrice.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
+NewReg=read.csv(paste0(getwd(),"/GitHub/EMF33/data/Trade/TradeRegData.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
+BioPrice=read.csv(paste0(getwd(),"/GitHub/EMF33/data/Trade/TradeRegPrice.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
 # Delete extra column created when data in imported
 NewReg$X <-NULL
 NewReg$Year = as.numeric(substr(NewReg$Year, start=1, stop=4))
@@ -1246,102 +1246,102 @@ colnames(SupData)[1:5] <- c("Model","Scenario","Region","Variable","Unit")
 
 #
 # # ---- OUTPUTS FOR PAPER----
-# png(file = paste0(getwd(),"/output/BioTrade/Fig1.png"), width = 6.5*ppi, height = 4*ppi, units = "px", res = ppi)
+# png(file = paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Fig1.png"), width = 6.5*ppi, height = 4*ppi, units = "px", res = ppi)
 # plot(FigTrad2)
 # dev.off()
 # 
-# png(file = paste0(getwd(),"/output/BioTrade/Fig2a.png"), width=2.8*ppi, height=2.8*ppi, res=ppi)
+# png(file = paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Fig2a.png"), width=2.8*ppi, height=2.8*ppi, res=ppi)
 # plot(MapTradFracAll)
 # dev.off()
 # 
-# png(file = paste0(getwd(),"/output/BioTrade/Fig2b.png"), width=3*ppi, height=4*ppi, res=ppi)
+# png(file = paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Fig2b.png"), width=3*ppi, height=4*ppi, res=ppi)
 # plot(legend)
 # dev.off()
 # 
-# png(file = paste0(getwd(),"/output/BioTrade/Fig3.png"), width=5*ppi, height=5*ppi, res=ppi)
+# png(file = paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Fig3.png"), width=5*ppi, height=5*ppi, res=ppi)
 # plot(SecurityFig2)
 # dev.off()
 # 
-# png(file = paste0(getwd(),"/output/BioTrade/Fig4.png"), width=6*ppi, height=6*ppi, res=ppi)
+# png(file = paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Fig4.png"), width=6*ppi, height=6*ppi, res=ppi)
 # plot(SupplyDiversityFinal)
 # dev.off()
 # 
 # 
-# png(file = paste0(getwd(),"/output/BioTrade/FigS1.png"), width = 6*ppi, height = 8*ppi, units = "px", res = ppi)
+# png(file = paste0(getwd(),"/GitHub/EMF33/output/BioTrade/FigS1.png"), width = 6*ppi, height = 8*ppi, units = "px", res = ppi)
 # plot(FigTradeFull)
 # dev.off()
 # 
-# png(file = paste0(getwd(),"/output/BioTrade/FigS2.png"), width=8*ppi, height=8*ppi, res=ppi)
+# png(file = paste0(getwd(),"/GitHub/EMF33/output/BioTrade/FigS2.png"), width=8*ppi, height=8*ppi, res=ppi)
 # print(plot(FFandBioLo))
 # dev.off()
 # 
-# png(file = paste0(getwd(),"/output/BioTrade/FigS3.png"), width=5*ppi, height=8*ppi, res=ppi)
+# png(file = paste0(getwd(),"/GitHub/EMF33/output/BioTrade/FigS3.png"), width=5*ppi, height=8*ppi, res=ppi)
 # print(plot(ExportFrac))
 # dev.off()
 # 
-# png(file = paste0(getwd(),"/output/BioTrade/FigS4.png"), width=7*ppi, height=5*ppi, res=ppi)
+# png(file = paste0(getwd(),"/GitHub/EMF33/output/BioTrade/FigS4.png"), width=7*ppi, height=5*ppi, res=ppi)
 # print(plot(TradeComparePointGlobal))
 # dev.off()
 # 
-# png(file = paste0(getwd(),"/output/BioTrade/FigS5.png"), width=5*ppi, height=8*ppi, res=ppi)
+# png(file = paste0(getwd(),"/GitHub/EMF33/output/BioTrade/FigS5.png"), width=5*ppi, height=8*ppi, res=ppi)
 # plot(SecurityFig)
 # dev.off()
 # 
-# png(file = paste0(getwd(),"/output/BioTrade/FigS6.png"), width=5*ppi, height=8*ppi, res=ppi)
+# png(file = paste0(getwd(),"/GitHub/EMF33/output/BioTrade/FigS6.png"), width=5*ppi, height=8*ppi, res=ppi)
 # print(plot(SecurityCompareFig))
 # dev.off()
 # 
-# png(file = paste0(getwd(),"/output/BioTrade/FigS7.png"), width = 5*ppi, height = 9*ppi, units = "px", res = ppi)
+# png(file = paste0(getwd(),"/GitHub/EMF33/output/BioTrade/FigS7.png"), width = 5*ppi, height = 9*ppi, units = "px", res = ppi)
 # plot(FigBiovsAgri)
 # dev.off()
 # 
-# write.xlsx(SupData, file=paste0(getwd(),"/output/BioTrade/SupplementaryData.xlsx"), sheetName="Supplementary Data", row.names=FALSE, showNA = TRUE)
+# write.xlsx(SupData, file=paste0(getwd(),"/GitHub/EMF33/output/BioTrade/SupplementaryData.xlsx"), sheetName="Supplementary Data", row.names=FALSE, showNA = TRUE)
 #
-# write.xlsx(DiversityTest.TtestDF, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Diversity of Supply", row.names=TRUE, showNA = TRUE)
-# write.xlsx(DriversTech.Ttest, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Drivers of Trade (Technology)", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(DriversBudg.Ttest, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(SecurityCompare, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Security Compound Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(SecurityTest.Ttest, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Security Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(EneTradeMed, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Medians", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(EneTradeGrMod, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Growth Rates (per model)", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(EneTradeGr, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Growth Rates", append=TRUE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(BiomassTrade, file=paste0(getwd(),"/output/BioTrade/Statistics.xlsx"), sheetName="Biomass Trade Summary", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(DiversityTest.TtestDF, file=paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Statistics.xlsx"), sheetName="Diversity of Supply", row.names=TRUE, showNA = TRUE)
+# write.xlsx(DriversTech.Ttest, file=paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Statistics.xlsx"), sheetName="Drivers of Trade (Technology)", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(DriversBudg.Ttest, file=paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Statistics.xlsx"), sheetName="Drivers of Trade (Budget)", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(SecurityCompare, file=paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Statistics.xlsx"), sheetName="Security Compound Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(SecurityTest.Ttest, file=paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Statistics.xlsx"), sheetName="Security Indicator", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(EneTradeMed, file=paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Statistics.xlsx"), sheetName="Medians", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(EneTradeGrMod, file=paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Statistics.xlsx"), sheetName="Growth Rates (per model)", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(EneTradeGr, file=paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Statistics.xlsx"), sheetName="Growth Rates", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(BiomassTrade, file=paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Statistics.xlsx"), sheetName="Biomass Trade Summary", append=TRUE, row.names=FALSE, showNA = TRUE)
 #
 #
 # ---- OTHER OUTPUTS ----
-# png(paste0(getwd(),"/output/BioTrade/BioProdTrade.png"), width=6*ppi, height=8*ppi, res=ppi)
+# png(paste0(getwd(),"/GitHub/EMF33/output/BioTrade/BioProdTrade.png"), width=6*ppi, height=8*ppi, res=ppi)
 # print(plot(FigTradeFull))
 # dev.off()
 # 
-# png(paste0(getwd(),"/output/BioTrade/BioTradeVolume.png"), width=6*ppi, height=8*ppi, res=ppi)
+# png(paste0(getwd(),"/GitHub/EMF33/output/BioTrade/BioTradeVolume.png"), width=6*ppi, height=8*ppi, res=ppi)
 # print(plot(Trade_BioVol))
 # dev.off()
 # 
-# png(paste0(getwd(),"/output/BioTrade/BioTradeValue2.png"), width=8*ppi, height=5*ppi, res=ppi)
+# png(paste0(getwd(),"/GitHub/EMF33/output/BioTrade/BioTradeValue2.png"), width=8*ppi, height=5*ppi, res=ppi)
 # print(plot(Trade_BioVal))
 # dev.off()
 # 
-# png(paste0(getwd(),"/output/BioTrade/MapTradFrac.jpg"), width=4.9*ppi, height=5*ppi, res=ppi)
+# png(paste0(getwd(),"/GitHub/EMF33/output/BioTrade/MapTradFrac.jpg"), width=4.9*ppi, height=5*ppi, res=ppi)
 # print(plot(MapTradFracAll))
 # dev.off()
 # 
-# png(paste0(getwd(),"/output/BioTrade/Security.png"), width=6*ppi, height=8*ppi, res=ppi)
+# png(paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Security.png"), width=6*ppi, height=8*ppi, res=ppi)
 # print(plot(SecurityFig))
 # dev.off()
 # 
-# png(paste0(getwd(),"/output/BioTrade/SupplyDiversity.png"), width=6.5*ppi, height=3*ppi, res=ppi)
+# png(paste0(getwd(),"/GitHub/EMF33/output/BioTrade/SupplyDiversity.png"), width=6.5*ppi, height=3*ppi, res=ppi)
 # print(plot(SupplyDiversity))
 # dev.off()
 # 
-# png(paste0(getwd(),"/output/BioTrade/BioExportFracRCP.png"), width=5*ppi, height=8*ppi, res=ppi)
+# png(paste0(getwd(),"/GitHub/EMF33/output/BioTrade/BioExportFracRCP.png"), width=5*ppi, height=8*ppi, res=ppi)
 # print(plot(ExportFracRCP))
 # dev.off()
 # 
-# png(paste0(getwd(),"/output/BioTrade/Carriers.png"), width=8*ppi, height=8*ppi, res=ppi)
+# png(paste0(getwd(),"/GitHub/EMF33/output/BioTrade/Carriers.png"), width=8*ppi, height=8*ppi, res=ppi)
 # print(plot(Carriers1))
 # dev.off()
 # 
-# png(paste0(getwd(),"/output/BioTrade/FFandBioHi.png"), width=8*ppi, height=8*ppi, res=ppi)
+# png(paste0(getwd(),"/GitHub/EMF33/output/BioTrade/FFandBioHi.png"), width=8*ppi, height=8*ppi, res=ppi)
 # print(plot(FFandBioHi))
 # dev.off()
 # 
