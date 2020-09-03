@@ -654,7 +654,7 @@ FigProd <- ggplot(data=subset(BioProd, variable=="BioProd"&(!REGION=="World") &(
   theme_bw() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, vjust=0.5), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  ylab(expression(paste("Regional Production,", EJ[Primary],"/yr",""))) +
+  ylab(expression(paste("Production,", EJ[Primary],"/yr",""))) +
   xlab("") +
   scale_x_continuous(breaks=seq(2020, 2100, 20)) +
   scale_fill_manual(values=c("forestgreen","greenyellow","navy","dodgerblue","cadetblue1","brown","blueviolet","pink","red"),
@@ -675,7 +675,7 @@ FigTrad <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(!REGION==
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, vjust=0.5), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.title=element_blank(), legend.position="bottom", legend.text=element_text(size=FSizeLeg)) +
-  ylab(expression(paste("Regional Net Trade,", EJ[Primary],"/yr",""))) +
+  ylab(expression(paste("Net Trade,", EJ[Primary],"/yr",""))) +
   xlab("") +
   scale_x_continuous(breaks=seq(2020, 2100, 20)) +
   scale_fill_manual(values=c("forestgreen","greenyellow","navy","dodgerblue","cadetblue1","brown","blueviolet","pink","red"),
@@ -698,7 +698,7 @@ FigTrad2 <- ggplot(data=subset(BioProd,variable=="TradePrimBiomassVol"&(SCENARIO
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, vjust=0.5), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.title=element_blank(), legend.position="bottom", legend.text=element_text(size=FSizeLeg)) +
-  ylab(expression(paste("Regional Net Trade,", EJ[Primary],"/yr",""))) +
+  ylab(expression(paste("Net Trade,", EJ[Primary],"/yr",""))) +
   xlab("") +
   scale_x_continuous(breaks=seq(2020, 2100, 20)) +
   scale_fill_manual(values=c("forestgreen","greenyellow","navy","dodgerblue","cadetblue1","brown","blueviolet","pink","red"),
