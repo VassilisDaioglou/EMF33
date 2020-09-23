@@ -1660,6 +1660,18 @@ SupData.defs <- data.frame(Variables = c("Secondary Carrier",
 
 #
 # ---- *** OTHER DATA PROCESSING - NOT FOR MANUSCRIPT *** ----
+# ---- OUTPUT: MODEL and LIT COMPARISON ----
+# DataComp.model = GlobalData.BioCor1
+# DataComp.model = subset(DataComp.model, select=c(MODEL,SCENARIO,VARIABLE,Year,CarrierID,Prim,Tech,Capt,Efficiency,CapitalCo))
+# 
+# DataComp.lit = LitData
+# DataComp.lit = subset(DataComp.lit, select=c(VARIABLE,CarrierID,Prim,Tech,Capt,Efficiency,CapitalCo,Ref))
+# 
+# write.xlsx(DataComp.model, file=paste0(getwd(),"/GitHub/EMF33/output/BioTech/Other/EMF33_TechData_Comparison.xlsx"), sheetName="Model Data", append=FALSE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(DataComp.lit, file=paste0(getwd(),"/GitHub/EMF33/output/BioTech/Other/EMF33_TechData_Comparison.xlsx"), sheetName="Literature Data", append=TRUE, row.names=FALSE, showNA = TRUE)
+# 
+# rm(DataComp.model,DataComp.lit)
+#
 # ---- Liquids use in IMAGE ----
 # RegSecEn.Liq = subset(RegData.Liq, select=c(MODEL,SCENARIO,REGION,Year,Prim,Capt,SecEn,Tech2))
 # RegSecEn.BioLiqIMAGE = subset(RegSecEn.Liq, MODEL=="IMAGE"&(Prim=="Biomass"|Prim=="BiomasswCCS"))
