@@ -27,6 +27,8 @@ Additional data (model results not reported on EMF-33 database & external litera
   - *TradeData2.R:* Additional data for trade paper concerning regional biomass prices (TradeRegData.csv; TradeRegPrice.csv)
 
 ## References
-Daioglou, V., Rose, S., Bauer, N., et al. (2020). Bioenergy technologies in long-run climate mitigation: Results from the EMF-33 study. Climatic Change (accepted)
+Daioglou, V., Rose, S., Bauer, N. et al. (2020). Bioenergy technologies in long-run climate mitigation: Results from the EMF-33 study. *Climatic Change*.\
+ https://doi.org/10.1007/s10584-020-02799-y
 
-Daioglou V., Muratori M., et al. , Implications of climate change mitigation strategies on international bioenergy trade, (under review)
+Daioglou V., Muratori M., Lamers P. et al. , Implications of climate change mitigation strategies on international bioenergy trade. *Climatic Change*. \
+https://doi.org/10.1007/s10584-020-02877-1
