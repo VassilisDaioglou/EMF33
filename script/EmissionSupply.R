@@ -109,7 +109,7 @@ Emis_Supply.Order = subset(Emis_Supply.Order, MargPrimBio_EJ > 0)
 
 # ---- FIG: Emission Supply Curve ----
 Scatter<-ggplot(data = subset(Emis_Supply.Order, SCENARIO == "AllFeedstocks")) + 
-  geom_point(aes(x=CumPrimBio_EJ, y=EF_PrimBio, colour = MODEL)) +
+  geom_point(aes(x=CumPrimBio_EJ, y=EF_PrimBio, shape = REGION, colour = REGION)) +
   # xlim(2010,2100) +
   ylim(-200,400) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
@@ -130,7 +130,7 @@ Scatter<-ggplot(data = subset(Emis_Supply.Order, SCENARIO == "AllFeedstocks")) +
   #                    name ="Climate Target",
   #                    breaks=c("20","450","550","Baseline"),
   #                    labels=c("1.9 W/m²","2.6 W/m²","3.4 W/m²","Baseline")) +
-  facet_grid(MODEL~REGION)
+  facet_grid(.~MODEL)
 Scatter
 
 # ---- OUTPUTS ----
