@@ -41,7 +41,7 @@ DATA = subset(DATA, Year %in% ActYears)
 # Models which include valid data for the "Energy Crops Only" Scenario
 MODELS.EnergyCrops = unique(subset(DATA, SCENARIO == "R5B300EC")$MODEL)
 #
-# --- MAKE RELEVANT DATASETS ----
+# --- FUNCTIONS ----
 clean.data <- function(dataframe){
   data = spread(dataframe, SCENARIO, value, fill = 0)
   data = data %>% mutate(AllFeedstocks = R5B300 - R5B0)
@@ -78,17 +78,30 @@ get.marginal <- function(dataframe){
   dataframe
 }
 
+# --- MAKE RELEVANT DATASETS ----
 # ---- *** Land Use Emissions *** ----
 Emis.temp = subset(DATA, VARIABLE == "Emissions|CO2|Land Use")
-Emis.marg = get.marginal(Emis.temp)
+# Emis.marg = get.marginal(Emis.temp)
 Emis.marg = clean.data(Emis.temp)
 
 # ---- *** Primary Biomass Production *** ----
-Prim = subset(DATA, VARIABLE == "Primary Energy|Biomass|Modern" | VARIABLE == "Primary Energy|Biomass|Energy Crops")
+Prim = subset(DATA, VARIABLE == "Primary Energy|Biomass|Modern")
 Prim.marg = get.marginal(Prim)
 Prim.marg = clean.data(Prim.marg)
 
-# ---- *** Complete Dataset *** ----
+Prim$ID = paste(Prim$MODEL, Prim$REGION, Prim$Year)
+# ---- *** Projections of Prim and Emissions *** ----
+Prim.temp = subset(Prim, SCENARIO == "R5B300" & VARIABLE == "Primary Energy|Biomass|Modern")
+Prim.temp$ID = paste(Prim.temp$MODEL, Prim.temp$REGION, Prim.temp$Year)
+
+Projections = Emis.marg
+Projections$PrimBio = Prim.temp[match(Projections$ID,Prim.temp$ID),"value"]
+colnames(Projections)[7] <- "LUC_MtCO2"
+colnames(Projections)[9] <- "PrimBio_EJ"
+Projections = subset(Projections, select =-c(VARIABLE, UNIT, ID))
+
+Projections = melt(Projections, id.vars=c("MODEL","Year","REGION","SCENARIO"), rm.na = TRUE)
+# ---- *** Emission-Supply Dataset *** ----
 Emis_Supply = Emis.marg
 Emis_Supply$PrimBio = Prim.marg[match(Emis_Supply$ID,Prim.marg$ID),"value"]
 Emis_Supply = subset(Emis_Supply, !Year == 2010)
@@ -107,11 +120,26 @@ Emis_Supply.Order$CumPrimBio_EJ <- ave(Emis_Supply.Order$MargPrimBio_EJ, Emis_Su
 
 Emis_Supply.Order = subset(Emis_Supply.Order, MargPrimBio_EJ > 0)
 
-# ---- FIG: Emission Supply Curve ----
-Scatter<-ggplot(data = subset(Emis_Supply.Order, SCENARIO == "AllFeedstocks")) + 
-  geom_point(aes(x=CumPrimBio_EJ, y=EF_PrimBio, shape = REGION, colour = REGION)) +
+# ---- FIGURES ----
+# ---- *** FIG: Emission and Biomass Projections ----
+proj<-ggplot(data = subset(Projections, SCENARIO == "AllFeedstocks" & REGION == "WORLD")) + 
+  geom_line(aes(x=Year, y=value, colour = REGION)) +
+  xlim(2010,2100) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  xlab("Year") +
+  facet_grid(MODEL~variable, scales = "free_y")
+proj
+
+#
+# ---- *** FIG: Emission Supply Curve ----
+Scatter<-ggplot(data = subset(Emis_Supply.Order, SCENARIO == "AllFeedstocks" & REGION == "WORLD")) + 
+  geom_point(aes(x=CumPrimBio_EJ, y=EF_PrimBio, shape = REGION, colour = MODEL)) +
+  geom_line(aes(x=CumPrimBio_EJ, y=EF_PrimBio,  colour = MODEL)) +
   # xlim(2010,2100) +
-  ylim(-200,400) +
+  # ylim(-200,400) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=0,size = 0.1, colour='black') +
   # ggtitle("A: Radiative Forcing") + theme(plot.title = element_text(face="bold")) +
@@ -120,7 +148,7 @@ Scatter<-ggplot(data = subset(Emis_Supply.Order, SCENARIO == "AllFeedstocks")) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   # ylab(expression("W/m"^2)) +
   ylab("KgCO2/GJ-Prim")+ 
-  xlab("EJ Primary Biomass") +
+  xlab("EJ Primary Biomass") 
   # theme(legend.position="none", legend.text = element_text(size=6, face="plain")) +
   # scale_colour_manual(values=c("forestgreen","forestgreen","forestgreen","navy","navy","navy","firebrick","firebrick","firebrick"),
   #                     name ="",
@@ -130,11 +158,16 @@ Scatter<-ggplot(data = subset(Emis_Supply.Order, SCENARIO == "AllFeedstocks")) +
   #                    name ="Climate Target",
   #                    breaks=c("20","450","550","Baseline"),
   #                    labels=c("1.9 W/m²","2.6 W/m²","3.4 W/m²","Baseline")) +
-  facet_grid(.~MODEL)
+  # facet_grid(MODEL~.)
 Scatter
 
+#
 # ---- OUTPUTS ----
-png(file = "GitHub/EMF33/output/EmissionSupply/Scatter.png", width = 7*ppi, height = 3*ppi, units = "px", res = ppi)
+png(file = "GitHub/EMF33/output/EmissionSupply/Projections.png", width = 4*ppi, height = 7*ppi, units = "px", res = ppi)
+plot(proj)
+dev.off()
+# 
+png(file = "GitHub/EMF33/output/EmissionSupply/Scatter.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
 plot(Scatter)
 dev.off()
 # #
