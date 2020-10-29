@@ -15,7 +15,7 @@ library(tidyr)
 library(xlsx)
 
 # ---- READ DATA ----
-DATA=read.csv(paste0(getwd(),"/data/emf33demr3r_compare_20180219-164947.csv"), sep=",", dec=".", stringsAsFactors = FALSE)
+DATA=read.csv("GitHub/EMF33/data/emf33demr3r_compare_20180219-164947.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 DATA=melt(DATA, id.vars=c("MODEL","SCENARIO","REGION","VARIABLE","UNIT"), variable_name="Year", value.name="value", na.rm=FALSE)
 colnames(DATA)[6]<-"Year"
 DATA$Year = as.numeric(substr(DATA$Year, start=2, stop=5))
