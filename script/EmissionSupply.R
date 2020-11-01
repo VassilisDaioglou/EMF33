@@ -35,7 +35,7 @@ DATA = DATA %>% mutate(WORLD = ASIA + LAM + MAF + OECD90 + REF)
 DATA = melt(DATA,id.vars = c("MODEL","SCENARIO","VARIABLE","UNIT","Year"), na.rm = TRUE)
 colnames(DATA)[6] <- "REGION"
 DATA = subset(DATA, Year %in% ActYears)
-
+DATA = subset(DATA, !(MODEL == "NLU 1.0"))
 #
 # ---- IDENTIFY RELEVANT MODELS ----
 # Models which include valid data for the "Energy Crops Only" Scenario
@@ -47,7 +47,7 @@ clean.data <- function(dataframe){
   data = data %>% mutate(AllFeedstocks = R5B300 - R5B0)
   data = data %>% mutate(EnergyCrops = R5B300EC - R5B0)
   
-  data = subset(data, selec = -c(R5B0, R5B300, R5B300EC))
+  data = subset(data, select = -c(R5B0, R5B300, R5B300EC))
   
   data = melt(data, id.vars=c("MODEL","VARIABLE","UNIT","Year","REGION"), na.rm = TRUE)
   colnames(data)[6] <- "SCENARIO"
@@ -83,7 +83,7 @@ get.marginal <- function(dataframe){
 Emis.temp = subset(DATA, VARIABLE == "Emissions|CO2|Land Use")
 # Emis.marg = get.marginal(Emis.temp)
 Emis.marg = clean.data(Emis.temp)
-
+Emis.marg = subset(Emis.marg, SCENARIO == "AllFeedstocks")
 # ---- *** Primary Biomass Production *** ----
 Prim = subset(DATA, VARIABLE == "Primary Energy|Biomass|Modern")
 Prim.marg = get.marginal(Prim)
@@ -91,7 +91,7 @@ Prim.marg = clean.data(Prim.marg)
 
 Prim$ID = paste(Prim$MODEL, Prim$REGION, Prim$Year)
 # ---- *** Projections of Prim and Emissions *** ----
-Prim.temp = subset(Prim, SCENARIO == "R5B300" & VARIABLE == "Primary Energy|Biomass|Modern")
+Prim.temp = subset(Prim, SCENARIO == "R5B300")
 Prim.temp$ID = paste(Prim.temp$MODEL, Prim.temp$REGION, Prim.temp$Year)
 
 Projections = Emis.marg
@@ -124,13 +124,14 @@ Emis_Supply.Order = subset(Emis_Supply.Order, MargPrimBio_EJ > 0)
 # ---- *** FIG: Emission and Biomass Projections ----
 proj<-ggplot(data = subset(Projections, SCENARIO == "AllFeedstocks" & REGION == "WORLD")) + 
   geom_line(aes(x=Year, y=value, colour = REGION)) +
+  ggtitle("Effect of biomass growth (B300-B0)") + 
   xlim(2010,2100) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   theme_bw() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   xlab("Year") +
-  facet_grid(MODEL~variable, scales = "free_y")
+  facet_grid(variable~MODEL, scales = "free_y")
 proj
 
 #
@@ -163,7 +164,7 @@ Scatter
 
 #
 # ---- OUTPUTS ----
-png(file = "GitHub/EMF33/output/EmissionSupply/Projections.png", width = 4*ppi, height = 7*ppi, units = "px", res = ppi)
+png(file = "GitHub/EMF33/output/EmissionSupply/Projections.png", width = 9*ppi, height = 3*ppi, units = "px", res = ppi)
 plot(proj)
 dev.off()
 # 
