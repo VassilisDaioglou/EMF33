@@ -1,10 +1,23 @@
-# R script that reads in EMF33 Supply Scenarios (R3) data
-# to produce multi-model biomass emission-supply curves 
+# AIM:
+# R script that reads in EMF33 Supply Scenarios (R3) data to produce multi-model biomass emission-supply curves 
 # 
+# METHOD:
+# Use EMF-33 senarios with linearly increased (modern) biomass demand from 0 EJ/yr to 100/200/300/400 EJ/yr by 2100
+# For each of these scenarios we have the annual LUC emissions. By comparing these LUC emission with those of a 
+# counterfactual scenario (R3B0), we can get the LUC emissions associated with increased biomass demand
+#
+# By determining the cumulative (2010-2100) biomass production and LUC emissions, we can get an aggregate emission 
+# factor (kgCO2/GJ-prim) for biomass production for each scenario and model. If we determine these emission factors 
+# for each scenario, we can then draw and emission-factor supply curve for each model
+#
+# x-axis: 0, 100, 200, 300, 400 EJ/yr (based on each scenario)
+# y-axis: Aggregate emission factor (based on cumulative LUC emissions divided by cumulative biomass production)
+#
+# AUTHORSHIP:
 # Author: Vassilis Daioglou
 # Date: October-November 2020
 # Reference: AR6 WGIII Ch.7.4.4
-
+#
 # ---- START ----
 # clear memory
 rm(list=ls()) 
@@ -37,114 +50,65 @@ colnames(DATA)[6] <- "REGION"
 DATA = subset(DATA, Year %in% ActYears)
 DATA = subset(DATA, !(MODEL == "NLU 1.0" | MODEL == "FARM 3.1"))
 #
-# ---- IDENTIFY RELEVANT MODELS ----
-# Models which include valid data for the "Energy Crops Only" Scenario
-MODELS.EnergyCrops = unique(subset(DATA, SCENARIO == "R5B300EC")$MODEL)
-#
 # --- FUNCTIONS ----
 clean.data <- function(dataframe){
   data = spread(dataframe, SCENARIO, value, fill = 0)
-  data = data %>% mutate(AllFeedstocks = R5B300 - R5B0)
-  data = data %>% mutate(EnergyCrops = R5B300EC - R5B0)
-  
-  data = subset(data, select = -c(R5B0, R5B300, R5B300EC))
+  data = data %>% mutate(Bio100 = R5B100 - R5B0)
+  data = data %>% mutate(Bio200 = R5B200 - R5B0)
+  data = data %>% mutate(Bio300 = R5B300 - R5B0)
+  data = data %>% mutate(Bio400 = R5B400 - R5B0)
+
+  data = subset(data, select = -c(R5B0, R5B100, R5B200, R5B300, R5B400))
   
   data = melt(data, id.vars=c("MODEL","VARIABLE","UNIT","Year","REGION"), na.rm = TRUE)
   colnames(data)[6] <- "SCENARIO"
 
-  data$ID = paste(data$MODEL, data$REGION, data$Year)
   data
 } 
 
-get.marginal <- function(dataframe){
+get.cumulative <- function(dataframe){
+  dataframe$ID <- NULL
   dataframe = spread(dataframe, Year, value)
   colnames(dataframe)[6:15] <- c("x2010","x2020","x2030","x2040","x2050","x2060","x2070","x2080","x2090","x2100")
-  dataframe = dataframe %>% mutate(x2020marg = x2020 - x2010)
-  dataframe = dataframe %>% mutate(x2030marg = x2030 - x2020)
-  dataframe = dataframe %>% mutate(x2040marg = x2040 - x2030)
-  dataframe = dataframe %>% mutate(x2050marg = x2050 - x2040)
-  dataframe = dataframe %>% mutate(x2060marg = x2060 - x2050)
-  dataframe = dataframe %>% mutate(x2070marg = x2070 - x2060)
-  dataframe = dataframe %>% mutate(x2080marg = x2080 - x2070)
-  dataframe = dataframe %>% mutate(x2090marg = x2090 - x2080)
-  dataframe = dataframe %>% mutate(x2100marg = x2100 - x2090)
+  dataframe = dataframe %>% mutate(Cumulative = x2010 + x2020 + x2030 + x2040 + x2050 +
+                                     x2060 + x2070 + x2080 + x2090 + x2100)
   dataframe = subset(dataframe, select = -c(x2010,x2020,x2030,x2040,x2050,x2060,x2070,x2080,x2090,x2100))
-  dataframe = melt(dataframe, id.vars=c("MODEL","SCENARIO","VARIABLE","UNIT","REGION"))
-  colnames(dataframe)[6] <- "Year" 
-  
-  dataframe$Year <- gsub("x","",dataframe$Year)
-  dataframe$Year <- gsub("marg","",dataframe$Year)
-  dataframe$Year = as.numeric(dataframe$Year)
-  dataframe
+  dataframe 
 }
 
 # --- MAKE RELEVANT DATASETS ----
 # ---- *** Land Use Emissions *** ----
-Emis.temp = subset(DATA, VARIABLE == "Emissions|CO2|Land Use")
-# Emis.marg = get.marginal(Emis.temp)
-Emis.marg = clean.data(Emis.temp)
-Emis.marg = subset(Emis.marg, SCENARIO == "AllFeedstocks")
+Emis = subset(DATA, VARIABLE == "Emissions|CO2|Land Use")
+Emis.temp = clean.data(Emis)
+Emis.cum = get.cumulative(Emis.temp)
+Emis.cum$ID = paste(Emis.cum$MODEL, Emis.cum$REGION, Emis.cum$SCENARIO)
+# 
 # ---- *** Primary Biomass Production *** ----
 Prim = subset(DATA, VARIABLE == "Primary Energy|Biomass|Modern" | VARIABLE == "Primary Energy|Biomass|Energy Crops")
-Prim.marg = get.marginal(Prim)
-Prim.marg = clean.data(Prim.marg)
-Prim.marg = spread(Prim.marg, VARIABLE, value)
+Prim.temp = clean.data(Prim)
+Prim.cum = get.cumulative(Prim.temp)
+Prim.cum = spread(Prim.cum, VARIABLE, Cumulative)
+Prim.cum$ID = paste(Prim.cum$MODEL, Prim.cum$REGION, Prim.cum$SCENARIO)
+# 
+# ---- *** Emission Factor Dataframe *** ----
+EmisFac = Emis.cum
+EmisFac$PrimBio = Prim.cum[match(EmisFac$ID,Prim.cum$ID),"Primary Energy|Biomass|Modern"]
+EmisFac$PrimEC = Prim.cum[match(EmisFac$ID,Prim.cum$ID),"Primary Energy|Biomass|Energy Crops"]
 
-Prim$ID = paste(Prim$MODEL, Prim$REGION, Prim$Year)
-# ---- *** Projections of Prim and Emissions *** ----
-Prim.temp = subset(Prim, SCENARIO == "R5B300")
-Prim.temp = spread(Prim.temp, VARIABLE, value)
-Prim.temp$ID = paste(Prim.temp$MODEL, Prim.temp$REGION, Prim.temp$Year)
+EmisFac = EmisFac %>% mutate(EF_PrimBio = Cumulative / PrimBio)
+EmisFac = EmisFac %>% mutate(EF_PrimEC = Cumulative / PrimEC)
+EmisFac$UNIT <- "kgCO2/GJ"
 
-Projections = Emis.marg
-Projections$PrimBio = Prim.temp[match(Projections$ID,Prim.temp$ID),"Primary Energy|Biomass|Modern"]
-Projections$PrimEC = Prim.temp[match(Projections$ID,Prim.temp$ID),"Primary Energy|Biomass|Energy Crops"]
-colnames(Projections)[7] <- "LUC_MtCO2"
-colnames(Projections)[9] <- "PrimBio_EJ"
-colnames(Projections)[10] <- "PrimEnergyCrop_EJ"
-Projections = subset(Projections, select =-c(VARIABLE, UNIT, ID))
+EmisFac = subset(EmisFac, select=-c(VARIABLE, Cumulative, ID, PrimBio, PrimEC))
 
-Projections = melt(Projections, id.vars=c("MODEL","Year","REGION","SCENARIO"), rm.na = TRUE)
-# ---- *** Emission-Supply Dataset *** ----
-Emis_Supply = Emis.marg
-Emis_Supply$PrimBio = Prim.marg[match(Emis_Supply$ID,Prim.marg$ID),"Primary Energy|Biomass|Modern"]
-Emis_Supply$PrimEC = Prim.marg[match(Emis_Supply$ID,Prim.marg$ID),"Primary Energy|Biomass|Energy Crops"]
-Emis_Supply = subset(Emis_Supply, !Year == 2010)
-colnames(Emis_Supply)[7] <- "LUC_MtCO2"
-colnames(Emis_Supply)[9] <- "MargPrimBio_EJ"
-colnames(Emis_Supply)[10] <- "PrimaryEnergyCrop_EJ"
-Emis_Supply = subset(Emis_Supply, select = -c(VARIABLE, UNIT,ID))
-
-  # Order the data according to increasing LUC emissions
-  # Per MODEL, REGION, and SCENARIO
-Emis_Supply.Order = Emis_Supply
-Emis_Supply.Order = Emis_Supply.Order %>% mutate(EF_PrimBio = LUC_MtCO2 / MargPrimBio_EJ)
-
-Emis_Supply.Order <- Emis_Supply.Order[with(Emis_Supply.Order, order(MODEL, REGION, SCENARIO, EF_PrimBio)),]
-Emis_Supply.Order$ID = paste(Emis_Supply.Order$MODEL, Emis_Supply.Order$REGION, Emis_Supply.Order$SCENARIO)
-Emis_Supply.Order$CumPrimBio_EJ <- ave(Emis_Supply.Order$MargPrimBio_EJ, Emis_Supply.Order$ID, FUN = cumsum)
-
-Emis_Supply.Order = subset(Emis_Supply.Order, MargPrimBio_EJ > 0)
-
+EmisFac$EFOrder = factor(EmisFac$SCENARIO, levels = c("Bio100","Bio200","Bio300","Bio400"))
+# 
 # ---- FIGURES ----
-# ---- *** FIG: Emission and Biomass Projections ----
-proj<-ggplot(data = subset(Projections, SCENARIO == "AllFeedstocks" & REGION == "WORLD")) + 
-  geom_line(aes(x=Year, y=value, colour = REGION)) +
-  ggtitle("Effect of biomass growth (B300-B0)") + 
-  xlim(2010,2100) +
-  geom_hline(yintercept=0,size = 0.1, colour='black') +
-  theme_bw() +
-  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
-  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  xlab("Year") +
-  facet_grid(variable~MODEL, scales = "free_y")
-proj
-
-#
-# ---- *** FIG: Emission Supply Curve ----
-Scatter<-ggplot(data = subset(Emis_Supply.Order, SCENARIO == "AllFeedstocks" & REGION == "WORLD")) + 
-  geom_point(aes(x=CumPrimBio_EJ, y=EF_PrimBio, shape = REGION, colour = MODEL)) +
-  geom_line(aes(x=CumPrimBio_EJ, y=EF_PrimBio,  colour = MODEL)) +
+# ---- *** FIG: Emission Supply Curve (cumulative) ----
+Scatter<-ggplot(data = subset(EmisFac, REGION == "WORLD" ),
+                aes(x=factor(EFOrder), y = EF_PrimBio, colour = MODEL, group=MODEL)) + 
+  geom_point() +
+  geom_line() +
   # xlim(2010,2100) +
   # ylim(-200,400) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
@@ -156,25 +120,12 @@ Scatter<-ggplot(data = subset(Emis_Supply.Order, SCENARIO == "AllFeedstocks" & R
   # ylab(expression("W/m"^2)) +
   ylab("KgCO2/GJ-Prim")+ 
   xlab("EJ Primary Biomass") 
-  # theme(legend.position="none", legend.text = element_text(size=6, face="plain")) +
-  # scale_colour_manual(values=c("forestgreen","forestgreen","forestgreen","navy","navy","navy","firebrick","firebrick","firebrick"),
-  #                     name ="",
-  #                     breaks=c("SSP1","SSP1_20","SSP1_450","SSP2","SSP2_20","SSP2_450","SSP3","SSP3_450"),
-  #                     labels=c("SSP1","","","SSP2","","","SSP3",""), guide=FALSE) +
-  # scale_shape_manual(values=c(1,2,3,4),
-  #                    name ="Climate Target",
-  #                    breaks=c("20","450","550","Baseline"),
-  #                    labels=c("1.9 W/m²","2.6 W/m²","3.4 W/m²","Baseline")) +
-  # facet_grid(MODEL~.)
+  # facet_wrap(.~MODEL, nrow=2, scales = "free_y")
 Scatter
 
 #
 # ---- OUTPUTS ----
-png(file = "GitHub/EMF33/output/EmissionSupply/Projections.png", width = 9*ppi, height = 3*ppi, units = "px", res = ppi)
-plot(proj)
-dev.off()
-# 
-png(file = "GitHub/EMF33/output/EmissionSupply/Scatter.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
+png(file = "GitHub/EMF33/output/EmissionSupply/Scatter_2.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
 plot(Scatter)
 dev.off()
 # #
