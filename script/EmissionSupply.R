@@ -35,7 +35,7 @@ DATA = DATA %>% mutate(WORLD = ASIA + LAM + MAF + OECD90 + REF)
 DATA = melt(DATA,id.vars = c("MODEL","SCENARIO","VARIABLE","UNIT","Year"), na.rm = TRUE)
 colnames(DATA)[6] <- "REGION"
 DATA = subset(DATA, Year %in% ActYears)
-DATA = subset(DATA, !(MODEL == "NLU 1.0"))
+DATA = subset(DATA, !(MODEL == "NLU 1.0" | MODEL == "FARM 3.1"))
 #
 # ---- IDENTIFY RELEVANT MODELS ----
 # Models which include valid data for the "Energy Crops Only" Scenario
@@ -85,28 +85,34 @@ Emis.temp = subset(DATA, VARIABLE == "Emissions|CO2|Land Use")
 Emis.marg = clean.data(Emis.temp)
 Emis.marg = subset(Emis.marg, SCENARIO == "AllFeedstocks")
 # ---- *** Primary Biomass Production *** ----
-Prim = subset(DATA, VARIABLE == "Primary Energy|Biomass|Modern")
+Prim = subset(DATA, VARIABLE == "Primary Energy|Biomass|Modern" | VARIABLE == "Primary Energy|Biomass|Energy Crops")
 Prim.marg = get.marginal(Prim)
 Prim.marg = clean.data(Prim.marg)
+Prim.marg = spread(Prim.marg, VARIABLE, value)
 
 Prim$ID = paste(Prim$MODEL, Prim$REGION, Prim$Year)
 # ---- *** Projections of Prim and Emissions *** ----
 Prim.temp = subset(Prim, SCENARIO == "R5B300")
+Prim.temp = spread(Prim.temp, VARIABLE, value)
 Prim.temp$ID = paste(Prim.temp$MODEL, Prim.temp$REGION, Prim.temp$Year)
 
 Projections = Emis.marg
-Projections$PrimBio = Prim.temp[match(Projections$ID,Prim.temp$ID),"value"]
+Projections$PrimBio = Prim.temp[match(Projections$ID,Prim.temp$ID),"Primary Energy|Biomass|Modern"]
+Projections$PrimEC = Prim.temp[match(Projections$ID,Prim.temp$ID),"Primary Energy|Biomass|Energy Crops"]
 colnames(Projections)[7] <- "LUC_MtCO2"
 colnames(Projections)[9] <- "PrimBio_EJ"
+colnames(Projections)[10] <- "PrimEnergyCrop_EJ"
 Projections = subset(Projections, select =-c(VARIABLE, UNIT, ID))
 
 Projections = melt(Projections, id.vars=c("MODEL","Year","REGION","SCENARIO"), rm.na = TRUE)
 # ---- *** Emission-Supply Dataset *** ----
 Emis_Supply = Emis.marg
-Emis_Supply$PrimBio = Prim.marg[match(Emis_Supply$ID,Prim.marg$ID),"value"]
+Emis_Supply$PrimBio = Prim.marg[match(Emis_Supply$ID,Prim.marg$ID),"Primary Energy|Biomass|Modern"]
+Emis_Supply$PrimEC = Prim.marg[match(Emis_Supply$ID,Prim.marg$ID),"Primary Energy|Biomass|Energy Crops"]
 Emis_Supply = subset(Emis_Supply, !Year == 2010)
 colnames(Emis_Supply)[7] <- "LUC_MtCO2"
 colnames(Emis_Supply)[9] <- "MargPrimBio_EJ"
+colnames(Emis_Supply)[10] <- "PrimaryEnergyCrop_EJ"
 Emis_Supply = subset(Emis_Supply, select = -c(VARIABLE, UNIT,ID))
 
   # Order the data according to increasing LUC emissions
