@@ -102,31 +102,31 @@ EmisFac$UNIT <- "kgCO2/GJ"
 EmisFac = subset(EmisFac, select=-c(VARIABLE, Cumulative, ID, PrimBio, PrimEC))
 
 EmisFac$EFOrder = factor(EmisFac$SCENARIO, levels = c("Bio100","Bio200","Bio300","Bio400"))
+EmisFac$EFOrder = gsub( "Bio", "", EmisFac$EFOrder, fixed = F)
 # 
 # ---- FIGURES ----
 # ---- *** FIG: Emission Supply Curve (cumulative) ----
-Scatter<-ggplot(data = subset(EmisFac, REGION == "WORLD" ),
-                aes(x=factor(EFOrder), y = EF_PrimBio, colour = MODEL, group=MODEL)) + 
-  geom_point() +
-  geom_line() +
-  # xlim(2010,2100) +
-  # ylim(-200,400) +
+boxplot<-ggplot(data = subset(EmisFac, REGION == "WORLD" ),
+                aes(x=factor(EFOrder), y = EF_PrimEC)) + 
+  geom_boxplot() +
+  geom_jitter(width=0.2, alpha = 0.2) +
+  ylim(0,50) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=0,size = 0.1, colour='black') +
-  # ggtitle("A: Radiative Forcing") + theme(plot.title = element_text(face="bold")) +
   theme_bw() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   # ylab(expression("W/m"^2)) +
-  ylab("KgCO2/GJ-Prim")+ 
+  ylab(expression(paste("kgCO"[2],"/GJ-Prim"))) + 
   xlab("EJ Primary Biomass") 
-  # facet_wrap(.~MODEL, nrow=2, scales = "free_y")
-Scatter
+# facet_wrap(.~MODEL, nrow=2, scales = "free_y")
+boxplot
 
 #
 # ---- OUTPUTS ----
-png(file = "GitHub/EMF33/output/EmissionSupply/Scatter_2.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
-plot(Scatter)
+# #
+png(file = "GitHub/EMF33/output/EmissionSupply/boxplot_EF.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
+plot(boxplot)
 dev.off()
 # #
 
