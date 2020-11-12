@@ -28,9 +28,9 @@ DATA = na.omit(DATA)
 # ---- SUBSET RELEVANT DATA ----
 DATA1 = subset(DATA, 
                VARIABLE=="Emissions|CO2|Land Use" |
-                 VARIABLE=="Primary Energy|Biomass|Energy Crops" | VARIABLE=="Primary Energy|Biomass|Modern")
+                 VARIABLE=="Primary Energy|Biomass|Energy Crops")
 
-DATA1 = subset(DATA1, SCENARIO=="R5B0" | SCENARIO == "R5B100" | SCENARIO == "R5B200" | SCENARIO == "R5B300" | SCENARIO == "R5B400")
+DATA1 = subset(DATA1, SCENARIO=="R5B0" | SCENARIO == "R5B100" | SCENARIO == "R5B200" | SCENARIO == "R5B300" | SCENARIO == "R5B300LP" |SCENARIO == "R5B400")
 DATA1 = subset(DATA1, REGION=="ASIA" | REGION == "LAM" | REGION == "MAF" | REGION == "OECD90" | REGION == "REF" | REGION == "WORLD")
 
 # ---- OUTPUT ----
