@@ -5,6 +5,12 @@
 "1008374","GLOBIOM","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2000,1908.4373
 "1008388","GLOBIOM","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2000,335.7351
 "1008404","GLOBIOM","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2000,160.9621
+"1010285","GLOBIOM","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2000,1043.69060001352
+"1010347","GLOBIOM","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2000,3320.38703065593
+"1010354","GLOBIOM","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0.00894812497973202
+"1010365","GLOBIOM","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2000,1908.4373
+"1010379","GLOBIOM","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2000,335.7351
+"1010395","GLOBIOM","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2000,160.9621
 "1010972","GLOBIOM","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2000,1043.69060001352
 "1011052","GLOBIOM","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2000,3320.38703065593
 "1011060","GLOBIOM","R5B100","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0.00894812497973202
@@ -45,6 +51,16 @@
 "1047368","GRAPE-15","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
 "1047379","GRAPE-15","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2000,-33
 "1047394","GRAPE-15","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1051565","GRAPE-15","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2000,968
+"1051580","GRAPE-15","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1051721","GRAPE-15","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2000,1950.67
+"1051736","GRAPE-15","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1051747","GRAPE-15","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2000,971.67
+"1051762","GRAPE-15","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1051773","GRAPE-15","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2000,-212.67
+"1051788","GRAPE-15","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1051799","GRAPE-15","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2000,-33
+"1051814","GRAPE-15","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
 "1052449","GRAPE-15","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2000,968
 "1052464","GRAPE-15","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
 "1052605","GRAPE-15","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2000,1950.67
@@ -105,6 +121,16 @@
 "1076760","IMAGE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
 "1076777","IMAGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2000,105.05047684333
 "1076788","IMAGE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1082115","IMAGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2000,1833.87727588037
+"1082126","IMAGE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1082283","IMAGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2000,1608.29015861049
+"1082294","IMAGE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1082311","IMAGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2000,995.107592193545
+"1082322","IMAGE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1082339","IMAGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2000,-58.9647114123684
+"1082350","IMAGE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1082367","IMAGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2000,105.05047684333
+"1082378","IMAGE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
 "1083233","IMAGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2000,1833.87727588037
 "1083244","IMAGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
 "1083401","IMAGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2000,1608.29015861049
@@ -165,6 +191,16 @@
 "1225539","NLU 1.0","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
 "1225564","NLU 1.0","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2000,-30.876957
 "1225579","NLU 1.0","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1228709","NLU 1.0","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2000,-316.11862
+"1228724","NLU 1.0","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1228909","NLU 1.0","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2000,-273.948788
+"1228924","NLU 1.0","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1228949","NLU 1.0","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2000,-421.506713
+"1228964","NLU 1.0","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1228989","NLU 1.0","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2000,-44.567447
+"1229004","NLU 1.0","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
+"1229029","NLU 1.0","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2000,-30.876957
+"1229044","NLU 1.0","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
 "1229864","NLU 1.0","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2000,-316.11862
 "1229879","NLU 1.0","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2000,0
 "1230064","NLU 1.0","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2000,-273.948788
@@ -220,6 +256,11 @@
 "1679809","AIM/CGE","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2005,0
 "1679830","AIM/CGE","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2005,0
 "1679852","AIM/CGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,0
+"1684766","AIM/CGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,0
+"1684895","AIM/CGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,0
+"1684917","AIM/CGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2005,0
+"1684938","AIM/CGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2005,0
+"1684960","AIM/CGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,0
 "1685790","AIM/CGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,0
 "1685804","AIM/CGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1685931","AIM/CGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,0
@@ -280,6 +321,16 @@
 "1741428","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1741453","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,205.505160390516
 "1741466","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1748521","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,1633.03207810321
+"1748534","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1748749","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,1251.37963737796
+"1748762","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1748787","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2005,833.029846582985
+"1748800","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1748825","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2005,462.386610878661
+"1748838","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1748863","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,205.505160390516
+"1748876","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1750003","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,1633.03207810321
 "1750016","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1750231","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,1251.37963737796
@@ -340,6 +391,16 @@
 "1807942","GCAM_EMF33","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1807983","GCAM_EMF33","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,-306.205516571485
 "1808035","GCAM_EMF33","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1816883","GCAM_EMF33","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,1434.58168794844
+"1816935","GCAM_EMF33","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1817441","GCAM_EMF33","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,923.991530019208
+"1817493","GCAM_EMF33","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1817534","GCAM_EMF33","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2005,1101.1935400096
+"1817586","GCAM_EMF33","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1817627","GCAM_EMF33","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2005,-609.216799563166
+"1817679","GCAM_EMF33","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1817720","GCAM_EMF33","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,-85.9739135498356
+"1817772","GCAM_EMF33","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1818820","GCAM_EMF33","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,1499.34473273956
 "1818872","GCAM_EMF33","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1819378","GCAM_EMF33","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,878.258258409566
@@ -400,6 +461,16 @@
 "1886820","GRAPE-15","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1886831","GRAPE-15","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,-25.67
 "1886846","GRAPE-15","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1891017","GRAPE-15","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,-40.33
+"1891032","GRAPE-15","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1891173","GRAPE-15","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,1983.67
+"1891188","GRAPE-15","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1891199","GRAPE-15","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2005,894.67
+"1891214","GRAPE-15","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1891225","GRAPE-15","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2005,-128.33
+"1891240","GRAPE-15","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1891251","GRAPE-15","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,-25.67
+"1891266","GRAPE-15","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1891901","GRAPE-15","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,-40.33
 "1891916","GRAPE-15","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1892057","GRAPE-15","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,1983.67
@@ -460,6 +531,16 @@
 "1916212","IMAGE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1916229","IMAGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,-139.186860929564
 "1916240","IMAGE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1921567","IMAGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,1055.28736760507
+"1921578","IMAGE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1921735","IMAGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,1653.86381522675
+"1921746","IMAGE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1921763","IMAGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2005,1008.39835648729
+"1921774","IMAGE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1921791","IMAGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2005,-53.9824740333039
+"1921802","IMAGE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"1921819","IMAGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,-139.186860929564
+"1921830","IMAGE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1922685","IMAGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,1055.28736760507
 "1922696","IMAGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "1922853","IMAGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,1653.86381522675
@@ -520,6 +601,16 @@
 "2026353","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "2026363","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,-191.8916
 "2026373","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"2028773","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,1404.4378
+"2028783","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"2028793","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,1531.3034
+"2028803","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"2028813","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2005,1038.3232
+"2028823","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"2028833","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2005,504.3994
+"2028843","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"2028853","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,-191.8916
+"2028863","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "2029271","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,1404.4378
 "2029281","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "2029291","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,1531.3034
@@ -580,6 +671,16 @@
 "2064991","NLU 1.0","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "2065016","NLU 1.0","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,-181.240763
 "2065031","NLU 1.0","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"2068161","NLU 1.0","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,12.036407
+"2068176","NLU 1.0","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"2068361","NLU 1.0","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,16.786433
+"2068376","NLU 1.0","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"2068401","NLU 1.0","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2005,24.725605
+"2068416","NLU 1.0","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"2068441","NLU 1.0","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2005,2.174068
+"2068456","NLU 1.0","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
+"2068481","NLU 1.0","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2005,1.176262
+"2068496","NLU 1.0","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "2069316","NLU 1.0","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2005,-576.01243
 "2069331","NLU 1.0","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2005,0
 "2069516","NLU 1.0","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2005,2455.344526
@@ -635,6 +736,11 @@
 "2519261","AIM/CGE","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2010,876.3578
 "2519282","AIM/CGE","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2010,813.578
 "2519304","AIM/CGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,119.1152
+"2524218","AIM/CGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,484.1158
+"2524347","AIM/CGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,225.7391
+"2524369","AIM/CGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2010,1091.4753
+"2524390","AIM/CGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2010,794.8314
+"2524412","AIM/CGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,153.3176
 "2525242","AIM/CGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,580.0346
 "2525256","AIM/CGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2525383","AIM/CGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,309.5575
@@ -745,6 +851,16 @@
 "2580880","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2580905","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,179.142207685076
 "2580918","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2587973","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,1451.77898532641
+"2587986","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2588201","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,1225.54979354066
+"2588214","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2588239","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2010,1065.48127808118
+"2588252","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2588277","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2010,452.906386271983
+"2588290","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2588315","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,179.142207685076
+"2588328","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2589455","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,1451.77898532641
 "2589468","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2589683","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,1225.54979354066
@@ -805,6 +921,16 @@
 "2620664","FARM 3.1","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0.000168
 "2620690","FARM 3.1","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,3e-10
 "2620707","FARM 3.1","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,2.46008640629816
+"2622927","FARM 3.1","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,4e-10
+"2622944","FARM 3.1","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0.000192
+"2623185","FARM 3.1","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,2e-10
+"2623202","FARM 3.1","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,9.60000000000001e-05
+"2623228","FARM 3.1","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2010,2e-10
+"2623245","FARM 3.1","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,9.60000000000001e-05
+"2623271","FARM 3.1","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2010,4e-10
+"2623288","FARM 3.1","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0.000168
+"2623314","FARM 3.1","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,3e-10
+"2623331","FARM 3.1","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,2.95678000395014
 "2624239","FARM 3.1","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,4e-10
 "2624256","FARM 3.1","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0.000192
 "2624497","FARM 3.1","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,2e-10
@@ -865,6 +991,16 @@
 "2647394","GCAM_EMF33","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2647435","GCAM_EMF33","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,-427.749889201712
 "2647487","GCAM_EMF33","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2656335","GCAM_EMF33","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,1381.02079460088
+"2656387","GCAM_EMF33","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2656893","GCAM_EMF33","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,1372.7569809765
+"2656945","GCAM_EMF33","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2656986","GCAM_EMF33","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2010,1595.00393454189
+"2657038","GCAM_EMF33","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2657079","GCAM_EMF33","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2010,317.092448673951
+"2657131","GCAM_EMF33","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2657172","GCAM_EMF33","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,-514.361176272445
+"2657224","GCAM_EMF33","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2658272","GCAM_EMF33","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,1362.28809122448
 "2658324","GCAM_EMF33","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2658830","GCAM_EMF33","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,1400.97001428766
@@ -920,6 +1056,11 @@
 "2687278","GLOBIOM","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2010,2000.69411250892
 "2687292","GLOBIOM","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2010,415.545117806956
 "2687308","GLOBIOM","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,111.706580240457
+"2689189","GLOBIOM","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,1033.73185516051
+"2689251","GLOBIOM","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,3552.58844131017
+"2689269","GLOBIOM","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2010,2000.69411250892
+"2689283","GLOBIOM","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2010,415.545117806956
+"2689299","GLOBIOM","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,111.706580240457
 "2689876","GLOBIOM","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,1033.73185516051
 "2689956","GLOBIOM","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,3552.58844131017
 "2689977","GLOBIOM","R5B100","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2010,2000.69411250892
@@ -955,6 +1096,16 @@
 "2726272","GRAPE-15","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2726283","GRAPE-15","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,-73.33
 "2726298","GRAPE-15","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2730469","GRAPE-15","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,209
+"2730484","GRAPE-15","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2730625","GRAPE-15","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,1613.33
+"2730640","GRAPE-15","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2730651","GRAPE-15","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2010,920.33
+"2730666","GRAPE-15","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2730677","GRAPE-15","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2010,11
+"2730692","GRAPE-15","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2730703","GRAPE-15","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,-73.33
+"2730718","GRAPE-15","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2731353","GRAPE-15","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,209
 "2731368","GRAPE-15","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2731509","GRAPE-15","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,1613.33
@@ -1015,6 +1166,16 @@
 "2755664","IMAGE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2755681","IMAGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,-154.922684917365
 "2755692","IMAGE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2761019","IMAGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,1507.57021209074
+"2761030","IMAGE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2761187","IMAGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,1526.45017301355
+"2761198","IMAGE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2761215","IMAGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2010,877.449681234412
+"2761226","IMAGE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2761243","IMAGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2010,-473.042321547763
+"2761254","IMAGE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2761271","IMAGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,-154.922684917365
+"2761282","IMAGE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2762137","IMAGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,1507.57021209074
 "2762148","IMAGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2762305","IMAGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,1526.45017301355
@@ -1075,6 +1236,16 @@
 "2865805","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2865815","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,1.0117
 "2865825","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2868225","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,1100.7344
+"2868235","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2868245","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,1716.1987
+"2868255","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2868265","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2010,738.0473
+"2868275","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2868285","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2010,192.5521
+"2868295","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2868305","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,0.9541
+"2868315","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2868723","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,1094.6266
 "2868733","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2868743","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,1977.6539
@@ -1135,6 +1306,16 @@
 "2904443","NLU 1.0","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2904468","NLU 1.0","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,-183.683318
 "2904483","NLU 1.0","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2907613","NLU 1.0","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,-0.231561
+"2907628","NLU 1.0","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2907813","NLU 1.0","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,9.169384
+"2907828","NLU 1.0","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2907853","NLU 1.0","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2010,20.738117
+"2907868","NLU 1.0","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2907893","NLU 1.0","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2010,1.053238
+"2907908","NLU 1.0","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
+"2907933","NLU 1.0","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2010,-0.690145
+"2907948","NLU 1.0","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2908768","NLU 1.0","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2010,-665.86374
 "2908783","NLU 1.0","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2010,0
 "2908968","NLU 1.0","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2010,2396.878642
@@ -1195,6 +1376,16 @@
 "3420332","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
 "3420357","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2015,192.794015890844
 "3420370","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
+"3427425","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2015,1133.7708556954
+"3427438","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
+"3427653","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2015,841.148814053894
+"3427666","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
+"3427691","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2015,1184.56101019215
+"3427704","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
+"3427729","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2015,463.487314990754
+"3427742","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
+"3427767","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2015,192.794015890844
+"3427780","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
 "3428907","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2015,1133.7708556954
 "3428920","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,1.8882468
 "3429135","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2015,841.148814053894
@@ -1255,6 +1446,16 @@
 "3705257","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
 "3705267","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2015,60.89
 "3705277","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
+"3707677","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2015,964.8567
+"3707687","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
+"3707697","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2015,2031.8557
+"3707707","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
+"3707717","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2015,732.6555
+"3707727","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
+"3707737","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2015,71.5936
+"3707747","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
+"3707757","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2015,60.6729
+"3707767","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
 "3708175","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2015,961.1662
 "3708185","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2015,0
 "3708195","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2015,2622.2332
@@ -1310,6 +1511,11 @@
 "3778439","AIM/CGE","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2020,1159.2459
 "3778460","AIM/CGE","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2020,554.2179
 "3778482","AIM/CGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,60.2505
+"3783396","AIM/CGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,462.3497
+"3783525","AIM/CGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,282.5613
+"3783547","AIM/CGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2020,1211.339
+"3783568","AIM/CGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2020,437.8897
+"3783590","AIM/CGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,54.6315
 "3784420","AIM/CGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,438.1651
 "3784434","AIM/CGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0.0507
 "3784561","AIM/CGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,272.6678
@@ -1420,6 +1626,16 @@
 "3840058","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "3840083","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,206.445824096613
 "3840096","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3847151","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,815.762726064378
+"3847164","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3847379","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,456.747834567125
+"3847392","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3847417","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2020,1303.64074230313
+"3847430","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3847455","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2020,474.068243709524
+"3847468","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3847493","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,206.445824096613
+"3847506","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "3848633","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,881.019873728361
 "3848646","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,5.56090776
 "3848861","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,456.747834567125
@@ -1480,6 +1696,16 @@
 "3879842","FARM 3.1","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0.000168
 "3879868","FARM 3.1","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,-32.5295362018791
 "3879885","FARM 3.1","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,2.15519818994546
+"3882105","FARM 3.1","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,18.5980519789102
+"3882122","FARM 3.1","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0.000192
+"3882363","FARM 3.1","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,-2.35616182691343
+"3882380","FARM 3.1","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,9.6e-05
+"3882406","FARM 3.1","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2020,45.9739992559143
+"3882423","FARM 3.1","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,9.6e-05
+"3882449","FARM 3.1","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2020,-86.5556608580688
+"3882466","FARM 3.1","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0.000168
+"3882492","FARM 3.1","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,-62.1700602189245
+"3882509","FARM 3.1","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,1.82406912484414
 "3883417","FARM 3.1","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,10.7505201498677
 "3883434","FARM 3.1","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0.000192
 "3883675","FARM 3.1","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,21.3996845879522
@@ -1540,6 +1766,16 @@
 "3906572","GCAM_EMF33","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "3906613","GCAM_EMF33","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,-351.576280435398
 "3906665","GCAM_EMF33","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3915513","GCAM_EMF33","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,-371.889650798617
+"3915565","GCAM_EMF33","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3916071","GCAM_EMF33","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,200.302425740824
+"3916123","GCAM_EMF33","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3916164","GCAM_EMF33","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2020,137.853950596441
+"3916216","GCAM_EMF33","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3916257","GCAM_EMF33","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2020,-1505.65450331764
+"3916309","GCAM_EMF33","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3916350","GCAM_EMF33","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,-563.612158320013
+"3916402","GCAM_EMF33","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "3917450","GCAM_EMF33","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,61.5183134834122
 "3917502","GCAM_EMF33","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0.015156889868627
 "3918008","GCAM_EMF33","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,346.956363048977
@@ -1595,6 +1831,11 @@
 "3946456","GLOBIOM","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2020,2565.84013882259
 "3946470","GLOBIOM","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2020,281.009075584362
 "3946486","GLOBIOM","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,105.980180700426
+"3948367","GLOBIOM","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,777.130661700624
+"3948429","GLOBIOM","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,3181.66946812869
+"3948447","GLOBIOM","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2020,2541.49810514647
+"3948461","GLOBIOM","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2020,284.629727352279
+"3948477","GLOBIOM","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,98.5465931819298
 "3949054","GLOBIOM","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,777.875631248415
 "3949062","GLOBIOM","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0.0270965410595136
 "3949134","GLOBIOM","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,3166.04023066744
@@ -1649,6 +1890,16 @@
 "3985450","GRAPE-15","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "3985461","GRAPE-15","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,-47.5
 "3985476","GRAPE-15","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3989647","GRAPE-15","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,287.91
+"3989662","GRAPE-15","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3989803","GRAPE-15","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,1550.86
+"3989818","GRAPE-15","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3989829","GRAPE-15","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2020,845.21
+"3989844","GRAPE-15","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3989855","GRAPE-15","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2020,1398.31
+"3989870","GRAPE-15","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"3989881","GRAPE-15","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,142.9
+"3989896","GRAPE-15","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "3990531","GRAPE-15","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,1278.04
 "3990546","GRAPE-15","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0.56
 "3990687","GRAPE-15","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,1550.86
@@ -1709,6 +1960,16 @@
 "4014842","IMAGE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "4014859","IMAGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,19.2607246792805
 "4014870","IMAGE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4020197","IMAGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,1040.80119178582
+"4020208","IMAGE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4020365","IMAGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,1647.57797064082
+"4020376","IMAGE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4020393","IMAGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2020,1869.11826623254
+"4020404","IMAGE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4020421","IMAGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2020,-389.495043434887
+"4020432","IMAGE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4020449","IMAGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,19.2607246792805
+"4020460","IMAGE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "4021315","IMAGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,1040.80119178582
 "4021326","IMAGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "4021483","IMAGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,1647.57797064082
@@ -1769,6 +2030,16 @@
 "4124983","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "4124993","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,55.2328
 "4125003","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4127403","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,966.9695
+"4127413","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4127423","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,1787.66
+"4127433","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4127443","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2020,804.05
+"4127453","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4127463","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2020,138.0728
+"4127473","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4127483","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,54.2323
+"4127493","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "4127901","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,1014.9863
 "4127911","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "4127921","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,2412.9108
@@ -1829,6 +2100,16 @@
 "4163621","NLU 1.0","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "4163646","NLU 1.0","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,-184.163168
 "4163661","NLU 1.0","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4166791","NLU 1.0","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,3.679671
+"4166806","NLU 1.0","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4166991","NLU 1.0","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,8.468272
+"4167006","NLU 1.0","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4167031","NLU 1.0","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2020,18.161993
+"4167046","NLU 1.0","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4167071","NLU 1.0","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2020,1.839401
+"4167086","NLU 1.0","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
+"4167111","NLU 1.0","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2020,0.131542
+"4167126","NLU 1.0","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "4167946","NLU 1.0","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2020,-830.040933
 "4167961","NLU 1.0","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2020,0
 "4168146","NLU 1.0","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2020,2296.240003
@@ -1889,6 +2170,16 @@
 "4259784","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
 "4259809","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2025,175.03486621335
 "4259822","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
+"4266877","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2025,606.600211628333
+"4266890","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
+"4267105","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2025,413.637570440603
+"4267118","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
+"4267143","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2025,1206.8971132927
+"4267156","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
+"4267181","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2025,431.305409082743
+"4267194","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
+"4267219","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2025,175.03486621335
+"4267232","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
 "4268359","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2025,663.957778265398
 "4268372","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,8.35392204
 "4268587","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2025,413.637570440603
@@ -1949,6 +2240,16 @@
 "4544709","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
 "4544719","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2025,51.6705
 "4544729","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
+"4547129","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2025,868.5765
+"4547139","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
+"4547149","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2025,1764.2866
+"4547159","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
+"4547169","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2025,1040.5777
+"4547179","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
+"4547189","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2025,229.6299
+"4547199","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
+"4547209","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2025,49.9596
+"4547219","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
 "4547627","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2025,1027.795
 "4547637","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2025,0
 "4547647","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2025,2194.3573
@@ -2004,6 +2305,11 @@
 "4617891","AIM/CGE","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2030,906.1206
 "4617912","AIM/CGE","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2030,387.4306
 "4617934","AIM/CGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,59.5597
+"4622848","AIM/CGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,225.1892
+"4622977","AIM/CGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,327.3626
+"4622999","AIM/CGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2030,826.3797
+"4623020","AIM/CGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2030,428.1948
+"4623042","AIM/CGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,70.1881
 "4623872","AIM/CGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,229.7828
 "4623886","AIM/CGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0.4185
 "4624013","AIM/CGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,397.0384
@@ -2114,6 +2420,16 @@
 "4679510","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "4679535","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,143.623908330087
 "4679548","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4686603","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,397.437697192288
+"4686616","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4686831","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,370.52730631408
+"4686844","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4686869","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2030,1110.15348428228
+"4686882","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4686907","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2030,388.542574455962
+"4686920","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4686945","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,143.623908330087
+"4686958","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "4688085","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,468.796414555485
 "4688098","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,11.95791948
 "4688313","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,370.52730631408
@@ -2174,6 +2490,16 @@
 "4719294","FARM 3.1","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0.000168
 "4719320","FARM 3.1","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,-60.657185905863
 "4719337","FARM 3.1","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,1.83596696951595
+"4721557","FARM 3.1","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,8.87276371756498
+"4721574","FARM 3.1","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0.000192
+"4721815","FARM 3.1","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,14.4944574389777
+"4721832","FARM 3.1","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,9.6e-05
+"4721858","FARM 3.1","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2030,29.3675654146861
+"4721875","FARM 3.1","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,9.6e-05
+"4721901","FARM 3.1","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2030,16.2310587079616
+"4721918","FARM 3.1","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0.000168
+"4721944","FARM 3.1","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,-49.7192581289725
+"4721961","FARM 3.1","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,1.09299480647659
 "4722869","FARM 3.1","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,1.95551006337853
 "4722886","FARM 3.1","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0.000192
 "4723127","FARM 3.1","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,21.9166916867987
@@ -2234,6 +2560,16 @@
 "4746024","GCAM_EMF33","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "4746065","GCAM_EMF33","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,-255.196363813895
 "4746117","GCAM_EMF33","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4754965","GCAM_EMF33","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,-87.5834322859521
+"4755017","GCAM_EMF33","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4755523","GCAM_EMF33","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,474.51211428472
+"4755575","GCAM_EMF33","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4755616","GCAM_EMF33","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2030,250.223865414425
+"4755668","GCAM_EMF33","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4755709","GCAM_EMF33","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2030,-1055.49767609207
+"4755761","GCAM_EMF33","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4755802","GCAM_EMF33","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,-458.352793717467
+"4755854","GCAM_EMF33","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "4756902","GCAM_EMF33","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,343.741966699051
 "4756954","GCAM_EMF33","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,1.4787981272838
 "4757460","GCAM_EMF33","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,609.758666390327
@@ -2289,6 +2625,11 @@
 "4785908","GLOBIOM","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2030,2376.31446558272
 "4785922","GLOBIOM","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2030,225.571711663824
 "4785938","GLOBIOM","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,98.2582488046348
+"4787819","GLOBIOM","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,525.375854331894
+"4787881","GLOBIOM","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,2319.48782145281
+"4787899","GLOBIOM","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2030,2342.97020632597
+"4787913","GLOBIOM","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2030,224.048899108588
+"4787929","GLOBIOM","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,98.3959137748443
 "4788506","GLOBIOM","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,513.097952995022
 "4788514","GLOBIOM","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,2.23475771574289
 "4788586","GLOBIOM","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,2242.26721287336
@@ -2346,6 +2687,16 @@
 "4824902","GRAPE-15","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "4824913","GRAPE-15","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,278.53
 "4824928","GRAPE-15","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4829099","GRAPE-15","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,501.87
+"4829114","GRAPE-15","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0.04
+"4829255","GRAPE-15","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,-85.86
+"4829270","GRAPE-15","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4829281","GRAPE-15","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2030,314.94
+"4829296","GRAPE-15","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4829307","GRAPE-15","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2030,1282.72
+"4829322","GRAPE-15","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4829333","GRAPE-15","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,171.38
+"4829348","GRAPE-15","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "4829983","GRAPE-15","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,-28.59
 "4829998","GRAPE-15","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,3.95
 "4830139","GRAPE-15","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,-97.84
@@ -2406,6 +2757,16 @@
 "4854294","IMAGE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "4854311","IMAGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,-44.1568572779182
 "4854322","IMAGE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4859649","IMAGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,828.14010881186
+"4859660","IMAGE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4859817","IMAGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,1559.30061626597
+"4859828","IMAGE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4859845","IMAGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2030,2804.28785316881
+"4859856","IMAGE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4859873","IMAGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2030,-466.122595927876
+"4859884","IMAGE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4859901","IMAGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,-43.4103472862642
+"4859912","IMAGE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "4860767","IMAGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,819.411145905124
 "4860778","IMAGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "4860935","IMAGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,1543.15917104375
@@ -2466,6 +2827,16 @@
 "4964435","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "4964445","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,48.1935
 "4964455","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4966855","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,655.0644
+"4966865","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4966875","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,1684.2195
+"4966885","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4966895","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2030,1422.4262
+"4966905","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4966915","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2030,156.1185
+"4966925","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"4966935","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,48.3906
+"4966945","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "4967353","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,885.5451
 "4967363","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0.0972
 "4967373","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,1720.1115
@@ -2526,6 +2897,16 @@
 "5003073","NLU 1.0","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "5003098","NLU 1.0","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,0.089445
 "5003113","NLU 1.0","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"5006243","NLU 1.0","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,2.447426
+"5006258","NLU 1.0","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"5006443","NLU 1.0","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,6.820027
+"5006458","NLU 1.0","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"5006483","NLU 1.0","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2030,18.593119
+"5006498","NLU 1.0","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"5006523","NLU 1.0","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2030,1.703689
+"5006538","NLU 1.0","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
+"5006563","NLU 1.0","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2030,0.176805
+"5006578","NLU 1.0","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "5007398","NLU 1.0","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2030,542.402388
 "5007413","NLU 1.0","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2030,0
 "5007598","NLU 1.0","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2030,2195.505624
@@ -2586,6 +2967,16 @@
 "5384161","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2035,0
 "5384171","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2035,43.1277
 "5384181","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2035,0
+"5386581","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2035,508.2703
+"5386591","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2035,0
+"5386601","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2035,1001.441
+"5386611","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2035,0
+"5386621","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2035,1232.3006
+"5386631","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2035,0
+"5386641","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2035,34.3454
+"5386651","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2035,0
+"5386661","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2035,45.0706
+"5386671","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2035,0
 "5387079","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2035,663.8835
 "5387089","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2035,3.4635
 "5387099","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2035,919.2101
@@ -2641,6 +3032,11 @@
 "5457343","AIM/CGE","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2040,366.5286
 "5457364","AIM/CGE","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2040,342.3416
 "5457386","AIM/CGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,53.2116
+"5462300","AIM/CGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,97.9565
+"5462429","AIM/CGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,236.6838
+"5462451","AIM/CGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2040,520.9013
+"5462472","AIM/CGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2040,368.3324
+"5462494","AIM/CGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,111.3453
 "5463324","AIM/CGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,99.3448
 "5463338","AIM/CGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,1.0594
 "5463465","AIM/CGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,290.1981
@@ -2751,6 +3147,16 @@
 "5518962","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5518987","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,149.730492024521
 "5519000","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5526055","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,767.182900839801
+"5526068","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5526283","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,338.862517441924
+"5526296","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5526321","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2040,921.625060464453
+"5526334","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5526359","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2040,462.179882190973
+"5526372","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5526397","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,149.730492024521
+"5526410","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5527537","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,841.658484572954
 "5527550","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,18.71164656
 "5527765","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,338.862517441924
@@ -2811,6 +3217,16 @@
 "5558746","FARM 3.1","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0.000168
 "5558772","FARM 3.1","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,-61.7647808872323
 "5558789","FARM 3.1","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,1.52767420322707
+"5561009","FARM 3.1","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,9.66714946621682
+"5561026","FARM 3.1","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0.000192
+"5561267","FARM 3.1","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,10.5652957317568
+"5561284","FARM 3.1","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,9.6e-05
+"5561310","FARM 3.1","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2040,14.8943682903128
+"5561327","FARM 3.1","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,9.6e-05
+"5561353","FARM 3.1","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2040,9.72501406637002
+"5561370","FARM 3.1","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0.000168
+"5561396","FARM 3.1","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,-57.8058141541903
+"5561413","FARM 3.1","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0.429689916012643
 "5562321","FARM 3.1","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,-1.48605635019788
 "5562338","FARM 3.1","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0.000192
 "5562579","FARM 3.1","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,13.7732827080118
@@ -2871,6 +3287,16 @@
 "5585476","GCAM_EMF33","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5585517","GCAM_EMF33","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,-121.521445959645
 "5585569","GCAM_EMF33","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5594417","GCAM_EMF33","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,290.996839068728
+"5594469","GCAM_EMF33","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5594975","GCAM_EMF33","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,796.769823704364
+"5595027","GCAM_EMF33","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5595068","GCAM_EMF33","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2040,668.161267751958
+"5595120","GCAM_EMF33","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5595161","GCAM_EMF33","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2040,-663.190769501672
+"5595213","GCAM_EMF33","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5595254","GCAM_EMF33","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,-377.185639609066
+"5595306","GCAM_EMF33","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5596354","GCAM_EMF33","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,764.322560775181
 "5596406","GCAM_EMF33","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,3.3765196825999
 "5596912","GCAM_EMF33","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,846.274344977914
@@ -2926,6 +3352,11 @@
 "5625360","GLOBIOM","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2040,2018.40653048798
 "5625374","GLOBIOM","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2040,136.889819391824
 "5625390","GLOBIOM","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,75.8364938701777
+"5627271","GLOBIOM","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,234.805524149511
+"5627333","GLOBIOM","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,1770.0062285522
+"5627351","GLOBIOM","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2040,1979.98061530276
+"5627365","GLOBIOM","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2040,134.438846575819
+"5627381","GLOBIOM","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,67.6316594298671
 "5627958","GLOBIOM","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,233.356669654484
 "5627966","GLOBIOM","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,4.19813072572776
 "5628038","GLOBIOM","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,1780.03719617372
@@ -2983,6 +3414,16 @@
 "5664354","GRAPE-15","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5664365","GRAPE-15","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,452.47
 "5664380","GRAPE-15","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5668551","GRAPE-15","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,147.06
+"5668566","GRAPE-15","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0.16
+"5668707","GRAPE-15","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,-231.72
+"5668722","GRAPE-15","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5668733","GRAPE-15","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2040,0
+"5668748","GRAPE-15","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5668759","GRAPE-15","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2040,-76.15
+"5668774","GRAPE-15","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5668785","GRAPE-15","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,399.59
+"5668800","GRAPE-15","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5669435","GRAPE-15","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,-28.59
 "5669450","GRAPE-15","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,9.08
 "5669591","GRAPE-15","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,-238.9
@@ -3043,6 +3484,16 @@
 "5693746","IMAGE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5693763","IMAGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,-10.6468384406159
 "5693774","IMAGE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5699101","IMAGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,532.115644847157
+"5699112","IMAGE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5699269","IMAGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,1361.84478339593
+"5699280","IMAGE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5699297","IMAGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2040,2015.5498202459
+"5699308","IMAGE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5699325","IMAGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2040,-258.802991722305
+"5699336","IMAGE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5699353","IMAGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,-15.8422184721366
+"5699364","IMAGE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5700219","IMAGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,537.828783146976
 "5700230","IMAGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5700387","IMAGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,1372.78786143517
@@ -3103,6 +3554,16 @@
 "5803887","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5803897","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,39.4648
 "5803907","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5806307","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,364.5523
+"5806317","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5806327","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,520.5815
+"5806337","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5806347","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2040,939.6808
+"5806357","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5806367","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2040,-18.5805
+"5806377","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5806387","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,43.2565
+"5806397","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5806805","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,391.6133
 "5806815","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,4.3294
 "5806825","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,707.82
@@ -3163,6 +3624,16 @@
 "5842525","NLU 1.0","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5842550","NLU 1.0","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,0.833623
 "5842565","NLU 1.0","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5845695","NLU 1.0","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,4.581942
+"5845710","NLU 1.0","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5845895","NLU 1.0","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,6.437807
+"5845910","NLU 1.0","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5845935","NLU 1.0","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2040,24.487562
+"5845950","NLU 1.0","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5845975","NLU 1.0","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2040,1.51518
+"5845990","NLU 1.0","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
+"5846015","NLU 1.0","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2040,1.035849
+"5846030","NLU 1.0","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0
 "5846850","NLU 1.0","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2040,530.378188
 "5846865","NLU 1.0","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2040,0.762013
 "5847050","NLU 1.0","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2040,2111.195879
@@ -3223,6 +3694,16 @@
 "6223613","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2045,0
 "6223623","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2045,35.9172
 "6223633","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2045,0
+"6226033","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2045,172.6835
+"6226043","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2045,0
+"6226053","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2045,420.7314
+"6226063","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2045,0
+"6226073","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2045,954.3428
+"6226083","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2045,0
+"6226093","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2045,-43.2776
+"6226103","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2045,0
+"6226113","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2045,41.7623
+"6226123","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2045,0
 "6226531","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2045,153.7246
 "6226541","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2045,4.3294
 "6226551","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2045,745.4367
@@ -3278,6 +3759,11 @@
 "6296795","AIM/CGE","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2050,367.9994
 "6296816","AIM/CGE","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2050,273.98
 "6296838","AIM/CGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,28.1925
+"6301752","AIM/CGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,48.6364
+"6301881","AIM/CGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,154.3568
+"6301903","AIM/CGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2050,478.928
+"6301924","AIM/CGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2050,310.5615
+"6301946","AIM/CGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,123.333
 "6302776","AIM/CGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,55.2318
 "6302790","AIM/CGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,2.0532
 "6302917","AIM/CGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,160.7123
@@ -3388,6 +3874,16 @@
 "6358414","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6358439","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,141.663252307464
 "6358452","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6365507","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,632.910388238229
+"6365520","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6365735","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,341.093749852914
+"6365748","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6365773","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2050,609.160977470843
+"6365786","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6365811","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2050,428.921954162117
+"6365824","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6365849","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,141.663252307464
+"6365862","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6366989","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,646.27766338517
 "6367002","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,24.36215184
 "6367217","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,341.093749852914
@@ -3448,6 +3944,16 @@
 "6398198","FARM 3.1","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0.000168
 "6398224","FARM 3.1","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,-31.5605438582953
 "6398241","FARM 3.1","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,1.25001588474596
+"6400461","FARM 3.1","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,0.0788310317067247
+"6400478","FARM 3.1","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0.000192
+"6400719","FARM 3.1","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,5.87915793223743
+"6400736","FARM 3.1","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,9.6e-05
+"6400762","FARM 3.1","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2050,7.11589981241217
+"6400779","FARM 3.1","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,9.6e-05
+"6400805","FARM 3.1","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2050,0.597140249949043
+"6400822","FARM 3.1","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0.000168
+"6400848","FARM 3.1","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,-14.1436980242503
+"6400865","FARM 3.1","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0.00284125732304993
 "6401773","FARM 3.1","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,-14.3456782132802
 "6401790","FARM 3.1","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0.000192
 "6402031","FARM 3.1","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,10.1465238041478
@@ -3508,6 +4014,16 @@
 "6424928","GCAM_EMF33","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6424969","GCAM_EMF33","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,-103.352248988284
 "6425021","GCAM_EMF33","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6433869","GCAM_EMF33","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,-49.2880372544342
+"6433921","GCAM_EMF33","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6434427","GCAM_EMF33","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,203.897929229115
+"6434479","GCAM_EMF33","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6434520","GCAM_EMF33","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2050,310.790618864242
+"6434572","GCAM_EMF33","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6434613","GCAM_EMF33","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2050,-588.598261527121
+"6434665","GCAM_EMF33","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6434706","GCAM_EMF33","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,-320.410686058861
+"6434758","GCAM_EMF33","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6435806","GCAM_EMF33","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,276.629428241661
 "6435858","GCAM_EMF33","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,5.3492471157196
 "6436364","GCAM_EMF33","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,226.919065253024
@@ -3563,6 +4079,11 @@
 "6464812","GLOBIOM","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2050,1663.74264574787
 "6464826","GLOBIOM","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2050,40.0812038911896
 "6464842","GLOBIOM","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,29.5236609142542
+"6466723","GLOBIOM","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,-36.5964125411723
+"6466785","GLOBIOM","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,1476.83254034132
+"6466803","GLOBIOM","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2050,1646.91041351613
+"6466817","GLOBIOM","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2050,36.653029838394
+"6466833","GLOBIOM","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,25.1197793863761
 "6467410","GLOBIOM","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,-25.3382214315059
 "6467418","GLOBIOM","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,6.34277118196311
 "6467490","GLOBIOM","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,1448.57461224
@@ -3620,6 +4141,16 @@
 "6503806","GRAPE-15","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6503817","GRAPE-15","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,169.77
 "6503832","GRAPE-15","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6508003","GRAPE-15","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,661.63
+"6508018","GRAPE-15","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0.5
+"6508159","GRAPE-15","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,-260.03
+"6508174","GRAPE-15","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6508185","GRAPE-15","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2050,0
+"6508200","GRAPE-15","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6508211","GRAPE-15","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2050,-30.61
+"6508226","GRAPE-15","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6508237","GRAPE-15","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,175.07
+"6508252","GRAPE-15","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6508887","GRAPE-15","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,620.62
 "6508902","GRAPE-15","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,11.9
 "6509043","GRAPE-15","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,-260.03
@@ -3680,6 +4211,16 @@
 "6533198","IMAGE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6533215","IMAGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,-23.9929994866653
 "6533226","IMAGE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6538553","IMAGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,469.254503485593
+"6538564","IMAGE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6538721","IMAGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,1145.4600794157
+"6538732","IMAGE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6538749","IMAGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2050,1928.88143108064
+"6538760","IMAGE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6538777","IMAGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2050,-159.9961889407
+"6538788","IMAGE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6538805","IMAGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,-17.3333136607278
+"6538816","IMAGE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6539671","IMAGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,479.420597621523
 "6539682","IMAGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6539839","IMAGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,1187.59084585612
@@ -3740,6 +4281,16 @@
 "6643339","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6643349","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,35.6194
 "6643359","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6645759","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,65.207
+"6645769","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6645779","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,396.0841
+"6645789","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6645799","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2050,843.6282
+"6645809","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6645819","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2050,-35.4011
+"6645829","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6645839","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,37.5334
+"6645849","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6646257","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,63.5945
 "6646267","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,4.4122
 "6646277","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,507.8261
@@ -3800,6 +4351,16 @@
 "6681977","NLU 1.0","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6682002","NLU 1.0","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,0.295105
 "6682017","NLU 1.0","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6685147","NLU 1.0","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,0.610662
+"6685162","NLU 1.0","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6685347","NLU 1.0","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,6.082743
+"6685362","NLU 1.0","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6685387","NLU 1.0","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2050,19.794753
+"6685402","NLU 1.0","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6685427","NLU 1.0","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2050,1.281164
+"6685442","NLU 1.0","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
+"6685467","NLU 1.0","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2050,0.650847
+"6685482","NLU 1.0","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,0
 "6686302","NLU 1.0","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2050,515.037835
 "6686317","NLU 1.0","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2050,1.615431
 "6686502","NLU 1.0","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2050,2019.999157
@@ -3860,6 +4421,16 @@
 "7063065","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2055,0
 "7063075","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2055,37.7293
 "7063085","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2055,0
+"7065485","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2055,48.9616
+"7065495","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2055,0
+"7065505","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2055,376.5832
+"7065515","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2055,0
+"7065525","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2055,596.6758
+"7065535","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2055,0
+"7065545","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2055,-14.8446
+"7065555","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2055,0
+"7065565","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2055,38.5811
+"7065575","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2055,0
 "7065983","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2055,57.4216
 "7065993","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2055,5.8087
 "7066003","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2055,244.9933
@@ -3915,6 +4486,11 @@
 "7136247","AIM/CGE","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2060,352.2095
 "7136268","AIM/CGE","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2060,271.7055
 "7136290","AIM/CGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,15.8495
+"7141204","AIM/CGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,22.4628
+"7141333","AIM/CGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,161.7994
+"7141355","AIM/CGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2060,450.3048
+"7141376","AIM/CGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2060,349.1878
+"7141398","AIM/CGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,-111.8696
 "7142228","AIM/CGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,51.561
 "7142242","AIM/CGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,2.9735
 "7142369","AIM/CGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,157.3939
@@ -4025,6 +4601,16 @@
 "7197866","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7197891","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,115.879746368212
 "7197904","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7204959","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,495.951544835023
+"7204972","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7205187","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,270.690923289582
+"7205200","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7205225","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2060,444.164031934004
+"7205238","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7205263","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2060,371.102326259109
+"7205276","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7205301","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,115.879746368212
+"7205314","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7206441","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,504.917516539319
 "7206454","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,30.56908284
 "7206669","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,270.690923289582
@@ -4085,6 +4671,16 @@
 "7237650","FARM 3.1","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0.000168
 "7237676","FARM 3.1","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,-13.1155719806406
 "7237693","FARM 3.1","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0.991025107960105
+"7239913","FARM 3.1","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,-18.1528250162263
+"7239930","FARM 3.1","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0.000192
+"7240171","FARM 3.1","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,2.82546349848407
+"7240188","FARM 3.1","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,9.6e-05
+"7240214","FARM 3.1","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2060,3.46763335142914
+"7240231","FARM 3.1","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,9.6e-05
+"7240257","FARM 3.1","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2060,-4.26626126930206
+"7240274","FARM 3.1","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0.000168
+"7240300","FARM 3.1","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,7.96616101325414
+"7240317","FARM 3.1","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0.000144
 "7241225","FARM 3.1","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,-32.4948128479609
 "7241242","FARM 3.1","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0.000192
 "7241483","FARM 3.1","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,9.23002733355805
@@ -4145,6 +4741,16 @@
 "7264380","GCAM_EMF33","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7264421","GCAM_EMF33","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,-69.6579858621101
 "7264473","GCAM_EMF33","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7273321","GCAM_EMF33","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,-202.63106130351
+"7273373","GCAM_EMF33","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7273879","GCAM_EMF33","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,-71.4230532532421
+"7273931","GCAM_EMF33","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7273972","GCAM_EMF33","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2060,-118.201567111364
+"7274024","GCAM_EMF33","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7274065","GCAM_EMF33","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2060,-469.796489842067
+"7274117","GCAM_EMF33","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7274158","GCAM_EMF33","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,-230.246951134996
+"7274210","GCAM_EMF33","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7275258","GCAM_EMF33","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,-41.3038036369434
 "7275310","GCAM_EMF33","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,7.644695773432
 "7275816","GCAM_EMF33","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,-36.6407960191609
@@ -4200,6 +4806,11 @@
 "7304264","GLOBIOM","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2060,1296.58813408476
 "7304278","GLOBIOM","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2060,-64.6436573007859
 "7304294","GLOBIOM","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,-29.9177278324883
+"7306175","GLOBIOM","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,-262.254899159345
+"7306237","GLOBIOM","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,1326.99439865203
+"7306255","GLOBIOM","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2060,1299.07878804195
+"7306269","GLOBIOM","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2060,-69.2669414643138
+"7306285","GLOBIOM","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,-31.7516142545928
 "7306862","GLOBIOM","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,-265.15927721801
 "7306870","GLOBIOM","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,8.74513857729472
 "7306942","GLOBIOM","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,1283.58998047615
@@ -4259,6 +4870,16 @@
 "7343258","GRAPE-15","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7343269","GRAPE-15","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,-19.21
 "7343284","GRAPE-15","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7347455","GRAPE-15","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,447.88
+"7347470","GRAPE-15","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,1.25
+"7347611","GRAPE-15","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,-106.83
+"7347626","GRAPE-15","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7347637","GRAPE-15","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2060,0
+"7347652","GRAPE-15","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7347663","GRAPE-15","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2060,36.31
+"7347678","GRAPE-15","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7347689","GRAPE-15","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,-18.93
+"7347704","GRAPE-15","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7348339","GRAPE-15","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,439.36
 "7348354","GRAPE-15","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,13.96
 "7348495","GRAPE-15","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,-100.85
@@ -4319,6 +4940,16 @@
 "7372650","IMAGE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7372667","IMAGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,-12.7361500523919
 "7372678","IMAGE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7378005","IMAGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,287.514932480108
+"7378016","IMAGE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7378173","IMAGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,684.349589979953
+"7378184","IMAGE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7378201","IMAGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2060,695.062221103436
+"7378212","IMAGE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7378229","IMAGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2060,42.7165020449569
+"7378240","IMAGE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7378257","IMAGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,-9.2388620643163
+"7378268","IMAGE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7379123","IMAGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,279.796679158097
 "7379134","IMAGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7379291","IMAGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,3319.88647840581
@@ -4379,6 +5010,16 @@
 "7482791","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7482801","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,36.4655
 "7482811","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7485211","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,44.2409
+"7485221","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7485231","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,313.2355
+"7485241","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7485251","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2060,323.2559
+"7485261","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7485271","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2060,-18.7168
+"7485281","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7485291","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,40.0776
+"7485301","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7485709","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,47.0392
 "7485719","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,6.3199
 "7485729","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,139.5534
@@ -4439,6 +5080,16 @@
 "7521429","NLU 1.0","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7521454","NLU 1.0","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,0.009425
 "7521469","NLU 1.0","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7524599","NLU 1.0","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,0.120764
+"7524614","NLU 1.0","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7524799","NLU 1.0","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,5.543768
+"7524814","NLU 1.0","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7524839","NLU 1.0","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2060,13.141924
+"7524854","NLU 1.0","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7524879","NLU 1.0","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2060,0.68905
+"7524894","NLU 1.0","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
+"7524919","NLU 1.0","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2060,0.222359
+"7524934","NLU 1.0","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,0
 "7525754","NLU 1.0","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2060,0.104108
 "7525769","NLU 1.0","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2060,3.594471
 "7525954","NLU 1.0","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2060,2.875304
@@ -4499,6 +5150,16 @@
 "7902517","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2065,0
 "7902527","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2065,38.2484
 "7902537","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2065,0
+"7904937","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2065,37.7096
+"7904947","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2065,0
+"7904957","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2065,166.869
+"7904967","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2065,0
+"7904977","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2065,135.177
+"7904987","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2065,0
+"7904997","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2065,-8.1363
+"7905007","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2065,0
+"7905017","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2065,38.3821
+"7905027","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2065,0
 "7905435","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2065,37.6884
 "7905445","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2065,6.6694
 "7905455","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2065,66.1128
@@ -4554,6 +5215,11 @@
 "7975699","AIM/CGE","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2070,240.111
 "7975720","AIM/CGE","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2070,347.7803
 "7975742","AIM/CGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,-124.8023
+"7980656","AIM/CGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,61.274
+"7980785","AIM/CGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,95.6278
+"7980807","AIM/CGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2070,415.994
+"7980828","AIM/CGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2070,317.4589
+"7980850","AIM/CGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,-157.6637
 "7981680","AIM/CGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,27.5526
 "7981694","AIM/CGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,4.3447
 "7981821","AIM/CGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,162.8549
@@ -4664,6 +5330,16 @@
 "8037318","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8037343","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,90.0962404289599
 "8037356","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8044411","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,358.992701431817
+"8044424","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8044639","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,200.288096726251
+"8044652","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8044677","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2070,279.167086397165
+"8044690","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8044715","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2070,313.282698356101
+"8044728","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8044753","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,90.0962404289599
+"8044766","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8045893","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,363.557369693468
 "8045906","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,36.77601384
 "8046121","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,200.288096726251
@@ -4724,6 +5400,16 @@
 "8077102","FARM 3.1","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0.000168
 "8077128","FARM 3.1","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,5.24386888755362
 "8077145","FARM 3.1","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0.743005464999842
+"8079365","FARM 3.1","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,-36.8798825891649
+"8079382","FARM 3.1","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0.000192
+"8079623","FARM 3.1","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,1.39205442307187
+"8079640","FARM 3.1","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,9.6e-05
+"8079666","FARM 3.1","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2070,2.02845209655821
+"8079683","FARM 3.1","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,9.6e-05
+"8079709","FARM 3.1","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2070,-6.38235372722799
+"8079726","FARM 3.1","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0.000168
+"8079752","FARM 3.1","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,23.7447954621862
+"8079769","FARM 3.1","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0.000144
 "8080677","FARM 3.1","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,-50.917539531111
 "8080694","FARM 3.1","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0.000192
 "8080935","FARM 3.1","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,11.8759707510822
@@ -4784,6 +5470,16 @@
 "8103832","GCAM_EMF33","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8103873","GCAM_EMF33","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,-57.8188415789
 "8103925","GCAM_EMF33","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8112773","GCAM_EMF33","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,-274.080967512857
+"8112825","GCAM_EMF33","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8113331","GCAM_EMF33","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,-162.288076633873
+"8113383","GCAM_EMF33","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8113424","GCAM_EMF33","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2070,-165.130851739825
+"8113476","GCAM_EMF33","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8113517","GCAM_EMF33","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2070,-361.83884305913
+"8113569","GCAM_EMF33","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8113610","GCAM_EMF33","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,-144.775202147256
+"8113662","GCAM_EMF33","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8114710","GCAM_EMF33","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,-227.704191307364
 "8114762","GCAM_EMF33","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,10.083493192435
 "8115268","GCAM_EMF33","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,-137.111862080774
@@ -4839,6 +5535,11 @@
 "8143716","GLOBIOM","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2070,845.398648210085
 "8143730","GLOBIOM","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2070,-176.660322403465
 "8143746","GLOBIOM","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,-65.8240780801014
+"8145627","GLOBIOM","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,-378.140778611934
+"8145689","GLOBIOM","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,1241.50111369794
+"8145707","GLOBIOM","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2070,781.59004749826
+"8145721","GLOBIOM","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2070,-189.009821774977
+"8145737","GLOBIOM","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,-72.2349570542657
 "8146314","GLOBIOM","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,-393.721286337579
 "8146322","GLOBIOM","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,11.227185141322
 "8146394","GLOBIOM","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,1258.15945212701
@@ -4898,6 +5599,16 @@
 "8182710","GRAPE-15","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8182721","GRAPE-15","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,-37.91
 "8182736","GRAPE-15","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8186907","GRAPE-15","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,293.97
+"8186922","GRAPE-15","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,1.74
+"8187063","GRAPE-15","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,-33.91
+"8187078","GRAPE-15","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8187089","GRAPE-15","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2070,0
+"8187104","GRAPE-15","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8187115","GRAPE-15","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2070,45.58
+"8187130","GRAPE-15","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8187141","GRAPE-15","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,-38.01
+"8187156","GRAPE-15","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8187791","GRAPE-15","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,274.87
 "8187806","GRAPE-15","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,16.66
 "8187947","GRAPE-15","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,-30.31
@@ -4958,6 +5669,16 @@
 "8212102","IMAGE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8212119","IMAGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,-3.0579264344946
 "8212130","IMAGE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8217457","IMAGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,276.109303416362
+"8217468","IMAGE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8217625","IMAGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,751.031711953857
+"8217636","IMAGE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8217653","IMAGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2070,764.445099663105
+"8217664","IMAGE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8217681","IMAGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2070,-41.1399314287962
+"8217692","IMAGE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8217709","IMAGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,-2.97741333794425
+"8217720","IMAGE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8218575","IMAGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,264.034884993262
 "8218586","IMAGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8218743","IMAGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,2429.52739756791
@@ -5018,6 +5739,16 @@
 "8322243","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8322253","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,33.5883
 "8322263","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8324663","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,34.8688
+"8324673","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8324683","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,37.8266
+"8324693","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8324703","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2070,41.7326
+"8324713","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8324723","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2070,35.3175
+"8324733","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8324743","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,37.179
+"8324753","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8325161","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,34.8401
 "8325171","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,7.3964
 "8325181","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,37.5393
@@ -5078,6 +5809,16 @@
 "8360881","NLU 1.0","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8360906","NLU 1.0","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,0.013899
 "8360921","NLU 1.0","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8364051","NLU 1.0","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,-1.121321
+"8364066","NLU 1.0","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8364251","NLU 1.0","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,3.953525
+"8364266","NLU 1.0","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8364291","NLU 1.0","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2070,9.645404
+"8364306","NLU 1.0","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8364331","NLU 1.0","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2070,0.322382
+"8364346","NLU 1.0","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
+"8364371","NLU 1.0","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2070,-0.046858
+"8364386","NLU 1.0","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,0
 "8365206","NLU 1.0","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2070,-1.105042
 "8365221","NLU 1.0","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2070,5.534241
 "8365406","NLU 1.0","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2070,1.704693
@@ -5138,6 +5879,16 @@
 "8741969","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2075,0
 "8741979","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2075,24.9577
 "8741989","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2075,0
+"8744389","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2075,24.9618
+"8744399","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2075,0
+"8744409","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2075,0
+"8744419","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2075,0
+"8744429","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2075,4.7761
+"8744439","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2075,0
+"8744449","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2075,40.5949
+"8744459","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2075,0
+"8744469","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2075,34.9366
+"8744479","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2075,0
 "8744887","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2075,33.0609
 "8744897","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2075,9.2312
 "8744907","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2075,17.0324
@@ -5193,6 +5944,11 @@
 "8815151","AIM/CGE","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2080,221.5599
 "8815172","AIM/CGE","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2080,202.2609
 "8815194","AIM/CGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-127.5995
+"8820108","AIM/CGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,69.7044
+"8820237","AIM/CGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,85.5126
+"8820259","AIM/CGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2080,303.7223
+"8820280","AIM/CGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2080,230.1507
+"8820302","AIM/CGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-91.5567
 "8821132","AIM/CGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,73.7012
 "8821146","AIM/CGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,6.6579
 "8821273","AIM/CGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,105.553
@@ -5303,6 +6059,16 @@
 "8876770","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "8876795","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,79.2882642007418
 "8876808","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"8883863","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,316.46335359585
+"8883876","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"8884091","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,179.306637514656
+"8884104","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"8884129","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2080,206.336973945639
+"8884142","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"8884167","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2080,272.548546308379
+"8884180","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"8884205","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,79.2882642007418
+"8884218","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "8885345","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,320.337587585014
 "8885358","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,40.3460982
 "8885573","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,179.306637514656
@@ -5363,6 +6129,16 @@
 "8916554","FARM 3.1","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0.000168
 "8916580","FARM 3.1","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,25.3526143878503
 "8916597","FARM 3.1","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0.523762742123641
+"8918817","FARM 3.1","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,-53.2698845509553
+"8918834","FARM 3.1","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0.000192
+"8919075","FARM 3.1","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,0.417533889797826
+"8919092","FARM 3.1","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,9.6e-05
+"8919118","FARM 3.1","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2080,1.51490421403112
+"8919135","FARM 3.1","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,9.6e-05
+"8919161","FARM 3.1","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2080,-5.99365096754445
+"8919178","FARM 3.1","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0.000168
+"8919204","FARM 3.1","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,38.6750402582689
+"8919221","FARM 3.1","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0.000144
 "8920129","FARM 3.1","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,-65.7388105551772
 "8920146","FARM 3.1","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0.000192747887093695
 "8920387","FARM 3.1","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,15.3436357262404
@@ -5423,6 +6199,16 @@
 "8943284","GCAM_EMF33","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "8943325","GCAM_EMF33","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-53.4401120210356
 "8943377","GCAM_EMF33","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"8952225","GCAM_EMF33","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,-301.678171411547
+"8952277","GCAM_EMF33","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"8952783","GCAM_EMF33","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,-171.862796463346
+"8952835","GCAM_EMF33","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"8952876","GCAM_EMF33","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-146.544456182358
+"8952928","GCAM_EMF33","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"8952969","GCAM_EMF33","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2080,-260.137696398558
+"8953021","GCAM_EMF33","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"8953062","GCAM_EMF33","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-78.6955815635901
+"8953114","GCAM_EMF33","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "8954162","GCAM_EMF33","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,-297.763475243805
 "8954214","GCAM_EMF33","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,12.749792231708
 "8954720","GCAM_EMF33","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,-162.621445395615
@@ -5478,6 +6264,11 @@
 "8983168","GLOBIOM","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2080,404.191254602401
 "8983182","GLOBIOM","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2080,-262.636453050303
 "8983198","GLOBIOM","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-90.179623936874
+"8985079","GLOBIOM","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,-516.487343048814
+"8985141","GLOBIOM","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,1213.80003916805
+"8985159","GLOBIOM","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2080,379.32420794173
+"8985173","GLOBIOM","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2080,-252.760005981745
+"8985189","GLOBIOM","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-93.2991953440274
 "8985766","GLOBIOM","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,-499.946440960963
 "8985774","GLOBIOM","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,13.3705090922338
 "8985846","GLOBIOM","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,1236.95374206663
@@ -5537,6 +6328,16 @@
 "9022162","GRAPE-15","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "9022173","GRAPE-15","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-69.59
 "9022188","GRAPE-15","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9026359","GRAPE-15","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,114.91
+"9026374","GRAPE-15","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,1.76
+"9026515","GRAPE-15","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,-19.75
+"9026530","GRAPE-15","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9026541","GRAPE-15","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2080,655.23
+"9026556","GRAPE-15","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9026567","GRAPE-15","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2080,52.43
+"9026582","GRAPE-15","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9026593","GRAPE-15","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-69.89
+"9026608","GRAPE-15","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "9027243","GRAPE-15","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,48.97
 "9027258","GRAPE-15","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,17.17
 "9027399","GRAPE-15","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,-19.75
@@ -5597,6 +6398,16 @@
 "9051554","IMAGE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "9051571","IMAGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-67.3657988184468
 "9051582","IMAGE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9056909","IMAGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,180.33473015436
+"9056920","IMAGE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9057077","IMAGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,526.943209637295
+"9057088","IMAGE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9057105","IMAGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2080,719.282320677317
+"9057116","IMAGE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9057133","IMAGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2080,-30.459533582587
+"9057144","IMAGE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9057161","IMAGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-66.7253414765397
+"9057172","IMAGE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "9058027","IMAGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,159.259555409433
 "9058038","IMAGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "9058195","IMAGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,1594.5756435767
@@ -5657,6 +6468,16 @@
 "9161695","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "9161705","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,26.5448
 "9161715","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9164115","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,-2.464
+"9164125","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9164135","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,0
+"9164145","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9164155","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2080,7.0296
+"9164165","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9164175","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2080,14.9497
+"9164185","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9164195","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,28.935
+"9164205","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "9164613","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,32.3522
 "9164623","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,11.8171
 "9164633","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,0
@@ -5717,6 +6538,16 @@
 "9200333","NLU 1.0","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "9200358","NLU 1.0","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-0.368148
 "9200373","NLU 1.0","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9203503","NLU 1.0","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,-0.767521
+"9203518","NLU 1.0","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9203703","NLU 1.0","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,3.765009
+"9203718","NLU 1.0","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9203743","NLU 1.0","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2080,6.53952
+"9203758","NLU 1.0","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9203783","NLU 1.0","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2080,0.080625
+"9203798","NLU 1.0","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
+"9203823","NLU 1.0","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2080,-0.466449
+"9203838","NLU 1.0","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,0
 "9204658","NLU 1.0","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2080,-0.763604
 "9204673","NLU 1.0","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2080,7.932272
 "9204858","NLU 1.0","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2080,-1.012738
@@ -5777,6 +6608,16 @@
 "9581421","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2085,0
 "9581431","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2085,26.9445
 "9581441","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2085,0
+"9583841","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2085,-22.9414
+"9583851","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2085,0
+"9583861","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2085,-13.6175
+"9583871","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2085,0
+"9583881","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2085,-0.4861
+"9583891","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2085,0
+"9583901","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2085,2.5231
+"9583911","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2085,0
+"9583921","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2085,22.3078
+"9583931","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2085,0
 "9584339","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2085,31.715
 "9584349","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2085,15.3238
 "9584359","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2085,0
@@ -5832,6 +6673,11 @@
 "9654603","AIM/CGE","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2090,162.0545
 "9654624","AIM/CGE","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2090,238.5456
 "9654646","AIM/CGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-147.0734
+"9659560","AIM/CGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,90.5844
+"9659689","AIM/CGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,72.2198
+"9659711","AIM/CGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2090,276.791
+"9659732","AIM/CGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2090,206.094
+"9659754","AIM/CGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-120.6023
 "9660584","AIM/CGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,94.4381
 "9660598","AIM/CGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,10.5079
 "9660725","AIM/CGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,77.11
@@ -5942,6 +6788,16 @@
 "9716222","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "9716247","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,68.4802879725237
 "9716260","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9723315","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,273.934005759883
+"9723328","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9723543","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,158.325178303061
+"9723556","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9723581","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2090,133.506861494114
+"9723594","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9723619","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2090,231.814394260656
+"9723632","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9723657","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,68.4802879725237
+"9723670","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "9724797","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,277.117805476561
 "9724810","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,43.91618256
 "9725025","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,158.325178303061
@@ -6002,6 +6858,16 @@
 "9756006","FARM 3.1","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0.000168
 "9756032","FARM 3.1","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,43.1471344723566
 "9756049","FARM 3.1","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0.347456750320042
+"9758269","FARM 3.1","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,-64.1884255156008
+"9758286","FARM 3.1","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0.000192
+"9758527","FARM 3.1","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,-1.18536173331706
+"9758544","FARM 3.1","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,9.6e-05
+"9758570","FARM 3.1","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2090,1.33210610452565
+"9758587","FARM 3.1","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,9.6e-05
+"9758613","FARM 3.1","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2090,-12.365074194632
+"9758630","FARM 3.1","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0.000168
+"9758656","FARM 3.1","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,24.0365485152342
+"9758673","FARM 3.1","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0.000144
 "9759581","FARM 3.1","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,-75.114405771786
 "9759598","FARM 3.1","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0.000193376614845382
 "9759839","FARM 3.1","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,16.0480004337446
@@ -6062,6 +6928,16 @@
 "9782736","GCAM_EMF33","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "9782777","GCAM_EMF33","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-63.9927072386142
 "9782829","GCAM_EMF33","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9791677","GCAM_EMF33","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,-348.191824735197
+"9791729","GCAM_EMF33","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9792235","GCAM_EMF33","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,-252.268562485666
+"9792287","GCAM_EMF33","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9792328","GCAM_EMF33","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-164.213722127312
+"9792380","GCAM_EMF33","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9792421","GCAM_EMF33","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2090,-191.795969153701
+"9792473","GCAM_EMF33","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9792514","GCAM_EMF33","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-5.82080550547347
+"9792566","GCAM_EMF33","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "9793614","GCAM_EMF33","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,-398.546656160515
 "9793666","GCAM_EMF33","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,15.677364791492
 "9794172","GCAM_EMF33","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,-284.030847188163
@@ -6117,6 +6993,11 @@
 "9822620","GLOBIOM","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2090,155.523147100625
 "9822634","GLOBIOM","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2090,-315.166721557588
 "9822650","GLOBIOM","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-102.935892553405
+"9824531","GLOBIOM","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,-552.102812141316
+"9824593","GLOBIOM","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,1169.47306997615
+"9824611","GLOBIOM","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2090,154.822461208303
+"9824625","GLOBIOM","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2090,-326.960527300072
+"9824641","GLOBIOM","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-104.448122211089
 "9825218","GLOBIOM","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,-565.774872578054
 "9825226","GLOBIOM","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,16.4136030122054
 "9825298","GLOBIOM","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,1200.78631746434
@@ -6176,6 +7057,16 @@
 "9861614","GRAPE-15","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "9861625","GRAPE-15","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-57.88
 "9861640","GRAPE-15","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9865811","GRAPE-15","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,319
+"9865826","GRAPE-15","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,1.89
+"9865967","GRAPE-15","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,0
+"9865982","GRAPE-15","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9865993","GRAPE-15","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2090,2565.98
+"9866008","GRAPE-15","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9866019","GRAPE-15","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2090,46.54
+"9866034","GRAPE-15","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9866045","GRAPE-15","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-58.54
+"9866060","GRAPE-15","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "9866695","GRAPE-15","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,133.48
 "9866710","GRAPE-15","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,12.43
 "9866851","GRAPE-15","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,0
@@ -6236,6 +7127,16 @@
 "9891006","IMAGE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "9891023","IMAGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-124.446040302709
 "9891034","IMAGE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9896361","IMAGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,198.175296420823
+"9896372","IMAGE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9896529","IMAGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,430.822800762919
+"9896540","IMAGE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9896557","IMAGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2090,643.495845226689
+"9896568","IMAGE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9896585","IMAGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2090,-63.4317143928691
+"9896596","IMAGE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"9896613","IMAGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-124.40285974964
+"9896624","IMAGE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "9897479","IMAGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,177.424327179683
 "9897490","IMAGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "9897647","IMAGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,1268.12954915348
@@ -6296,6 +7197,16 @@
 "10001147","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "10001157","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,14.7534
 "10001167","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"10003567","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,-15.2984
+"10003577","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"10003587","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,-33.6795
+"10003597","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"10003607","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-61.5535
+"10003617","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"10003627","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2090,-6.5907
+"10003637","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"10003647","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,11.0424
+"10003657","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "10004065","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,30.5211
 "10004075","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,18.0924
 "10004085","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,-0.0664
@@ -6356,6 +7267,16 @@
 "10039785","NLU 1.0","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "10039810","NLU 1.0","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-0.650553
 "10039825","NLU 1.0","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"10042955","NLU 1.0","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,-2.345335
+"10042970","NLU 1.0","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"10043155","NLU 1.0","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,1.520153
+"10043170","NLU 1.0","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"10043195","NLU 1.0","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2090,1.210032
+"10043210","NLU 1.0","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"10043235","NLU 1.0","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2090,-0.018055
+"10043250","NLU 1.0","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
+"10043275","NLU 1.0","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2090,-0.800962
+"10043290","NLU 1.0","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,0
 "10044110","NLU 1.0","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2090,-2.812306
 "10044125","NLU 1.0","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2090,10.302249
 "10044310","NLU 1.0","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2090,-8.635366
@@ -6416,6 +7337,16 @@
 "10420873","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2095,0
 "10420883","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2095,2.0088
 "10420893","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2095,0
+"10423293","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2095,-5.4688
+"10423303","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2095,0
+"10423313","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2095,-41.1139
+"10423323","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2095,0
+"10423333","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2095,-123.7341
+"10423343","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2095,0
+"10423353","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2095,-26.6439
+"10423363","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2095,0
+"10423373","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2095,-0.1479
+"10423383","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2095,0
 "10423791","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2095,19.7345
 "10423801","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2095,20.3043
 "10423811","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2095,-13.7503
@@ -6471,6 +7402,11 @@
 "10494055","AIM/CGE","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2100,161.6926
 "10494076","AIM/CGE","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2100,162.5507
 "10494098","AIM/CGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-122.4755
+"10499012","AIM/CGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,56.0501
+"10499141","AIM/CGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,64.2366
+"10499163","AIM/CGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2100,248.5145
+"10499184","AIM/CGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2100,175.1329
+"10499206","AIM/CGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-102.976
 "10500036","AIM/CGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,113.7541
 "10500050","AIM/CGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,12.3555
 "10500177","AIM/CGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,65.0284
@@ -6581,6 +7517,16 @@
 "10555674","DNE21+ V.14","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10555699","DNE21+ V.14","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,57.6723117443055
 "10555712","DNE21+ V.14","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10562767","DNE21+ V.14","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,231.404657923916
+"10562780","DNE21+ V.14","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10562995","DNE21+ V.14","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,137.343719091467
+"10563008","DNE21+ V.14","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10563033","DNE21+ V.14","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2100,60.6767490425891
+"10563046","DNE21+ V.14","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10563071","DNE21+ V.14","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2100,191.080242212934
+"10563084","DNE21+ V.14","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10563109","DNE21+ V.14","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,57.6723117443055
+"10563122","DNE21+ V.14","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10564249","DNE21+ V.14","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,233.898023368108
 "10564262","DNE21+ V.14","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,47.48626692
 "10564477","DNE21+ V.14","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,137.343719091467
@@ -6641,6 +7587,16 @@
 "10595458","FARM 3.1","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0.000168
 "10595484","FARM 3.1","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,54.2906716867059
 "10595501","FARM 3.1","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0.217205750018653
+"10597721","FARM 3.1","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,-70.6501350438967
+"10597738","FARM 3.1","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0.000192
+"10597979","FARM 3.1","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,-3.49008891109581
+"10597996","FARM 3.1","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,9.6e-05
+"10598022","FARM 3.1","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2100,1.41465412958637
+"10598039","FARM 3.1","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,9.6e-05
+"10598065","FARM 3.1","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2100,-27.5265224640767
+"10598082","FARM 3.1","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0.000168
+"10598108","FARM 3.1","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-1.94388062646273
+"10598125","FARM 3.1","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0.000144
 "10599033","FARM 3.1","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,-58.2481475640512
 "10599050","FARM 3.1","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,3.92197358451857
 "10599291","FARM 3.1","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,14.4142994272606
@@ -6701,6 +7657,16 @@
 "10622188","GCAM_EMF33","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10622229","GCAM_EMF33","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-68.1319954838485
 "10622281","GCAM_EMF33","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10631129","GCAM_EMF33","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,-355.762276248432
+"10631181","GCAM_EMF33","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10631687","GCAM_EMF33","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,-265.339371863546
+"10631739","GCAM_EMF33","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10631780","GCAM_EMF33","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-147.962908520279
+"10631832","GCAM_EMF33","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10631873","GCAM_EMF33","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2100,-125.366625075402
+"10631925","GCAM_EMF33","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10631966","GCAM_EMF33","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,23.6753783364329
+"10632018","GCAM_EMF33","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10633066","GCAM_EMF33","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,-334.222594236825
 "10633118","GCAM_EMF33","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,18.838174355049
 "10633624","GCAM_EMF33","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,-309.892705765766
@@ -6756,6 +7722,11 @@
 "10662072","GLOBIOM","R5B0","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-68.8462513080657
 "10662086","GLOBIOM","R5B0","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2100,-364.823229060596
 "10662102","GLOBIOM","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-115.608511911475
+"10663983","GLOBIOM","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,-583.979773134564
+"10664045","GLOBIOM","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,1151.75347201232
+"10664063","GLOBIOM","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-92.241700021954
+"10664077","GLOBIOM","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2100,-381.398959282821
+"10664093","GLOBIOM","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-121.236838233568
 "10664670","GLOBIOM","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,-613.178419632862
 "10664678","GLOBIOM","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,19.789154223298
 "10664750","GLOBIOM","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,1236.12068003736
@@ -6815,6 +7786,16 @@
 "10701066","GRAPE-15","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10701077","GRAPE-15","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-44.37
 "10701092","GRAPE-15","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10705263","GRAPE-15","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,490.43
+"10705278","GRAPE-15","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,1.99
+"10705419","GRAPE-15","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,0
+"10705434","GRAPE-15","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10705445","GRAPE-15","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2100,455.16
+"10705460","GRAPE-15","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10705471","GRAPE-15","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2100,31.82
+"10705486","GRAPE-15","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10705497","GRAPE-15","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-44.81
+"10705512","GRAPE-15","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10706147","GRAPE-15","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,199.93
 "10706162","GRAPE-15","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,10.1
 "10706303","GRAPE-15","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,0
@@ -6875,6 +7856,16 @@
 "10730458","IMAGE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10730475","IMAGE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,34.9279669330123
 "10730486","IMAGE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10735813","IMAGE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,52.1518160432233
+"10735824","IMAGE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10735981","IMAGE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,241.681018847397
+"10735992","IMAGE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10736009","IMAGE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2100,426.93554728047
+"10736020","IMAGE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10736037","IMAGE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2100,55.3278803999585
+"10736048","IMAGE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10736065","IMAGE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,33.5974516239996
+"10736076","IMAGE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10736931","IMAGE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,76.6431892059854
 "10736942","IMAGE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10737099","IMAGE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,727.002325447396
@@ -6935,6 +7926,16 @@
 "10840599","MAgPIE","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10840609","MAgPIE","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,7.8636
 "10840619","MAgPIE","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10843019","MAgPIE","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,-4.9997
+"10843029","MAgPIE","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10843039","MAgPIE","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,-50.267
+"10843049","MAgPIE","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10843059","MAgPIE","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-100.6141
+"10843069","MAgPIE","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10843079","MAgPIE","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2100,-49.4708
+"10843089","MAgPIE","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10843099","MAgPIE","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,6.5601
+"10843109","MAgPIE","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10843517","MAgPIE","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,0.0094999999999974
 "10843527","MAgPIE","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,22.4202
 "10843537","MAgPIE","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,-40.919
@@ -6995,6 +7996,16 @@
 "10879237","NLU 1.0","R5B0","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10879262","NLU 1.0","R5B0","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-0.355871
 "10879277","NLU 1.0","R5B0","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10882407","NLU 1.0","R5B0LP","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,-3.781055
+"10882422","NLU 1.0","R5B0LP","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10882607","NLU 1.0","R5B0LP","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,-1.456498
+"10882622","NLU 1.0","R5B0LP","LAM","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10882647","NLU 1.0","R5B0LP","MAF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-2.859521
+"10882662","NLU 1.0","R5B0LP","MAF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10882687","NLU 1.0","R5B0LP","OECD90","Emissions|CO2|Land Use","Mt CO2/yr",2100,-0.332833
+"10882702","NLU 1.0","R5B0LP","OECD90","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
+"10882727","NLU 1.0","R5B0LP","REF","Emissions|CO2|Land Use","Mt CO2/yr",2100,-0.478309
+"10882742","NLU 1.0","R5B0LP","REF","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,0
 "10883562","NLU 1.0","R5B100","ASIA","Emissions|CO2|Land Use","Mt CO2/yr",2100,-3.248336
 "10883577","NLU 1.0","R5B100","ASIA","Primary Energy|Biomass|Energy Crops","EJ/yr",2100,12.132509
 "10883762","NLU 1.0","R5B100","LAM","Emissions|CO2|Land Use","Mt CO2/yr",2100,-16.245626
