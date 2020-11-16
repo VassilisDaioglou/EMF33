@@ -28,7 +28,8 @@ DATA = na.omit(DATA)
 # ---- SUBSET RELEVANT DATA ----
 DATA1 = subset(DATA, 
                VARIABLE=="Emissions|CO2|Land Use" |
-                 VARIABLE=="Primary Energy|Biomass|Energy Crops")
+                 VARIABLE=="Primary Energy|Biomass|Energy Crops"|
+                 VARIABLE=="Primary Energy|Biomass|Modern")
 
 DATA1 = subset(DATA1, SCENARIO=="R5B0" | SCENARIO == "R5B100" | SCENARIO == "R5B200" | SCENARIO == "R5B300" |SCENARIO == "R5B400"
                | SCENARIO == "R5B0LP" | SCENARIO == "R5B300LP")
