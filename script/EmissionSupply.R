@@ -84,7 +84,7 @@ get.cumulative <- function(dataframe){
   dataframe 
 }
 
-# --- MAKE RELEVANT DATASETS ----
+# --- MAKE RELEVANT DATASETS (EMF-33) ----
 # ---- *** Land Use Emissions *** ----
 Emis = subset(DATA, VARIABLE == "Emissions|CO2|Land Use")
 Emis.temp = clean.data(Emis)
@@ -94,7 +94,7 @@ rm(Emis.temp)
 # 
 # ---- *** Primary Biomass Production *** ----
 # Get cumulative production for EF calculation
-Prim = subset(DATA, VARIABLE == "Primary Energy|Biomass|Energy Crops")
+Prim = subset(DATA, VARIABLE == "Primary Energy|Biomass|Modern")
 Prim.temp = clean.data(Prim)
 Prim.cum = get.cumulative(Prim.temp)
 Prim.cum$ID = paste(Prim.cum$MODEL, Prim.cum$REGION, Prim.cum$SCENARIO)
@@ -127,6 +127,17 @@ EmisFac$PrimEC_2050_bin = factor(EmisFac$PrimEC_2050_bin, levels = c("0", "50", 
 
 # clean
 EmisFac <- EmisFac[!is.infinite(EmisFac$EF_PrimEC),]
+
+# EmisFac ribbon min/max
+EMF33_range <- aggregate(EmisFac$EF_PrimEC, by=list(PrimEC_2050_bin=EmisFac$PrimEC_2050_bin, REGION=EmisFac$REGION), FUN=min, na.rm=TRUE) 
+colnames(EMF33_range)[1] <- "Pot_bin"
+colnames(EMF33_range)[3]<- "Min"
+Max <- aggregate(EmisFac$EF_PrimEC, by=list(PrimEC_2050_bin=EmisFac$PrimEC_2050_bin, REGION=EmisFac$REGION), FUN=max, na.rm=TRUE) 
+EMF33_range$Max = Max[match(EMF33_range$Pot_bin,Max$PrimEC_2050_bin),"x"]
+EMF33_range$label <- "EMF-33"
+EMF33_range <- EMF33_range[!is.infinite(EMF33_range$Min),]
+EMF33_range <- EMF33_range[!is.infinite(EMF33_range$Max),]
+rm(Max)
 # 
 # ---- LITERATURE DATA ----
 daioglou=read.xlsx("GitHub/EMF33/data/EmissionSupply/Lit_EF.xlsx", sheetName="Daioglou_2017", startRow=1)
@@ -157,9 +168,12 @@ colnames(Lit_range)[2]<- "Min"
 Max <- aggregate(Lit$EF_kgCO2pGJprim, by=list(Pot_bin=Lit$Pot_bin), FUN=max, na.rm=TRUE) 
 Lit_range$Max = Max[match(Lit_range$Pot_bin,Max$Pot_bin),"x"]
 Lit_range$label <- "Literature"
-
-rm(daioglou, daioglou_clean, kalt, kalt_clean, Max)
+Lit_range$REGION <- "WORLD"
+rm(daioglou_clean, kalt_clean, Max)
 #
+# ---- MIN-MAX EFs (Lit + EMF-33) ----
+EF_ranges = rbind(EmisFac_range,Lit_range)
+EF_ranges$Pot_Order = factor(EmisFac_range$Pot_bin, levels =c("0","50","100","150","200"))
 # ---- FIGURES ----
 # ---- *** FIG: Literature data - lineplot  ----
 Figlit<-ggplot() + 
@@ -174,12 +188,12 @@ Figlit<-ggplot() +
   xlab("EJ Primary Biomass") 
 Figlit
 #
-# ---- *** FIG: EMF-33 EF + Literature (box&lilne)  ----
+# ---- *** FIG: EMF-33 EF-Curve - boxplot  ----
 boxplot<-ggplot(data = subset(EmisFac, REGION == "WORLD" & !SCENARIO=="Bio300LP"),
                  aes(x=PrimEC_2050_bin, y = EF_PrimEC)) + 
   geom_boxplot() +
   geom_jitter(aes(colour = MODEL, shape=SCENARIO),
-              width=0.2, alpha = 0.9) +
+              width=0.1, alpha = 0.9) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=0,size = 0.1, colour='black') +
   theme_bw() +
@@ -189,7 +203,7 @@ boxplot<-ggplot(data = subset(EmisFac, REGION == "WORLD" & !SCENARIO=="Bio300LP"
   xlab("EJ Primary Biomass") 
 boxplot
 #
-# ---- *** FIG: EMF-33 EF Curve - lineplot  ----
+# ---- *** FIG: EMF-33 EF-Curve - lineplot  ----
 line<-ggplot(data = subset(EmisFac, REGION == "WORLD" & !SCENARIO=="Bio300LP"),
                 aes(x=PrimEC_2050, y = EF_PrimEC,colour = MODEL)) + 
   geom_line() +
@@ -203,7 +217,7 @@ line<-ggplot(data = subset(EmisFac, REGION == "WORLD" & !SCENARIO=="Bio300LP"),
   xlab("EJ Primary Biomass") 
 line
 #
-# ---- *** FIG: EMF-33 EF + Literature (box&lilne)  ----
+# ---- *** FIG: EMF-33 EF (box) + Literature (ribbon)  ----
 combined<-ggplot(data = subset(EmisFac, REGION == "WORLD" & !SCENARIO=="Bio300LP"),
                 aes(x=PrimEC_2050_bin, y = EF_PrimEC)) + 
   geom_boxplot() +
@@ -227,6 +241,24 @@ combined<-ggplot(data = subset(EmisFac, REGION == "WORLD" & !SCENARIO=="Bio300LP
                   labels="Kalt et al. (2020) & Daioglou et al. (2017)")
 combined
 #
+# ---- *** FIG: EMF-33 EF Literature (double ribbon)  ----
+ribboned<-ggplot() + 
+  geom_ribbon(data = subset(EF_ranges, REGION == "WORLD"),
+              aes(x = Pot_bin, ymin=Min, ymax=Max, group = label, fill=label), alpha = "0.25") +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ylab(expression(paste("kgCO"[2],"/GJ-Prim"))) + 
+  xlab("EJ Primary Biomass")  +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="bottom", legend.box = "vertical", legend.title= element_text(face="bold.italic")) +
+  scale_fill_manual(values=c("dodgerblue","forestgreen"),
+                    name="Model type",
+                    breaks=c("Literature","EMF-33"),
+  labels=c("Partial models","EMF-33 (IAM)"))
+ribboned
+#
 # ---- OUTPUTS ----
 # #
 png(file = "GitHub/EMF33/output/EmissionSupply/boxplot_EF.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
@@ -239,6 +271,10 @@ dev.off()
 # #
 png(file = "GitHub/EMF33/output/EmissionSupply/Combined.png", width = 4*ppi, height = 4*ppi, units = "px", res = ppi)
 plot(combined)
+dev.off()
+# #
+png(file = "GitHub/EMF33/output/EmissionSupply/Ribboned.png", width = 4*ppi, height = 4*ppi, units = "px", res = ppi)
+plot(ribboned)
 dev.off()
 
 
