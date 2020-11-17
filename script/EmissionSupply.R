@@ -128,15 +128,20 @@ EmisFac$PrimEC_2050_bin = factor(EmisFac$PrimEC_2050_bin, levels = c("0", "50", 
 # clean
 EmisFac <- EmisFac[!is.infinite(EmisFac$EF_PrimEC),]
 
-# EmisFac ribbon min/max
+# ---- *** Emission Factor min/max *** ----
 EMF33_range <- aggregate(EmisFac$EF_PrimEC, by=list(PrimEC_2050_bin=EmisFac$PrimEC_2050_bin, REGION=EmisFac$REGION), FUN=min, na.rm=TRUE) 
 colnames(EMF33_range)[1] <- "Pot_bin"
 colnames(EMF33_range)[3]<- "Min"
+EMF33_range$ID = paste(EMF33_range$Pot_bin, EMF33_range$REGION)
+
 Max <- aggregate(EmisFac$EF_PrimEC, by=list(PrimEC_2050_bin=EmisFac$PrimEC_2050_bin, REGION=EmisFac$REGION), FUN=max, na.rm=TRUE) 
-EMF33_range$Max = Max[match(EMF33_range$Pot_bin,Max$PrimEC_2050_bin),"x"]
+Max$ID = paste(Max$PrimEC_2050_bin, Max$REGION)
+
+EMF33_range$Max = Max[match(EMF33_range$ID,Max$ID),"x"]
 EMF33_range$label <- "EMF-33"
 EMF33_range <- EMF33_range[!is.infinite(EMF33_range$Min),]
 EMF33_range <- EMF33_range[!is.infinite(EMF33_range$Max),]
+EMF33_range$ID <- NULL
 rm(Max)
 # 
 # ---- LITERATURE DATA ----
@@ -172,8 +177,9 @@ Lit_range$REGION <- "WORLD"
 rm(daioglou_clean, kalt_clean, Max)
 #
 # ---- MIN-MAX EFs (Lit + EMF-33) ----
-EF_ranges = rbind(EmisFac_range,Lit_range)
-EF_ranges$Pot_Order = factor(EmisFac_range$Pot_bin, levels =c("0","50","100","150","200"))
+EF_ranges = rbind(EMF33_range,Lit_range)
+EF_ranges$Pot_Order = factor(EF_ranges$Pot_bin, levels =c("0","50","100","150","200"))
+#
 # ---- FIGURES ----
 # ---- *** FIG: Literature data - lineplot  ----
 Figlit<-ggplot() + 
@@ -219,13 +225,13 @@ line
 #
 # ---- *** FIG: EMF-33 EF (box) + Literature (ribbon)  ----
 combined<-ggplot(data = subset(EmisFac, REGION == "WORLD" & !SCENARIO=="Bio300LP"),
-                aes(x=PrimEC_2050_bin, y = EF_PrimEC)) + 
+                aes(x=PrimEC_2050_bin, y = EFOrder)) + 
   geom_boxplot() +
   geom_jitter(aes(colour=MODEL),
               width=0.2, alpha = 0.9) +
-  geom_ribbon(data = Lit_range, 
+  geom_ribbon(data = subset(EF_ranges, label == "Literature"),
               inherit.aes = FALSE,
-              aes(x = factor(Pot_bin), ymin=Min, ymax=Max, group = 1, fill=label), alpha = "0.25") +
+              aes(x = factor(Pot_Order), ymin=Min, ymax=Max, group = 1, fill=label), alpha = "0.25") +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=0,size = 0.1, colour='black') +
   ylab(expression(paste("kgCO"[2],"/GJ-Prim"))) + 
@@ -261,11 +267,11 @@ ribboned
 #
 # ---- OUTPUTS ----
 # #
-png(file = "GitHub/EMF33/output/EmissionSupply/boxplot_EF.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
+png(file = "GitHub/EMF33/output/EmissionSupply/Boxplot_EMF33.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
 plot(boxplot)
 dev.off()
 # #
-png(file = "GitHub/EMF33/output/EmissionSupply/line_EF.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
+png(file = "GitHub/EMF33/output/EmissionSupply/Line_EMF33.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
 plot(line)
 dev.off()
 # #
@@ -276,6 +282,7 @@ dev.off()
 png(file = "GitHub/EMF33/output/EmissionSupply/Ribboned.png", width = 4*ppi, height = 4*ppi, units = "px", res = ppi)
 plot(ribboned)
 dev.off()
-
-
-
+# #
+png(file = "GitHub/EMF33/output/EmissionSupply/LineLit.png", width = 4*ppi, height = 4*ppi, units = "px", res = ppi)
+plot(Figlit)
+dev.off()
