@@ -256,9 +256,9 @@ ribboned<-ggplot() +
   ylab(expression(paste("kgCO"[2],"/GJ-Prim"))) + 
   xlab("EJ Primary Biomass")  +
   theme_bw() +
-  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
+  theme(text= element_text(size=5, face="plain"), axis.text.x = element_text(angle=66, size=5, hjust=1), axis.text.y = element_text(size=5)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position="bottom", legend.box = "vertical", legend.title= element_text(face="bold.italic")) +
+  theme(legend.position="right", legend.box = "vertical", legend.title= element_text(face="bold.italic")) +
   scale_fill_manual(values=c("dodgerblue","forestgreen"),
                     name="Model type",
                     breaks=c("Literature","EMF-33"),
@@ -279,7 +279,7 @@ png(file = "GitHub/EMF33/output/EmissionSupply/Combined.png", width = 4*ppi, hei
 plot(combined)
 dev.off()
 # #
-png(file = "GitHub/EMF33/output/EmissionSupply/Ribboned.png", width = 4*ppi, height = 4*ppi, units = "px", res = ppi)
+png(file = "GitHub/EMF33/output/EmissionSupply/Ribboned.png", width = 4*ppi, height = 2*ppi, units = "px", res = ppi)
 plot(ribboned)
 dev.off()
 # #
