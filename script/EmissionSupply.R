@@ -36,6 +36,7 @@ library(dplyr)
 library(data.table);
 library(tidyr)
 library(xlsx)
+library(forcats)
 
 # ---- CONSTANTS ----
 ppi <- 300
@@ -44,7 +45,6 @@ FSizeAxis = 12
 FSizeLeg = 9
 
 ActYears = c(2010,2020,2030,2040,2050)
-Scnearios = c(R5B0, R5B100, R5B200, R5B300, R5B400, R5B0LP, R5B300LP)
 
 # ---- READ DATA ----
 DATA=read.csv("GitHub/EMF33/data/EmissionSupply/EmissSupplyDat.csv", sep=",", dec=".", stringsAsFactors = FALSE)
@@ -224,14 +224,14 @@ line<-ggplot(data = subset(EmisFac, REGION == "WORLD" & !SCENARIO=="Bio300LP"),
 line
 #
 # ---- *** FIG: EMF-33 EF (box) + Literature (ribbon)  ----
-combined<-ggplot(data = subset(EmisFac, REGION == "WORLD" & !SCENARIO=="Bio300LP"),
-                aes(x=PrimEC_2050_bin, y = EFOrder)) + 
-  geom_boxplot() +
-  geom_jitter(aes(colour=MODEL),
-              width=0.2, alpha = 0.9) +
+combined<-ggplot() + 
+  geom_boxplot(data = subset(EmisFac, REGION == "WORLD" & !SCENARIO=="Bio300LP"),
+               aes(x=PrimEC_2050_bin, y = EF_PrimEC)) +
+  # geom_jitter(aes(colour=MODEL),
+  #             width=0.2, alpha = 0.9) +
   geom_ribbon(data = subset(EF_ranges, label == "Literature"),
               inherit.aes = FALSE,
-              aes(x = factor(Pot_Order), ymin=Min, ymax=Max, group = 1, fill=label), alpha = "0.25") +
+              aes(x = Pot_Order, ymin=Min, ymax=Max, group = label, fill=label), alpha = "0.25") +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=0,size = 0.1, colour='black') +
   ylab(expression(paste("kgCO"[2],"/GJ-Prim"))) + 
@@ -267,22 +267,22 @@ ribboned
 #
 # ---- OUTPUTS ----
 # #
-png(file = "GitHub/EMF33/output/EmissionSupply/Boxplot_EMF33.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
-plot(boxplot)
-dev.off()
-# #
-png(file = "GitHub/EMF33/output/EmissionSupply/Line_EMF33.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
-plot(line)
-dev.off()
-# #
-png(file = "GitHub/EMF33/output/EmissionSupply/Combined.png", width = 4*ppi, height = 4*ppi, units = "px", res = ppi)
-plot(combined)
-dev.off()
-# #
-png(file = "GitHub/EMF33/output/EmissionSupply/Ribboned.png", width = 4*ppi, height = 2*ppi, units = "px", res = ppi)
-plot(ribboned)
-dev.off()
-# #
-png(file = "GitHub/EMF33/output/EmissionSupply/LineLit.png", width = 4*ppi, height = 4*ppi, units = "px", res = ppi)
-plot(Figlit)
-dev.off()
+# png(file = "GitHub/EMF33/output/EmissionSupply/Boxplot_EMF33.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
+# plot(boxplot)
+# dev.off()
+# # #
+# png(file = "GitHub/EMF33/output/EmissionSupply/Line_EMF33.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
+# plot(line)
+# dev.off()
+# # #
+# png(file = "GitHub/EMF33/output/EmissionSupply/Combined.png", width = 4*ppi, height = 4*ppi, units = "px", res = ppi)
+# plot(combined)
+# dev.off()
+# # #
+# png(file = "GitHub/EMF33/output/EmissionSupply/Ribboned.png", width = 4*ppi, height = 2*ppi, units = "px", res = ppi)
+# plot(ribboned)
+# dev.off()
+# # #
+# png(file = "GitHub/EMF33/output/EmissionSupply/LineLit.png", width = 4*ppi, height = 4*ppi, units = "px", res = ppi)
+# plot(Figlit)
+# dev.off()
