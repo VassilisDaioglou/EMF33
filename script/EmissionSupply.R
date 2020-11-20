@@ -190,6 +190,20 @@ EmisFac.all$Pot_bin = factor(EmisFac.all$Pot_bin, levels = AllPotBins)
 EmisFac.all = subset(EmisFac.all, Pot_bin %in% ActPotBins)
 
 rm(EMF33.temp, Lit.temp)
+#
+# ---- SUMMARY STATISTICS ----
+# Determine median, Q1 and Q3 of emission factor data
+meds <- aggregate(EmisFac.all$EF_kgCO2pGJprim, by=list(Pot_bin=EmisFac.all$Pot_bin, label=EmisFac.all$label), FUN=median, na.rm=TRUE) 
+q1 <- aggregate(EmisFac.all$EF_kgCO2pGJprim, by=list(Pot_bin=EmisFac.all$Pot_bin, label=EmisFac.all$label), FUN=quantile, probs=0.25, na.rm=TRUE) 
+q3 <- aggregate(EmisFac.all$EF_kgCO2pGJprim, by=list(Pot_bin=EmisFac.all$Pot_bin, label=EmisFac.all$label), FUN=quantile, probs=0.75, na.rm=TRUE) 
+
+colnames(meds)[3] <- "Median"
+colnames(q1)[3] <- "1st Quartile"
+colnames(q3)[3] <- "3rd Quartile"
+
+summary_stats = merge(meds,q1,by=c("Pot_bin","label"))
+summary_stats = merge(summary_stats,q3,by=c("Pot_bin","label"))
+
 # ---- MIN-MAX EFs (Lit + EMF-33) ----
 EF_ranges = rbind(EMF33_range,Lit_range)
 EF_ranges$Pot_bin = factor(EF_ranges$Pot_bin, levels = AllPotBins) #c("0","25","50","75","100","125","150","175","200","225","250","275","300","325"))
@@ -278,6 +292,7 @@ ribboned<-ggplot() +
 ribboned
 #
 # ---- OUTPUTS ----
+# write.xlsx(summary_stats, file="GitHub/EMF33/output/EmissionSupply/EF_statistics.xlsx", sheetName="Emission Factor Statistics", append=FALSE, row.names=FALSE, showNA = TRUE)
 # #
 # png(file = "GitHub/EMF33/output/EmissionSupply/Boxplot_EMF33.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
 # plot(boxplot)
