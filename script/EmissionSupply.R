@@ -182,8 +182,9 @@ EMF33.temp$label <- "EMF-33"
 EMF33.temp$Ref <- "Rose_2021"
 colnames(EMF33.temp)[] <- c("Scenario","Pot_bin","EF_kgCO2pGJprim","label","Ref")
 
-Lit.temp = subset(Lit, select = c(EF_kgCO2pGJprim, Scenario, Pot_bin, Ref))
-Lit.temp$label <- "Partial Models"
+Lit.temp = Lit
+Lit.temp$label <- paste("Partial Models", Lit$LandCounterfactual)
+Lit.temp = subset(Lit.temp, select = c(EF_kgCO2pGJprim, Scenario, Pot_bin, Ref, label))
 
 EmisFac.all = rbind(EMF33.temp,Lit.temp)
 EmisFac.all$Pot_bin = factor(EmisFac.all$Pot_bin, levels = AllPotBins)
@@ -267,10 +268,13 @@ boxed<-ggplot() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="right", legend.box = "vertical", legend.title= element_text(face="bold.italic"))  +
-  scale_fill_manual(values=c("darksalmon","dodgerblue"),
+  scale_fill_manual(values=c("dodgerblue", "darksalmon", "firebrick"),
                   name="Model type",
-                  breaks=c("Partial Models","EMF-33"),
-                  labels=c("Partial Models","EMF-33 (IAM)"))
+                  # breaks=c("Partial Models","EMF-33"),
+                  # labels=c("Partial Models","IAM (EMF-33)"))
+                  breaks = unique(EmisFac.all$label),
+                  labels = c("IAM (EMF-33)", "Partial Models (Natural Regrowth)", "Partial Models (Original)"))
+                  
 boxed
 #
 # ---- *** FIG: EMF-33 EF Literature (double ribbon)  ----
