@@ -45,8 +45,10 @@ FSizeAxis = 12
 FSizeLeg = 9
 
 ActYears = c(2010,2020,2030,2040,2050)
-ActPotBins = factor(c(0,25,50,75,100,125,150,175,200))
-AllPotBins = c(0,25,50,75,100,125,150,175,200,225,250,275,300,325)
+# ActPotBins = factor(c(0,25,50,75,100,125,150,175,200))
+# ActPotBins = factor(c(0,30,50,60,90,100,120,150,180,200))
+ActPotBins = factor(c(0,50,100,150,200))
+AllPotBins = c(0,25,30,50,60,75,90,100,120,125,150,175,180,200,210,225,240,250,270,275,300,325,330)
 # ---- READ DATA ----
 DATA=read.csv("GitHub/EMF33/data/EmissionSupply/EmissSupplyDat.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 
@@ -155,7 +157,7 @@ clean.lit <- function(dataframe,bin,reference){
 
 daioglou=read.xlsx("GitHub/EMF33/data/EmissionSupply/Lit_EF.xlsx", sheetName="Daioglou_2017", startRow=1)
 kalt = read.xlsx("GitHub/EMF33/data/EmissionSupply/Lit_EF.xlsx", sheetName="Kalt_2020", startRow=1)
-bin_width2 = 25
+bin_width2 = 50
 
 daioglou = clean.lit(daioglou,bin_width2,"Daioglou_2017")
 kalt = clean.lit(kalt,bin_width2,"Kalt_2020")
@@ -254,11 +256,34 @@ line<-ggplot(data = subset(EmisFac, REGION == "WORLD"),
 line
 #
 # ---- *** FIG: EMF-33 EF + Literature (boxplot)  ----
-boxed<-ggplot() + 
-  geom_boxplot(data = EmisFac.all,
-               aes(x=Pot_bin, y = EF_kgCO2pGJprim, fill = label),
+boxed<-ggplot(data = EmisFac.all) + 
+  geom_boxplot(aes(x=Pot_bin, y = EF_kgCO2pGJprim, fill = label),
                size = 0.5, outlier.shape = NA) +
-  ylim(0,100) +
+  geom_jitter(aes(x=Pot_bin, y = EF_kgCO2pGJprim, colour = label), alpha = 0.25, width=0.1, size = 1) +
+  ylim(-20,100) +
+  scale_x_discrete(limits=ActPotBins) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ylab(expression(paste("kgCO"[2]," / GJ"[Prim]))) + 
+  xlab(expression(paste("EJ"[Prim]," Biomass")))  +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position=c(0.125, 0.85), legend.box = "vertical", legend.title= element_text(face="bold.italic"))  +
+  scale_fill_manual(values=c("dodgerblue", "darksalmon", "firebrick"),
+                  name="Model type",
+                  breaks = unique(EmisFac.all$label),
+                  labels = c("IAM \n(EMF-33)", "Partial Models \n(Natural Regrowth)", "Partial Models \n(Constant Land Cover)")) +
+  scale_colour_manual(values=c("dodgerblue", "darksalmon", "firebrick"),
+                  name="Model type",
+                  breaks = unique(EmisFac.all$label),
+                  labels = c("IAM \n(EMF-33)", "Partial Models \n(Natural Regrowth)", "Partial Models \n(Constant Land Cover)"))
+boxed
+# 
+# ---- *** FIG: EMF-33 EF + Literature (points)  ----
+points<-ggplot(data = EmisFac.all) + 
+  geom_jitter(aes(x=Pot_bin, y = EF_kgCO2pGJprim, colour = label), alpha = 1, width=0.2, size = 1) +
+  ylim(-20,100) +
   scale_x_discrete(limits=ActPotBins) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=0,size = 0.1, colour='black') +
@@ -268,14 +293,12 @@ boxed<-ggplot() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="right", legend.box = "vertical", legend.title= element_text(face="bold.italic"))  +
-  scale_fill_manual(values=c("dodgerblue", "darksalmon", "firebrick"),
-                  name="Model type",
-                  # breaks=c("Partial Models","EMF-33"),
-                  # labels=c("Partial Models","IAM (EMF-33)"))
-                  breaks = unique(EmisFac.all$label),
-                  labels = c("IAM (EMF-33)", "Partial Models (Natural Regrowth)", "Partial Models (Original)"))
-                  
-boxed
+  scale_colour_manual(values=c("dodgerblue", "darksalmon", "firebrick"),
+                      name="Model type",
+                      breaks = unique(EmisFac.all$label),
+                      labels = c("IAM \n(EMF-33)", "Partial Models \n(Natural Regrowth)", "Partial Models \n(Constant Land Cover)"))
+points
+
 #
 # ---- *** FIG: EMF-33 EF Literature (double ribbon)  ----
 ribboned<-ggplot() + 
@@ -306,8 +329,12 @@ ribboned
 # plot(line)
 # dev.off()
 # # #
-# png(file = "GitHub/EMF33/output/EmissionSupply/Boxed.png", width = 4*ppi, height = 2*ppi, units = "px", res = ppi)
+# png(file = "GitHub/EMF33/output/EmissionSupply/Boxed.png", width = 5*ppi, height = 4*ppi, units = "px", res = ppi)
 # plot(boxed)
+# dev.off()
+# #
+# png(file = "GitHub/EMF33/output/EmissionSupply/Points.png", width = 4*ppi, height = 2*ppi, units = "px", res = ppi)
+# plot(points)
 # dev.off()
 # # #
 # png(file = "GitHub/EMF33/output/EmissionSupply/Ribboned.png", width = 4*ppi, height = 2*ppi, units = "px", res = ppi)
