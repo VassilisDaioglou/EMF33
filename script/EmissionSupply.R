@@ -144,6 +144,7 @@ EMF33_range$label <- "EMF-33"
 EMF33_range <- EMF33_range[!is.infinite(EMF33_range$Min),]
 EMF33_range <- EMF33_range[!is.infinite(EMF33_range$Max),]
 EMF33_range$ID <- NULL
+EMF33_range$LandCounterfactual <- "IAM Scenario"
 rm(Max)
 # 
 # ---- LITERATURE DATA ----
@@ -167,14 +168,16 @@ Lit = rbind(daioglou,kalt)
 Lit$EF_kgCO2pGJprim <- as.numeric(Lit$EF_kgCO2pGJprim)
 Lit$Pot_bin = factor(Lit$Pot_bin, levels = AllPotBins)
 
-Lit_range <- aggregate(Lit$EF_kgCO2pGJprim, by=list(Pot_bin=Lit$Pot_bin), FUN=min, na.rm=TRUE) 
-colnames(Lit_range)[2]<- "Min"
-Max <- aggregate(Lit$EF_kgCO2pGJprim, by=list(Pot_bin=Lit$Pot_bin), FUN=max, na.rm=TRUE) 
-Lit_range$Max = Max[match(Lit_range$Pot_bin,Max$Pot_bin),"x"]
+Lit_range <- aggregate(Lit$EF_kgCO2pGJprim, by=list(Pot_bin=Lit$Pot_bin, LandCounterfactual=Lit$LandCounterfactual), FUN=min, na.rm=TRUE) 
+colnames(Lit_range)[3]<- "Min"
+Lit_range$ID = paste(Lit_range$Pot_bin, Lit_range$LandCounterfactual)
+Max <- aggregate(Lit$EF_kgCO2pGJprim, by=list(Pot_bin=Lit$Pot_bin, LandCounterfactual=Lit$LandCounterfactual), FUN=max, na.rm=TRUE) 
+Max$ID = paste(Max$Pot_bin, Max$LandCounterfactual)
+Lit_range$Max = Max[match(Lit_range$ID,Max$ID),"x"]
 Lit_range$label <- "Literature"
 Lit_range$REGION <- "WORLD"
 Lit_range$Pot_bin = factor(Lit_range$Pot_bin, levels = AllPotBins)
-
+Lit_range$ID <- NULL
 rm(daioglou,kalt, Max)
 #
 # ---- COMBINED EMF-33 & LITERATURE ----
@@ -303,7 +306,7 @@ points
 # ---- *** FIG: EMF-33 EF Literature (double ribbon)  ----
 ribboned<-ggplot() + 
   geom_ribbon(data = subset(EF_ranges, REGION == "WORLD"),
-              aes(x = Pot_bin, ymin=Min, ymax=Max, group = label, fill=label), alpha = "0.25") +
+              aes(x = Pot_bin, ymin=Min, ymax=Max, group = LandCounterfactual, fill=LandCounterfactual), alpha = "0.25") +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=0,size = 0.1, colour='black') +
   ylab(expression(paste("kgCO"[2],"/GJ-Prim"))) + 
@@ -312,10 +315,10 @@ ribboned<-ggplot() +
   theme(text= element_text(size=5, face="plain"), axis.text.x = element_text(angle=66, size=5, hjust=1), axis.text.y = element_text(size=5)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="right", legend.box = "vertical", legend.title= element_text(face="bold.italic")) +
-  scale_fill_manual(values=c("dodgerblue","forestgreen"),
+  scale_fill_manual(values=c("dodgerblue","darksalmon","firebrick"),
                     name="Model type",
-                    breaks=c("Literature","EMF-33"),
-  labels=c("Partial models","EMF-33 (IAM)"))
+                    breaks = unique(EF_ranges$LandCounterfactual),
+                    labels = c("IAM \n(EMF-33)", "Partial Models \n(Natural Regrowth)", "Partial Models \n(Constant Land Cover)"))
 ribboned
 #
 # ---- OUTPUTS ----
