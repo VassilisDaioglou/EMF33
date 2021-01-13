@@ -323,6 +323,10 @@ ribboned
 #
 # ---- OUTPUTS ----
 # write.xlsx(summary_stats, file="GitHub/EMF33/output/EmissionSupply/EF_statistics.xlsx", sheetName="Emission Factor Statistics", append=FALSE, row.names=FALSE, showNA = TRUE)
+#
+# For TSU
+# write.xlsx(subset(EmisFac.all, select = -c(Scenario, Ref)), file="GitHub/EMF33/output/EmissionSupply/Box_7_10_Figure_1_Data.xlsx", sheetName="Data (Points)", append=FALSE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(summary_stats, file="GitHub/EMF33/output/EmissionSupply/Box_7_10_Figure_1_Data.xlsx", sheetName="Data (Boxplot)", append=TRUE, row.names=FALSE, showNA = TRUE)
 # #
 # png(file = "GitHub/EMF33/output/EmissionSupply/Boxplot_EMF33.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
 # plot(boxplot)
