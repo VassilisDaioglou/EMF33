@@ -328,7 +328,7 @@ ribboned
 # write.xlsx(subset(EmisFac.all, select = -c(Scenario, Ref)), file="GitHub/EMF33/output/EmissionSupply/Box_7_10_Figure_1_Data.xlsx", sheetName="Data (Points)", append=FALSE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(summary_stats, file="GitHub/EMF33/output/EmissionSupply/Box_7_10_Figure_1_Data.xlsx", sheetName="Data (Boxplot)", append=TRUE, row.names=FALSE, showNA = TRUE)
 #
-# pdf(file = "GitHub/EMF33/output/EmissionSupply/Boxed.pdf", width = 6, height = 3)
+# pdf(file = "GitHub/EMF33/output/EmissionSupply/Box_7_10_Figure_1.pdf", width = 6, height = 3)
 # plot(boxed)
 # dev.off()
 # #
