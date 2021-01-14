@@ -272,7 +272,7 @@ boxed<-ggplot(data = EmisFac.all) +
   theme_bw() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=66, size=6, hjust=1), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  theme(legend.position=c(0.125, 0.85), legend.box = "vertical", legend.title= element_text(face="bold.italic"))  +
+  theme(legend.position="right", legend.box = "vertical", legend.title= element_text(face="bold.italic"))  +
   scale_fill_manual(values=c("dodgerblue", "darksalmon", "firebrick"),
                   name="Model type",
                   breaks = unique(EmisFac.all$label),
@@ -327,7 +327,12 @@ ribboned
 # For TSU
 # write.xlsx(subset(EmisFac.all, select = -c(Scenario, Ref)), file="GitHub/EMF33/output/EmissionSupply/Box_7_10_Figure_1_Data.xlsx", sheetName="Data (Points)", append=FALSE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(summary_stats, file="GitHub/EMF33/output/EmissionSupply/Box_7_10_Figure_1_Data.xlsx", sheetName="Data (Boxplot)", append=TRUE, row.names=FALSE, showNA = TRUE)
+#
+# pdf(file = "GitHub/EMF33/output/EmissionSupply/Boxed.pdf", width = 6, height = 3)
+# plot(boxed)
+# dev.off()
 # #
+# Other
 # png(file = "GitHub/EMF33/output/EmissionSupply/Boxplot_EMF33.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
 # plot(boxplot)
 # dev.off()
