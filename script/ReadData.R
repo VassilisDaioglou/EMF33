@@ -28,14 +28,15 @@ DATA = na.omit(DATA)
 BraData = subset(DATA, REGION=="Brazil"|REGION=="World")
 BraData = subset(BraData, VARIABLE == "Emissions|CO2"|
                    VARIABLE == "Emissions|CO2|Energy"|
-                   VARIABLE == "Emissions|CO2|Land Use|Total")
+                   VARIABLE == "Emissions|CO2|Land Use")
 BraData = subset(BraData, SCENARIO == "R3-B-lo-full"|
                    SCENARIO == "R3-B-lo-nofuel"|
                    SCENARIO == "R3-B-lo=nobeccs"|
                    SCENARIO == "R3-B-lo-none")
+
 #
 # ---- OUTPUT: TRADE ANALYSIS ----
-# write.csv(BraData, file = "C:/Users/Asus/Documents/GitHub/EMF33/data/Brazil/BraDATA.csv")
+write.csv(BraData, file = "C:/Users/Asus/Documents/GitHub/EMF33/data/Brazil/BraDATA.csv")
 #
 rm(BraData)
 # ---- TRADE DATAFRAME ----
