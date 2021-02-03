@@ -21,6 +21,23 @@ colnames(DATA)[6]<-"Year"
 DATA$Year = as.numeric(substr(DATA$Year, start=2, stop=5))
 DATA = na.omit(DATA)
 
+
+# ---- BRAZIL EMISSIONS DATAFRAME ----
+# Produce dataframe to be used in the processing of "Brazil" results
+# Specifically for the energy and land use emissions of Brazil
+BraData = subset(DATA, REGION=="Brazil"|REGION=="World")
+BraData = subset(BraData, VARIABLE == "Emissions|CO2"|
+                   VARIABLE == "Emissions|CO2|Energy"|
+                   VARIABLE == "Emissions|CO2|Land Use|Total")
+BraData = subset(BraData, SCENARIO == "R3-B-lo-full"|
+                   SCENARIO == "R3-B-lo-nofuel"|
+                   SCENARIO == "R3-B-lo=nobeccs"|
+                   SCENARIO == "R3-B-lo-none")
+#
+# ---- OUTPUT: TRADE ANALYSIS ----
+# write.csv(BraData, file = "C:/Users/Asus/Documents/GitHub/EMF33/data/Brazil/BraDATA.csv")
+#
+rm(BraData)
 # ---- TRADE DATAFRAME ----
 # Produce dataframe to be used in the processing of "Bioenergy trade" results
 
