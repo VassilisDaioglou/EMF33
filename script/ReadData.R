@@ -21,6 +21,39 @@ colnames(DATA)[6]<-"Year"
 DATA$Year = as.numeric(substr(DATA$Year, start=2, stop=5))
 DATA = na.omit(DATA)
 
+# ---- FOSSIL DISPLACEMENT DATAFRAME ----
+# Produce a dataframe to be used to determine the displacement of fossil fuels from bioenergy
+# Used in the Roe et al (2021) GCB paper
+
+Displ = subset(DATA, SCENARIO=="R3-BASE-0-full"|
+                 SCENARIO=="R3-B-hi-full"|SCENARIO=="R3-B-lo-full"|SCENARIO=="R3-B-vlo-full"|
+                 SCENARIO=="R3-B-hi-cost100"|SCENARIO=="R3-B-lo-cost100"|SCENARIO=="R3-B-vlo-cost100"|
+                 SCENARIO=="R3-B-hi-ready2050"|SCENARIO=="R3-B-lo-ready2050"|SCENARIO=="R3-B-vlo-ready2050"|
+                 SCENARIO=="R3-B-hi-limbio"|SCENARIO=="R3-B-lo-limbio"|SCENARIO=="R3-B-vlo-limbio")
+
+Displ$VARIABLE2 = substr(Displ$VARIABLE, start = 1, stop = 24)
+Displ = subset(Displ, VARIABLE2=="Secondary Energy|Liquids" | VARIABLE2=="Secondary Energy|Electri")
+
+Displ.Ele = subset(Displ, VARIABLE2=="Secondary Energy|Electri")
+Displ.Liq = subset(Displ, VARIABLE2=="Secondary Energy|Liquids")
+
+Displ.Ele$Tech = substr(Displ.Ele$VARIABLE, start = 30, stop = 50)
+Displ.Liq$Tech = substr(Displ.Liq$VARIABLE, start = 26, stop = 50)
+
+Displ.Ele = subset(Displ.Ele, Tech==""|Tech=="Biomass"|Tech=="Coal"|Tech=="Gas"|Tech=="Oil"|
+                     Tech=="Geothermal"|Tech=="Hydro"|Tech=="Nuclear"|Tech=="Solar"|Tech=="Wind"|Tech=="Ocean")
+
+Displ.Liq = subset(Displ.Liq, Tech==""|Tech=="Biomass"|Tech=="Coal"|Tech=="Gas"|Tech=="Oil")
+
+Displ.Final = rbind(Displ.Ele,Displ.Liq)
+Displ.Final$VARIABLE2 <- NULL
+Displ.Final$Tech[Displ.Final$Tech==""]<-"Total"
+
+rm(Displ, Displ.Ele, Displ.Liq)
+
+#
+# ---- > OUTPUT: FOSSIL DISPLACEMENT ANALYSIS ----
+# write.csv(Displ.Final, file = "C:/Users/Asus/Documents/GitHub/EMF33/data/FossilDisplacement/DisplacementData.csv")
 
 # ---- BRAZIL EMISSIONS DATAFRAME ----
 # Produce dataframe to be used in the processing of "Brazil" results
@@ -35,8 +68,8 @@ BraData = subset(BraData, SCENARIO == "R3-B-lo-full"|
                    SCENARIO == "R3-B-lo-none")
 
 #
-# ---- OUTPUT: TRADE ANALYSIS ----
-write.csv(BraData, file = "C:/Users/Asus/Documents/GitHub/EMF33/data/Brazil/BraDATA.csv")
+# ---- > OUTPUT: BRAZIL ANALYSIS ----
+# write.csv(BraData, file = "C:/Users/Asus/Documents/GitHub/EMF33/data/Brazil/BraDATA.csv")
 #
 rm(BraData)
 # ---- TRADE DATAFRAME ----
@@ -121,7 +154,7 @@ TradDATA1.RYVS = subset(TradDATA1.RYVS, !(MODEL=="COFFEE"&VARIABLE=="Primary Ene
 TradDATA1.RYVS = subset(TradDATA1.RYVS, !(MODEL=="IMACLIM-NLU"&VARIABLE=="Trade|Primary Energy|Biomass|Volume"))
 TradDATA = rbind(TradDATA1.RYVS,TradData1.COF,NewIMACLIM1)
 
-# ---- OUTPUT: TRADE ANALYSIS ----
+# ---- > OUTPUT: TRADE ANALYSIS ----
 # write.csv(TradDATA, file = paste0(getwd(),"/data/Trade/TradDATA.csv"))
 # write.csv(BioPrice, file = paste0(getwd(),"/data/Trade/TradPrice.csv"))
 
@@ -651,7 +684,7 @@ TechData4$CapitalCo[TechData4$MODEL=="REMIND-MAGPIE" & TechData4$REGION=="REF"] 
 TechData4$OMCostFi[TechData4$MODEL=="REMIND-MAGPIE" & TechData4$REGION=="REF"] <- (TechData4$OMCostFi[TechData4$MODEL=="REMIND-MAGPIE" & TechData4$REGION=="REF"]/1)
 TechData4$OMCostVa[TechData4$MODEL=="REMIND-MAGPIE" & TechData4$REGION=="REF"] <- (TechData4$OMCostVa[TechData4$MODEL=="REMIND-MAGPIE" & TechData4$REGION=="REF"]/1)
 
-# ---- OUTPUT: TECHNOLOGY ANALYSIS ----
+# ---- > OUTPUT: TECHNOLOGY ANALYSIS ----
 TechData5 = subset(TechData4,  !(REGION=="ASIA"|REGION=="LAM"|REGION=="MAF"|REGION=="OECD90"|REGION=="REF"))
 TechData5.RCP = subset(TechData4,  REGION=="ASIA"|REGION=="LAM"|REGION=="MAF"|REGION=="OECD90"|REGION=="REF")
 
