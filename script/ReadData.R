@@ -32,24 +32,29 @@ Displ = subset(DATA, SCENARIO=="R3-BASE-0-full"|
                  SCENARIO=="R3-B-hi-limbio"|SCENARIO=="R3-B-lo-limbio"|SCENARIO=="R3-B-vlo-limbio")
 
 Displ$VARIABLE2 = substr(Displ$VARIABLE, start = 1, stop = 24)
-Displ = subset(Displ, VARIABLE2=="Secondary Energy|Liquids" | VARIABLE2=="Secondary Energy|Electri")
+
+
+Displ = subset(Displ, VARIABLE2=="Secondary Energy|Liquids" | VARIABLE2=="Secondary Energy|Electri" |
+                  VARIABLE2=="Price|Carbon")
 
 Displ.Ele = subset(Displ, VARIABLE2=="Secondary Energy|Electri")
 Displ.Liq = subset(Displ, VARIABLE2=="Secondary Energy|Liquids")
+Displ.Car = subset(Displ, VARIABLE2=="Price|Carbon")
 
 Displ.Ele$Tech = substr(Displ.Ele$VARIABLE, start = 30, stop = 50)
 Displ.Liq$Tech = substr(Displ.Liq$VARIABLE, start = 26, stop = 50)
+Displ.Car$Tech <- NA
 
 Displ.Ele = subset(Displ.Ele, Tech==""|Tech=="Biomass"|Tech=="Coal"|Tech=="Gas"|Tech=="Oil"|
                      Tech=="Geothermal"|Tech=="Hydro"|Tech=="Nuclear"|Tech=="Solar"|Tech=="Wind"|Tech=="Ocean")
 
 Displ.Liq = subset(Displ.Liq, Tech==""|Tech=="Biomass"|Tech=="Coal"|Tech=="Gas"|Tech=="Oil")
 
-Displ.Final = rbind(Displ.Ele,Displ.Liq)
+Displ.Final = rbind(Displ.Ele,Displ.Liq, Displ.Car)
 Displ.Final$VARIABLE2 <- NULL
 Displ.Final$Tech[Displ.Final$Tech==""]<-"Total"
 
-rm(Displ, Displ.Ele, Displ.Liq)
+rm(Displ, Displ.Ele, Displ.Liq, Displ.Car)
 
 #
 # ---- > OUTPUT: FOSSIL DISPLACEMENT ANALYSIS ----
