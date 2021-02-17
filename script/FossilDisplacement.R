@@ -1,16 +1,18 @@
 # ---- INFORMATION ----
 # AIM
-# R script to process IAM results for CLEW nexus interactions 
-# Author: Vassilis Daioglou
-# 
-# This script reads in IAMC template scenario projections and plots nexus interactions
-# Compares the behaviour for selected indicators across the SSP-RCP matrix
-
-
+# R script to determine the displaced fossil fuel emissions due to the use of bioenergy
+# To be combined with CDR from BECCS in order to understand the full mitigation potential of bioenergy with CCS. 
+#
+# METHOD:
+# Use EMF-33 scenarios to get range of results across models and scenarios.
+# 1. Determine carbon content of electrifcity and liquids use based on baseline projections
+# 2. Determine extent of bioenergy use in these energy carriers across a mitigation scenario
+# 3. Determine displaced CO2
+#
 # AUTHORSHIP:
 # Author: Vassilis Daioglou
-# Date: October-November 2020
-# Reference: AR6 WGIII Ch.7.4.4
+# Date: February 2020
+# Reference: Roe et al. 2021, Global Environmental Change
 #
 # ---- START ----
 # clear memory
