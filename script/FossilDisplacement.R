@@ -43,6 +43,66 @@ FSizeStrip = 9
 FSizeAxis = 9
 FSizeLeg = 9
 
+GJperMWh = 3.6  
+
+# Carbon Content in kgCO2/MWh
+CCPrim <- data.frame(c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind","Ocean","Oil"),
+                     c(0,            # Biomass = Assume no LUC here as it is accounted for in the BECCS mitigation potential
+                       353.8,        # Coal 
+                       221.76,       # Gas 
+                       0,            # Geothermal
+                       0,            # Hydro
+                       0,            # Nuclear
+                       0,            # Solar
+                       0,            # Wind
+                       0,            # Ocean
+                       249.5))       # Oil 
+
+colnames(CCPrim) <- c("Tech","CC_kgCO2_MWh")
+CCPrim = CCPrim %>% mutate(CC_MtCO2_EJ = CC_kgCO2_MWh / GJperMWh)
+
+# electricity conversion efficiency, based on UNFCCC tool to calculate electricity emission factor
+# https://cdm.unfccc.int/methodologies/PAmethodologies/tools/am-tool-07-v5.0.pdf
+# Appendix I
+Elec_Eff <- data.frame(c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind","Ocean","Oil"),
+                       c(0,            # Biomass = Assume no LUC here as it is accounted for in the BECCS mitigation potential
+                         0.40,        # Coal 
+                         0.60,       # Gas 
+                         0,            # Geothermal
+                         0,            # Hydro
+                         0,            # Nuclear
+                         0,            # Solar
+                         0,            # Wind
+                         0,            # Ocean
+                         0.46))       # Oil 
+colnames(Elec_Eff) <- c("Tech","Efficiency")
+
+CCElec = CCPrim 
+CCElec$Eff = Elec_Eff[match(CCElec$Tech,Elec_Eff$Tech),"Efficiency"]  
+CCElec$Elec_CC_MtCO2_EJ = CCElec$CC_MtCO2_EJ / CCElec$Eff  
+CCElec[is.na(CCElec)] <- 0.0
+
+# Liquids thermal conversion efficiency
+# Coal-to-liquids: https://uu.diva-portal.org/smash/get/diva2:293610/FULLTEXT02.pdf
+# Gas-to-Liquids: https://pubs-acs-org.proxy.library.uu.nl/doi/10.1021/ie402284q
+Liq_Eff <- data.frame(c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind","Ocean","Oil"),
+                       c(0,            # Biomass = Assume no LUC here as it is accounted for in the BECCS mitigation potential
+                         0.5,          # Coal 
+                         0.5,          # Gas 
+                         0,            # Geothermal
+                         0,            # Hydro
+                         0,            # Nuclear
+                         0,            # Solar
+                         0,            # Wind
+                         0,            # Ocean
+                         1))       # Oil 
+colnames(Liq_Eff) <- c("Tech","Efficiency")
+
+CCLiq = CCPrim 
+CCLiq$Eff = Liq_Eff[match(CCLiq$Tech,Liq_Eff$Tech),"Efficiency"]  
+CCLiq$Elec_CC_MtCO2_EJ = CCElec$CC_MtCO2_EJ / CCLiq$Eff  
+CCLiq[is.na(CCLiq)] <- 0.0
+
 # ---- READ DATA ----
 DATA=read.csv("data/FossilDisplacement/DisplacementData.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 
@@ -61,4 +121,5 @@ Cross100$ID2 = paste(Cross100$ID1, Cross100$x)
 
 DATA.cor = subset(DATA, ID2 %in% Cross100$ID2 & !(VARIABLE=="Price|Carbon"))
 
+rm(Above100, Cross100)
 # ----  CARBON CONTENTS OF FINAL ENERGY CARRIERS ----
