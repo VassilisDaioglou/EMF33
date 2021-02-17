@@ -137,7 +137,6 @@ Cross100$ID3 = gsub("R3-B-vlo-limbio","R3-BASE-0-full",Cross100$ID3, fixed=F)
 # Correct data to include (i) Mitigation AND Baseline scenario data for year of interest 
 DATA.cor = subset(DATA, (ID2 %in% Cross100$ID2 | ID2 %in% Cross100$ID3) & !(VARIABLE=="Price|Carbon"))
 
-
 rm(Above100)
 # ----  CARBON CONTENTS OF FINAL ENERGY CARRIERS ----
 DATA.cor$Carrier = substr(DATA.cor$VARIABLE, start = 18, stop = 20)
@@ -164,8 +163,8 @@ Elec.shares = Elec.shares %>% mutate(Oil_Share = Oil / Total_NonBio)
 Elec.shares = Elec.shares %>% mutate(Sol_Share = Solar / Total_NonBio)  
 Elec.shares = Elec.shares %>% mutate(Win_Share = Wind / Total_NonBio)  
 
-Elec.shares = Elec.shares[,c(1:3,5:6,20:29)]
-Elec.shares = melt(Elec.shares, id.vars=c("MODEL","SCENARIO","REGION","Year","ID1"))
+Elec.shares = Elec.shares[,c(1:3,5:7,20:29)]
+Elec.shares = melt(Elec.shares, id.vars=c("MODEL","SCENARIO","REGION","Year","ID1","ID2"))
 Elec.shares$Tech = substr(Elec.shares$variable, start = 1, stop = 3)
 Elec.NonBio = subset(Elec.shares, Tech == "Tot")
 Elec.NonBio$Tech <- NULL
@@ -177,7 +176,8 @@ Elec.shares$CC = CCElec[match(Elec.shares$Tech,CCElec$Tech),5]
 Elec.shares = Elec.shares %>% mutate(CC_factor = value * CC)
 
 # Determine final emission factor of secondary energy carrier by summing contribution of each primary feedstock
-Elec.CC = aggregate(Elec.shares$CC_factor, by=list(ID1=Elec.shares$ID1), FUN=sum, na.rm=TRUE)
+Elec.CC = aggregate(Elec.shares$CC_factor, by=list(ID2=Elec.shares$ID2), FUN=sum, na.rm=TRUE)
+Elec.CC$Carrier <- "Electricity"
 
 # ---- *** LIQUIDS *** ----
 # Determine share of fuels used for each carrier, ignoring biomass use
@@ -190,8 +190,8 @@ Liq.shares = Liq.shares %>% mutate(Coa_Share = Coal / Total_NonBio)
 Liq.shares = Liq.shares %>% mutate(Gas_Share = Gas / Total_NonBio)  
 Liq.shares = Liq.shares %>% mutate(Oil_Share = Oil / Total_NonBio)  
 
-Liq.shares = Liq.shares[,c(1:3,5:6,14:17)]
-Liq.shares = melt(Liq.shares, id.vars=c("MODEL","SCENARIO","REGION","Year","ID1"))
+Liq.shares = Liq.shares[,c(1:3,5:7,14:17)]
+Liq.shares = melt(Liq.shares, id.vars=c("MODEL","SCENARIO","REGION","Year","ID1","ID2"))
 Liq.shares$Tech = substr(Liq.shares$variable, start = 1, stop = 3)
 Liq.NonBio = subset(Liq.shares, Tech == "Tot")
 Liq.NonBio$Tech <- NULL
@@ -202,9 +202,13 @@ Liq.shares$CC = CCLiq[match(Liq.shares$Tech,CCLiq$Tech),5]
 Liq.shares = Liq.shares %>% mutate(CC_factor = value * CC)
 
 # Determine final emission factor of secondary energy carrier by summing contribution of each primary feedstock
-Liq.CC = aggregate(Liq.shares$CC_factor, by=list(ID1=Liq.shares$ID1), FUN=sum, na.rm=TRUE)
+Liq.CC = aggregate(Liq.shares$CC_factor, by=list(ID2=Liq.shares$ID2), FUN=sum, na.rm=TRUE)
+Liq.CC$Carrier <- "Liquids"
 
 # 
 # ---- AVOIDED EMISSIONS ----
+Liq.NonBio$CC = Liq.CC[match(Liq.NonBio$ID1,Liq.CC$ID1),"x"]
+Elec.NonBio$CC = Elec.CC[match(Elec.NonBio$ID1,Elec.CC$ID1),"x"]
+
 NonBioDemand = rbind(Liq.NonBio, Elec.NonBio)
 NonBioDemand.base = subset(NonBioDemand, SCENARIO=="R3-BASE-0-full")
