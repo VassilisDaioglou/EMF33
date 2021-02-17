@@ -119,9 +119,26 @@ Above100 = subset(cprice, value > 100)
 Cross100 = aggregate(Above100$Year, by=list(ID1=Above100$ID1), FUN=min, na.rm=TRUE)
 Cross100$ID2 = paste(Cross100$ID1, Cross100$x)
 
-DATA.cor = subset(DATA, ID2 %in% Cross100$ID2 & !(VARIABLE=="Price|Carbon"))
+# Determine comination of MODEL-REGION for year of interest
+Cross100$ID3 = Cross100$ID2
+Cross100$ID3 = gsub("R3-B-hi-cost100","R3-BASE-0-full",Cross100$ID3, fixed=F)
+Cross100$ID3 = gsub("R3-B-hi-full","R3-BASE-0-full",Cross100$ID3, fixed=F)
+Cross100$ID3 = gsub("R3-B-hi-ready2050","R3-BASE-0-full",Cross100$ID3, fixed=F)
+Cross100$ID3 = gsub("R3-B-hi-limbio","R3-BASE-0-full",Cross100$ID3, fixed=F)
+Cross100$ID3 = gsub("R3-B-lo-full","R3-BASE-0-full",Cross100$ID3, fixed=F)
+Cross100$ID3 = gsub("R3-B-lo-ready2050","R3-BASE-0-full",Cross100$ID3, fixed=F)
+Cross100$ID3 = gsub("R3-B-lo-cost100","R3-BASE-0-full",Cross100$ID3, fixed=F)
+Cross100$ID3 = gsub("R3-B-lo-limbio","R3-BASE-0-full",Cross100$ID3, fixed=F)
+Cross100$ID3 = gsub("R3-B-vlo-full","R3-BASE-0-full",Cross100$ID3, fixed=F)
+Cross100$ID3 = gsub("R3-B-vlo-ready2050","R3-BASE-0-full",Cross100$ID3, fixed=F)
+Cross100$ID3 = gsub("R3-B-vlo-cost100","R3-BASE-0-full",Cross100$ID3, fixed=F)
+Cross100$ID3 = gsub("R3-B-vlo-limbio","R3-BASE-0-full",Cross100$ID3, fixed=F)
 
-rm(Above100, Cross100)
+# Correct data to include (i) Mitigation AND Baseline scenario data for year of interest 
+DATA.cor = subset(DATA, (ID2 %in% Cross100$ID2 | ID2 %in% Cross100$ID3) & !(VARIABLE=="Price|Carbon"))
+
+
+rm(Above100)
 # ----  CARBON CONTENTS OF FINAL ENERGY CARRIERS ----
 DATA.cor$Carrier = substr(DATA.cor$VARIABLE, start = 18, stop = 20)
 DATA.cor$VARIABLE <- NULL
@@ -151,6 +168,8 @@ Elec.shares = Elec.shares[,c(1:3,5:6,20:29)]
 Elec.shares = melt(Elec.shares, id.vars=c("MODEL","SCENARIO","REGION","Year","ID1"))
 Elec.shares$Tech = substr(Elec.shares$variable, start = 1, stop = 3)
 Elec.NonBio = subset(Elec.shares, Tech == "Tot")
+Elec.NonBio$Tech <- NULL
+Elec.NonBio$Carrier <- "Electricity"
 
 # Determine contribution of each energy carrier to secondary emission factor
 Elec.shares = subset(Elec.shares, !(Tech=="Tot"))
@@ -175,7 +194,8 @@ Liq.shares = Liq.shares[,c(1:3,5:6,14:17)]
 Liq.shares = melt(Liq.shares, id.vars=c("MODEL","SCENARIO","REGION","Year","ID1"))
 Liq.shares$Tech = substr(Liq.shares$variable, start = 1, stop = 3)
 Liq.NonBio = subset(Liq.shares, Tech == "Tot")
-
+Liq.NonBio$Tech <- NULL
+Liq.NonBio$Carrier <- "Liquids"
 # Determine contribution of each energy carrier to secondary emission factor
 Liq.shares = subset(Liq.shares, !(Tech=="Tot"))
 Liq.shares$CC = CCLiq[match(Liq.shares$Tech,CCLiq$Tech),5]
@@ -183,3 +203,8 @@ Liq.shares = Liq.shares %>% mutate(CC_factor = value * CC)
 
 # Determine final emission factor of secondary energy carrier by summing contribution of each primary feedstock
 Liq.CC = aggregate(Liq.shares$CC_factor, by=list(ID1=Liq.shares$ID1), FUN=sum, na.rm=TRUE)
+
+# 
+# ---- AVOIDED EMISSIONS ----
+NonBioDemand = rbind(Liq.NonBio, Elec.NonBio)
+NonBioDemand.base = subset(NonBioDemand, SCENARIO=="R3-BASE-0-full")
