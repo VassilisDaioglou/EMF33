@@ -234,4 +234,53 @@ FinalData = FinalData[,c(1:7,10,12)]
 colnames(FinalData)[colnames(FinalData) == 'value'] <- 'Biomass_EJ'
 colnames(FinalData)[colnames(FinalData) == 'Baseline_CC'] <- 'Baseline_CC_MtCO2perEJ'
 FinalData$UNIT <- NULL
+FinalData$Tech <- NULL
 FinalData = FinalData %>% mutate(Avoided_Emis_MtCO2 = Biomass_EJ * Baseline_CC_MtCO2perEJ)
+
+# Remove FARM since it does not report Coal use in China and thus skew the results
+FinalData = subset(FinalData, !(MODEL == "FARM 3.1"))
+
+FinalData = subset(FinalData, (REGION == "World"))
+
+# Remove cases where there is no biomass use as this skews results
+FinalData = subset(FinalData, Biomass_EJ > 1)
+
+# Remove Basleine Data as we only want mitigation scenario results
+FinalData = subset(FinalData, !(SCENARIO=="R3-BASE-0-full"))
+
+#
+# ---- SUMMARY STATISTICS ----
+# Determine median, Q1 and Q3 of emission factor data
+meds <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=median, na.rm=TRUE) 
+P5 <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=quantile, probs=0.05, na.rm=TRUE) 
+P25 <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=quantile, probs=0.25, na.rm=TRUE) 
+P75 <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=quantile, probs=0.75, na.rm=TRUE) 
+P95 <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=quantile, probs=0.95, na.rm=TRUE) 
+
+colnames(meds)[2] <- "Median"
+colnames(P5)[2] <- "5th Percentile"
+colnames(P25)[2] <- "25th Percentile"
+colnames(P75)[2] <- "75th Percentile"
+colnames(P95)[2] <- "95th Percentile"
+
+summary_stats = merge(meds,P5,by=c("Carrier"))
+summary_stats = merge(summary_stats,P25,by=c("Carrier"))
+summary_stats = merge(summary_stats,P75,by=c("Carrier"))
+summary_stats = merge(summary_stats,P95,by=c("Carrier"))
+
+plot(density(FinalData$Avoided_Emis_MtCO2))
+# ---- FIGURES ----
+# ---- Boxplot + Jitter  ----
+boxplot<-ggplot(data = subset(FinalData, !(REGION == "WORLD")),
+                aes(x = Carrier, y = Avoided_Emis_MtCO2)) + 
+  geom_boxplot() +
+  geom_jitter(width=0.1, alpha = 0.75) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=0,size = 0.1, colour='black') +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  ylab(expression(paste("Avoided MtCO"[2],"/GJ-Prim"))) + 
+  xlab("") 
+boxplot
+
