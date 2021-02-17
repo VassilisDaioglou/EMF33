@@ -46,7 +46,7 @@ FSizeLeg = 9
 GJperMWh = 3.6  
 
 # Carbon Content in kgCO2/MWh
-CCPrim <- data.frame(c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind","Ocean","Oil"),
+CCPrim <- data.frame(c("Bio","Coa","Gas","Geo","Hyd","Nuc","Sol","Win","Oce","Oil"),
                      c(0,            # Biomass = Assume no LUC here as it is accounted for in the BECCS mitigation potential
                        353.8,        # Coal 
                        221.76,       # Gas 
@@ -64,7 +64,7 @@ CCPrim = CCPrim %>% mutate(CC_MtCO2_EJ = CC_kgCO2_MWh / GJperMWh)
 # electricity conversion efficiency, based on UNFCCC tool to calculate electricity emission factor
 # https://cdm.unfccc.int/methodologies/PAmethodologies/tools/am-tool-07-v5.0.pdf
 # Appendix I
-Elec_Eff <- data.frame(c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind","Ocean","Oil"),
+Elec_Eff <- data.frame(c("Bio","Coa","Gas","Geo","Hyd","Nuc","Sol","Win","Oce","Oil"),
                        c(0,            # Biomass = Assume no LUC here as it is accounted for in the BECCS mitigation potential
                          0.40,        # Coal 
                          0.60,       # Gas 
@@ -85,8 +85,8 @@ CCElec[is.na(CCElec)] <- 0.0
 # Liquids thermal conversion efficiency
 # Coal-to-liquids: https://uu.diva-portal.org/smash/get/diva2:293610/FULLTEXT02.pdf
 # Gas-to-Liquids: https://pubs-acs-org.proxy.library.uu.nl/doi/10.1021/ie402284q
-Liq_Eff <- data.frame(c("Biomass","Coal","Gas","Geothermal","Hydro","Nuclear","Solar","Wind","Ocean","Oil"),
-                       c(0,            # Biomass = Assume no LUC here as it is accounted for in the BECCS mitigation potential
+Liq_Eff <- data.frame(c("Bio","Coa","Gas","Geo","Hyd","Nuc","Sol","Win","Oce","Oil"),
+                      c(0,            # Biomass = Assume no LUC here as it is accounted for in the BECCS mitigation potential
                          0.5,          # Coal 
                          0.5,          # Gas 
                          0,            # Geothermal
@@ -123,3 +123,40 @@ DATA.cor = subset(DATA, ID2 %in% Cross100$ID2 & !(VARIABLE=="Price|Carbon"))
 
 rm(Above100, Cross100)
 # ----  CARBON CONTENTS OF FINAL ENERGY CARRIERS ----
+DATA.cor$Carrier = substr(DATA.cor$VARIABLE, start = 18, stop = 20)
+DATA.cor$VARIABLE <- NULL
+DATA.cor[is.na(DATA.cor)] <- 0.0
+
+Electricity = subset(DATA.cor, Carrier=="Ele")
+Liquids = subset(DATA.cor, Carrier == "Liq")
+
+# ---- *** ELECTRICITY *** ----
+# Determine share of fuels used for each carrier, ignoring biomass use
+Elec.shares <- spread(Electricity, Tech, value)
+Elec.shares[is.na(Elec.shares)] <- 0.0
+Elec.shares = Elec.shares %>% mutate(Total_NonBio = Coal + Gas + Geothermal + Hydro + Nuclear + Ocean + Oil + Solar + Wind)
+
+# Get shares of primary energy carriers
+Elec.shares = Elec.shares %>% mutate(Coa_Share = Coal / Total_NonBio)  
+Elec.shares = Elec.shares %>% mutate(Gas_Share = Gas / Total_NonBio)  
+Elec.shares = Elec.shares %>% mutate(Geo_Share = Geothermal / Total_NonBio)  
+Elec.shares = Elec.shares %>% mutate(Hyd_Share = Hydro / Total_NonBio)  
+Elec.shares = Elec.shares %>% mutate(Nuc_Share = Nuclear / Total_NonBio)  
+Elec.shares = Elec.shares %>% mutate(Oce_Share = Ocean / Total_NonBio)  
+Elec.shares = Elec.shares %>% mutate(Oil_Share = Oil / Total_NonBio)  
+Elec.shares = Elec.shares %>% mutate(Sol_Share = Solar / Total_NonBio)  
+Elec.shares = Elec.shares %>% mutate(Win_Share = Wind / Total_NonBio)  
+
+Elec.shares = Elec.shares[,c(1:3,5:6,20:29)]
+Elec.shares = melt(Elec.shares, id.vars=c("MODEL","SCENARIO","REGION","Year","ID1"))
+Elec.shares$Tech = substr(Elec.shares$variable, start = 1, stop = 3)
+Elec.NonBio = subset(Elec.shares, Tech == "Tot")
+
+# Determine contribution of each energy carrier to secondary emission factor
+Elec.shares = subset(Elec.shares, !(Tech=="Tot"))
+Elec.shares$CC = CCElec[match(Elec.shares$Tech,CCElec$Tech),5]
+Elec.shares = Elec.shares %>% mutate(CC_factor = value * CC)
+
+# Determine final emission factor of secondary energy carrier by summing contribution of each primary feedstock
+Elec.CC = aggregate(Elec.shares$CC_factor, by=list(ID1=Elec.shares$ID1), FUN=sum, na.rm=TRUE)
+
