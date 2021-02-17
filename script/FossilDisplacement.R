@@ -205,10 +205,33 @@ Liq.shares = Liq.shares %>% mutate(CC_factor = value * CC)
 Liq.CC = aggregate(Liq.shares$CC_factor, by=list(ID2=Liq.shares$ID2), FUN=sum, na.rm=TRUE)
 Liq.CC$Carrier <- "Liquids"
 
+#
+# ---- USE OF BIOMASS IN MITIGATION SCENARIOS ----
+# Use of Biomass
+Elec.bio = subset(Electricity, Tech == "Biomass")
+Liq.bio = subset(Liquids, Tech == "Biomass")
+
+Elec.bio$Carrier <- "Electricity"
+Liq.bio$Carrier <- "Liquids"
+
+BioDem = rbind(Elec.bio, Liq.bio)
+BioDem$ID3 = paste(BioDem$MODEL, BioDem$REGION, BioDem$Year, BioDem$Carrier)
+
 # 
 # ---- AVOIDED EMISSIONS ----
-Liq.NonBio$CC = Liq.CC[match(Liq.NonBio$ID1,Liq.CC$ID1),"x"]
-Elec.NonBio$CC = Elec.CC[match(Elec.NonBio$ID1,Elec.CC$ID1),"x"]
+Liq.NonBio$CC = Liq.CC[match(Liq.NonBio$ID2,Liq.CC$ID2),"x"]
+Elec.NonBio$CC = Elec.CC[match(Elec.NonBio$ID2,Elec.CC$ID2),"x"]
 
 NonBioDemand = rbind(Liq.NonBio, Elec.NonBio)
 NonBioDemand.base = subset(NonBioDemand, SCENARIO=="R3-BASE-0-full")
+NonBioDemand.base$ID3 = paste(NonBioDemand.base$MODEL, NonBioDemand.base$REGION, NonBioDemand.base$Year, NonBioDemand.base$Carrier) 
+
+# FINAL DATASET
+# Unit of Baseline_CC is MtCO2/EJ-sec
+FinalData <- BioDem
+FinalData$Baseline_CC = NonBioDemand.base[match(FinalData$ID3, NonBioDemand.base$ID3),"CC"]
+FinalData = FinalData[,c(1:7,10,12)]
+colnames(FinalData)[colnames(FinalData) == 'value'] <- 'Biomass_EJ'
+colnames(FinalData)[colnames(FinalData) == 'Baseline_CC'] <- 'Baseline_CC_MtCO2perEJ'
+FinalData$UNIT <- NULL
+FinalData = FinalData %>% mutate(Avoided_Emis_MtCO2 = Biomass_EJ * Baseline_CC_MtCO2perEJ)
