@@ -160,3 +160,26 @@ Elec.shares = Elec.shares %>% mutate(CC_factor = value * CC)
 # Determine final emission factor of secondary energy carrier by summing contribution of each primary feedstock
 Elec.CC = aggregate(Elec.shares$CC_factor, by=list(ID1=Elec.shares$ID1), FUN=sum, na.rm=TRUE)
 
+# ---- *** LIQUIDS *** ----
+# Determine share of fuels used for each carrier, ignoring biomass use
+Liq.shares <- spread(Liquids, Tech, value)
+Liq.shares[is.na(Liq.shares)] <- 0.0
+Liq.shares = Liq.shares %>% mutate(Total_NonBio = Coal + Gas + Oil)
+
+# Get shares of primary energy carriers
+Liq.shares = Liq.shares %>% mutate(Coa_Share = Coal / Total_NonBio)  
+Liq.shares = Liq.shares %>% mutate(Gas_Share = Gas / Total_NonBio)  
+Liq.shares = Liq.shares %>% mutate(Oil_Share = Oil / Total_NonBio)  
+
+Liq.shares = Liq.shares[,c(1:3,5:6,14:17)]
+Liq.shares = melt(Liq.shares, id.vars=c("MODEL","SCENARIO","REGION","Year","ID1"))
+Liq.shares$Tech = substr(Liq.shares$variable, start = 1, stop = 3)
+Liq.NonBio = subset(Liq.shares, Tech == "Tot")
+
+# Determine contribution of each energy carrier to secondary emission factor
+Liq.shares = subset(Liq.shares, !(Tech=="Tot"))
+Liq.shares$CC = CCLiq[match(Liq.shares$Tech,CCLiq$Tech),5]
+Liq.shares = Liq.shares %>% mutate(CC_factor = value * CC)
+
+# Determine final emission factor of secondary energy carrier by summing contribution of each primary feedstock
+Liq.CC = aggregate(Liq.shares$CC_factor, by=list(ID1=Liq.shares$ID1), FUN=sum, na.rm=TRUE)
