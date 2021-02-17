@@ -230,7 +230,7 @@ NonBioDemand.base$ID3 = paste(NonBioDemand.base$MODEL, NonBioDemand.base$REGION,
 # Unit of Baseline_CC is MtCO2/EJ-sec
 FinalData <- BioDem
 FinalData$Baseline_CC = NonBioDemand.base[match(FinalData$ID3, NonBioDemand.base$ID3),"CC"]
-FinalData = FinalData[,c(1:7,10,12)]
+FinalData = FinalData[,c(1:8,10,12)]
 colnames(FinalData)[colnames(FinalData) == 'value'] <- 'Biomass_EJ'
 colnames(FinalData)[colnames(FinalData) == 'Baseline_CC'] <- 'Baseline_CC_MtCO2perEJ'
 FinalData$UNIT <- NULL
@@ -248,9 +248,12 @@ FinalData = subset(FinalData, Biomass_EJ > 1)
 # Remove Basleine Data as we only want mitigation scenario results
 FinalData = subset(FinalData, !(SCENARIO=="R3-BASE-0-full"))
 
+# Summing Electricity and Liquids
+FinalData.Total<- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(ID1=FinalData$ID1), FUN=sum, na.rm=TRUE) 
+
 #
 # ---- SUMMARY STATISTICS ----
-# Determine median, Q1 and Q3 of emission factor data
+# Separated for Electricity and liquids
 meds <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=median, na.rm=TRUE) 
 P5 <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=quantile, probs=0.05, na.rm=TRUE) 
 P25 <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=quantile, probs=0.25, na.rm=TRUE) 
@@ -269,9 +272,14 @@ summary_stats = merge(summary_stats,P75,by=c("Carrier"))
 summary_stats = merge(summary_stats,P95,by=c("Carrier"))
 
 plot(density(FinalData$Avoided_Emis_MtCO2))
+
+# Total Biomass Mitigation 
+quantiles = quantile(FinalData.Total$x)
+plot(density(FinalData.Total$x))
+
 # ---- FIGURES ----
-# ---- Boxplot + Jitter  ----
-boxplot<-ggplot(data = subset(FinalData, !(REGION == "WORLD")),
+# ---- Boxplot + Jitter per Carrier  ----
+boxplot.c<-ggplot(data = subset(FinalData, !(REGION == "WORLD")),
                 aes(x = Carrier, y = Avoided_Emis_MtCO2)) + 
   geom_boxplot() +
   geom_jitter(width=0.1, alpha = 0.75) +
@@ -282,5 +290,32 @@ boxplot<-ggplot(data = subset(FinalData, !(REGION == "WORLD")),
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   ylab(expression(paste("Avoided MtCO"[2],"/GJ-Prim"))) + 
   xlab("") 
-boxplot
+boxplot.c
 
+# ---- Boxplot + Jitter TOTAL  ----
+boxplot.t<-ggplot(data = FinalData.Total,
+                aes(x = factor(0), y = x)) + 
+  geom_boxplot() +
+  geom_jitter(width=0.1, alpha = 0.75) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=0,size = 0.1, colour='black') +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  ylab(expression(paste("Avoided MtCO"[2],"/GJ-Prim"))) + 
+  xlab("") 
+boxplot.t
+
+# ---- OUTPUTS ----
+# write.xlsx(FinalData.Total, file="output/FossilDisplacement/EMF-33_AvoidedEmissions.xlsx", sheetName="Avoided Emissions ALL", append=FALSE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(quantiles, file="output/FossilDisplacement/EMF-33_AvoidedEmissions.xlsx", sheetName="Quantiles", append=TRUE, row.names=FALSE, showNA = TRUE)
+# 
+# #
+# png(file = "output/FossilDisplacement/Boxplot_carriers.png", width = 3*ppi, height = 3*ppi, units = "px", res = ppi)
+# plot(boxplot.c)
+# dev.off()
+# # # #
+# png(file = "output/FossilDisplacement/Boxplot_total.png", width = 3*ppi, height = 3*ppi, units = "px", res = ppi)
+# plot(boxplot.t)
+# dev.off()
+# 
