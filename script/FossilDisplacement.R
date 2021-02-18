@@ -114,12 +114,12 @@ DATA$ID2 = paste(DATA$MODEL, DATA$SCENARIO, DATA$REGION,DATA$Year)
 cprice = subset(DATA, VARIABLE == "Price|Carbon")
 cprice$Tech <- NULL
 # ---- YEAR OF INTEREST ----
-# Identify first year when carbon prices are above 100$/tCO2
+# Determine combination of MODEL-REGION for year of interest
+  # Identify first year when carbon prices are above 100$/tCO2
 Above100 = subset(cprice, value > 100)
 Cross100 = aggregate(Above100$Year, by=list(ID1=Above100$ID1), FUN=min, na.rm=TRUE)
 Cross100$ID2 = paste(Cross100$ID1, Cross100$x)
 
-# Determine comination of MODEL-REGION for year of interest
 Cross100$ID3 = Cross100$ID2
 Cross100$ID3 = gsub("R3-B-hi-cost100","R3-BASE-0-full",Cross100$ID3, fixed=F)
 Cross100$ID3 = gsub("R3-B-hi-full","R3-BASE-0-full",Cross100$ID3, fixed=F)
@@ -282,6 +282,14 @@ summary_stats_total <- data.frame(c("5th perc.","10th perc.","25th perc.","50th 
 colnames(summary_stats_total) <- c("Percentile","Bioenergy Mitigation: MtCO2/yr")
 
 #
+# ---- FINAL DATASET ----
+BioMitigation = DATA.cor
+BioMitigation = subset(BioMitigation, ID1 %in% FinalData.Total$ID1)
+BioMitigation$Bioenergy_Mitigation = FinalData.Total[match(BioMitigation$ID1, FinalData.Total$ID1),2]
+BioMitigation = subset(BioMitigation, select=c("MODEL","SCENARIO","REGION","Bioenergy_Mitigation"))
+BioMitigation = unique(BioMitigation) #Removes some duplicate observations
+BioMitigation$UNIT <- "Mitigated MtCO2/yr"
+
 # ---- FIGURES ----
 # ---- Boxplot + Jitter per Carrier  ----
 boxplot.c<-ggplot(data = subset(FinalData, !(REGION == "WORLD")),
@@ -298,23 +306,34 @@ boxplot.c<-ggplot(data = subset(FinalData, !(REGION == "WORLD")),
 boxplot.c
 
 # ---- Boxplot + Jitter TOTAL  ----
-boxplot.t<-ggplot(data = FinalData.Total,
-                aes(x = factor(0), y = Bioenergy_Mitigation_MtCO2)) + 
-  geom_boxplot() +
-  geom_jitter(width=0.1, alpha = 0.75) +
+boxplot.t<-ggplot(data = BioMitigation,
+                aes(x = factor(0), y = Bioenergy_Mitigation)) + 
+  geom_boxplot(outlier.shape=NA) +
+  geom_jitter(aes(colour = MODEL),width=0.2, alpha = 0.75, size=1) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=0,size = 0.1, colour='black') +
   theme_bw() +
   theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
-  ylab(expression(paste("Avoided MtCO"[2],"/GJ-Prim"))) + 
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  xlab("") + ylab(expression(paste("Avoided MtCO"[2]))) + 
   xlab("") 
 boxplot.t
 
 # ---- OUTPUTS ----
-# write.xlsx(FinalData.Total, file="output/FossilDisplacement/EMF-33_AvoidedEmissions.xlsx", sheetName="Avoided Emissions ALL", append=FALSE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(quantiles, file="output/FossilDisplacement/EMF-33_AvoidedEmissions.xlsx", sheetName="Quantiles", append=TRUE, row.names=FALSE, showNA = TRUE)
+# # ---- SUPPLEMENTARY DATA OUTPUT ----
+# wb <- createWorkbook()
 # 
+# addWorksheet(wb, "Avoided Emissions")
+# writeDataTable(wb, sheet = "Avoided Emissions", x = BioMitigation)
+# 
+# addWorksheet(wb, "Percentiles")
+# writeDataTable(wb, sheet = "Percentiles", x = summary_stats_total)
+# 
+# saveWorkbook(wb, "output/FossilDisplacement/EMF-33_AvoidedEmissions.xlsx", overwrite = TRUE)
+
 # #
 # png(file = "output/FossilDisplacement/Boxplot_carriers.png", width = 3*ppi, height = 3*ppi, units = "px", res = ppi)
 # plot(boxplot.c)
@@ -325,5 +344,5 @@ boxplot.t
 # dev.off()
 # 
 # png(file = "output/FossilDisplacement/distribution.png", width = 6*ppi, height = 6*ppi, units = "px", res = ppi)
-# plot(density(FinalData.Total$x))
+# plot(density(FinalData.Total$Bioenergy_Mitigation_MtCO2), cex.main = 0.75, cex.axis=0.75, cex.lab=0.75)
 # dev.off()
