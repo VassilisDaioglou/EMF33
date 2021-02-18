@@ -240,6 +240,11 @@ Liq.bio$Carrier <- "Liquids"
 BioDem = rbind(Elec.bio, Liq.bio)
 BioDem$ID3 = paste(BioDem$MODEL, BioDem$REGION, BioDem$Year, BioDem$Carrier)
 
+# Total secondary bioenergy demand
+BioDem.Total = subset(BioDem, REGION == "World" & !(SCENARIO=="R3-BASE-0-full"))
+BioDem.Total <- aggregate(BioDem.Total$value, by=list(ID1=BioDem.Total$ID1), FUN=sum, na.rm=TRUE) 
+plot(density(BioDem.Total$x))
+
 rm(Elec.bio, Liq.bio,
    Electricity, Liquids)
 # 
