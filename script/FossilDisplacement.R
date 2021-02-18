@@ -103,6 +103,7 @@ CCLiq$Eff = Liq_Eff[match(CCLiq$Tech,Liq_Eff$Tech),"Efficiency"]
 CCLiq$Elec_CC_MtCO2_EJ = CCElec$CC_MtCO2_EJ / CCLiq$Eff  
 CCLiq[is.na(CCLiq)] <- 0.0
 
+rm(Elec_Eff, Liq_Eff)
 # ---- READ DATA ----
 DATA=read.csv("data/FossilDisplacement/DisplacementData.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 
@@ -137,7 +138,7 @@ Cross100$ID3 = gsub("R3-B-vlo-limbio","R3-BASE-0-full",Cross100$ID3, fixed=F)
 # Correct data to include (i) Mitigation AND Baseline scenario data for year of interest 
 DATA.cor = subset(DATA, (ID2 %in% Cross100$ID2 | ID2 %in% Cross100$ID3) & !(VARIABLE=="Price|Carbon"))
 
-rm(Above100)
+rm(Above100, Cross100, cprice)
 # ----  CARBON CONTENTS OF FINAL ENERGY CARRIERS ----
 DATA.cor$Carrier = substr(DATA.cor$VARIABLE, start = 18, stop = 20)
 DATA.cor$VARIABLE <- NULL
@@ -179,6 +180,8 @@ Elec.shares = Elec.shares %>% mutate(CC_factor = value * CC)
 Elec.CC = aggregate(Elec.shares$CC_factor, by=list(ID2=Elec.shares$ID2), FUN=sum, na.rm=TRUE)
 Elec.CC$Carrier <- "Electricity"
 
+rm(Elec.shares)
+#
 # ---- *** LIQUIDS *** ----
 # Determine share of fuels used for each carrier, ignoring biomass use
 Liq.shares <- spread(Liquids, Tech, value)
@@ -205,6 +208,7 @@ Liq.shares = Liq.shares %>% mutate(CC_factor = value * CC)
 Liq.CC = aggregate(Liq.shares$CC_factor, by=list(ID2=Liq.shares$ID2), FUN=sum, na.rm=TRUE)
 Liq.CC$Carrier <- "Liquids"
 
+rm(Liq.shares)
 #
 # ---- USE OF BIOMASS IN MITIGATION SCENARIOS ----
 # Use of Biomass
@@ -217,6 +221,8 @@ Liq.bio$Carrier <- "Liquids"
 BioDem = rbind(Elec.bio, Liq.bio)
 BioDem$ID3 = paste(BioDem$MODEL, BioDem$REGION, BioDem$Year, BioDem$Carrier)
 
+rm(Elec.bio, Liq.bio,
+   Electricity, Liquids)
 # 
 # ---- AVOIDED EMISSIONS ----
 Liq.NonBio$CC = Liq.CC[match(Liq.NonBio$ID2,Liq.CC$ID2),"x"]
@@ -226,6 +232,8 @@ NonBioDemand = rbind(Liq.NonBio, Elec.NonBio)
 NonBioDemand.base = subset(NonBioDemand, SCENARIO=="R3-BASE-0-full")
 NonBioDemand.base$ID3 = paste(NonBioDemand.base$MODEL, NonBioDemand.base$REGION, NonBioDemand.base$Year, NonBioDemand.base$Carrier) 
 
+
+rm(Elec.CC, Liq.CC, Elec.NonBio, Liq.NonBio)
 # FINAL DATASET
 # Unit of Baseline_CC is MtCO2/EJ-sec
 FinalData <- BioDem
@@ -237,9 +245,10 @@ FinalData$UNIT <- NULL
 FinalData$Tech <- NULL
 FinalData = FinalData %>% mutate(Avoided_Emis_MtCO2 = Biomass_EJ * Baseline_CC_MtCO2perEJ)
 
-# Remove FARM since it does not report Coal use in China and thus skew the results
+# Remove FARM since it does not report Coal use in electricity and thus skews the results
 FinalData = subset(FinalData, !(MODEL == "FARM 3.1"))
 
+# Only interested in Global data. Including regional would skew results to those of models with high regional dissagregation
 FinalData = subset(FinalData, (REGION == "World"))
 
 # Remove cases where there is no biomass use as this skews results
@@ -253,28 +262,7 @@ FinalData.Total<- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(ID1=FinalData$
 colnames(FinalData.Total)[colnames(FinalData.Total) == "x"] <- "Bioenergy_Mitigation_MtCO2"
 #
 # ---- SUMMARY STATISTICS ----
-# Separated for Electricity and liquids
-meds <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=median, na.rm=TRUE) 
-P5 <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=quantile, probs=0.05, na.rm=TRUE) 
-P25 <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=quantile, probs=0.25, na.rm=TRUE) 
-P75 <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=quantile, probs=0.75, na.rm=TRUE) 
-P95 <- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(Carrier=FinalData$Carrier), FUN=quantile, probs=0.95, na.rm=TRUE) 
-
-colnames(meds)[2] <- "Median"
-colnames(P5)[2] <- "5th Percentile"
-colnames(P25)[2] <- "25th Percentile"
-colnames(P75)[2] <- "75th Percentile"
-colnames(P95)[2] <- "95th Percentile"
-
-summary_stats_carrier = merge(meds,P5,by=c("Carrier"))
-summary_stats_carrier = merge(summary_stats,P25,by=c("Carrier"))
-summary_stats_carrier = merge(summary_stats,P75,by=c("Carrier"))
-summary_stats_carrier = merge(summary_stats,P95,by=c("Carrier"))
-
-plot(density(FinalData$Avoided_Emis_MtCO2))
-
 # Total Biomass Mitigation 
-quantiles = quantile(FinalData.Total$Bioenergy_Mitigation_MtCO2)
 plot(density(FinalData.Total$Bioenergy_Mitigation_MtCO2))
 
 summary_stats_total <- data.frame(c("5th perc.","10th perc.","25th perc.","50th perc.","75th perc.","90th perc.","95th perc."),
@@ -323,7 +311,6 @@ boxplot.t<-ggplot(data = BioMitigation,
 boxplot.t
 
 # ---- OUTPUTS ----
-# # ---- SUPPLEMENTARY DATA OUTPUT ----
 # wb <- createWorkbook()
 # 
 # addWorksheet(wb, "Avoided Emissions")
