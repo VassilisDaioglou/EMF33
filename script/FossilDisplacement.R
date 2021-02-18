@@ -250,7 +250,7 @@ FinalData = subset(FinalData, !(SCENARIO=="R3-BASE-0-full"))
 
 # Summing Electricity and Liquids
 FinalData.Total<- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(ID1=FinalData$ID1), FUN=sum, na.rm=TRUE) 
-
+colnames(FinalData.Total)[colnames(FinalData.Total) == "x"] <- "Bioenergy_Mitigation_MtCO2"
 #
 # ---- SUMMARY STATISTICS ----
 # Separated for Electricity and liquids
@@ -266,17 +266,22 @@ colnames(P25)[2] <- "25th Percentile"
 colnames(P75)[2] <- "75th Percentile"
 colnames(P95)[2] <- "95th Percentile"
 
-summary_stats = merge(meds,P5,by=c("Carrier"))
-summary_stats = merge(summary_stats,P25,by=c("Carrier"))
-summary_stats = merge(summary_stats,P75,by=c("Carrier"))
-summary_stats = merge(summary_stats,P95,by=c("Carrier"))
+summary_stats_carrier = merge(meds,P5,by=c("Carrier"))
+summary_stats_carrier = merge(summary_stats,P25,by=c("Carrier"))
+summary_stats_carrier = merge(summary_stats,P75,by=c("Carrier"))
+summary_stats_carrier = merge(summary_stats,P95,by=c("Carrier"))
 
 plot(density(FinalData$Avoided_Emis_MtCO2))
 
 # Total Biomass Mitigation 
-quantiles = quantile(FinalData.Total$x)
-plot(density(FinalData.Total$x))
+quantiles = quantile(FinalData.Total$Bioenergy_Mitigation_MtCO2)
+plot(density(FinalData.Total$Bioenergy_Mitigation_MtCO2))
 
+summary_stats_total <- data.frame(c("5th perc.","10th perc.","25th perc.","50th perc.","75th perc.","90th perc.","95th perc."),
+                      quantile(FinalData.Total$Bioenergy_Mitigation_MtCO2, probs = c(0.05,0.1,0.25,0.5,0.75,0.9,0.95)))
+colnames(summary_stats_total) <- c("Percentile","Bioenergy Mitigation: MtCO2/yr")
+
+#
 # ---- FIGURES ----
 # ---- Boxplot + Jitter per Carrier  ----
 boxplot.c<-ggplot(data = subset(FinalData, !(REGION == "WORLD")),
@@ -294,7 +299,7 @@ boxplot.c
 
 # ---- Boxplot + Jitter TOTAL  ----
 boxplot.t<-ggplot(data = FinalData.Total,
-                aes(x = factor(0), y = x)) + 
+                aes(x = factor(0), y = Bioenergy_Mitigation_MtCO2)) + 
   geom_boxplot() +
   geom_jitter(width=0.1, alpha = 0.75) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
@@ -319,3 +324,6 @@ boxplot.t
 # plot(boxplot.t)
 # dev.off()
 # 
+# png(file = "output/FossilDisplacement/distribution.png", width = 6*ppi, height = 6*ppi, units = "px", res = ppi)
+# plot(density(FinalData.Total$x))
+# dev.off()
