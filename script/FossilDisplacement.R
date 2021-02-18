@@ -1,22 +1,41 @@
 # ---- INFORMATION ----
 # AIM
-# R script to determine the displaced fossil fuel emissions due to the use of bioenergy
+# R script to determine the displaced fossil fuel due to the use of bioenergy, and thus determine 
+# avoided CO2 emissions due to the use of bioenergy.
 # To be combined with CDR from BECCS in order to understand the full mitigation potential of bioenergy with CCS. 
 #
-# METHOD:
-# Use EMF-33 scenarios to get range of results across models and scenarios.
-# 1. Determine carbon content of electrifcity and liquids use based on baseline projections
-# 2. Determine extent of bioenergy use in these energy carriers across a mitigation scenario
-# 3. Determine displaced CO2
+# METHOD
+# Emissions mitigation due to the use of bioenergy depends on the carbon content of the 
+# energy carriers it displaces. This differs across use of bioenergy (production of liquids or electricity),
+# and may vary over time as different technologies are used (i.e. movement from coal based electricity to natural gas, or renewables)
 #
-# Calculations are done for a carbon price of approximately 100 $/tCO2, in order to be consistent with BECCS
-# potential calculations. Sinnce the EMF-33 projections do not include results for a carbon price of exactly 100$/tCO2,
+# Thus, a system perspective has to be taken. However, there are huge uncertainties on how 
+# the energy system may develop over time. 
+#
+# To adress this problem, we use EMF-33 scenarios to get range of results across models and scenarios.
+# 1. Determine carbon content of ELECTRICITY and LIQUIDS production, based on the primary fuels used in a baseline projection
+# 2. Determine extent of bioenergy use in the production of ELECTRICITY and LIQUIDS across a set mitigation scenario
+# 3. Thus, the mitigation due to bioenergy in the mitigation scenario is determined by multiplying bioenergy use 
+#     in the production of ELECTRICITY and LIQUIDS with thier baseline carbon content
+#
+# Results are generated across a combination of models and mitigation scenarios (EMF-33 project, Bauer et al.(2018)) 
+#
+# KEY ASSUMPTIONS
+# 1. Calculations are done for a carbon price of approximately 100 $/tCO2, in order to be consistent with BECCS 
+# potential calculations. Since the EMF-33 projections do not include results for a carbon price of exactly 100$/tCO2,
 # we instead identify the timestep that car bon prices are projected to surpass 100$/tCO2, and use the data of that timestep.
+#
+# 2. The carbon content of the baseline is used as the counterfactual carbon content of bioenergy. Since the bioenergy use
+# is estimated for a carbon price of ~100$/tCO2, this is inconsistent since by this price level there is some decarbonization
+# of the production of electricity and liquids. However, using the carbon contents at that carbon price would only reveal the
+# MARGINAL emissions mitigation of bioenergy at the price level, while at lower price levels the mitigation would be higher. 
+#
+# 3. Explicity assume biomass has no emissions. AFOLU emissions are included in the BECCS potentials. Only ENERGY SYSTEM emissions are included here.
 #
 # AUTHORSHIP:
 # Author: Vassilis Daioglou
 # Date: February 2020
-# Reference: Roe et al. 2021, Global Environmental Change
+# Reference: Roe et al. (2021), Land-based measures to mitigate climate change: potential and feasibility by country, Global Environmental Change
 #
 # ---- START ----
 # clear memory
