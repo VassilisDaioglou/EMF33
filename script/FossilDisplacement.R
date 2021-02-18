@@ -240,11 +240,6 @@ Liq.bio$Carrier <- "Liquids"
 BioDem = rbind(Elec.bio, Liq.bio)
 BioDem$ID3 = paste(BioDem$MODEL, BioDem$REGION, BioDem$Year, BioDem$Carrier)
 
-# Total secondary bioenergy demand
-BioDem.Total = subset(BioDem, REGION == "World" & !(SCENARIO=="R3-BASE-0-full"))
-BioDem.Total <- aggregate(BioDem.Total$value, by=list(ID1=BioDem.Total$ID1), FUN=sum, na.rm=TRUE) 
-plot(density(BioDem.Total$x))
-
 rm(Elec.bio, Liq.bio,
    Electricity, Liquids)
 # 
@@ -272,7 +267,7 @@ FinalData = FinalData %>% mutate(Avoided_Emis_MtCO2 = Biomass_EJ * Baseline_CC_M
 # Remove FARM since it does not report Coal use in electricity and thus skews the results
 FinalData = subset(FinalData, !(MODEL == "FARM 3.1"))
 
-# Only interested in Global data. Including regional would skew results to those of models with high regional dissagregation
+# Only interested in Global data. 
 FinalData = subset(FinalData, (REGION == "World"))
 
 # Remove cases where there is no biomass use as this skews results
@@ -284,6 +279,12 @@ FinalData = subset(FinalData, !(SCENARIO=="R3-BASE-0-full"))
 # Summing Electricity and Liquids
 FinalData.Total<- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(ID1=FinalData$ID1), FUN=sum, na.rm=TRUE) 
 colnames(FinalData.Total)[colnames(FinalData.Total) == "x"] <- "Bioenergy_Mitigation_MtCO2"
+
+# Total secondary bioenergy demand
+BioDem.Total = subset(BioDem, ID1 %in% FinalData.Total$ID1)
+BioDem.Total <- aggregate(BioDem.Total$value, by=list(ID1=BioDem.Total$ID1), FUN=sum, na.rm=TRUE) 
+plot(density(BioDem.Total$x))
+
 #
 # ---- SUMMARY STATISTICS ----
 # Total Biomass Mitigation 
@@ -298,9 +299,11 @@ colnames(summary_stats_total) <- c("Percentile","Bioenergy Mitigation: MtCO2/yr"
 BioMitigation = DATA.cor
 BioMitigation = subset(BioMitigation, ID1 %in% FinalData.Total$ID1)
 BioMitigation$Bioenergy_Mitigation = FinalData.Total[match(BioMitigation$ID1, FinalData.Total$ID1),2]
-BioMitigation = subset(BioMitigation, select=c("MODEL","SCENARIO","REGION","Bioenergy_Mitigation"))
+BioMitigation$Bioenergy_Use = BioDem.Total[match(BioMitigation$ID1, BioDem.Total$ID1),2]
+BioMitigation = subset(BioMitigation, select=c("MODEL","SCENARIO","REGION","Bioenergy_Mitigation","Bioenergy_Use"))
 BioMitigation = unique(BioMitigation) #Removes some duplicate observations
-BioMitigation$UNIT <- "Mitigated MtCO2/yr"
+BioMitigation$Mitigation_UNIT <- "Mitigated MtCO2/yr"
+BioMitigation$Use_UNIT <- "EJ-Secondary/yr"
 
 # ---- FIGURES ----
 # ---- Boxplot + Jitter per Carrier  ----
