@@ -1,10 +1,9 @@
-# Energy Modelling Forum 33 
+# Energy Modelling Forum 33  
+![](EMF-Logo_v2.1.png) \
 Repository of R-scripts for processing EMF-33 results 
 
 *Author: Vassilis Daioglou*\
 *Contact: v.daioglou@uu.nl | @vassican*
-
-![](EMF-Logo_v2.1.png)
 
 ## Process
 These scripts aggregate the model projections on the EMF-33 database: \
