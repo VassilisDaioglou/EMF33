@@ -41,6 +41,6 @@ Daioglou, V., Rose, S., Bauer, N. et al. (2020a). Bioenergy technologies in long
 Daioglou V., Muratori, M., Lamers, P. et al. (2020b). Implications of climate change mitigation strategies on international bioenergy trade. *Climatic Change*. \
 https://doi.org/10.1007/s10584-020-02877-1
 
-Koberle A., Daioglou, V., Rochedo, P. et al. (2021). Can global models provide insights into regional mitigation strategies? A diagnostic model comparison study of bioenergy in Brazil. *Climatic Change*. \
+Koberle A., Daioglou, V., Rochedo, P. et al. (2021). Can global models provide insights into regional mitigation strategies? A diagnostic model comparison study of bioenergy in Brazil. *Climatic Change*. 
 
-Roe S., Streck, C., Beach, R. et al. (2021). Land-based measures to mitigate climate change: Potential and feasibility by country. *Global Change Biology*. \
+Roe S., Streck, C., Beach, R. et al. (2021). Land-based measures to mitigate climate change: Potential and feasibility by country. *Global Change Biology*. 
