@@ -128,6 +128,8 @@ DATA=read.csv("data/FossilDisplacement/DisplacementData.csv", sep=",", dec=".", 
 
 DATA$X <- NULL
 DATA = subset(DATA, !(Year=="1990"|Year=="1995"|Year=="2000"|Year=="2005"|Year=="2010"|Year=="2015"|Year=="2110"|Year=="2130"|Year=="2150"))
+BioDem.Total = subset(DATA, VARIABLE == "Secondary Energy|Biomass")
+DATA = subset(DATA, !(VARIABLE == "Secondary Energy|Biomass"))
 DATA$ID1 = paste(DATA$MODEL, DATA$SCENARIO, DATA$REGION)
 DATA$ID2 = paste(DATA$MODEL, DATA$SCENARIO, DATA$REGION,DATA$Year)
 
@@ -281,9 +283,9 @@ FinalData.Total<- aggregate(FinalData$Avoided_Emis_MtCO2, by=list(ID1=FinalData$
 colnames(FinalData.Total)[colnames(FinalData.Total) == "x"] <- "Bioenergy_Mitigation_MtCO2"
 
 # Total secondary bioenergy demand
-BioDem.Total = subset(BioDem, ID1 %in% FinalData.Total$ID1)
-BioDem.Total <- aggregate(BioDem.Total$value, by=list(ID1=BioDem.Total$ID1), FUN=sum, na.rm=TRUE) 
-plot(density(BioDem.Total$x))
+BioDem.EleLiq = subset(BioDem, ID1 %in% FinalData.Total$ID1)
+BioDem.EleLiq <- aggregate(BioDem.EleLiq$value, by=list(ID1=BioDem.EleLiq$ID1), FUN=sum, na.rm=TRUE) 
+plot(density(BioDem.EleLiq$x))
 
 #
 # ---- SUMMARY STATISTICS ----
@@ -296,21 +298,35 @@ colnames(summary_stats_total) <- c("Percentile","Bioenergy Mitigation: MtCO2/yr"
 
 #
 # ---- PRIMARY BIOMASS ----
+# Some biomass is used for secondary energy other than electricity and liquids (i.e. gasses, hydrogen, heat, etc.). 
+# Have to correct for this.
+# Determine share of secondary bioenergy which is used for ELECTRICITY or LIQUIDS only, scale primary biomass demand to that
+BioDem.Total$ID1 = paste(BioDem.Total$MODEL, BioDem.Total$SCENARIO, BioDem.Total$REGION)
+BioDem.Total$ID2 = paste(BioDem.Total$MODEL, BioDem.Total$SCENARIO, BioDem.Total$REGION, BioDem.Total$Year)
+BioDem.Total = subset(BioDem.Total, ID2 %in% Cross100$ID2)
+
+# Share of bio-based electricity and liquids in total bioenergy
+BioDem.EleLiqShare = BioDem.EleLiq
+BioDem.EleLiqShare$Total_SecBio = BioDem.Total[match(BioDem.EleLiqShare$ID1, BioDem.Total$ID1),"value"]
+BioDem.EleLiqShare = BioDem.EleLiqShare %>% mutate(Share_EleLiq = x / Total_SecBio)
+BioDem.EleLiqShare$Share_EleLiq[BioDem.EleLiqShare$Share_EleLiq > 1] <- 1
+
+# Scale primary biomass to this share
 BioPrim = subset(DATA, VARIABLE == "Primary Energy|Biomass|Modern")
 BioPrim.cor = subset(BioPrim, ID2 %in% Cross100$ID2)
+BioPrim.cor = subset(BioPrim.cor, ID1 %in% BioDem.EleLiqShare$ID1)
 BioPrim.cor = subset(BioPrim.cor, select = c ("MODEL","SCENARIO","REGION","VARIABLE","UNIT","Year","value","ID1"))
+BioPrim.cor$Share_EleLiq = BioDem.EleLiqShare[match(BioPrim.cor$ID1,BioDem.EleLiqShare$ID1),"Share_EleLiq"]
+BioPrim.cor = BioPrim.cor %>% mutate(BioPrim_cor = value * Share_EleLiq)
 #
 # ---- FINAL DATASET ----
 BioMitigation = DATA.cor
 BioMitigation = subset(BioMitigation, ID1 %in% FinalData.Total$ID1)
 BioMitigation$Mitigation_MtCO2perYr = FinalData.Total[match(BioMitigation$ID1, FinalData.Total$ID1),2]
-BioMitigation$SecBioenergy_EJperYr = BioDem.Total[match(BioMitigation$ID1, BioDem.Total$ID1),2]
-BioMitigation$PrimBiomass_EJperYr = BioPrim.cor[match(BioMitigation$ID1, BioPrim.cor$ID1),"value"]
+BioMitigation$SecBioenergy_EJperYr = BioDem.EleLiq[match(BioMitigation$ID1, BioDem.EleLiq$ID1),2]
+BioMitigation$PrimBiomass_EJperYr = BioPrim.cor[match(BioMitigation$ID1, BioPrim.cor$ID1),"BioPrim_cor"]
 BioMitigation = subset(BioMitigation, select=c("MODEL","SCENARIO","REGION","Mitigation_MtCO2perYr","SecBioenergy_EJperYr","PrimBiomass_EJperYr"))
 BioMitigation = unique(BioMitigation) #Removes some duplicate observations
-
-BioMitigation = BioMitigation %>% mutate(Eff = SecBioenergy_EJperYr / PrimBiomass_EJperYr)
-BioMitigation = BioMitigation %>% mutate(Mitig = (Mitigation_MtCO2perYr / PrimBiomass_EJperYr) * (12/44))
 
 # ---- FIGURES ----
 # ---- Boxplot + Jitter per Carrier  ----
