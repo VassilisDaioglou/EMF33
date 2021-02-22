@@ -34,7 +34,7 @@
 #
 # AUTHORSHIP:
 # Author: Vassilis Daioglou
-# Date: February 2020
+# Date: February 2021
 # Reference: Roe et al. (2021), Land-based measures to mitigate climate change: potential and feasibility by country, Global Environmental Change
 #
 # ---- START ----
@@ -157,7 +157,7 @@ Cross100$ID3 = gsub("R3-B-vlo-limbio","R3-BASE-0-full",Cross100$ID3, fixed=F)
 # Correct data to include (i) Mitigation AND Baseline scenario data for year of interest 
 DATA.cor = subset(DATA, (ID2 %in% Cross100$ID2 | ID2 %in% Cross100$ID3) & !(VARIABLE=="Price|Carbon"))
 
-rm(Above100, Cross100, cprice)
+rm(Above100, cprice)
 # ----  CARBON CONTENTS OF FINAL ENERGY CARRIERS ----
 DATA.cor$Carrier = substr(DATA.cor$VARIABLE, start = 18, stop = 20)
 DATA.cor$VARIABLE <- NULL
@@ -295,15 +295,22 @@ summary_stats_total <- data.frame(c("5th perc.","10th perc.","25th perc.","50th 
 colnames(summary_stats_total) <- c("Percentile","Bioenergy Mitigation: MtCO2/yr")
 
 #
+# ---- PRIMARY BIOMASS ----
+BioPrim = subset(DATA, VARIABLE == "Primary Energy|Biomass|Modern")
+BioPrim.cor = subset(BioPrim, ID2 %in% Cross100$ID2)
+BioPrim.cor = subset(BioPrim.cor, select = c ("MODEL","SCENARIO","REGION","VARIABLE","UNIT","Year","value","ID1"))
+#
 # ---- FINAL DATASET ----
 BioMitigation = DATA.cor
 BioMitigation = subset(BioMitigation, ID1 %in% FinalData.Total$ID1)
-BioMitigation$Bioenergy_Mitigation = FinalData.Total[match(BioMitigation$ID1, FinalData.Total$ID1),2]
-BioMitigation$Bioenergy_Use = BioDem.Total[match(BioMitigation$ID1, BioDem.Total$ID1),2]
-BioMitigation = subset(BioMitigation, select=c("MODEL","SCENARIO","REGION","Bioenergy_Mitigation","Bioenergy_Use"))
+BioMitigation$Mitigation_MtCO2perYr = FinalData.Total[match(BioMitigation$ID1, FinalData.Total$ID1),2]
+BioMitigation$SecBioenergy_EJperYr = BioDem.Total[match(BioMitigation$ID1, BioDem.Total$ID1),2]
+BioMitigation$PrimBiomass_EJperYr = BioPrim.cor[match(BioMitigation$ID1, BioPrim.cor$ID1),"value"]
+BioMitigation = subset(BioMitigation, select=c("MODEL","SCENARIO","REGION","Mitigation_MtCO2perYr","SecBioenergy_EJperYr","PrimBiomass_EJperYr"))
 BioMitigation = unique(BioMitigation) #Removes some duplicate observations
-BioMitigation$Mitigation_UNIT <- "Mitigated MtCO2/yr"
-BioMitigation$Use_UNIT <- "EJ-Secondary/yr"
+
+BioMitigation = BioMitigation %>% mutate(Eff = SecBioenergy_EJperYr / PrimBiomass_EJperYr)
+BioMitigation = BioMitigation %>% mutate(Mitig = (Mitigation_MtCO2perYr / PrimBiomass_EJperYr) * (12/44))
 
 # ---- FIGURES ----
 # ---- Boxplot + Jitter per Carrier  ----
@@ -322,7 +329,7 @@ boxplot.c
 
 # ---- Boxplot + Jitter TOTAL  ----
 boxplot.t<-ggplot(data = BioMitigation,
-                aes(x = factor(0), y = Bioenergy_Mitigation)) + 
+                aes(x = factor(0), y = Mitigation_MtCO2perYr)) + 
   geom_boxplot(outlier.shape=NA) +
   geom_jitter(aes(colour = MODEL),width=0.2, alpha = 0.75, size=1) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
@@ -358,5 +365,5 @@ boxplot.t
 # dev.off()
 # 
 # png(file = "output/FossilDisplacement/distribution.png", width = 6*ppi, height = 6*ppi, units = "px", res = ppi)
-# plot(density(FinalData.Total$Bioenergy_Mitigation_MtCO2), cex.main = 0.75, cex.axis=0.75, cex.lab=0.75)
+
 # dev.off()
