@@ -35,31 +35,56 @@ Displ$VARIABLE2 = substr(Displ$VARIABLE, start = 1, stop = 24)
 
 
 Displ = subset(Displ, VARIABLE2=="Secondary Energy|Liquids" | VARIABLE2=="Secondary Energy|Electri" |
+                      VARIABLE2=="Secondary Energy|Gases|B" | VARIABLE2=="Secondary Energy|Hydroge"|VARIABLE2=="Secondary Energy|Heat|Bi"|
                       VARIABLE2=="Primary Energy|Biomass|M"|
                   VARIABLE2=="Price|Carbon")
 
+# Fix datasets for biomass based (secondary) ELECTRICITY and LIQIUDS
 Displ.Ele = subset(Displ, VARIABLE2=="Secondary Energy|Electri")
 Displ.Liq = subset(Displ, VARIABLE2=="Secondary Energy|Liquids")
-Displ.Car = subset(Displ, VARIABLE2=="Price|Carbon")
-Displ.Pri = subset(Displ, VARIABLE2=="Primary Energy|Biomass|M")
 
 Displ.Ele$Tech = substr(Displ.Ele$VARIABLE, start = 30, stop = 50)
 Displ.Liq$Tech = substr(Displ.Liq$VARIABLE, start = 26, stop = 50)
-Displ.Car$Tech <- NA
-Displ.Pri$Tech <- NA
 
 Displ.Ele = subset(Displ.Ele, Tech==""|Tech=="Biomass"|Tech=="Coal"|Tech=="Gas"|Tech=="Oil"|
                      Tech=="Geothermal"|Tech=="Hydro"|Tech=="Nuclear"|Tech=="Solar"|Tech=="Wind"|Tech=="Ocean")
 
 Displ.Liq = subset(Displ.Liq, Tech==""|Tech=="Biomass"|Tech=="Coal"|Tech=="Gas"|Tech=="Oil")
 
+# Fix datasrt for TOTAL secondary based bioenergy
+Displ.SecBio = subset(Displ, VARIABLE == "Secondary Energy|Hydrogen|Biomass"|
+                        VARIABLE == "Secondary Energy|Gases|Biomass"|
+                        VARIABLE == "Secondary Energy|Heat|Biomass"|
+                        VARIABLE == "Secondary Energy|Electricity|Biomass"|
+                        VARIABLE == "Secondary Energy|Liquids|Biomass")
+
+Displ.SecBio <- aggregate(Displ.SecBio$value, by=list(MODEL = Displ.SecBio$MODEL,
+                                               SCENARIO = Displ.SecBio$SCENARIO,
+                                               REGION = Displ.SecBio$REGION,
+                                               Year = Displ.SecBio$Year), FUN=sum, na.rm=TRUE)
+
+
+Displ.SecBio$VARIABLE <- "Secondary Energy|Biomass"
+Displ.SecBio$UNIT <- "EJ/yr"
+Displ.SecBio$VARIABLE2 <- "Secondary Energy|Biomass"
+Displ.SecBio$Tech <- "Biomass"
+colnames(Displ.SecBio)[colnames(Displ.SecBio)=="x"] <- "value"
+
+# Fix dataset for total primary biomass
+Displ.Pri = subset(Displ, VARIABLE2=="Primary Energy|Biomass|M")
+Displ.Pri$Tech <- NA
 Displ.Pri = subset(Displ.Pri, VARIABLE == "Primary Energy|Biomass|Modern")
 
-Displ.Final = rbind(Displ.Ele,Displ.Liq, Displ.Car, Displ.Pri)
+# Fix dataset for carbon prices
+Displ.Car = subset(Displ, VARIABLE2=="Price|Carbon")
+Displ.Car$Tech <- NA
+
+# Combine to form final dataset
+Displ.Final = rbind(Displ.Ele,Displ.Liq, Displ.Car, Displ.Pri, Displ.SecBio)
 Displ.Final$VARIABLE2 <- NULL
 Displ.Final$Tech[Displ.Final$Tech==""]<-"Total"
 
-rm(Displ, Displ.Ele, Displ.Liq, Displ.Car)
+rm(Displ, Displ.Ele, Displ.Liq, Displ.Car, Displ.SecBio)
 
 #
 # ---- > OUTPUT: FOSSIL DISPLACEMENT ANALYSIS ----
