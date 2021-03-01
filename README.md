@@ -3,11 +3,10 @@
 Repository of R-scripts for processing EMF-33 results 
 
 *Author: Vassilis Daioglou*\
-*Contact: v.daioglou@uu.nl | @vassican*
+*Contact: v.daioglou@uu.nl | [@vassican](https://twitter.com/vassican)*
 
 ## Process
-These scripts aggregate the model projections on the EMF-33 database: \
-https://tntcat.iiasa.ac.at/EMF30BIODB/dsd?Action=htmlpage&page=welcome
+These scripts aggregate the model projections on the [EMF-33 database](https://tntcat.iiasa.ac.at/EMF30BIODB/dsd?Action=htmlpage&page=welcome). 
 
 A snapshot of this database is processed in the ***ReadData.R*** script to produce scaled down datasets to be further processed for specific areas of interest.
 
