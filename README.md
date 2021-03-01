@@ -43,11 +43,9 @@ Additional data (model results not reported on EMF-33 database & external litera
 - [***EmissionSupply.R:***](https://github.com/VassilisDaioglou/EMF33/blob/master/script/EmissionSupply.R) Determines Emission-Supply curves for the AR6 AFOLU chapter, specifically *Box7.10 Figure 1* (Nabuurs et al. 2021). Also uses data from partial models. 
 
 ## References
-Daioglou, V., Rose, S., Bauer, N. et al. (2020a). Bioenergy technologies in long-run climate mitigation: Results from the EMF-33 study. *Climatic Change*.\
- https://doi.org/10.1007/s10584-020-02799-y
+Daioglou, V., Rose, S., Bauer, N. et al. (2020a). [Bioenergy technologies in long-run climate mitigation: Results from the EMF-33 study](https://doi.org/10.1007/s10584-020-02799-y). *Climatic Change*.
 
-Daioglou V., Muratori, M., Lamers, P. et al. (2020b). Implications of climate change mitigation strategies on international bioenergy trade. *Climatic Change*. \
-https://doi.org/10.1007/s10584-020-02877-1
+Daioglou V., Muratori, M., Lamers, P. et al. (2020b). [Implications of climate change mitigation strategies on international bioenergy trade](https://doi.org/10.1007/s10584-020-02877-1). *Climatic Change*.
 
 Koberle A., Daioglou, V., Rochedo, P. et al. (2021). Can global models provide insights into regional mitigation strategies? A diagnostic model comparison study of bioenergy in Brazil. *Climatic Change*. 
 
