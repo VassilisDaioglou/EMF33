@@ -65,36 +65,36 @@ FSizeLeg = 9
 GJperMWh = 3.6  
 
 # Carbon Content in kgCO2/MWh
-CCPrim <- data.frame(c("Bio","Coa","Gas","Geo","Hyd","Nuc","Sol","Win","Oce","Oil"),
-                     c(0,            # Biomass = Assume no LUC here as it is accounted for in the BECCS mitigation potential
-                       353.8,        # Coal 
-                       221.76,       # Gas 
-                       0,            # Geothermal
-                       0,            # Hydro
-                       0,            # Nuclear
-                       0,            # Solar
-                       0,            # Wind
-                       0,            # Ocean
-                       249.5))       # Oil 
+CCPrim <- data.frame(Tech = c("Bio","Coa","Gas","Geo","Hyd","Nuc","Sol","Win","Oce","Oil"),
+                      CC_kgCO2_MWh = c(0,            # Biomass = Assume no LUC here as it is accounted for in the BECCS mitigation potential
+                                       353.8,        # Coal 
+                                       221.76,       # Gas 
+                                       0,            # Geothermal
+                                       0,            # Hydro
+                                       0,            # Nuclear
+                                       0,            # Solar
+                                       0,            # Wind
+                                       0,            # Ocean
+                                       249.5))       # Oil 
 
-colnames(CCPrim) <- c("Tech","CC_kgCO2_MWh")
 CCPrim = CCPrim %>% mutate(CC_MtCO2_EJ = CC_kgCO2_MWh / GJperMWh)
 
 # electricity conversion efficiency, based on UNFCCC tool to calculate electricity emission factor
 # https://cdm.unfccc.int/methodologies/PAmethodologies/tools/am-tool-07-v5.0.pdf
 # Appendix I
-Elec_Eff <- data.frame(c("Bio","Coa","Gas","Geo","Hyd","Nuc","Sol","Win","Oce","Oil"),
-                       c(0,            # Biomass = Assume no LUC here as it is accounted for in the BECCS mitigation potential
-                         0.40,        # Coal 
-                         0.60,       # Gas 
-                         0,            # Geothermal
-                         0,            # Hydro
-                         0,            # Nuclear
-                         0,            # Solar
-                         0,            # Wind
-                         0,            # Ocean
-                         0.46))       # Oil 
-colnames(Elec_Eff) <- c("Tech","Efficiency")
+# Biomass based on average of supplementary data of Daioglou et al. 2020 (https://link.springer.com/article/10.1007/s10584-020-02799-y)
+  # Filter: Year = 2050; Primary Carrier = Biomass; Secondary Carrier = Ele; Carbon Capture = With
+Elec_Eff <- data.frame(Tech = c("Bio","Coa","Gas","Geo","Hyd","Nuc","Sol","Win","Oce","Oil"),
+                       Efficiency = c(0.36,         # Biomass
+                                      0.40,         # Coal 
+                                      0.60,         # Gas 
+                                      0,            # Geothermal
+                                      0,            # Hydro
+                                      0,            # Nuclear
+                                      0,            # Solar
+                                      0,            # Wind
+                                      0,            # Ocean
+                                      0.46))       # Oil 
 
 CCElec = CCPrim 
 CCElec$Eff = Elec_Eff[match(CCElec$Tech,Elec_Eff$Tech),"Efficiency"]  
@@ -104,25 +104,24 @@ CCElec[is.na(CCElec)] <- 0.0
 # Liquids thermal conversion efficiency
 # Coal-to-liquids: https://uu.diva-portal.org/smash/get/diva2:293610/FULLTEXT02.pdf
 # Gas-to-Liquids: https://pubs-acs-org.proxy.library.uu.nl/doi/10.1021/ie402284q
-Liq_Eff <- data.frame(c("Bio","Coa","Gas","Geo","Hyd","Nuc","Sol","Win","Oce","Oil"),
-                      c(0,            # Biomass = Assume no LUC here as it is accounted for in the BECCS mitigation potential
-                         0.5,          # Coal 
-                         0.5,          # Gas 
-                         0,            # Geothermal
-                         0,            # Hydro
-                         0,            # Nuclear
-                         0,            # Solar
-                         0,            # Wind
-                         0,            # Ocean
-                         1))       # Oil 
-colnames(Liq_Eff) <- c("Tech","Efficiency")
-
+# Biomass based on average of supplementary data of Daioglou et al. 2020 (https://link.springer.com/article/10.1007/s10584-020-02799-y)
+  # Filter: Year = 2050; Primary Carrier = Biomass; Secondary Carrier = Liq; Carbon Capture = With
+Liq_Eff <- data.frame(Tech = c("Bio","Coa","Gas","Geo","Hyd","Nuc","Sol","Win","Oce","Oil"),
+                      Efficiency = c(0.47,         # Biomass
+                                     0.5,          # Coal 
+                                     0.5,          # Gas 
+                                     0,            # Geothermal
+                                     0,            # Hydro
+                                     0,            # Nuclear
+                                     0,            # Solar
+                                     0,            # Wind
+                                     0,            # Ocean
+                                     1))       # Oil 
 CCLiq = CCPrim 
 CCLiq$Eff = Liq_Eff[match(CCLiq$Tech,Liq_Eff$Tech),"Efficiency"]  
 CCLiq$Elec_CC_MtCO2_EJ = CCElec$CC_MtCO2_EJ / CCLiq$Eff  
 CCLiq[is.na(CCLiq)] <- 0.0
-
-rm(Elec_Eff, Liq_Eff)
+#
 # ---- READ DATA ----
 DATA=read.csv("data/FossilDisplacement/DisplacementData.csv", sep=",", dec=".", stringsAsFactors = FALSE)
 
@@ -288,6 +287,47 @@ BioDem.EleLiq <- aggregate(BioDem.EleLiq$value, by=list(ID1=BioDem.EleLiq$ID1), 
 plot(density(BioDem.EleLiq$x))
 
 #
+# ---- TECHNICAL POTENTIALS ----
+# Determine technical potential of bioenergy based on Ar6 Ch7.4.4 technical potential for bioenergy
+# Potential based on sum of:
+# Energy Crops:
+#   Min: 46
+#   Max: 245
+# Residues:
+#   Min: 4
+#   Max: 74
+
+TechPot <- data.frame( Variable = c("Prim_EJ_Min","Prim_EJ_Max"),
+                       Value = c(46+4, 245+74))
+TechPot <- data.frame(Prim_EJ_Min = 46+4,
+                      Prim_EJ_Max = 245+74)
+
+TechPot$SecEle_EJ_Min = TechPot$Prim_EJ_Min * Elec_Eff$Efficiency[Elec_Eff$Tech=="Bio"]
+TechPot$SecEle_EJ_Max = TechPot$Prim_EJ_Max * Elec_Eff$Efficiency[Elec_Eff$Tech=="Bio"]
+TechPot$SecLiq_EJ_Min = TechPot$Prim_EJ_Min * Liq_Eff$Efficiency[Liq_Eff$Tech=="Bio"]
+TechPot$SecLiq_EJ_Max = TechPot$Prim_EJ_Max * Liq_Eff$Efficiency[Liq_Eff$Tech=="Bio"]
+
+TechPotMitigation = FinalData[,1:8]
+TechPotMitigation$Sec_EJ_Min[TechPotMitigation$Carrier=="Electricity"] <- TechPot$SecEle_EJ_Min 
+TechPotMitigation$Sec_EJ_Max[TechPotMitigation$Carrier=="Electricity"] <- TechPot$SecEle_EJ_Max 
+TechPotMitigation$Sec_EJ_Min[TechPotMitigation$Carrier=="Liquids"] <- TechPot$SecLiq_EJ_Min 
+TechPotMitigation$Sec_EJ_Max[TechPotMitigation$Carrier=="Liquids"] <- TechPot$SecLiq_EJ_Max 
+
+TechPotMitigation = TechPotMitigation %>% mutate(Tech_Avoided_Emis_Min_MtCO2 = Baseline_CC_MtCO2perEJ * Sec_EJ_Min )
+TechPotMitigation = TechPotMitigation %>% mutate(Tech_Avoided_Emis_Max_MtCO2 = Baseline_CC_MtCO2perEJ * Sec_EJ_Max )
+
+# Summing Electricity and Liquids
+TechPotMitigation.TotalMin<- aggregate(TechPotMitigation$Tech_Avoided_Emis_Min_MtCO2, by=list(ID1=TechPotMitigation$ID1), FUN=sum, na.rm=TRUE) 
+TechPotMitigation.TotalMax<- aggregate(TechPotMitigation$Tech_Avoided_Emis_Max_MtCO2, by=list(ID1=TechPotMitigation$ID1), FUN=sum, na.rm=TRUE) 
+
+TechPotMitigation.Total = DATA.cor
+TechPotMitigation.Total = subset(TechPotMitigation.Total, ID1 %in% TechPotMitigation.TotalMin$ID1)
+TechPotMitigation.Total$Min_TechMitigation_MtCO2perYr = TechPotMitigation.TotalMin[match(TechPotMitigation.Total$ID1, TechPotMitigation.TotalMin$ID1),2]
+TechPotMitigation.Total$Max_TechMitigation_MtCO2perYr = TechPotMitigation.TotalMax[match(TechPotMitigation.Total$ID1, TechPotMitigation.TotalMax$ID1),2]
+TechPotMitigation.Total = subset(TechPotMitigation.Total, select=c("MODEL","SCENARIO","REGION","Min_TechMitigation_MtCO2perYr","Max_TechMitigation_MtCO2perYr"))
+TechPotMitigation.Total = unique(TechPotMitigation.Total) #Removes some duplicate observations
+TechPotMitigation.Total = melt(TechPotMitigation.Total, id.vars=c("MODEL","SCENARIO","REGION"))
+#
 # ---- SUMMARY STATISTICS ----
 # Total Biomass Mitigation 
 plot(density(FinalData.Total$Bioenergy_Mitigation_MtCO2))
@@ -329,7 +369,7 @@ BioMitigation = subset(BioMitigation, select=c("MODEL","SCENARIO","REGION","Miti
 BioMitigation = unique(BioMitigation) #Removes some duplicate observations
 
 # ---- FIGURES ----
-# ---- Boxplot + Jitter per Carrier  ----
+# ---- Economic Potential Boxplot + Jitter per Carrier  ----
 boxplot.c<-ggplot(data = subset(FinalData, !(REGION == "WORLD")),
                 aes(x = Carrier, y = Avoided_Emis_MtCO2)) + 
   geom_boxplot() +
@@ -343,7 +383,7 @@ boxplot.c<-ggplot(data = subset(FinalData, !(REGION == "WORLD")),
   xlab("") 
 boxplot.c
 
-# ---- Boxplot + Jitter TOTAL  ----
+# ---- Economic Potential Boxplot + Jitter TOTAL  ----
 boxplot.t<-ggplot(data = BioMitigation,
                 aes(x = factor(0), y = Mitigation_MtCO2perYr)) + 
   geom_boxplot(outlier.shape=NA) +
@@ -356,9 +396,24 @@ boxplot.t<-ggplot(data = BioMitigation,
   theme(axis.title.x=element_blank(),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank()) +
-  xlab("") + ylab(expression(paste("Avoided MtCO"[2]))) + 
-  xlab("") 
+  xlab("") + ylab(expression(paste("Avoided MtCO"[2])))
 boxplot.t
+
+# ---- Technical Potential Boxplot + Jitter TOTAL  ----
+boxplot.tech<-ggplot(data = TechPotMitigation.Total,
+                  aes(x = variable, y = value)) + 
+  geom_boxplot(outlier.shape=NA) +
+  geom_jitter(aes(colour = MODEL), width=0.2, alpha = 0.75, size=1) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=0,size = 0.1, colour='black') +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  ylab(expression(paste("Avoided MtCO"[2])))
+boxplot.tech
 
 # ---- OUTPUTS ----
 # wb <- createWorkbook()
@@ -380,6 +435,4 @@ boxplot.t
 # plot(boxplot.t)
 # dev.off()
 # 
-# png(file = "output/FossilDisplacement/distribution.png", width = 6*ppi, height = 6*ppi, units = "px", res = ppi)
-
-# dev.off()
+# 
