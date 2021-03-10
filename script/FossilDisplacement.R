@@ -253,7 +253,7 @@ NonBioDemand.base = subset(NonBioDemand, SCENARIO=="R3-BASE-0-full")
 NonBioDemand.base$ID3 = paste(NonBioDemand.base$MODEL, NonBioDemand.base$REGION, NonBioDemand.base$Year, NonBioDemand.base$Carrier) 
 
 
-rm(Elec.CC, Liq.CC, Elec.NonBio, Liq.NonBio)
+rm(Elec.NonBio, Liq.NonBio)
 # FINAL DATASET
 # Unit of Baseline_CC is MtCO2/EJ-sec
 FinalData <- BioDem
@@ -288,6 +288,13 @@ plot(density(BioDem.EleLiq$x))
 
 #
 # ---- TECHNICAL POTENTIALS ----
+# Determine Technical potential of bioenergy fossil fuel displacement mitigation
+#
+# Use two different methods:
+# 1. Technical potential of bioenergy based on Ar6 Ch7.4.4 technical potential for bioenergy
+# 2. Technical potential based on Hanssen et al. (2020), bioelectricity-BECCS potential offering net-negative emissions within a 30 year timframe
+#
+# METHOD 1:
 # Determine technical potential of bioenergy based on Ar6 Ch7.4.4 technical potential for bioenergy
 # Potential based on sum of:
 # Energy Crops:
@@ -297,36 +304,89 @@ plot(density(BioDem.EleLiq$x))
 #   Min: 4
 #   Max: 74
 
-TechPot <- data.frame( Variable = c("Prim_EJ_Min","Prim_EJ_Max"),
-                       Value = c(46+4, 245+74))
-TechPot <- data.frame(Prim_EJ_Min = 46+4,
+TechPot1 <- data.frame(Prim_EJ_Min = 46+4,
                       Prim_EJ_Max = 245+74)
 
-TechPot$SecEle_EJ_Min = TechPot$Prim_EJ_Min * Elec_Eff$Efficiency[Elec_Eff$Tech=="Bio"]
-TechPot$SecEle_EJ_Max = TechPot$Prim_EJ_Max * Elec_Eff$Efficiency[Elec_Eff$Tech=="Bio"]
-TechPot$SecLiq_EJ_Min = TechPot$Prim_EJ_Min * Liq_Eff$Efficiency[Liq_Eff$Tech=="Bio"]
-TechPot$SecLiq_EJ_Max = TechPot$Prim_EJ_Max * Liq_Eff$Efficiency[Liq_Eff$Tech=="Bio"]
+TechPot1$SecEle_EJ_Min = TechPot1$Prim_EJ_Min * Elec_Eff$Efficiency[Elec_Eff$Tech=="Bio"]
+TechPot1$SecEle_EJ_Max = TechPot1$Prim_EJ_Max * Elec_Eff$Efficiency[Elec_Eff$Tech=="Bio"]
+TechPot1$SecLiq_EJ_Min = TechPot1$Prim_EJ_Min * Liq_Eff$Efficiency[Liq_Eff$Tech=="Bio"]
+TechPot1$SecLiq_EJ_Max = TechPot1$Prim_EJ_Max * Liq_Eff$Efficiency[Liq_Eff$Tech=="Bio"]
 
-TechPotMitigation = FinalData[,1:8]
-TechPotMitigation$Sec_EJ_Min[TechPotMitigation$Carrier=="Electricity"] <- TechPot$SecEle_EJ_Min 
-TechPotMitigation$Sec_EJ_Max[TechPotMitigation$Carrier=="Electricity"] <- TechPot$SecEle_EJ_Max 
-TechPotMitigation$Sec_EJ_Min[TechPotMitigation$Carrier=="Liquids"] <- TechPot$SecLiq_EJ_Min 
-TechPotMitigation$Sec_EJ_Max[TechPotMitigation$Carrier=="Liquids"] <- TechPot$SecLiq_EJ_Max 
+# METHOD 2:
+# Technical potential based on Hanssen et al. (2020), bioelectricity-BECCS potential offering net-negative emissions within a 30 year timframe
+# Potential:
+# 28 EJ-Elec/yr - basic restult
+# 59.2 EJ-Prim/yr - Residue availability (SI Table S4)
+TechPot2 <- data.frame(Sec_EJ_Hanssen1 = 28,
+                       Sec_EJ_Hanssen2 = 28 + (59.2 * Elec_Eff$Efficiency[Elec_Eff$Tech=="Bio"]))
+
+
+# DETERMINE TECHNICAL MITIGATION POTENTIAL
+# Do this far all model-scenario-regionitimestep combinations, initially. 
+
+  # First get baseline Electricity and Liquids Carbon Contents
+BaselineCC = subset(BioDem, select = c(MODEL,SCENARIO,REGION,Year,ID2,ID3))
+BaselineCC = subset(BaselineCC, SCENARIO == "R3-BASE-0-full")
+BaselineCC$Ele_CC_MtCO2perEJ = Elec.CC[match(BaselineCC$ID2, Elec.CC$ID2),"x"]
+BaselineCC$Liq_CC_MtCO2perEJ = Liq.CC[match(BaselineCC$ID2, Elec.CC$ID2),"x"]
+
+  # Make DF with Baseline Carbon contants for the baseline
+TechPotMitigation = subset(DATA, select = c(MODEL,SCENARIO,REGION,Year,ID2))
+TechPotMitigation = subset(TechPotMitigation, SCENARIO == "R3-BASE-0-full")
+TechPotMitigation = unique(TechPotMitigation) #Removes some duplicate observations
+TechPotMitigation$EleBaseline_CC_MtCO2perEJ = BaselineCC[match(TechPotMitigation$ID2,BaselineCC$ID2),"Ele_CC_MtCO2perEJ"]
+TechPotMitigation$LiqBaseline_CC_MtCO2perEJ = BaselineCC[match(TechPotMitigation$ID2,BaselineCC$ID2),"Liq_CC_MtCO2perEJ"]
+TechPotMitigation = melt(TechPotMitigation, id.vars=c("MODEL","SCENARIO","REGION","Year","ID2"))
+TechPotMitigation$Carrier = substr(TechPotMitigation$variable, start = 1, stop = 3)
+colnames(TechPotMitigation)[colnames(TechPotMitigation)=="value"] <- "Baseline_CC_MtCO2perEJ"
+TechPotMitigation$variable <- NULL
+# Get only for years where ctax ~ 100$/tCO2
+TechPotMitigation = subset(TechPotMitigation, ID2 %in% Cross100$ID3)
+
+  # Dwetermine mitigation potential based on biomass technical potentials
+TechPotMitigation$Sec_EJ_Min[TechPotMitigation$Carrier=="Ele"] <- TechPot1$SecEle_EJ_Min 
+TechPotMitigation$Sec_EJ_Max[TechPotMitigation$Carrier=="Ele"] <- TechPot1$SecEle_EJ_Max 
+TechPotMitigation$Sec_EJ_Min[TechPotMitigation$Carrier=="Liq"] <- TechPot1$SecLiq_EJ_Min 
+TechPotMitigation$Sec_EJ_Max[TechPotMitigation$Carrier=="Liq"] <- TechPot1$SecLiq_EJ_Max 
+TechPotMitigation$Sec_EJ_Hanssen1[TechPotMitigation$Carrier=="Ele"] <- TechPot2$Sec_EJ_Hanssen1
+TechPotMitigation$Sec_EJ_Hanssen2[TechPotMitigation$Carrier=="Ele"] <- TechPot2$Sec_EJ_Hanssen2
+TechPotMitigation$Sec_EJ_Hanssen1[TechPotMitigation$Carrier=="Liq"] <- 0
+TechPotMitigation$Sec_EJ_Hanssen2[TechPotMitigation$Carrier=="Liq"] <- 0
 
 TechPotMitigation = TechPotMitigation %>% mutate(Tech_Avoided_Emis_Min_MtCO2 = Baseline_CC_MtCO2perEJ * Sec_EJ_Min )
 TechPotMitigation = TechPotMitigation %>% mutate(Tech_Avoided_Emis_Max_MtCO2 = Baseline_CC_MtCO2perEJ * Sec_EJ_Max )
+TechPotMitigation = TechPotMitigation %>% mutate(Tech_Avoided_Emis_Hanssen1_MtCO2 = Baseline_CC_MtCO2perEJ * Sec_EJ_Hanssen1 )
+TechPotMitigation = TechPotMitigation %>% mutate(Tech_Avoided_Emis_Hanssen2_MtCO2 = Baseline_CC_MtCO2perEJ * Sec_EJ_Hanssen2 )
 
-# Summing Electricity and Liquids
-TechPotMitigation.TotalMin<- aggregate(TechPotMitigation$Tech_Avoided_Emis_Min_MtCO2, by=list(ID1=TechPotMitigation$ID1), FUN=sum, na.rm=TRUE) 
-TechPotMitigation.TotalMax<- aggregate(TechPotMitigation$Tech_Avoided_Emis_Max_MtCO2, by=list(ID1=TechPotMitigation$ID1), FUN=sum, na.rm=TRUE) 
+  # Summing Electricity and Liquids
+TechPotMitigation.TotalMin<- aggregate(TechPotMitigation$Tech_Avoided_Emis_Min_MtCO2, by=list(ID2=TechPotMitigation$ID2), FUN=sum, na.rm=TRUE) 
+TechPotMitigation.TotalMax<- aggregate(TechPotMitigation$Tech_Avoided_Emis_Max_MtCO2, by=list(ID2=TechPotMitigation$ID2), FUN=sum, na.rm=TRUE) 
+TechPotMitigation.Hanssen1<- aggregate(TechPotMitigation$Tech_Avoided_Emis_Hanssen1, by=list(ID2=TechPotMitigation$ID2), FUN=sum, na.rm=TRUE) 
+TechPotMitigation.Hanssen2<- aggregate(TechPotMitigation$Tech_Avoided_Emis_Hanssen2, by=list(ID2=TechPotMitigation$ID2), FUN=sum, na.rm=TRUE) 
 
-TechPotMitigation.Total = DATA.cor
-TechPotMitigation.Total = subset(TechPotMitigation.Total, ID1 %in% TechPotMitigation.TotalMin$ID1)
-TechPotMitigation.Total$Min_TechMitigation_MtCO2perYr = TechPotMitigation.TotalMin[match(TechPotMitigation.Total$ID1, TechPotMitigation.TotalMin$ID1),2]
-TechPotMitigation.Total$Max_TechMitigation_MtCO2perYr = TechPotMitigation.TotalMax[match(TechPotMitigation.Total$ID1, TechPotMitigation.TotalMax$ID1),2]
-TechPotMitigation.Total = subset(TechPotMitigation.Total, select=c("MODEL","SCENARIO","REGION","Min_TechMitigation_MtCO2perYr","Max_TechMitigation_MtCO2perYr"))
+  # Final dataset with technical mitigation potential, per IAM baseline carbon contents 
+TechPotMitigation.Total = subset(DATA, select = c(MODEL,SCENARIO,REGION,Year,ID2))
+TechPotMitigation.Total = subset(TechPotMitigation.Total, SCENARIO == "R3-BASE-0-full")
 TechPotMitigation.Total = unique(TechPotMitigation.Total) #Removes some duplicate observations
-TechPotMitigation.Total = melt(TechPotMitigation.Total, id.vars=c("MODEL","SCENARIO","REGION"))
+TechPotMitigation.Total = subset(TechPotMitigation.Total, ID2 %in% Cross100$ID3)
+
+TechPotMitigation.Total$Min_TechMitigation_MtCO2perYr = TechPotMitigation.TotalMin[match(TechPotMitigation.Total$ID2, TechPotMitigation.TotalMin$ID2),2]
+TechPotMitigation.Total$Max_TechMitigation_MtCO2perYr = TechPotMitigation.TotalMax[match(TechPotMitigation.Total$ID2, TechPotMitigation.TotalMax$ID2),2]
+TechPotMitigation.Total$Hanssen1_TechMitigation_MtCO2perYr = TechPotMitigation.Hanssen1[match(TechPotMitigation.Total$ID2, TechPotMitigation.Hanssen1$ID2),2]
+TechPotMitigation.Total$Hanssen2_TechMitigation_MtCO2perYr = TechPotMitigation.Hanssen2[match(TechPotMitigation.Total$ID2, TechPotMitigation.Hanssen2$ID2),2]
+TechPotMitigation.Total = melt(TechPotMitigation.Total, id.vars=c("MODEL","SCENARIO","REGION","Year","ID2"))
+
+# Remove FARM since it does not report Coal use in electricity and thus skews the results
+TechPotMitigation.Total = subset(TechPotMitigation.Total, !(MODEL == "FARM 3.1"))
+
+# Only interested in Global data. 
+TechPotMitigation.Total = subset(TechPotMitigation.Total, (REGION == "World"))
+
+rm(Elec.CC, Liq.CC,
+   TechPot1, TechPot2,
+   TechPotMitigation, 
+   TechPotMitigation.TotalMax, TechPotMitigation.TotalMin,
+   TechPotMitigation.Hanssen1, TechPotMitigation.Hanssen2)
 #
 # ---- SUMMARY STATISTICS ----
 # Total Biomass Mitigation 
@@ -335,6 +395,10 @@ plot(density(FinalData.Total$Bioenergy_Mitigation_MtCO2))
 summary_stats_total <- data.frame(c("5th perc.","10th perc.","25th perc.","50th perc.","75th perc.","90th perc.","95th perc."),
                       quantile(FinalData.Total$Bioenergy_Mitigation_MtCO2, probs = c(0.05,0.1,0.25,0.5,0.75,0.9,0.95)))
 colnames(summary_stats_total) <- c("Percentile","Bioenergy Mitigation: MtCO2/yr")
+
+TechPotMitigation.Final = subset(TechPotMitigation.Total, variable=="Hanssen2_TechMitigation_MtCO2perYr") # Biomass potential from Hanssen et al. 2020, including residues
+plot(density(TechPotMitigation.Final$value))
+
 
 #
 # ---- PRIMARY BIOMASS ----
@@ -403,7 +467,7 @@ boxplot.t
 boxplot.tech<-ggplot(data = TechPotMitigation.Total,
                   aes(x = variable, y = value)) + 
   geom_boxplot(outlier.shape=NA) +
-  geom_jitter(aes(colour = MODEL), width=0.2, alpha = 0.75, size=1) +
+  geom_jitter(aes(colour = MODEL), width=0.2, alpha = 0.75, size=0.5) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=0,size = 0.1, colour='black') +
   theme_bw() +
@@ -433,6 +497,10 @@ boxplot.tech
 # # # #
 # png(file = "output/FossilDisplacement/Boxplot_total.png", width = 3*ppi, height = 3*ppi, units = "px", res = ppi)
 # plot(boxplot.t)
+# dev.off()
+# 
+# png(file = "output/FossilDisplacement/TechnicalPot_Boxplot_total.png", width = 5*ppi, height = 3*ppi, units = "px", res = ppi)
+# plot(boxplot.tech)
 # dev.off()
 # 
 # 
