@@ -390,16 +390,33 @@ rm(Elec.CC, Liq.CC,
 #
 # ---- SUMMARY STATISTICS ----
 # Total Biomass Mitigation 
-plot(density(FinalData.Total$Bioenergy_Mitigation_MtCO2))
+  # Economic Potential
+png(file = "output/FossilDisplacement/density_economic_pot.png", width = 5*ppi, height = 5*ppi, units = "px", res = ppi)
+plot(density(FinalData.Total$Bioenergy_Mitigation_MtCO2), 
+     main = "Mitigation Bioenergy Use @ 100$/tCO2",
+     xlab = "Mt-CO2",
+     cex.lab = 1,
+     cex.axis = 1,
+     cex.main = 1)
+dev.off()
 
-summary_stats_total <- data.frame(c("5th perc.","10th perc.","25th perc.","50th perc.","75th perc.","90th perc.","95th perc."),
-                      quantile(FinalData.Total$Bioenergy_Mitigation_MtCO2, probs = c(0.05,0.1,0.25,0.5,0.75,0.9,0.95)))
-colnames(summary_stats_total) <- c("Percentile","Bioenergy Mitigation: MtCO2/yr")
+summary_stats_economic <- data.frame(Percentile = c("5th perc.","10th perc.","25th perc.","50th perc.","75th perc.","90th perc.","95th perc."),
+                                  "Bioenergy_Mitigation_MtCO2peryr" = quantile(FinalData.Total$Bioenergy_Mitigation_MtCO2, probs = c(0.05,0.1,0.25,0.5,0.75,0.9,0.95)))
 
+  # Technical Potential
 TechPotMitigation.Final = subset(TechPotMitigation.Total, variable=="Hanssen2_TechMitigation_MtCO2perYr") # Biomass potential from Hanssen et al. 2020, including residues
-plot(density(TechPotMitigation.Final$value))
 
+png(file = "output/FossilDisplacement/density_technical_pot.png", width = 5*ppi, height = 5*ppi, units = "px", res = ppi)
+plot(density(TechPotMitigation.Final$value),
+     main = "Technical Potnetial of Bioenergy Mitigation",
+     xlab = "Mt-CO2",
+     cex.lab = 1,
+     cex.axis = 1,
+     cex.main = 1)
+dev.off()
 
+summary_stats_technical <- data.frame(Percentile = c("5th perc.","10th perc.","25th perc.","50th perc.","75th perc.","90th perc.","95th perc."),
+                                 "Bioenergy_Technical_Mitigation_Potential_MtCO2peryr" = quantile(TechPotMitigation.Final$value, probs = c(0.05,0.1,0.25,0.5,0.75,0.9,0.95)))
 #
 # ---- PRIMARY BIOMASS ----
 # Some biomass is used for secondary energy other than electricity and liquids (i.e. gasses, hydrogen, heat, etc.). 
@@ -485,8 +502,11 @@ boxplot.tech
 # addWorksheet(wb, "Avoided Emissions")
 # writeDataTable(wb, sheet = "Avoided Emissions", x = BioMitigation)
 # 
-# addWorksheet(wb, "Percentiles")
-# writeDataTable(wb, sheet = "Percentiles", x = summary_stats_total)
+# addWorksheet(wb, "Economic Potential Percentiles")
+# writeDataTable(wb, sheet = "Economic Potential Percentiles", x = summary_stats_economic)
+# 
+# addWorksheet(wb, "Technical Potential Percentiles")
+# writeDataTable(wb, sheet = "Technical Potential Percentiles", x = summary_stats_technical)
 # 
 # saveWorkbook(wb, "output/FossilDisplacement/EMF-33_AvoidedEmissions.xlsx", overwrite = TRUE)
 
