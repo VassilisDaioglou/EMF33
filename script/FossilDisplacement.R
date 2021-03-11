@@ -481,10 +481,10 @@ boxplot.t<-ggplot(data = BioMitigation,
 boxplot.t
 
 # ---- Technical Potential Boxplot + Jitter TOTAL  ----
-boxplot.tech<-ggplot(data = TechPotMitigation.Total,
+boxplot.tech<-ggplot(data = TechPotMitigation.Final,
                   aes(x = variable, y = value)) + 
   geom_boxplot(outlier.shape=NA) +
-  geom_jitter(aes(colour = MODEL), width=0.2, alpha = 0.75, size=0.5) +
+  geom_jitter(aes(colour = MODEL), width=0.2, alpha = 0.75, size=1) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
   geom_vline(xintercept=0,size = 0.1, colour='black') +
   theme_bw() +
@@ -519,7 +519,7 @@ boxplot.tech
 # plot(boxplot.t)
 # dev.off()
 # 
-# png(file = "output/FossilDisplacement/TechnicalPot_Boxplot_total.png", width = 5*ppi, height = 3*ppi, units = "px", res = ppi)
+# png(file = "output/FossilDisplacement/TechnicalPot_Boxplot_total.png", width = 3*ppi, height = 3*ppi, units = "px", res = ppi)
 # plot(boxplot.tech)
 # dev.off()
 # 
