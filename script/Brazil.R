@@ -18,6 +18,9 @@ library(maps)
 library(mapdata)
 library(gridExtra)
 library(scales)
+library(ggpubr)
+library(grid)
+
 
 # ---- CONSTANTS ----
 ppi <- 600
@@ -37,6 +40,22 @@ BraDATA$X <- NULL
 # ---- PROCESS DATA FILE ----
 BraDATA = subset(BraDATA, (MODEL %in% ActiveModel) & (Year %in% ActiveYear))
 
+# GCAM data lacks values for "Emissions|CO2|Energy"
+# Calculate thisas the difference between total and AFOLU
+BraDATA.GCAMCor <- BraDATA %>%
+  subset(MODEL == "GCAM_EMF33" & !(VARIABLE == "Emissions|CO2|Energy")) %>%
+  spread(key = "VARIABLE", value = "value") %>%
+  set_colnames(c("MODEL","SCENARIO","REGION","UNIT","Year","TotalEmis","AFOLU")) %>%
+  mutate(Energy = TotalEmis - AFOLU) %>%
+  set_colnames(c("MODEL","SCENARIO","REGION","UNIT","Year","Emissions|CO2","Emissions|CO2|Land Use","Emissions|CO2|Energy")) %>%
+  melt(id.vars=c("MODEL","SCENARIO","REGION","UNIT","Year")) %>%
+  set_colnames(c("MODEL","SCENARIO","REGION","UNIT","Year","VARIABLE","value"))
+
+BraDATA = BraDATA %>%
+  subset(!MODEL == "GCAM_EMF33") %>%
+  rbind(BraDATA.GCAMCor)
+
+rm(BraDATA.GCAMCor)
 # ---- LABELS ----
 #Model labels with text wraps                
 model_labels <- c("AIM/CGE"="AIM/CGE","BET"="BET","COFFEE"="COFFEE","DNE21+ V.14"="DNE21+","FARM 3.1"="FARM","MESSAGE-GLOBIOM"="MESSAGEix-\nGLOBIOM","GCAM_EMF33"="GCAM","GRAPE-15"="GRAPE","IMACLIM-NLU"="IMACLIM-\nNLU","IMAGE"="IMAGE","POLES EMF33"="POLES","REMIND-MAGPIE"="REMIND-\nMAgPIE")
