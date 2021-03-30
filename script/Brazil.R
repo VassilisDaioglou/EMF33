@@ -31,7 +31,8 @@ FSizeAxis = 9
 FSizeLeg = 9
 
 ActiveModel = c("AIM/CGE","BET","COFFEE","DNE21+ V.14","FARM 3.1","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE","POLES EMF33")
-ActiveYear = c(2020,2030,2040,2050,2060,2070,2080,2090,2100)
+ActiveYear = c(2010,2030,2050,2070)
+# ActiveYear = c(2020,2030,2040,2050,2060,2070,2080,2090,2100)
 ActiveYear2 = c(2050,2100)
 
 # ---- READ DATA FILE ----
@@ -91,7 +92,7 @@ GlobEmis <- ggplot() +
   geom_line(data=subset(BraDATA, SCENARIO == "R3-B-lo-full"  & !VARIABLE == "Emissions|CO2"),
             aes(x=Year,y = value, color=VARIABLE), size=1, alpha=0.75) +
   geom_hline(yintercept=0,size = 0.1, colour='black') +
-  ylab("Emissions MtCO2/yr") + xlab("") +
+  ylab(expression(paste("Emissions MtCO"[2],"/yr"))) + xlab("") +
   theme_bw() +  theme(panel.grid.minor=element_blank(), panel.grid.major=element_line(colour="gray80", size = 0.3)) +
   theme(plot.title = element_text(size = FSizeTitle, face = "bold")) +
   theme(text= element_text(size=FSizeStrip, face="plain"), axis.text.x = element_text(angle=66, size=FSizeAxis, hjust=1), axis.text.y = element_text(size=FSizeAxis)) +
@@ -102,6 +103,7 @@ GlobEmis <- ggplot() +
                       breaks=c("Emissions|CO2","Emissions|CO2|Energy","Emissions|CO2|Land Use"),
                       labels=c("Total","Energy","AFOLU"),
                       guide="legend") +
+  scale_x_continuous(breaks=ActiveYear)   +
   theme(strip.text.x = element_text(size = FSizeStrip, face="bold"), strip.text.y = element_text(size = FSizeStrip, face="bold")) +
   facet_grid(REGION~MODEL, scales="free_y", labeller=labeller(MODEL = model_labels))
 GlobEmis
@@ -112,7 +114,7 @@ GlobEmis
 # print(plot(TotEmis))
 # dev.off()
 # 
-# png(paste0(getwd(),"/GitHub/EMF33/output/Brazil/GlobalEmissions.png"), width=10*ppi, height=5*ppi, res=ppi)
+# png(paste0(getwd(),"/GitHub/EMF33/output/Brazil/GlobalEmissions.png"), width=10*ppi, height=4*ppi, res=ppi)
 # print(plot(GlobEmis))
 # dev.off()
 # 
