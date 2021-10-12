@@ -49,6 +49,6 @@ Daioglou V., Muratori, M., Lamers, P. et al. (2020b). [Implications of climate c
 
 Koberle A., Daioglou, V., Rochedo, P. et al. (2021). Can global models provide insights into regional mitigation strategies? A diagnostic model comparison study of bioenergy in Brazil. *Climatic Change*. 
 
-Roe S., Streck, C., Beach, R. et al. (2021). Land-based measures to mitigate climate change: Potential and feasibility by country. *Global Change Biology*. 
+Roe S., Streck, C., Beach, R. et al. (2021). [Land-based measures to mitigate climate change: Potential and feasibility by country](https://onlinelibrary.wiley.com/doi/10.1111/gcb.15873). *Global Change Biology*. 
 
 Nabuurs, G. J., Mrabet, R., Abu Hatab, A. et al. (2021). Agriculture, Forestry, and Other Land Uses (AFOLU). *Contribution of Working Group III to the 6th Assessment Report of the Intergovernmental Panel on Climate Change.*
