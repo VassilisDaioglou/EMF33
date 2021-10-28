@@ -215,6 +215,14 @@ EF_ranges = rbind(EMF33_range,Lit_range)
 EF_ranges$Pot_bin = factor(EF_ranges$Pot_bin, levels = AllPotBins) #c("0","25","50","75","100","125","150","175","200","225","250","275","300","325"))
 EF_ranges = subset(EF_ranges, Pot_bin %in% ActPotBins)
 #
+# ---- CURVES PER MODEL ----
+model_curves <- EmisFac %>%
+  group_by(MODEL) %>%
+  subset(REGION=="WORLD") %>%
+  arrange(MODEL, EF_PrimBio) %>%
+  mutate(csum = cumsum(PrimBio_2050))
+  
+#
 # ---- FIGURES ----
 # ---- *** FIG: Literature data - lineplot  ----
 Figlit<-ggplot() + 
@@ -276,11 +284,11 @@ boxed<-ggplot(data = EmisFac.all) +
   scale_fill_manual(values=c("dodgerblue", "darksalmon", "firebrick"),
                   name="Model type",
                   breaks = unique(EmisFac.all$label),
-                  labels = c("IAM \n(EMF-33)", "Partial Models \n(Natural Regrowth)", "Partial Models \n(Constant Land Cover)")) +
+                  labels = c("IAM \n(EMF-33)", "Sectoral Models \n(Natural Regrowth)", "Sectoral Models \n(Constant Land Cover)")) +
   scale_colour_manual(values=c("dodgerblue", "darksalmon", "firebrick"),
                   name="Model type",
                   breaks = unique(EmisFac.all$label),
-                  labels = c("IAM \n(EMF-33)", "Partial Models \n(Natural Regrowth)", "Partial Models \n(Constant Land Cover)"))
+                  labels = c("IAM \n(EMF-33)", "Sectoral Models \n(Natural Regrowth)", "Sectoral Models \n(Constant Land Cover)"))
 boxed
 # 
 # ---- *** FIG: EMF-33 EF + Literature (points)  ----
@@ -321,6 +329,22 @@ ribboned<-ggplot() +
                     labels = c("IAM \n(EMF-33)", "Partial Models \n(Natural Regrowth)", "Partial Models \n(Constant Land Cover)"))
 ribboned
 #
+# ---- *** FIG: EMF-33 EF (points)  ----
+points1 <-ggplot(data = subset(model_curves, MODEL == "IMAGE")) + 
+  geom_point(aes(x=PrimBio_2050, y = EF_PrimBio), alpha = 1, size = 1) +
+  geom_line(aes(x=PrimBio_2050, y = EF_PrimBio)) +
+  ylim(0,100) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ylab(expression(paste("kgCO"[2],"/GJ-Prim"))) + 
+  xlab("EJ Primary Biomass")  +
+  theme_bw() +
+  theme(text= element_text(size=6, face="plain"), axis.text.x = element_text(angle=90, size=6, hjust=0.5), axis.text.y = element_text(size=6)) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
+  theme(legend.position="right", legend.box = "vertical", legend.title= element_text(face="bold.italic"))
+points1
+
+#
 # ---- OUTPUTS ----
 # write.xlsx(summary_stats, file="GitHub/EMF33/output/EmissionSupply/EF_statistics.xlsx", sheetName="Emission Factor Statistics", append=FALSE, row.names=FALSE, showNA = TRUE)
 #
@@ -328,7 +352,7 @@ ribboned
 # write.xlsx(subset(EmisFac.all, select = -c(Scenario, Ref)), file="GitHub/EMF33/output/EmissionSupply/Box_7_10_Figure_1_Data.xlsx", sheetName="Data (Points)", append=FALSE, row.names=FALSE, showNA = TRUE)
 # write.xlsx(summary_stats, file="GitHub/EMF33/output/EmissionSupply/Box_7_10_Figure_1_Data.xlsx", sheetName="Data (Boxplot)", append=TRUE, row.names=FALSE, showNA = TRUE)
 #
-# pdf(file = "GitHub/EMF33/output/EmissionSupply/Box_7_10_Figure_1.pdf", width = 6, height = 3)
+# pdf(file = "GitHub/EMF33/output/EmissionSupply/Box_7_7_Figure_1.pdf", width = 6, height = 3)
 # plot(boxed)
 # dev.off()
 # #
