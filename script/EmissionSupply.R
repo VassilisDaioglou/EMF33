@@ -209,8 +209,10 @@ colnames(q3)[3] <- "3rd Quartile"
 
 summary_stats = merge(meds,q1,by=c("Pot_bin","label"))
 summary_stats = merge(summary_stats,q3,by=c("Pot_bin","label"))
-
-# ---- MIN-MAX EFs (Lit + EMF-33) ----
+summary_stats <- summary_stats %>%
+  mutate(label = gsub("Partial Models", "Sectoral Models", label))
+  
+2# ---- MIN-MAX EFs (Lit + EMF-33) ----
 EF_ranges = rbind(EMF33_range,Lit_range)
 EF_ranges$Pot_bin = factor(EF_ranges$Pot_bin, levels = AllPotBins) #c("0","25","50","75","100","125","150","175","200","225","250","275","300","325"))
 EF_ranges = subset(EF_ranges, Pot_bin %in% ActPotBins)
@@ -349,8 +351,8 @@ points1
 # write.xlsx(summary_stats, file="GitHub/EMF33/output/EmissionSupply/EF_statistics.xlsx", sheetName="Emission Factor Statistics", append=FALSE, row.names=FALSE, showNA = TRUE)
 #
 # For TSU
-# write.xlsx(subset(EmisFac.all, select = -c(Scenario, Ref)), file="GitHub/EMF33/output/EmissionSupply/Box_7_10_Figure_1_Data.xlsx", sheetName="Data (Points)", append=FALSE, row.names=FALSE, showNA = TRUE)
-# write.xlsx(summary_stats, file="GitHub/EMF33/output/EmissionSupply/Box_7_10_Figure_1_Data.xlsx", sheetName="Data (Boxplot)", append=TRUE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(subset(EmisFac.all, select = -c(Scenario, Ref)), file="GitHub/EMF33/output/EmissionSupply/Box_7_7_Figure_1_Data.xlsx", sheetName="Data (Points)", append=FALSE, row.names=FALSE, showNA = TRUE)
+# write.xlsx(summary_stats, file="GitHub/EMF33/output/EmissionSupply/Box_7_7_Figure_1_Data.xlsx", sheetName="Data (Boxplot)", append=TRUE, row.names=FALSE, showNA = TRUE)
 #
 # pdf(file = "GitHub/EMF33/output/EmissionSupply/Box_7_7_Figure_1.pdf", width = 6, height = 3)
 # plot(boxed)
