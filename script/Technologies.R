@@ -951,8 +951,8 @@ Fig2 <- ggplot(subset(GlobalData.BioCor1, Year=="2020"&!(CarrierID=="Gas")&!(Tec
   theme(text= element_text(size=fontsize1-1, face="plain"), axis.text.x = element_text(angle=66, size=fontsize2, hjust=1), axis.text.y = element_text(size=fontsize2)) +
   theme(panel.border = element_rect(colour = "black", fill=NA, size=0.2)) +
   theme(legend.position="bottom", legend.text=element_text(size=fontsize1-1)) +
-  scale_colour_manual(values=c("green4","black"),name="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
-  scale_fill_manual(values=c("green4","black"),name ="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
+  scale_colour_manual(values=c("black","green4"),name="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
+  scale_fill_manual(values=c("black","green4"),name ="",breaks=c("woCCS","wCCS"),labels=c("No CCS", "With CCS")) +
   scale_shape_manual(values=initialShapes,
                      name="",
                      breaks=c("AIM/CGE","BET","DNE21+ V.14","GCAM_EMF33","GRAPE-15","IMACLIM-NLU","IMAGE", "MESSAGE-GLOBIOM","POLES EMF33","REMIND-MAGPIE"),
