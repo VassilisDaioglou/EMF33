@@ -35,14 +35,15 @@ library(plyr);
 library(dplyr)
 library(data.table);
 library(tidyr)
-library(xlsx)
+library(openxlsx)
 library(forcats)
 
 # ---- CONSTANTS ----
 ppi <- 300
-FSizeStrip = 12
-FSizeAxis = 12
-FSizeLeg = 9
+FSizeTitle = 9
+FSizeStrip = 7
+FSizeAxis = 7
+FSizeLeg = 7
 
 ActYears = c(2010,2020,2030,2040,2050)
 # ActPotBins = factor(c(0,25,50,75,100,125,150,175,200))
@@ -156,8 +157,8 @@ clean.lit <- function(dataframe,bin,reference){
   dataframe
 }
 
-daioglou=read.xlsx("GitHub/EMF33/data/EmissionSupply/Lit_EF.xlsx", sheetName="Daioglou_2017", startRow=1)
-kalt = read.xlsx("GitHub/EMF33/data/EmissionSupply/Lit_EF.xlsx", sheetName="Kalt_2020", startRow=1)
+daioglou=read.xlsx("GitHub/EMF33/data/EmissionSupply/Lit_EF.xlsx", sheet="Daioglou_2017", startRow=1)
+kalt = read.xlsx("GitHub/EMF33/data/EmissionSupply/Lit_EF.xlsx", sheet="Kalt_2020", startRow=1)
 bin_width2 = 50
 
 daioglou = clean.lit(daioglou,bin_width2,"Daioglou_2017")
@@ -212,7 +213,7 @@ summary_stats = merge(summary_stats,q3,by=c("Pot_bin","label"))
 summary_stats <- summary_stats %>%
   mutate(label = gsub("Partial Models", "Sectoral Models", label))
   
-2# ---- MIN-MAX EFs (Lit + EMF-33) ----
+# ---- MIN-MAX EFs (Lit + EMF-33) ----
 EF_ranges = rbind(EMF33_range,Lit_range)
 EF_ranges$Pot_bin = factor(EF_ranges$Pot_bin, levels = AllPotBins) #c("0","25","50","75","100","125","150","175","200","225","250","275","300","325"))
 EF_ranges = subset(EF_ranges, Pot_bin %in% ActPotBins)
@@ -268,7 +269,7 @@ line<-ggplot(data = subset(EmisFac, REGION == "WORLD"),
   xlab("EJ Primary Biomass") 
 line
 #
-# ---- *** FIG: EMF-33 EF + Literature (boxplot)  ----
+# ---- *** FIG: EMF-33 EF + Literature (boxplot + points)  ----
 boxed<-ggplot(data = EmisFac.all) + 
   geom_boxplot(aes(x=Pot_bin, y = EF_kgCO2pGJprim, fill = label),
                size = 0.5, outlier.shape = NA) +
@@ -292,6 +293,47 @@ boxed<-ggplot(data = EmisFac.all) +
                   breaks = unique(EmisFac.all$label),
                   labels = c("IAM \n(EMF-33)", "Sectoral Models \n(Natural Regrowth)", "Sectoral Models \n(Constant Land Cover)"))
 boxed
+# 
+# ---- *** FIG: EMF-33 EF + Literature (boxplot)  ----
+boxed2<-ggplot(data = EmisFac.all) + 
+  geom_boxplot(aes(x=Pot_bin, y = EF_kgCO2pGJprim, fill = label),
+               size = 0.5, outlier.shape = NA) +
+  ylim(-20,100) +
+  scale_x_discrete(limits=ActPotBins) +
+  geom_hline(yintercept=0,size = 0.1, colour='black') +
+  geom_vline(xintercept=0,size = 0.1, colour='black') +
+  ylab(expression(paste("kgCO"[2]," / GJ"[Prim]))) + 
+  xlab(expression(paste("EJ"[Prim]," Biomass")))  +
+  theme(plot.title = element_text(size = FSizeTitle, face = "bold"),
+        plot.margin = margin(t = 0.15, r = 0.15, b = 0.15, l = 0.15, "cm"),
+        text = element_text(size=FSizeStrip, face="plain"), 
+        axis.title.x = element_text(size = FSizeAxis, face="bold"),
+        axis.title.y = element_text(size = FSizeAxis, face="bold"),
+        axis.text.x = element_text(angle=66, size=FSizeAxis, hjust=1), 
+        axis.text.y = element_text(size=FSizeAxis),
+        axis.line = element_line(colour = "black", size = 0.5),
+        strip.background = element_rect(colour = "black", fill = "white", size = 0.5),
+        strip.text.x = element_text(size = FSizeStrip, face="bold"), 
+        strip.text.y = element_text(size = FSizeStrip, face="bold"), 
+        legend.position = "right",
+        legend.box = "vertical", 
+        legend.direction = "vertical", 
+        legend.spacing.x = unit(0.1, 'cm'),
+        legend.spacing.y = unit(0.01,"cm"),
+        panel.grid.minor = element_blank(), 
+        panel.grid.major = element_line(colour="gray80", size = 0.3),
+        panel.border = element_rect(colour = "black", fill=NA, size=0.5),
+        panel.background = element_blank()) +
+  
+  scale_fill_manual(values=c("dodgerblue", "honeydew2", "darkgreen"),
+                    name="Model type",
+                    breaks = unique(EmisFac.all$label),
+                    labels = c("IAM \n(EMF-33)", "Sectoral Models \n(Natural Regrowth)", "Sectoral Models \n(Constant Land Cover)")) +
+  scale_colour_manual(values=c("dodgerblue", "honeydew2", "darkgreen"),
+                      name="Model type",
+                      breaks = unique(EmisFac.all$label),
+                      labels = c("IAM \n(EMF-33)", "Sectoral Models \n(Natural Regrowth)", "Sectoral Models \n(Constant Land Cover)"))
+boxed2
 # 
 # ---- *** FIG: EMF-33 EF + Literature (points)  ----
 points<-ggplot(data = EmisFac.all) + 
@@ -359,6 +401,10 @@ points1
 # dev.off()
 # #
 # Other
+# png(file = "GitHub/EMF33/output/EmissionSupply/Boxplot_EMF33_2.png", width = 6*ppi, height = 3*ppi, units = "px", res = ppi)
+# plot(boxed2)
+# dev.off()
+# # #
 # png(file = "GitHub/EMF33/output/EmissionSupply/Boxplot_EMF33.png", width = 4*ppi, height = 3*ppi, units = "px", res = ppi)
 # plot(boxplot)
 # dev.off()
